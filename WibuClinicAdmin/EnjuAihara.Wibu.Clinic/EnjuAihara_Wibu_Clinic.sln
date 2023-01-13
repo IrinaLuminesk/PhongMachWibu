@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33214.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A51896A3-9A56-45F0-B5CB-D1A29C441105}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{3A1DDB54-E799-42ED-BA77-1DEF59F5AD89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{1A6B08D8-ED3D-4D5F-80B3-0E95A14DCD82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjuAihara.Main", "EnjuAihara.Main\EnjuAihara.Main.csproj", "{2D5C6529-688E-4F79-AA14-DD3247839FCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D5C6529-688E-4F79-AA14-DD3247839FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D5C6529-688E-4F79-AA14-DD3247839FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D5C6529-688E-4F79-AA14-DD3247839FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D5C6529-688E-4F79-AA14-DD3247839FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D5C6529-688E-4F79-AA14-DD3247839FCD} = {1A6B08D8-ED3D-4D5F-80B3-0E95A14DCD82}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6451DB7D-9CE8-483F-99B1-092796B6C31E}
+	EndGlobalSection
+EndGlobal
