@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f2cbb1d840fc4094b68188cfa00e7c52" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountModel" Width="1.5" PointX="8" PointY="8.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" Width="1.5" PointX="10.25" PointY="7.375" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CatalogModel" Width="1.5" PointX="10" PointY="2.25" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CatalogTypeModel" Width="1.5" PointX="7.75" PointY="2.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.ChangeDataLog" Width="1.5" PointX="8.75" PointY="13.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CityModel" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DistrictModel" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DistrictStreetModel" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DistrictWardModel" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.IngredientModel" Width="1.5" PointX="3.75" PointY="18.25" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineCompoundModel" Width="1.5" PointX="6" PointY="14.25" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineModel" Width="1.5" PointX="0.75" PointY="14.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineProvideModel" Width="1.5" PointX="3" PointY="13.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.ProviderModel" Width="1.5" PointX="0.75" PointY="11.25" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.RolesModel" Width="1.5" PointX="10.25" PointY="10.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.StreetModel" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.UsersModel" Width="1.5" PointX="5.75" PointY="8.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WardModel" Width="1.5" PointX="3" PointY="7.5" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DistrictModel_CityModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_DistrictModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DistrictWardModel_DistrictModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DistrictWardModel_WardModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineIngredientModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_MedicineModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_ProviderModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.AccountInRoleModel" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

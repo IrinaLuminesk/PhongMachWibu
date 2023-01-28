@@ -1,0 +1,1106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QuanLyPhongMachWibuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountInRoleModel">
+          <Key>
+            <PropertyRef Name="AccountId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="AccountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountModel">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AccountCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
+          <Property Name="ImagePath" Type="nvarchar(max)" />
+          <Property Name="Actived" Type="bit" />
+          <Property Name="LastLoginTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AccountRecoveryTokenModel">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Token" Type="nvarchar(max)" />
+          <Property Name="ExpiredDate" Type="datetime" />
+          <Property Name="AccountId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="CatalogModel">
+          <Key>
+            <PropertyRef Name="CatalogId" />
+          </Key>
+          <Property Name="CatalogId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CatalogTypeCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="CatalogCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="CatalogDescription" Type="nvarchar(max)" />
+          <Property Name="OrderIndex" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="CatalogTypeModel">
+          <Key>
+            <PropertyRef Name="CatalogTypeCode" />
+          </Key>
+          <Property Name="CatalogTypeCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CatalogTypeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="ChangeDataLog">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="200" />
+          <Property Name="PrimaryKey" Type="uniqueidentifier" />
+          <Property Name="FieldName" Type="nvarchar" MaxLength="400" />
+          <Property Name="OldData" Type="nvarchar(max)" />
+          <Property Name="NewData" Type="nvarchar(max)" />
+          <Property Name="LastEditBy" Type="uniqueidentifier" />
+          <Property Name="LastEditTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CityModel">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CityCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="DistrictModel">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DonViHanhChinh" Type="nvarchar" MaxLength="100" />
+          <Property Name="Actived" Type="bit" />
+          <Property Name="CityId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="DistrictStreetModel">
+          <Key>
+            <PropertyRef Name="DistrictStreetId" />
+          </Key>
+          <Property Name="DistrictStreetId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DistrictId" Type="uniqueidentifier" />
+          <Property Name="StreetId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="DistrictWardModel">
+          <Key>
+            <PropertyRef Name="DistrictWardId" />
+          </Key>
+          <Property Name="DistrictWardId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DistrictId" Type="uniqueidentifier" />
+          <Property Name="WardId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="IngredientModel">
+          <Key>
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="IngredientId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IngredientCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="IngredientName" Type="nvarchar(max)" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="MedicineCompoundModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IngredientId" Type="uniqueidentifier" />
+          <Property Name="MedicineId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="MedicineModel">
+          <Key>
+            <PropertyRef Name="MedicineId" />
+          </Key>
+          <Property Name="MedicineId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MedicineCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="MedicineName" Type="nvarchar(max)" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="100" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="MedicineProvideModel">
+          <Key>
+            <PropertyRef Name="MedicineProvideId" />
+          </Key>
+          <Property Name="MedicineProvideId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProviderId" Type="uniqueidentifier" />
+          <Property Name="MedicineId" Type="uniqueidentifier" />
+          <Property Name="BoughtQuantity" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExpiredDate" Type="datetime" />
+          <Property Name="BoughtPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Actived" Type="bit" />
+          <Property Name="InstockQuantity" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="ProviderModel">
+          <Key>
+            <PropertyRef Name="ProviderId" />
+          </Key>
+          <Property Name="ProviderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProviderCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProviderName" Type="nvarchar(max)" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="RolesModel">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="StreetModel">
+          <Key>
+            <PropertyRef Name="StreetId" />
+          </Key>
+          <Property Name="StreetId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StreetName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="UsersModel">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="ImagePath" Type="nvarchar(max)" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="WardModel">
+          <Key>
+            <PropertyRef Name="WardId" />
+          </Key>
+          <Property Name="WardId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WardName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DonViHanhChinh" Type="nvarchar" MaxLength="100" />
+          <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <Association Name="FK_AccountInRoleModel_AccountModel">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="1" />
+          <End Role="AccountInRoleModel" Type="Self.AccountInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="AccountInRoleModel">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountInRoleModel_RolesModel">
+          <End Role="RolesModel" Type="Self.RolesModel" Multiplicity="1" />
+          <End Role="AccountInRoleModel" Type="Self.AccountInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RolesModel">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="AccountInRoleModel">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountModel_UsersModel">
+          <End Role="UsersModel" Type="Self.UsersModel" Multiplicity="0..1" />
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersModel">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AccountModel">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountRecoveryTokenModel_AccountModel">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
+          <End Role="AccountRecoveryTokenModel" Type="Self.AccountRecoveryTokenModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="AccountRecoveryTokenModel">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CatalogModel_CatalogTypeModel">
+          <End Role="CatalogTypeModel" Type="Self.CatalogTypeModel" Multiplicity="0..1" />
+          <End Role="CatalogModel" Type="Self.CatalogModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogTypeModel">
+              <PropertyRef Name="CatalogTypeCode" />
+            </Principal>
+            <Dependent Role="CatalogModel">
+              <PropertyRef Name="CatalogTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictModel_CityModel">
+          <End Role="CityModel" Type="Self.CityModel" Multiplicity="0..1" />
+          <End Role="DistrictModel" Type="Self.DistrictModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityModel">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="DistrictModel">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictStreetModel_DistrictModel">
+          <End Role="DistrictModel" Type="Self.DistrictModel" Multiplicity="0..1" />
+          <End Role="DistrictStreetModel" Type="Self.DistrictStreetModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistrictModel">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="DistrictStreetModel">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictStreetModel_StreetModel">
+          <End Role="StreetModel" Type="Self.StreetModel" Multiplicity="0..1" />
+          <End Role="DistrictStreetModel" Type="Self.DistrictStreetModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StreetModel">
+              <PropertyRef Name="StreetId" />
+            </Principal>
+            <Dependent Role="DistrictStreetModel">
+              <PropertyRef Name="StreetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictWardModel_DistrictModel">
+          <End Role="DistrictModel" Type="Self.DistrictModel" Multiplicity="0..1" />
+          <End Role="DistrictWardModel" Type="Self.DistrictWardModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistrictModel">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="DistrictWardModel">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictWardModel_WardModel">
+          <End Role="WardModel" Type="Self.WardModel" Multiplicity="0..1" />
+          <End Role="DistrictWardModel" Type="Self.DistrictWardModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WardModel">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="DistrictWardModel">
+              <PropertyRef Name="WardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientInMedicine_MedicineIngredientModel">
+          <End Role="IngredientModel" Type="Self.IngredientModel" Multiplicity="0..1" />
+          <End Role="MedicineCompoundModel" Type="Self.MedicineCompoundModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IngredientModel">
+              <PropertyRef Name="IngredientId" />
+            </Principal>
+            <Dependent Role="MedicineCompoundModel">
+              <PropertyRef Name="IngredientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientInMedicine_MedicineModel">
+          <End Role="MedicineModel" Type="Self.MedicineModel" Multiplicity="0..1" />
+          <End Role="MedicineCompoundModel" Type="Self.MedicineCompoundModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicineModel">
+              <PropertyRef Name="MedicineId" />
+            </Principal>
+            <Dependent Role="MedicineCompoundModel">
+              <PropertyRef Name="MedicineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicineProvideModel_MedicineModel">
+          <End Role="MedicineModel" Type="Self.MedicineModel" Multiplicity="0..1" />
+          <End Role="MedicineProvideModel" Type="Self.MedicineProvideModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicineModel">
+              <PropertyRef Name="MedicineId" />
+            </Principal>
+            <Dependent Role="MedicineProvideModel">
+              <PropertyRef Name="MedicineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicineProvideModel_ProviderModel">
+          <End Role="ProviderModel" Type="Self.ProviderModel" Multiplicity="0..1" />
+          <End Role="MedicineProvideModel" Type="Self.MedicineProvideModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProviderModel">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="MedicineProvideModel">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyPhongMachWibuModelStoreContainer">
+          <EntitySet Name="AccountInRoleModel" EntityType="Self.AccountInRoleModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountModel" EntityType="Self.AccountModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountRecoveryTokenModel" EntityType="Self.AccountRecoveryTokenModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogModel" EntityType="Self.CatalogModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogTypeModel" EntityType="Self.CatalogTypeModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChangeDataLog" EntityType="Self.ChangeDataLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CityModel" EntityType="Self.CityModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistrictModel" EntityType="Self.DistrictModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistrictStreetModel" EntityType="Self.DistrictStreetModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistrictWardModel" EntityType="Self.DistrictWardModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IngredientModel" EntityType="Self.IngredientModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicineCompoundModel" EntityType="Self.MedicineCompoundModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicineModel" EntityType="Self.MedicineModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicineProvideModel" EntityType="Self.MedicineProvideModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProviderModel" EntityType="Self.ProviderModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolesModel" EntityType="Self.RolesModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StreetModel" EntityType="Self.StreetModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersModel" EntityType="Self.UsersModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WardModel" EntityType="Self.WardModel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccountInRoleModel_AccountModel" Association="Self.FK_AccountInRoleModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="AccountInRoleModel" EntitySet="AccountInRoleModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountInRoleModel_RolesModel" Association="Self.FK_AccountInRoleModel_RolesModel">
+            <End Role="RolesModel" EntitySet="RolesModel" />
+            <End Role="AccountInRoleModel" EntitySet="AccountInRoleModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountModel_UsersModel" Association="Self.FK_AccountModel_UsersModel">
+            <End Role="UsersModel" EntitySet="UsersModel" />
+            <End Role="AccountModel" EntitySet="AccountModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountRecoveryTokenModel_AccountModel" Association="Self.FK_AccountRecoveryTokenModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="AccountRecoveryTokenModel" EntitySet="AccountRecoveryTokenModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CatalogModel_CatalogTypeModel" Association="Self.FK_CatalogModel_CatalogTypeModel">
+            <End Role="CatalogTypeModel" EntitySet="CatalogTypeModel" />
+            <End Role="CatalogModel" EntitySet="CatalogModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictModel_CityModel" Association="Self.FK_DistrictModel_CityModel">
+            <End Role="CityModel" EntitySet="CityModel" />
+            <End Role="DistrictModel" EntitySet="DistrictModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictStreetModel_DistrictModel" Association="Self.FK_DistrictStreetModel_DistrictModel">
+            <End Role="DistrictModel" EntitySet="DistrictModel" />
+            <End Role="DistrictStreetModel" EntitySet="DistrictStreetModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictStreetModel_StreetModel" Association="Self.FK_DistrictStreetModel_StreetModel">
+            <End Role="StreetModel" EntitySet="StreetModel" />
+            <End Role="DistrictStreetModel" EntitySet="DistrictStreetModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictWardModel_DistrictModel" Association="Self.FK_DistrictWardModel_DistrictModel">
+            <End Role="DistrictModel" EntitySet="DistrictModel" />
+            <End Role="DistrictWardModel" EntitySet="DistrictWardModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictWardModel_WardModel" Association="Self.FK_DistrictWardModel_WardModel">
+            <End Role="WardModel" EntitySet="WardModel" />
+            <End Role="DistrictWardModel" EntitySet="DistrictWardModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientInMedicine_MedicineIngredientModel" Association="Self.FK_IngredientInMedicine_MedicineIngredientModel">
+            <End Role="IngredientModel" EntitySet="IngredientModel" />
+            <End Role="MedicineCompoundModel" EntitySet="MedicineCompoundModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientInMedicine_MedicineModel" Association="Self.FK_IngredientInMedicine_MedicineModel">
+            <End Role="MedicineModel" EntitySet="MedicineModel" />
+            <End Role="MedicineCompoundModel" EntitySet="MedicineCompoundModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicineProvideModel_MedicineModel" Association="Self.FK_MedicineProvideModel_MedicineModel">
+            <End Role="MedicineModel" EntitySet="MedicineModel" />
+            <End Role="MedicineProvideModel" EntitySet="MedicineProvideModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicineProvideModel_ProviderModel" Association="Self.FK_MedicineProvideModel_ProviderModel">
+            <End Role="ProviderModel" EntitySet="ProviderModel" />
+            <End Role="MedicineProvideModel" EntitySet="MedicineProvideModel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuanLyPhongMachWibuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QuanLyPhongMachWibuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountModels" EntityType="QuanLyPhongMachWibuModel.AccountModel" />
+          <EntitySet Name="AccountRecoveryTokenModels" EntityType="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" />
+          <EntitySet Name="CatalogModels" EntityType="QuanLyPhongMachWibuModel.CatalogModel" />
+          <EntitySet Name="CatalogTypeModels" EntityType="QuanLyPhongMachWibuModel.CatalogTypeModel" />
+          <EntitySet Name="ChangeDataLogs" EntityType="QuanLyPhongMachWibuModel.ChangeDataLog" />
+          <EntitySet Name="CityModels" EntityType="QuanLyPhongMachWibuModel.CityModel" />
+          <EntitySet Name="DistrictModels" EntityType="QuanLyPhongMachWibuModel.DistrictModel" />
+          <EntitySet Name="DistrictStreetModels" EntityType="QuanLyPhongMachWibuModel.DistrictStreetModel" />
+          <EntitySet Name="DistrictWardModels" EntityType="QuanLyPhongMachWibuModel.DistrictWardModel" />
+          <EntitySet Name="IngredientModels" EntityType="QuanLyPhongMachWibuModel.IngredientModel" />
+          <EntitySet Name="MedicineCompoundModels" EntityType="QuanLyPhongMachWibuModel.MedicineCompoundModel" />
+          <EntitySet Name="MedicineModels" EntityType="QuanLyPhongMachWibuModel.MedicineModel" />
+          <EntitySet Name="MedicineProvideModels" EntityType="QuanLyPhongMachWibuModel.MedicineProvideModel" />
+          <EntitySet Name="ProviderModels" EntityType="QuanLyPhongMachWibuModel.ProviderModel" />
+          <EntitySet Name="RolesModels" EntityType="QuanLyPhongMachWibuModel.RolesModel" />
+          <EntitySet Name="StreetModels" EntityType="QuanLyPhongMachWibuModel.StreetModel" />
+          <EntitySet Name="UsersModels" EntityType="QuanLyPhongMachWibuModel.UsersModel" />
+          <EntitySet Name="WardModels" EntityType="QuanLyPhongMachWibuModel.WardModel" />
+          <AssociationSet Name="FK_AccountModel_UsersModel" Association="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel">
+            <End Role="UsersModel" EntitySet="UsersModels" />
+            <End Role="AccountModel" EntitySet="AccountModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountRecoveryTokenModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="AccountRecoveryTokenModel" EntitySet="AccountRecoveryTokenModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CatalogModel_CatalogTypeModel" Association="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel">
+            <End Role="CatalogTypeModel" EntitySet="CatalogTypeModels" />
+            <End Role="CatalogModel" EntitySet="CatalogModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictModel_CityModel" Association="QuanLyPhongMachWibuModel.FK_DistrictModel_CityModel">
+            <End Role="CityModel" EntitySet="CityModels" />
+            <End Role="DistrictModel" EntitySet="DistrictModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictStreetModel_DistrictModel" Association="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_DistrictModel">
+            <End Role="DistrictModel" EntitySet="DistrictModels" />
+            <End Role="DistrictStreetModel" EntitySet="DistrictStreetModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictWardModel_DistrictModel" Association="QuanLyPhongMachWibuModel.FK_DistrictWardModel_DistrictModel">
+            <End Role="DistrictModel" EntitySet="DistrictModels" />
+            <End Role="DistrictWardModel" EntitySet="DistrictWardModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictStreetModel_StreetModel" Association="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel">
+            <End Role="StreetModel" EntitySet="StreetModels" />
+            <End Role="DistrictStreetModel" EntitySet="DistrictStreetModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistrictWardModel_WardModel" Association="QuanLyPhongMachWibuModel.FK_DistrictWardModel_WardModel">
+            <End Role="WardModel" EntitySet="WardModels" />
+            <End Role="DistrictWardModel" EntitySet="DistrictWardModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientInMedicine_MedicineIngredientModel" Association="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineIngredientModel">
+            <End Role="IngredientModel" EntitySet="IngredientModels" />
+            <End Role="MedicineCompoundModel" EntitySet="MedicineCompoundModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IngredientInMedicine_MedicineModel" Association="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineModel">
+            <End Role="MedicineModel" EntitySet="MedicineModels" />
+            <End Role="MedicineCompoundModel" EntitySet="MedicineCompoundModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicineProvideModel_MedicineModel" Association="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_MedicineModel">
+            <End Role="MedicineModel" EntitySet="MedicineModels" />
+            <End Role="MedicineProvideModel" EntitySet="MedicineProvideModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedicineProvideModel_ProviderModel" Association="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_ProviderModel">
+            <End Role="ProviderModel" EntitySet="ProviderModels" />
+            <End Role="MedicineProvideModel" EntitySet="MedicineProvideModels" />
+          </AssociationSet>
+          <AssociationSet Name="AccountInRoleModel" Association="QuanLyPhongMachWibuModel.AccountInRoleModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="RolesModel" EntitySet="RolesModels" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AccountModel">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Guid" Nullable="false" />
+          <Property Name="AccountCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="RoleId" Type="Guid" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UsersModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel" FromRole="AccountModel" ToRole="UsersModel" />
+          <NavigationProperty Name="AccountRecoveryTokenModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel" FromRole="AccountModel" ToRole="AccountRecoveryTokenModel" />
+          <NavigationProperty Name="RolesModels" Relationship="QuanLyPhongMachWibuModel.AccountInRoleModel" FromRole="AccountModel" ToRole="RolesModel" />
+        </EntityType>
+        <EntityType Name="AccountRecoveryTokenModel">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="Guid" Nullable="false" />
+          <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpiredDate" Type="DateTime" Precision="3" />
+          <Property Name="AccountId" Type="Guid" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel" FromRole="AccountRecoveryTokenModel" ToRole="AccountModel" />
+        </EntityType>
+        <EntityType Name="CatalogModel">
+          <Key>
+            <PropertyRef Name="CatalogId" />
+          </Key>
+          <Property Name="CatalogId" Type="Guid" Nullable="false" />
+          <Property Name="CatalogTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CatalogCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CatalogDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderIndex" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="CatalogTypeModel" Relationship="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel" FromRole="CatalogModel" ToRole="CatalogTypeModel" />
+        </EntityType>
+        <EntityType Name="CatalogTypeModel">
+          <Key>
+            <PropertyRef Name="CatalogTypeCode" />
+          </Key>
+          <Property Name="CatalogTypeCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CatalogTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="CatalogModels" Relationship="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel" FromRole="CatalogTypeModel" ToRole="CatalogModel" />
+        </EntityType>
+        <EntityType Name="ChangeDataLog">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Guid" Nullable="false" />
+          <Property Name="TableName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryKey" Type="Guid" />
+          <Property Name="FieldName" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="OldData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditBy" Type="Guid" />
+          <Property Name="LastEditTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CityModel">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Guid" Nullable="false" />
+          <Property Name="CityCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="DistrictModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictModel_CityModel" FromRole="CityModel" ToRole="DistrictModel" />
+        </EntityType>
+        <EntityType Name="DistrictModel">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="Guid" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DonViHanhChinh" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <Property Name="CityId" Type="Guid" />
+          <NavigationProperty Name="CityModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictModel_CityModel" FromRole="DistrictModel" ToRole="CityModel" />
+          <NavigationProperty Name="DistrictStreetModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_DistrictModel" FromRole="DistrictModel" ToRole="DistrictStreetModel" />
+          <NavigationProperty Name="DistrictWardModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictWardModel_DistrictModel" FromRole="DistrictModel" ToRole="DistrictWardModel" />
+        </EntityType>
+        <EntityType Name="DistrictStreetModel">
+          <Key>
+            <PropertyRef Name="DistrictStreetId" />
+          </Key>
+          <Property Name="DistrictStreetId" Type="Guid" Nullable="false" />
+          <Property Name="DistrictId" Type="Guid" />
+          <Property Name="StreetId" Type="Guid" />
+          <NavigationProperty Name="DistrictModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_DistrictModel" FromRole="DistrictStreetModel" ToRole="DistrictModel" />
+          <NavigationProperty Name="StreetModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel" FromRole="DistrictStreetModel" ToRole="StreetModel" />
+        </EntityType>
+        <EntityType Name="DistrictWardModel">
+          <Key>
+            <PropertyRef Name="DistrictWardId" />
+          </Key>
+          <Property Name="DistrictWardId" Type="Guid" Nullable="false" />
+          <Property Name="DistrictId" Type="Guid" />
+          <Property Name="WardId" Type="Guid" />
+          <NavigationProperty Name="DistrictModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictWardModel_DistrictModel" FromRole="DistrictWardModel" ToRole="DistrictModel" />
+          <NavigationProperty Name="WardModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictWardModel_WardModel" FromRole="DistrictWardModel" ToRole="WardModel" />
+        </EntityType>
+        <EntityType Name="IngredientModel">
+          <Key>
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="IngredientId" Type="Guid" Nullable="false" />
+          <Property Name="IngredientCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IngredientName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="MedicineCompoundModels" Relationship="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineIngredientModel" FromRole="IngredientModel" ToRole="MedicineCompoundModel" />
+        </EntityType>
+        <EntityType Name="MedicineCompoundModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="IngredientId" Type="Guid" />
+          <Property Name="MedicineId" Type="Guid" />
+          <NavigationProperty Name="IngredientModel" Relationship="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineIngredientModel" FromRole="MedicineCompoundModel" ToRole="IngredientModel" />
+          <NavigationProperty Name="MedicineModel" Relationship="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineModel" FromRole="MedicineCompoundModel" ToRole="MedicineModel" />
+        </EntityType>
+        <EntityType Name="MedicineModel">
+          <Key>
+            <PropertyRef Name="MedicineId" />
+          </Key>
+          <Property Name="MedicineId" Type="Guid" Nullable="false" />
+          <Property Name="MedicineCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MedicineName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="MedicineCompoundModels" Relationship="QuanLyPhongMachWibuModel.FK_IngredientInMedicine_MedicineModel" FromRole="MedicineModel" ToRole="MedicineCompoundModel" />
+          <NavigationProperty Name="MedicineProvideModels" Relationship="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_MedicineModel" FromRole="MedicineModel" ToRole="MedicineProvideModel" />
+        </EntityType>
+        <EntityType Name="MedicineProvideModel">
+          <Key>
+            <PropertyRef Name="MedicineProvideId" />
+          </Key>
+          <Property Name="MedicineProvideId" Type="Guid" Nullable="false" />
+          <Property Name="ProviderId" Type="Guid" />
+          <Property Name="MedicineId" Type="Guid" />
+          <Property Name="BoughtQuantity" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExpiredDate" Type="DateTime" Precision="3" />
+          <Property Name="BoughtPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Actived" Type="Boolean" />
+          <Property Name="InstockQuantity" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="MedicineModel" Relationship="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_MedicineModel" FromRole="MedicineProvideModel" ToRole="MedicineModel" />
+          <NavigationProperty Name="ProviderModel" Relationship="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_ProviderModel" FromRole="MedicineProvideModel" ToRole="ProviderModel" />
+        </EntityType>
+        <EntityType Name="ProviderModel">
+          <Key>
+            <PropertyRef Name="ProviderId" />
+          </Key>
+          <Property Name="ProviderId" Type="Guid" Nullable="false" />
+          <Property Name="ProviderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="MedicineProvideModels" Relationship="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_ProviderModel" FromRole="ProviderModel" ToRole="MedicineProvideModel" />
+        </EntityType>
+        <EntityType Name="RolesModel">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RoleCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="AccountModels" Relationship="QuanLyPhongMachWibuModel.AccountInRoleModel" FromRole="RolesModel" ToRole="AccountModel" />
+        </EntityType>
+        <EntityType Name="StreetModel">
+          <Key>
+            <PropertyRef Name="StreetId" />
+          </Key>
+          <Property Name="StreetId" Type="Guid" Nullable="false" />
+          <Property Name="StreetName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="DistrictStreetModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel" FromRole="StreetModel" ToRole="DistrictStreetModel" />
+        </EntityType>
+        <EntityType Name="UsersModel">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="UserCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="AccountModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel" FromRole="UsersModel" ToRole="AccountModel" />
+        </EntityType>
+        <EntityType Name="WardModel">
+          <Key>
+            <PropertyRef Name="WardId" />
+          </Key>
+          <Property Name="WardId" Type="Guid" Nullable="false" />
+          <Property Name="WardName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DonViHanhChinh" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <NavigationProperty Name="DistrictWardModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictWardModel_WardModel" FromRole="WardModel" ToRole="DistrictWardModel" />
+        </EntityType>
+        <Association Name="FK_AccountModel_UsersModel">
+          <End Type="QuanLyPhongMachWibuModel.UsersModel" Role="UsersModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersModel">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AccountModel">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountRecoveryTokenModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" Role="AccountRecoveryTokenModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="AccountRecoveryTokenModel">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CatalogModel_CatalogTypeModel">
+          <End Type="QuanLyPhongMachWibuModel.CatalogTypeModel" Role="CatalogTypeModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.CatalogModel" Role="CatalogModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogTypeModel">
+              <PropertyRef Name="CatalogTypeCode" />
+            </Principal>
+            <Dependent Role="CatalogModel">
+              <PropertyRef Name="CatalogTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictModel_CityModel">
+          <End Type="QuanLyPhongMachWibuModel.CityModel" Role="CityModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DistrictModel" Role="DistrictModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityModel">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="DistrictModel">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictStreetModel_DistrictModel">
+          <End Type="QuanLyPhongMachWibuModel.DistrictModel" Role="DistrictModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DistrictStreetModel" Role="DistrictStreetModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistrictModel">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="DistrictStreetModel">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictWardModel_DistrictModel">
+          <End Type="QuanLyPhongMachWibuModel.DistrictModel" Role="DistrictModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DistrictWardModel" Role="DistrictWardModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistrictModel">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="DistrictWardModel">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictStreetModel_StreetModel">
+          <End Type="QuanLyPhongMachWibuModel.StreetModel" Role="StreetModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DistrictStreetModel" Role="DistrictStreetModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StreetModel">
+              <PropertyRef Name="StreetId" />
+            </Principal>
+            <Dependent Role="DistrictStreetModel">
+              <PropertyRef Name="StreetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistrictWardModel_WardModel">
+          <End Type="QuanLyPhongMachWibuModel.WardModel" Role="WardModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DistrictWardModel" Role="DistrictWardModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WardModel">
+              <PropertyRef Name="WardId" />
+            </Principal>
+            <Dependent Role="DistrictWardModel">
+              <PropertyRef Name="WardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientInMedicine_MedicineIngredientModel">
+          <End Type="QuanLyPhongMachWibuModel.IngredientModel" Role="IngredientModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.MedicineCompoundModel" Role="MedicineCompoundModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IngredientModel">
+              <PropertyRef Name="IngredientId" />
+            </Principal>
+            <Dependent Role="MedicineCompoundModel">
+              <PropertyRef Name="IngredientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IngredientInMedicine_MedicineModel">
+          <End Type="QuanLyPhongMachWibuModel.MedicineModel" Role="MedicineModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.MedicineCompoundModel" Role="MedicineCompoundModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicineModel">
+              <PropertyRef Name="MedicineId" />
+            </Principal>
+            <Dependent Role="MedicineCompoundModel">
+              <PropertyRef Name="MedicineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicineProvideModel_MedicineModel">
+          <End Type="QuanLyPhongMachWibuModel.MedicineModel" Role="MedicineModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.MedicineProvideModel" Role="MedicineProvideModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicineModel">
+              <PropertyRef Name="MedicineId" />
+            </Principal>
+            <Dependent Role="MedicineProvideModel">
+              <PropertyRef Name="MedicineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedicineProvideModel_ProviderModel">
+          <End Type="QuanLyPhongMachWibuModel.ProviderModel" Role="ProviderModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.MedicineProvideModel" Role="MedicineProvideModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProviderModel">
+              <PropertyRef Name="ProviderId" />
+            </Principal>
+            <Dependent Role="MedicineProvideModel">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AccountInRoleModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="*" />
+          <End Type="QuanLyPhongMachWibuModel.RolesModel" Role="RolesModel" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuanLyPhongMachWibuModelStoreContainer" CdmEntityContainer="QuanLyPhongMachWibuEntities">
+          <EntitySetMapping Name="AccountModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.AccountModel">
+              <MappingFragment StoreEntitySet="AccountModel">
+                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccountCode" ColumnName="AccountCode" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountRecoveryTokenModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel">
+              <MappingFragment StoreEntitySet="AccountRecoveryTokenModel">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatalogModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.CatalogModel">
+              <MappingFragment StoreEntitySet="CatalogModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="CatalogDescription" ColumnName="CatalogDescription" />
+                <ScalarProperty Name="CatalogCode" ColumnName="CatalogCode" />
+                <ScalarProperty Name="CatalogTypeCode" ColumnName="CatalogTypeCode" />
+                <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatalogTypeModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.CatalogTypeModel">
+              <MappingFragment StoreEntitySet="CatalogTypeModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="CatalogTypeName" ColumnName="CatalogTypeName" />
+                <ScalarProperty Name="CatalogTypeCode" ColumnName="CatalogTypeCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChangeDataLogs">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.ChangeDataLog">
+              <MappingFragment StoreEntitySet="ChangeDataLog">
+                <ScalarProperty Name="LastEditTime" ColumnName="LastEditTime" />
+                <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
+                <ScalarProperty Name="NewData" ColumnName="NewData" />
+                <ScalarProperty Name="OldData" ColumnName="OldData" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CityModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.CityModel">
+              <MappingFragment StoreEntitySet="CityModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistrictModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DistrictModel">
+              <MappingFragment StoreEntitySet="DistrictModel">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="DonViHanhChinh" ColumnName="DonViHanhChinh" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistrictStreetModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DistrictStreetModel">
+              <MappingFragment StoreEntitySet="DistrictStreetModel">
+                <ScalarProperty Name="StreetId" ColumnName="StreetId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="DistrictStreetId" ColumnName="DistrictStreetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistrictWardModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DistrictWardModel">
+              <MappingFragment StoreEntitySet="DistrictWardModel">
+                <ScalarProperty Name="WardId" ColumnName="WardId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="DistrictWardId" ColumnName="DistrictWardId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IngredientModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.IngredientModel">
+              <MappingFragment StoreEntitySet="IngredientModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
+                <ScalarProperty Name="IngredientCode" ColumnName="IngredientCode" />
+                <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicineCompoundModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.MedicineCompoundModel">
+              <MappingFragment StoreEntitySet="MedicineCompoundModel">
+                <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+                <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicineModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.MedicineModel">
+              <MappingFragment StoreEntitySet="MedicineModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="MedicineName" ColumnName="MedicineName" />
+                <ScalarProperty Name="MedicineCode" ColumnName="MedicineCode" />
+                <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicineProvideModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.MedicineProvideModel">
+              <MappingFragment StoreEntitySet="MedicineProvideModel">
+                <ScalarProperty Name="InstockQuantity" ColumnName="InstockQuantity" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="BoughtPrice" ColumnName="BoughtPrice" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="BoughtQuantity" ColumnName="BoughtQuantity" />
+                <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+                <ScalarProperty Name="MedicineProvideId" ColumnName="MedicineProvideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProviderModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.ProviderModel">
+              <MappingFragment StoreEntitySet="ProviderModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolesModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.RolesModel">
+              <MappingFragment StoreEntitySet="RolesModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StreetModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.StreetModel">
+              <MappingFragment StoreEntitySet="StreetModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="StreetId" ColumnName="StreetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.UsersModel">
+              <MappingFragment StoreEntitySet="UsersModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WardModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.WardModel">
+              <MappingFragment StoreEntitySet="WardModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="DonViHanhChinh" ColumnName="DonViHanhChinh" />
+                <ScalarProperty Name="WardName" ColumnName="WardName" />
+                <ScalarProperty Name="WardId" ColumnName="WardId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AccountInRoleModel" TypeName="QuanLyPhongMachWibuModel.AccountInRoleModel" StoreEntitySet="AccountInRoleModel">
+            <EndProperty Name="RolesModel">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AccountModel">
+              <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
