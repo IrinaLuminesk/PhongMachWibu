@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjuAihara_Wibu_Clinic_Main
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjuAihara.Core", "EnjuAihara.Core\EnjuAihara.Core.csproj", "{181E89C3-8578-4BC6-A314-2C4CA3625DD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjuAihara.Entities", "EnjuAihara.Entities\EnjuAihara.Entities.csproj", "{65240BAE-8476-45CE-B22B-455BF2097DC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjuAihara.EntityFramework", "EnjuAihara.EntityFramework\EnjuAihara.EntityFramework.csproj", "{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{181E89C3-8578-4BC6-A314-2C4CA3625DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{181E89C3-8578-4BC6-A314-2C4CA3625DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{181E89C3-8578-4BC6-A314-2C4CA3625DD3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65240BAE-8476-45CE-B22B-455BF2097DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65240BAE-8476-45CE-B22B-455BF2097DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65240BAE-8476-45CE-B22B-455BF2097DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65240BAE-8476-45CE-B22B-455BF2097DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,7 +54,7 @@ Global
 		{EEC65682-B30B-4A6B-9EA0-DFDD885D5C0D} = {C78609E6-B271-4661-B4DE-1A49FD9B7F21}
 		{03FB5736-77E5-47BF-9653-DEDD7CAC8C0E} = {4D98FB0F-2B50-48BA-A31C-6ECE9EE1360D}
 		{181E89C3-8578-4BC6-A314-2C4CA3625DD3} = {C78609E6-B271-4661-B4DE-1A49FD9B7F21}
-		{65240BAE-8476-45CE-B22B-455BF2097DC0} = {C78609E6-B271-4661-B4DE-1A49FD9B7F21}
+		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1} = {C78609E6-B271-4661-B4DE-1A49FD9B7F21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF2870E6-E85A-40C0-BCC8-5F75DF7769C6}
