@@ -127,13 +127,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -151,25 +146,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\" />
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnjuAihara.Core\EnjuAihara.Core.csproj">
       <Project>{181e89c3-8578-4bc6-a314-2c4ca3625dd3}</Project>
       <Name>EnjuAihara.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EnjuAihara.Entities\EnjuAihara.Entities.csproj">
-      <Project>{65240bae-8476-45ce-b22b-455bf2097dc0}</Project>
-      <Name>EnjuAihara.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\EnjuAihara.Utilities\EnjuAihara.Utilities.csproj">
       <Project>{eec65682-b30b-4a6b-9ea0-dfdd885d5c0d}</Project>
