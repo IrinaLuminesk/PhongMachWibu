@@ -2324,6 +2324,10 @@
       <Project>{181e89c3-8578-4bc6-a314-2c4ca3625dd3}</Project>
       <Name>EnjuAihara.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EnjuAihara.EntityFramework\EnjuAihara.EntityFramework.csproj">
+      <Project>{2c7f252b-7cdc-4f5a-8625-d595a7e6aaa1}</Project>
+      <Name>EnjuAihara.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EnjuAihara.Utilities\EnjuAihara.Utilities.csproj">
       <Project>{eec65682-b30b-4a6b-9ea0-dfdd885d5c0d}</Project>
       <Name>EnjuAihara.Utilities</Name>

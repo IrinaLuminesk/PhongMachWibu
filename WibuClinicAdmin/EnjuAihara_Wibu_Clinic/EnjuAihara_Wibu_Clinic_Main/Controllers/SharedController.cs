@@ -15,6 +15,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
         }
         public ActionResult Sidebar()
         {
+            var 
             return PartialView();
         }
     }
