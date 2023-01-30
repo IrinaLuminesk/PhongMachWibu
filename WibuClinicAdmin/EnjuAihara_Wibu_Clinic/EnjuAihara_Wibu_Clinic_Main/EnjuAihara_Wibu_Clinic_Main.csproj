@@ -123,6 +123,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Permission\PermissionAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -131,6 +132,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Picture\LogoAdmin.jpg" />
     <Content Include="Scripts\build\config\postcss.config.js" />
     <Content Include="Scripts\build\config\rollup.config.js" />
     <Content Include="Scripts\build\js\AdminLTE.js" />
@@ -2315,6 +2317,7 @@
     <Content Include="Scripts\plugins\summernote\summernote.js.map" />
     <Content Include="Scripts\plugins\summernote\summernote.min.js.map" />
     <Content Include="Scripts\plugins\toastr\toastr.js.map" />
+    <Content Include="Views\Shared\Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnjuAihara.Core\EnjuAihara.Core.csproj">
