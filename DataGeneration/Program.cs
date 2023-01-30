@@ -1,5 +1,7 @@
 ﻿using DataGeneration.Entities;
+using DataGeneration.Illness;
 using DataGeneration.StreetDataModel;
+using DataGeneration.User;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,7 +19,7 @@ namespace DataGeneration
             QuanLyPhongMachWibuEntities _context = new QuanLyPhongMachWibuEntities();
             Random ran = new Random();
             #region Street
-            List<Root> list = StreetData.ConvertJsonToText();
+            //List<Root> list = StreetData.ConvertJsonToText();
             //foreach (var i in list)
             //{
             //    foreach (var j in i.district)
@@ -39,7 +41,7 @@ namespace DataGeneration
             //        }
             //    }
             //}
-            SaveData(list);
+            //SaveData(list);
             //var result = a.Select(x => x.name).Distinct().ToList();
             //foreach (var k in result)
             //{
@@ -138,6 +140,27 @@ namespace DataGeneration
             //        templst.RemoveAt(u);
             //    }
             //}
+            #endregion
+
+
+
+
+
+
+
+            #region Bệnh
+            //IllnessData.GetAllBenh();
+            #endregion
+
+
+            #region Nhà cung cấp
+            //Medicine.MedicineProvider.GetAllProvider();
+            //Medicine.MedicineProvider.GetProviderMed();
+            #endregion
+
+
+            #region Người dùng
+            UserData.GetUser();
             #endregion
         }
         public static void SaveData(List<Root> lst)

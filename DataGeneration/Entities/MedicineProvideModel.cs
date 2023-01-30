@@ -14,15 +14,25 @@ namespace DataGeneration.Entities
     
     public partial class MedicineProvideModel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MedicineProvideModel()
+        {
+            this.DescriptionDetailModels = new HashSet<DescriptionDetailModel>();
+        }
+    
         public System.Guid MedicineProvideId { get; set; }
         public Nullable<System.Guid> ProviderId { get; set; }
         public Nullable<System.Guid> MedicineId { get; set; }
         public Nullable<decimal> BoughtQuantity { get; set; }
         public Nullable<System.DateTime> ExpiredDate { get; set; }
-        public Nullable<decimal> BoughtPrice { get; set; }
+        public Nullable<double> BoughtPrice { get; set; }
         public Nullable<bool> Actived { get; set; }
         public Nullable<decimal> InstockQuantity { get; set; }
+        public Nullable<System.DateTime> BoughtDate { get; set; }
+        public Nullable<decimal> BoughtUnit { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }
         public virtual MedicineModel MedicineModel { get; set; }
         public virtual ProviderModel ProviderModel { get; set; }
     }

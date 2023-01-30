@@ -17,6 +17,7 @@ namespace DataGeneration.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RolesModel()
         {
+            this.PagePermissionModels = new HashSet<PagePermissionModel>();
             this.AccountModels = new HashSet<AccountModel>();
         }
     
@@ -25,6 +26,8 @@ namespace DataGeneration.Entities
         public string RoleName { get; set; }
         public Nullable<bool> Actived { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PagePermissionModel> PagePermissionModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountModel> AccountModels { get; set; }
     }

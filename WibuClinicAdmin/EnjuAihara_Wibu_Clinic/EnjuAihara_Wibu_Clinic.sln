@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjuAihara.Core", "EnjuAiha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjuAihara.EntityFramework", "EnjuAihara.EntityFramework\EnjuAihara.EntityFramework.csproj", "{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permission", "EnjuAihara_Wibu_Clinic_Main\Areas\Permission\Permission.csproj", "{2F3C6941-B083-4377-94D5-A7C6906BEB3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F3C6941-B083-4377-94D5-A7C6906BEB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F3C6941-B083-4377-94D5-A7C6906BEB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F3C6941-B083-4377-94D5-A7C6906BEB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F3C6941-B083-4377-94D5-A7C6906BEB3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{03FB5736-77E5-47BF-9653-DEDD7CAC8C0E} = {4D98FB0F-2B50-48BA-A31C-6ECE9EE1360D}
 		{181E89C3-8578-4BC6-A314-2C4CA3625DD3} = {C78609E6-B271-4661-B4DE-1A49FD9B7F21}
 		{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1} = {C78609E6-B271-4661-B4DE-1A49FD9B7F21}
+		{2F3C6941-B083-4377-94D5-A7C6906BEB3B} = {8DADFC4A-E940-4C53-A62B-B2DF3240827F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF2870E6-E85A-40C0-BCC8-5F75DF7769C6}

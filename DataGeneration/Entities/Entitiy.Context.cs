@@ -29,15 +29,25 @@ namespace DataGeneration.Entities
         public virtual DbSet<AccountRecoveryTokenModel> AccountRecoveryTokenModels { get; set; }
         public virtual DbSet<CatalogModel> CatalogModels { get; set; }
         public virtual DbSet<CatalogTypeModel> CatalogTypeModels { get; set; }
-        public virtual DbSet<ChangeDataLog> ChangeDataLogs { get; set; }
+        public virtual DbSet<ChangeDataLogModel> ChangeDataLogModels { get; set; }
         public virtual DbSet<CityModel> CityModels { get; set; }
+        public virtual DbSet<DateModel> DateModels { get; set; }
+        public virtual DbSet<DescriptionDetailModel> DescriptionDetailModels { get; set; }
+        public virtual DbSet<DescriptionIllnessModel> DescriptionIllnessModels { get; set; }
+        public virtual DbSet<DescriptionModel> DescriptionModels { get; set; }
         public virtual DbSet<DistrictModel> DistrictModels { get; set; }
         public virtual DbSet<DistrictStreetModel> DistrictStreetModels { get; set; }
         public virtual DbSet<DistrictWardModel> DistrictWardModels { get; set; }
+        public virtual DbSet<FunctionModel> FunctionModels { get; set; }
+        public virtual DbSet<IllnessModel> IllnessModels { get; set; }
         public virtual DbSet<IngredientModel> IngredientModels { get; set; }
         public virtual DbSet<MedicineCompoundModel> MedicineCompoundModels { get; set; }
         public virtual DbSet<MedicineModel> MedicineModels { get; set; }
         public virtual DbSet<MedicineProvideModel> MedicineProvideModels { get; set; }
+        public virtual DbSet<MenuModel> MenuModels { get; set; }
+        public virtual DbSet<PageFunctionModel> PageFunctionModels { get; set; }
+        public virtual DbSet<PageModel> PageModels { get; set; }
+        public virtual DbSet<PagePermissionModel> PagePermissionModels { get; set; }
         public virtual DbSet<ProviderModel> ProviderModels { get; set; }
         public virtual DbSet<RolesModel> RolesModels { get; set; }
         public virtual DbSet<StreetModel> StreetModels { get; set; }

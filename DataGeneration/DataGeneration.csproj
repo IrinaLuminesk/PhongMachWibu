@@ -67,10 +67,22 @@
     <Compile Include="Entities\CatalogTypeModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\ChangeDataLog.cs">
+    <Compile Include="Entities\ChangeDataLogModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\CityModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DateModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DescriptionDetailModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DescriptionIllnessModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DescriptionModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\DistrictModel.cs">
@@ -97,6 +109,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Entitiy.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\FunctionModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\IllnessModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\IngredientModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
@@ -107,6 +125,18 @@
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\MedicineProvideModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MenuModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PageFunctionModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PageModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PagePermissionModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ProviderModel.cs">
@@ -124,7 +154,9 @@
     <Compile Include="Entities\WardModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
+    <Compile Include="Illness\IllnessData.cs" />
     <Compile Include="MedicineModel\Medicine.cs" />
+    <Compile Include="Medicine\MedicineProvider.cs" />
     <Compile Include="Medicine\Medicines.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +164,7 @@
     <Compile Include="StreetDataModel\District.cs" />
     <Compile Include="StreetDataModel\Root.cs" />
     <Compile Include="StreetDataModel\Ward.cs" />
+    <Compile Include="User\UserData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
