@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EnjuAihara.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +7,7 @@ using System.Web.Mvc;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Controllers
 {
-    public class SharedController : Controller
+    public class SharedController : IrinaLumineskController
     {
         // GET: Shared
         public ActionResult Index()
@@ -15,7 +16,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
         }
         public ActionResult Sidebar()
         {
-            var 
+            var a = _context.MenuModels.ToList();
             return PartialView();
         }
     }
