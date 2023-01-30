@@ -45,5 +45,19 @@
     <Compile Include="IrinaLumineskController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EnjuAihara.EntityFramework\EnjuAihara.EntityFramework.csproj">
+      <Project>{2c7f252b-7cdc-4f5a-8625-d595a7e6aaa1}</Project>
+      <Name>EnjuAihara.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EnjuAihara.Utilities\EnjuAihara.Utilities.csproj">
+      <Project>{eec65682-b30b-4a6b-9ea0-dfdd885d5c0d}</Project>
+      <Name>EnjuAihara.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EnjuAihara.ViewModels\EnjuAihara.ViewModels.csproj">
+      <Project>{d0a04ab4-7f1c-423a-b2d1-5f20440971d7}</Project>
+      <Name>EnjuAihara.ViewModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
