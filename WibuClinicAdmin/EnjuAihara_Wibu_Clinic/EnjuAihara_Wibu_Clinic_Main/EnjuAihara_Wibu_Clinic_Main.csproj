@@ -2315,6 +2315,7 @@
     <Content Include="Scripts\plugins\summernote\summernote.js.map" />
     <Content Include="Scripts\plugins\summernote\summernote.min.js.map" />
     <Content Include="Scripts\plugins\toastr\toastr.js.map" />
+    <Content Include="Views\Shared\_Layout_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnjuAihara.Core\EnjuAihara.Core.csproj">

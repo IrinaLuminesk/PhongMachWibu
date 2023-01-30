@@ -8,5 +8,6 @@ namespace EnjuAihara.Core
 {
     public class IrinaLumineskController : System.Web.Mvc.Controller
     {
+
     }
 }
