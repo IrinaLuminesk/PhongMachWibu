@@ -1,8 +1,9 @@
-﻿<div class="content-header">
+﻿@model EnjuAihara.EntityFramework.MenuModel
+<div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="m-0">Tạo mới Menu</h1>
+				<h1 class="m-0">Chỉnh sửa @Model.MenuName</h1>
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
@@ -17,7 +18,8 @@
 		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form id="frmCreate" enctype='multipart/form-data'>
+					<form id="frmEdit" enctype='multipart/form-data'>
+						@Html.HiddenFor(x => x.MenuId);
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">
@@ -28,7 +30,8 @@
 													<label for="MenuName" class="col-form-label">Tên Menu</label>
 												</div>
 												<div class="col-md-10">
-													<input type="text" id="MenuName" name="MenuName" class="form-control" required>
+													@Html.TextBoxFor(x => x.MenuName, new { @class = "form-control" })
+													@*<input type="text" id="MenuName" name="MenuName" class="form-control" required>*@
 												</div>
 											</div>
 										</div>
@@ -38,7 +41,8 @@
 													<label for="Icon" class="col-form-label">Icon</label>
 												</div>
 												<div class="col-md-10">
-													<input type="text" id="Icon" name="Icon" class="form-control" required>
+													@Html.TextBoxFor(x => x.Icon, new { @class = "form-control" })
+													@*<input type="text" id="Icon" name="Icon" class="form-control" required>*@
 												</div>
 											</div>
 										</div>
@@ -48,16 +52,16 @@
 													<label for="Icon" class="col-form-label">OrderIndex</label>
 												</div>
 												<div class="col-md-10">
-													<input type="text" id="OrderIndex" name="OrderIndex" class="form-control">
+													@Html.TextBoxFor(x => x.OrderIndex, new { @class = "form-control" })
+													@*<input type="text" id="OrderIndex" name="OrderIndex" class="form-control">*@
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="row" style="margin-top: 15px">
 										<div class="col-md-12 text-center">
-											<button type="button" class="btn btn-primary" id="btn-add">
-												<i class="fa fa-plus-square"></i>
-												Thêm mới
+											<button type="button" class="btn btn-primary" id="btn-edit">
+												Lưu
 											</button>
 										</div>
 									</div>
@@ -72,11 +76,8 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$("#btn-add").on("click", function () {
-			SaveData("Permission/Menu", "#frmCreate");
-			PreventEnterButton();
+		$("#btn-edit").on("click", function () {
+			Edit("Permission/Menu", "#frmEdit");
 		});
 	});
-
 </script>
-

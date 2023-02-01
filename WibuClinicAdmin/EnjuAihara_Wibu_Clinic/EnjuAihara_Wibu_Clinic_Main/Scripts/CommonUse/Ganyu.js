@@ -89,6 +89,9 @@ function AlertPopup(id, title, message) {
     }
     $(alertId + " p:first-child").text(message);
     $(alertId + " p:nth-child(2)").text(title);
+    $(alertId).toast({
+        animation: true
+    });
     $(alertId).removeClass("hide");
     $(alertId).addClass("show");
     setTimeout(function(){
@@ -127,7 +130,7 @@ function SaveData(controller, frmCreate) {
                     if (data.redirect) {
                         setTimeout(function () {
                             window.location.href = data.redirect;
-                        }, 1000);
+                        }, 3000);
                     }
                 }
                 else {
@@ -136,6 +139,57 @@ function SaveData(controller, frmCreate) {
             },
             error: function (data) {
                 AlertPopup(2, "Lỗi", data.message);
+            }
+        });
+}
+
+function Edit(controller, frmEdit) {
+
+    var frm = $(frmEdit),
+        formData = new FormData(),
+        formParams = frm.serializeArray();
+    $.each(frm.find('input[type="file"]'), function (i, tag) {
+        isHasFile = true;
+        $.each($(tag)[0].files, function (i, file) {
+            formData.append(tag.name, file);
+        });
+    });
+
+    $.each(formParams, function (i, val) {
+        formData.append(val.name, val.value);
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "/" + controller + "/Edit",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            if (data.isSucess) {
+                if (data.title && data.message)
+                    AlertPopup(1, data.title, data.message);
+                if (data.redirect) {
+                    setTimeout(function () {
+                        window.location.href = data.redirect;
+                    }, 3000);
+                }
+            }
+            else {
+                AlertPopup(3, data.title, data.message);
+            }
+        },
+        error: function (data) {
+            AlertPopup(2, "Lỗi", data.message);
+        }
+    });
+}
+
+function PreventEnterButton() {
+    $(document).keypress(
+        function (event) {
+            if (event.which == '13') {
+                event.preventDefault();
             }
         });
 }
