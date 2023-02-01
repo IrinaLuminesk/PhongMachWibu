@@ -137,7 +137,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                     MenuId = model.MenuId,
                     Icon = model.Icon,
                     MenuName = model.MenuName,
-                    OrderIndex = model.OrderIndex
+                    OrderIndex = model.OrderIndex,
+                    Actived = model.Actived
                 };
                 _context.Entry(modifiedMenu).State = EntityState.Modified;
                 _context.SaveChanges();
