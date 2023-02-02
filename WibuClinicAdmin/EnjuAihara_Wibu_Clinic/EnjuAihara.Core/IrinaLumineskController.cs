@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using EnjuAihara.EntityFramework;
 using EnjuAihara.ViewModels;
 using EnjuAihara.Utilities;
+using EnjuAihara.Utilities.CloudinaryHelper;
+
 namespace EnjuAihara.Core
 {
     public class IrinaLumineskController : System.Web.Mvc.Controller
