@@ -1,36 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission
 {
-    public class PermissionAreaRegistration : AreaRegistration
+    public class PermissionAreaRegistration : AreaRegistration 
     {
-        public override string AreaName
+        public override string AreaName 
         {
-            get
+            get 
             {
                 return "Permission";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context)
+        public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
                 "Permission_default",
                 "Permission/{controller}/{action}/{id}",
-                new { controller = "Permission", action = "Index", id = UrlParameter.Optional },
-                new string[] { "Permission.Controllers" }
+                new { action = "Index", id = UrlParameter.Optional }
             );
-
-            //context.MapRoute(
-            //    "Permission_Account",
-            //    "Permission/Account/{action}/{id}",
-            //    new { controller = "Account", action = "Index", id = UrlParameter.Optional },
-            //    new string[] { "Permission.Controllers" }
-            //);
         }
     }
 }

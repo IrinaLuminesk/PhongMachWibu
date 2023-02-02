@@ -1,0 +1,93 @@
+﻿@model EnjuAihara.EntityFramework.MenuModel
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Chỉnh sửa @Model.MenuName</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/Permission/Menu"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmEdit" enctype='multipart/form-data'>
+						@Html.HiddenFor(x => x.MenuId);
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="MenuName" class="col-form-label">Tên Menu</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.MenuName, new { @class = "form-control" })
+													@*<input type="text" id="MenuName" name="MenuName" class="form-control" required>*@
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Icon" class="col-form-label">Icon</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.Icon, new { @class = "form-control" })
+													@*<input type="text" id="Icon" name="Icon" class="form-control" required>*@
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Icon" class="col-form-label">OrderIndex</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.OrderIndex, new { @class = "form-control" })
+													@*<input type="text" id="OrderIndex" name="OrderIndex" class="form-control">*@
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Icon" class="col-form-label">Actived</label>
+												</div>
+												<div class="col-md-10">
+													@Html.ActivedRadioButton(x => x.Actived)
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin-top: 15px">
+										<div class="col-md-12 text-center">
+											<button type="button" class="btn btn-primary" id="btn-edit">
+												Lưu
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#btn-edit").on("click", function () {
+			Edit("Permission/Menu", "#frmEdit");
+		});
+	});
+</script>
