@@ -12,7 +12,7 @@ namespace System.Web.Mvc.Html
         public static MvcHtmlString ActivedRadioButton<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression)
         {
             var result = new StringBuilder();
-            result.AppendFormat("<label class=\"col-form-label\">{0} {1}</label><label class=\"col-form-label\" style=\"margin-eft:50px\">{2} {3}</label>",
+            result.AppendFormat("<label class=\"col-form-label\">{0} {1}</label><label class=\"col-form-label\" style=\"margin-left:50px\">{2} {3}</label>",
                 helper.RadioButtonFor(expression, true, new { @checked = "checked", @id = "" }),
                 "Đang sử dụng",
                 helper.RadioButtonFor(expression, false),

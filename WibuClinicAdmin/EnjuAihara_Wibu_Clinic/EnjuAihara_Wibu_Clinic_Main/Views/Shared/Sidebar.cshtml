@@ -1,27 +1,33 @@
 ﻿@model IEnumerable<EnjuAihara.EntityFramework.MenuModel>
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-   
-    @foreach (var i in Model)
-    {
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="@i.Icon"></i>
-                <p>
-                    @i.MenuName
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                @foreach (var j in i.PageModels.ToList())
-                {
-                    <li class="nav-item">
-                        <a href="@j.PageUrl" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>@j.PageName</p>
-                        </a>
-                    </li>
-                }
-            </ul>
-        </li>
-    }
+
+	@foreach (var i in Model)
+	{
+		<li class="nav-item">
+			<a href="#" class="nav-link">
+				<i class="@i.Icon"></i>
+				<p>
+					@i.MenuName
+					<i class="right fas fa-angle-left"></i>
+				</p>
+			</a>
+			<ul class="nav nav-treeview">
+				@foreach (var j in i.PageModels.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList())
+				{
+					<li class="nav-item">
+						<a href="@j.PageUrl" class="nav-link" style="margin-left:10px">
+							<i class="@j.Icon"></i>
+							<p style="margin-left:5px">@j.PageName</p>
+						</a>
+					</li>
+				}
+			</ul>
+		</li>
+	}
+	<li class="nav-item">
+		<a href="#" class="nav-link">
+			<i class="fa-solid fa-right-from-bracket"></i>
+			<p>Đăng xuất</p>
+		</a>
+	</li>
 </ul>

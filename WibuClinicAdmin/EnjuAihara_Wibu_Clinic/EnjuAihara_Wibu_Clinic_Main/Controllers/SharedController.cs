@@ -17,8 +17,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
         }
         public PartialViewResult Sidebar()
         {
-            var result = _context.MenuModels.ToList();
-            return PartialView("~/EnjuAihara_Wibu_Clinic_Main/Views/Shared/Sidebar.cshtml", result);
+            var result = _context.MenuModels.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList();
+            return PartialView(result);
         }
     }
 }
