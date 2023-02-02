@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Controllers
 {
@@ -14,10 +15,10 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
         {
             return View();
         }
-        public ActionResult Sidebar()
+        public PartialViewResult Sidebar()
         {
-            var a = _context.MenuModels.ToList();
-            return PartialView();
+            var result = _context.MenuModels.ToList();
+            return PartialView("~/EnjuAihara_Wibu_Clinic_Main/Views/Shared/Sidebar.cshtml", result);
         }
     }
 }

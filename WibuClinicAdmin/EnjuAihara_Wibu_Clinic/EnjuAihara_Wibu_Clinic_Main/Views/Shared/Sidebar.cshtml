@@ -1,2 +1,27 @@
-﻿
-nunnkkklllllll
+﻿@model IEnumerable<EnjuAihara.EntityFramework.MenuModel>
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+   
+    @foreach (var i in Model)
+    {
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="@i.Icon"></i>
+                <p>
+                    @i.MenuName
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                @foreach (var j in i.PageModels.ToList())
+                {
+                    <li class="nav-item">
+                        <a href="@j.PageUrl" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>@j.PageName</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+</ul>

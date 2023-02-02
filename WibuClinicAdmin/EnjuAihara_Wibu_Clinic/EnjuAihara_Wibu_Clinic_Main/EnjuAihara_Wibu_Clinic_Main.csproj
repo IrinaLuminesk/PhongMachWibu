@@ -2114,7 +2114,6 @@
   <ItemGroup>
     <Content Include="Areas\Permission\Views\web.config" />
     <Content Include="Areas\Permission\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Permission\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Permission\Views\Menu\Index.cshtml" />
     <Content Include="Areas\Permission\Views\Menu\_Search.cshtml" />
     <Content Include="Areas\Permission\Views\Menu\Create.cshtml" />
