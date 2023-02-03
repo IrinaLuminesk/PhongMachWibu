@@ -1,0 +1,111 @@
+﻿@model EnjuAihara.EntityFramework.PageModel
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Chỉnh sửa @Model.PageName</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/Permission/Page"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmEdit" enctype='multipart/form-data'>
+						@Html.HiddenFor(x => x.PageId)
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="PageName" class="col-form-label">Tên trang</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.PageName, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="PageUrl" class="col-form-label">Đường dẫn</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.PageUrl, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Icon" class="col-form-label">Icon</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.Icon, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="OrderIndex" class="col-form-label">Order Index</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.OrderIndex, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="MenuId" class="col-form-label">Thuộc danh mục</label>
+												</div>
+												<div class="col-md-10">
+													@Html.DropDownListFor(x => x.MenuId, (SelectList)ViewBag.MenuList, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Actived" class="col-form-label">Trạng thái</label>
+												</div>
+												<div class="col-md-10">
+													@Html.ActivedRadioButton(x => x.Actived)
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin-top: 15px">
+										<div class="col-md-12 text-center">
+											<button type="button" class="btn btn-primary" id="btn-edit">
+												Lưu
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		Select2Init("#MenuId");
+		$("#btn-edit").on("click", function () {
+			Edit("Permission/Page", "#frmEdit");
+		});
+	});
+</script>

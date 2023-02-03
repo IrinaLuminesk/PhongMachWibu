@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EnjuAihara.EntityFramework.PageModel>
+@{
+	int j = 1;
+}
+<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
+	<thead class="table-header">
+		<tr>
+			<th class="text-center">STT</th>
+			<th class="text-center">Tên trang</th>
+			<th class="text-center">Đường dẫn</th>
+			<th class="text-center">Icon</th>
+			<th class="text-center">Thuộc danh mục</th>
+			<th class="text-center">Trạng thái</th>
+			<th class="text-center">Hành động</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var i in Model)
+		{
+			<tr>
+				<td class="text-center" style="vertical-align: middle;">@j</td>
+				<td class="text-center" style="vertical-align: middle;">@i.PageName</td>
+				<td class="text-center" style="vertical-align: middle;">@i.PageUrl</td>
+				<td class="text-center" style="vertical-align: middle;"><i class="@i.Icon"></i></td>
+				<td class="text-center" style="vertical-align: middle;">@i.MenuModel.MenuName</td>
+				<td class="text-center" style="vertical-align: middle;">
+					@if (i.Actived == true)
+					{
+						<p>Đang sử dụng</p>
+					}
+					else
+					{
+						<p>Đã ngừng sử dụng</p>
+					}
+				</td>
+				<td class="text-center" style="vertical-align: middle;">
+					<a class="btn btn-info" href="/Permission/Page/Edit/@i.PageId"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>
+				</td>
+			</tr>
+			j++;
+		}
+	</tbody>
+</table>

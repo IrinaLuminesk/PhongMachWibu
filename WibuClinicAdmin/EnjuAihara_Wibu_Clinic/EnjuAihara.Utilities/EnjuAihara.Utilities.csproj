@@ -78,15 +78,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudinaryHelper\CloudinaryUpload.cs" />
+    <Compile Include="Datatable\PaggingServerSideDatatable.cs" />
     <Compile Include="HtmlHelper\CustomeHtmlHelper.cs" />
     <Compile Include="Permission\AuthUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectListItemCustom\SelectListItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Momo\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EnjuAihara.ViewModels\EnjuAihara.ViewModels.csproj">
+      <Project>{d0a04ab4-7f1c-423a-b2d1-5f20440971d7}</Project>
+      <Name>EnjuAihara.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

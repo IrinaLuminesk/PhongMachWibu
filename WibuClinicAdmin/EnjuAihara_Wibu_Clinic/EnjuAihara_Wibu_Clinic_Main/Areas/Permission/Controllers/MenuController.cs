@@ -1,5 +1,6 @@
 ﻿using EnjuAihara.Core;
 using EnjuAihara.EntityFramework;
+using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.SelectList;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 {
     public class MenuController : IrinaLumineskController
@@ -22,13 +22,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 
         public void CreateViewBag()
         {
-
-            List<SelectBoolItem> StatusList = new List<SelectBoolItem>()
-        {
-            new SelectBoolItem() { id = true, name = "Đang sử dụng"},
-            new SelectBoolItem() { id = false, name = "Ngừng sử dụng"}
-        };
-            ViewBag.Actived = new SelectList(StatusList, "id", "name");
+            ViewBag.Actived = new SelectList(SelectListItemCustom.GetStatusSelectList(), "id", "name");
         }
 
 

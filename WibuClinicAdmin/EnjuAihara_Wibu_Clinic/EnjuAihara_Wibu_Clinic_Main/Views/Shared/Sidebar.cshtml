@@ -15,7 +15,7 @@
 				@foreach (var j in i.PageModels.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList())
 				{
 					<li class="nav-item">
-						<a href="@j.PageUrl" class="nav-link" style="margin-left:10px">
+						<a href="@j.PageUrl" class="nav-link" style="margin-left:10px" target="_blank">
 							<i class="@j.Icon"></i>
 							<p style="margin-left:5px">@j.PageName</p>
 						</a>

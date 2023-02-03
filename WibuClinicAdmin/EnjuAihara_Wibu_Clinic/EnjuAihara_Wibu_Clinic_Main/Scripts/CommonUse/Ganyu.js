@@ -1,5 +1,8 @@
 ﻿function Select2Init(Id) {
-	$(Id).select2();
+    $(Id).select2({
+        width: '100%',
+        scroll: true
+    });
 };
 function SearchInitialWithClick(controller) {
     $("#btn-search").click(function () {
@@ -69,6 +72,84 @@ function Pagging() {
     });
 }
 
+
+function PaggingServerSide(columns) {
+	$("#tableRes").DataTable().clear().destroy();
+	$("#tableRes").on('processing.dt', function (e, settings, processing) {
+		ISD.LoadingDataTable(processing, '.dataTableServerSide');
+	}).DataTable({
+			proccessing: true,
+			serverSide: true,
+			paging: true,
+			scrollX: true,
+			ajax: {
+				type: 'POST',
+				url: "/" + controller + "/_PaggingServerSide",
+				contentType: 'application/json',
+				data: function (d) {
+					var arr = {};
+					//data search
+					var data = $("#frmSearch").serializeArray();
+					$.each(data, function (index, val) {
+						var obj = {};
+						obj[val.name] = val.value;
+						$.extend(true, arr, obj);
+					});
+					$.extend(true, arr, d);
+					return JSON.stringify(arr);
+				}
+        },
+        columns: columns,
+        destroy: true,
+        language: {
+            sProcessing: "Đang xử lý...",
+			sLengthMenu: "Xem _MENU_ mục",
+			sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+			sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+			sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+			sInfoFiltered: "(được lọc từ _MAX_ mục)",
+			sInfoPostFix: "",
+			sSearch: "Tìm nội dung:",
+			sUrl: "",
+			oPaginate: {
+				sFirst: "Đầu",
+				sPrevious: "&laquo;",
+				sNext: "&raquo;",
+				sLast: "Cuối"
+            }
+        },
+        columnDefs: [
+            { targets: [0, 1], visible: true },
+            { targets: 'no-sort', visible: false }
+        ],
+        "sDom": '<"top"flp>rt<"bottom"ip><"clear">',
+    });
+}
+
+function LoadingDataTable(processing, element) {
+    var height = $(element + " tbody").height();
+    var width = $(element).width();
+
+    var ele = $(element).parent(".dataTables_scrollBody");
+    var processingElement = ele.find('.dataTables_processing');
+    if (processingElement.length == 0) {
+        $(element).parent(".dataTables_scrollBody").append('<div class="dataTables_processing"></div>');
+    }
+    $(processingElement).css('width', width + 10);
+    $(processingElement).css('padding-top', height / 2);
+    $(processingElement).css('display', processing ? 'block' : 'none');
+
+    if ($($("ul.nav-tabs li.active a").attr('href')).find('.dataTables_processing').length > 0 || $('.nav-tabs-custom').length == 0) {
+        //Loading content
+        var contentWidth = $(element).parent(".dataTables_scrollBody").width();
+        if (contentWidth > 0) {
+            $('.loading-content').css($(element).parent(".dataTables_scrollBody").position());
+            $('.loading-content').css('left', contentWidth / 2);
+            $('.loading-content').css('padding-top', height / 2);
+            $('.loading-content').css('display', $(element + ' tbody tr').length > 0 && processing ? 'block' : 'none');
+        }
+    }
+}
 //id = 1 Là thành công
 //id = 2 Là cảnh báo
 //id = 3 Là thất bại
