@@ -1,8 +1,9 @@
-﻿<div class="content-header">
+﻿@model EnjuAihara.EntityFramework.FunctionModel
+<div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Tạo mới thao tác</h1>
+                <h1 class="m-0">Chỉnh sửa @Model.FunctionName</h1>
             </div>
             <div class="col-sm-6 text-right">
                 <div class="pull-right">
@@ -17,7 +18,7 @@
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form id="frmCreate" enctype='multipart/form-data'>
+                    <form id="frmEdit" enctype='multipart/form-data'>
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
@@ -28,7 +29,7 @@
                                                     <label for="FunctionId" class="col-form-label">Mã chức năng</label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <input type="text" id="FunctionId" name="FunctionId" class="form-control" required>
+                                                    @Html.TextBoxFor(x => x.FunctionId, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>
@@ -38,26 +39,26 @@
                                                     <label for="FunctionName" class="col-form-label">Tên chức năng</label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <input type="text" id="FunctionName" name="FunctionName" class="form-control" required>
+                                                    @Html.TextBoxFor(x => x.FunctionName, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>
                                         @*<div class="col-md-12 mt-3">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-2 text-center">
-                                                    <label for="Icon" class="col-form-label">OrderIndex</label>
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Icon" class="col-form-label">OrderIndex</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="text" id="OrderIndex" name="OrderIndex" class="form-control">
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="OrderIndex" name="OrderIndex" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>*@
+                                            </div>*@
                                     </div>
                                     <div class="row" style="margin-top: 15px">
                                         <div class="col-md-12 text-center">
-                                            <button type="button" class="btn btn-primary" id="btn-add">
+                                            <button type="button" class="btn btn-primary" id="btn-edit">
                                                 <i class="fa fa-plus-square"></i>
-                                                Thêm mới
+                                                Lưu
                                             </button>
                                         </div>
                                     </div>
@@ -71,13 +72,11 @@
     </div>
 </div>
 <script type="text/javascript">
-	$(document).ready(function () {
-		$("#btn-add").on("click", function () {
-			SaveData("Permission/Function", "#frmCreate");
-			PreventEnterButton();
-		});
-	});
+    $(document).ready(function () {
+        $("#btn-edit").on("click", function () {
+            Edit("Permission/Function", "#frmEdit");
+        });
+    });
 
 </script>
-
 

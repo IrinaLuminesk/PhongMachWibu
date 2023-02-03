@@ -2121,6 +2121,8 @@
     <Content Include="Areas\Permission\Views\Menu\Edit.cshtml" />
     <Content Include="Areas\Permission\Views\Function\Index.cshtml" />
     <Content Include="Areas\Permission\Views\Function\Create.cshtml" />
+    <Content Include="Areas\Permission\Views\Function\_Search.cshtml" />
+    <Content Include="Areas\Permission\Views\Function\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
