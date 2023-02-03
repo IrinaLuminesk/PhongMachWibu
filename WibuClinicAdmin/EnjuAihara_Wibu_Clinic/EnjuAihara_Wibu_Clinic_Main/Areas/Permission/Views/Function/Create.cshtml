@@ -1,0 +1,83 @@
+﻿<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Tạo mới thao tác</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="pull-right">
+                    <a class="btn btn-info" href="/Permission/Menu"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="frmCreate" enctype='multipart/form-data'>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="FunctionId" class="col-form-label">Mã chức năng</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input type="text" id="FunctionId" name="FunctionId" class="form-control" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="FunctionName" class="col-form-label">Tên chức năng</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input type="text" id="FunctionName" name="FunctionName" class="form-control" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="Icon" class="col-form-label">OrderIndex</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input type="text" id="OrderIndex" name="OrderIndex" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                    <div class="row" style="margin-top: 15px">
+                                        <div class="col-md-12 text-center">
+                                            <button type="button" class="btn btn-primary" id="btn-add">
+                                                <i class="fa fa-plus-square"></i>
+                                                Thêm mới
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#btn-add").on("click", function () {
+			SaveData("Permission/Menu", "#frmCreate");
+			PreventEnterButton();
+		});
+	});
+
+</script>
+
+
