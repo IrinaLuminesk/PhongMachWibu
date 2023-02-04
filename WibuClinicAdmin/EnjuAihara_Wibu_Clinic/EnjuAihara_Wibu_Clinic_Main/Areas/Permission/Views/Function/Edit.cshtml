@@ -29,7 +29,8 @@
                                                     <label for="FunctionId" class="col-form-label">Mã chức năng</label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    @Html.TextBoxFor(x => x.FunctionId, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(x => x.FunctionId, new { @class = "form-control",@disabled="disabled" })
+                                                    <input type="hidden" name="FunctionId2" id="FunctionId2" value="@Model.FunctionId">
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +75,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#btn-edit").on("click", function () {
-            Edit("Permission/Function", "#frmEdit");
+            if ($("#FunctionId").val() == $("#FunctionId2").val()) {
+                Edit("Permission/Function", "#frmEdit");
+            }
+            else {
+                AlertPopup(2, "Lỗi", "Không được thay đổi mã chức năng");
+            }
         });
     });
 

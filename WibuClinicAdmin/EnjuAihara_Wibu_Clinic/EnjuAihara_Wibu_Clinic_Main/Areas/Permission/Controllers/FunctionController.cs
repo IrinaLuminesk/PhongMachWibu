@@ -46,7 +46,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 FunctionModel function = new FunctionModel()
                 {
                     FunctionName = model.FunctionName,
-                    FunctionId = model.FunctionId
+                    FunctionId = model.FunctionId.ToUpper()
                 };
                 _context.FunctionModels.Add(function);
                 _context.SaveChanges();
@@ -109,7 +109,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 FunctionModel function = new FunctionModel()
                 {
                     FunctionName = model.FunctionName,
-                    FunctionId = model.FunctionId
+                    FunctionId = model.FunctionId.ToUpper()
                 };
                 _context.Entry(function).State=EntityState.Modified;
                 _context.SaveChanges();
