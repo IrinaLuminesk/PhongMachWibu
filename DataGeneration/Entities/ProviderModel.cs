@@ -24,6 +24,9 @@ namespace DataGeneration.Entities
         public string ProviderCode { get; set; }
         public string ProviderName { get; set; }
         public Nullable<bool> Actived { get; set; }
+        public string Address { get; set; }
+        public Nullable<double> Latitude { get; set; }
+        public Nullable<double> longitude { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MedicineProvideModel> MedicineProvideModels { get; set; }

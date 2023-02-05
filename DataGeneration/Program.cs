@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -160,8 +161,41 @@ namespace DataGeneration
 
 
             #region Người dùng
-            UserData.GetUser();
+            //UserData.GetUser();
             #endregion
+
+
+            //UsersModel model = new UsersModel()
+            //{
+            //    FirstName = "Khánh Nhân",
+            //    LastName = "Nguyễn",
+            //    Actived = true,
+            //    Address = "Việt Nam",
+            //    Birthday = DateTime.Parse("01-01-2001"),
+            //    Email = "1951012084nhan@ou.edu.vn",
+            //    ImagePath = "https://res.cloudinary.com/do0kwmira/image/upload/v1660140267/Aihara_Enju_exdv8j.webp",
+            //    UserID = Guid.NewGuid(),
+            //    Phone = "0123456789",
+            //    UserCode = "USER-000202"
+            //};
+            //_context.UsersModels.Add(model);
+            //_context.SaveChanges();
+
+
+            AccountModel model = new AccountModel()
+            {
+                AccountCode = "USER-00002",
+                AccountId = Guid.NewGuid(),
+                Actived = true,
+                ImagePath = "https://res.cloudinary.com/do0kwmira/image/upload/v1662201917/ok3x3kwqelgnusxabxyr.jpg",
+                CreateDate = DateTime.Now,
+                LastLoginTime = DateTime.Now,
+                UserName = "QuyPhuoc123",
+                Password = SHA256Encrypt("QuyPhuoc123."),
+                UserId = Guid.Parse("E96BF721-09AB-403B-B29E-1F7F4EB2CCAE")
+            };
+            _context.AccountModels.Add(model);
+            _context.SaveChanges();
         }
         public static void SaveData(List<Root> lst)
         {
@@ -205,6 +239,22 @@ namespace DataGeneration
             }
 
             return street;
+        }
+
+        public static string SHA256Encrypt(string text)
+        {
+            StringBuilder Sb = new StringBuilder();
+
+            using (var hash = SHA256.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                byte[] result = hash.ComputeHash(enc.GetBytes(text));
+
+                foreach (byte b in result)
+                    Sb.Append(b.ToString("x2"));
+            }
+
+            return Sb.ToString();
         }
     }
 

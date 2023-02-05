@@ -8,6 +8,7 @@ namespace EnjuAihara_Wibu_Clinic_Main
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new AuthorizeAttribute());
         }
     }
 }

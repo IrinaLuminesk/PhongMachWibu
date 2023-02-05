@@ -27,10 +27,10 @@ namespace DataGeneration.Entities
         public Nullable<System.Guid> CreateBy { get; set; }
         public string Note { get; set; }
     
-        public virtual AccountModel AccountModel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescriptionIllnessModel> DescriptionIllnessModels { get; set; }
+        public virtual AccountModel AccountModel { get; set; }
     }
 }

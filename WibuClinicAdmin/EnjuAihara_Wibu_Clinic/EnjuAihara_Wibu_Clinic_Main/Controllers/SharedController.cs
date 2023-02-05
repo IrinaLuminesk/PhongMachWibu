@@ -17,6 +17,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
         }
         public PartialViewResult Sidebar()
         {
+            ViewBag.CurrentUser = CurrentUser;
             var result = _context.MenuModels.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList();
             return PartialView(result);
         }

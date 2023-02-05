@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EnjuAihara.Core;
 using EnjuAihara.Utilities.Permission;
 namespace EnjuAihara_Wibu_Clinic_Main.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : IrinaLumineskController
     {
         public ActionResult Index()
         {

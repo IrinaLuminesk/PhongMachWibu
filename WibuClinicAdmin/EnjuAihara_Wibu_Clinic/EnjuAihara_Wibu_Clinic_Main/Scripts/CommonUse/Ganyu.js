@@ -274,3 +274,17 @@ function PreventEnterButton() {
             }
         });
 }
+
+
+function Logout() {
+    $.ajax({
+        type: "POST",
+        url: "/Permission/Auth/Logout",
+        success: function (data) {
+            window.location.replace("/Permission/Auth/Login");
+        },
+        error: function (data) {
+            AlertPopup(2, "Lỗi", data.message);
+        }
+    });
+}

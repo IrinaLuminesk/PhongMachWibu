@@ -1,33 +1,48 @@
 ﻿@model IEnumerable<EnjuAihara.EntityFramework.MenuModel>
-<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+@{ 
+	var CurrentUser = (EnjuAihara.EntityFramework.AccountModel)ViewBag.CurrentUser;
+}
+<div class="sidebar">
+	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+		<div class="image">
+			<img src="@CurrentUser.ImagePath" class="img-square elevation-2" alt="User Image">
+		</div>
+		<div class="info">
+			<a href="#" class="d-block">@CurrentUser.UsersModel.FirstName</a>
+		</div>
+	</div>
+	<nav class="mt-2">
+		<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-	@foreach (var i in Model)
-	{
-		<li class="nav-item">
-			<a href="#" class="nav-link">
-				<i class="@i.Icon"></i>
-				<p>
-					@i.MenuName
-					<i class="right fas fa-angle-left"></i>
-				</p>
-			</a>
-			<ul class="nav nav-treeview">
-				@foreach (var j in i.PageModels.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList())
-				{
-					<li class="nav-item">
-						<a href="@j.PageUrl" class="nav-link" style="margin-left:10px" target="_blank">
-							<i class="@j.Icon"></i>
-							<p style="margin-left:5px">@j.PageName</p>
-						</a>
-					</li>
-				}
-			</ul>
-		</li>
-	}
-	<li class="nav-item">
-		<a href="#" class="nav-link">
-			<i class="fa-solid fa-right-from-bracket"></i>
-			<p>Đăng xuất</p>
-		</a>
-	</li>
-</ul>
+			@foreach (var i in Model)
+			{
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i class="@i.Icon"></i>
+						<p>
+							@i.MenuName
+							<i class="right fas fa-angle-left"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview">
+						@foreach (var j in i.PageModels.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList())
+						{
+							<li class="nav-item">
+								<a href="@j.PageUrl" class="nav-link" style="margin-left:10px" target="_blank">
+									<i class="@j.Icon"></i>
+									<p style="margin-left:5px">@j.PageName</p>
+								</a>
+							</li>
+						}
+					</ul>
+				</li>
+			}
+			<li class="nav-item">
+				<button class="nav-link" onclick="Logout()">
+					<i class="fa-solid fa-right-from-bracket"></i>
+					<p>Đăng xuất</p>
+				</button>
+			</li>
+		</ul>
+	</nav>
+</div>

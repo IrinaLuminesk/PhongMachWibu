@@ -154,6 +154,9 @@
     <Compile Include="Entities\WardModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\WarehouseModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
     <Compile Include="Illness\IllnessData.cs" />
     <Compile Include="MedicineModel\Medicine.cs" />
     <Compile Include="Medicine\MedicineProvider.cs" />
