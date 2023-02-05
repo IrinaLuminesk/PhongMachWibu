@@ -21,10 +21,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         public PartialViewResult _Search(FunctionModel search)
         {
             List<FunctionModel> kq = _context.FunctionModels.Where(x=>
-                (x.FunctionId.Contains(search.FunctionId))
-                || (x.FunctionName.Contains(search.FunctionName))
-                || (string.IsNullOrEmpty(search.FunctionName))
-                || (string.IsNullOrEmpty(search.FunctionId))
+                ((x.FunctionId.Contains(search.FunctionId)) || (string.IsNullOrEmpty(search.FunctionId)) )&&
+                ( (x.FunctionName.Contains(search.FunctionName)) || (string.IsNullOrEmpty(search.FunctionName)))
+                
                 ).ToList();
             return PartialView(kq);
         }
@@ -83,7 +82,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         }
         public JsonResult ValidateFunction(FunctionModel model)
         {
-            if (model.FunctionId == "")
+            if (string.IsNullOrEmpty(model.FunctionId))
             {
                 return Json(new
                 {
@@ -92,7 +91,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                     message = "Vui lòng không để trống mã chức năng"
                 });
             }
-            if (model.FunctionName == "")
+            if (string.IsNullOrEmpty(model.FunctionName))
             {
                 return Json(new
                 {
