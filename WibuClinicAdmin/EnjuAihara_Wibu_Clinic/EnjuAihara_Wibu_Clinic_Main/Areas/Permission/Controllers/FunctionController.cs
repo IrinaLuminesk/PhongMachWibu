@@ -43,6 +43,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             }
             try
             {
+                foreach (FunctionModel model2 in _context.FunctionModels)
+                {
+                    if (model2.FunctionId.Equals(model.FunctionId.ToUpper()))
+                    {
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Mã chức năng đã tồn tại"
+                        });
+                    }
+                }
+                
                 FunctionModel function = new FunctionModel()
                 {
                     FunctionName = model.FunctionName,
