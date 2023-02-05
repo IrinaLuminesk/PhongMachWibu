@@ -29,7 +29,7 @@
                                                     <label for="FunctionId" class="col-form-label">Mã chức năng</label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    @Html.TextBoxFor(x => x.FunctionId, new { @class = "form-control",@disabled="disabled" })
+                                                    @Html.TextBoxFor(x => x.FunctionId, new { @class = "form-control",@readonly=true })
                                                     <input type="hidden" name="FunctionId2" id="FunctionId2" value="@Model.FunctionId">
                                                 </div>
                                             </div>
@@ -83,6 +83,22 @@
             }
         });
     });
-
+    //$("#FunctionId").on("keypress", function (event) {
+    //    var regex = new RegExp("^[a-zA-Z0-9]+$");
+    //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    //    if (!regex.test(key)) {
+    //        event.preventDefault();
+    //        return false;
+    //    }
+    //});
+    $("#FunctionName").on("keypress", function (event) {
+        var regex = new RegExp("^[a-zA-Z0-9_]+$");
+        var regex2 = new RegExp("^[a-zA-Z0-9 ]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key) && !regex2.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
 </script>
 
