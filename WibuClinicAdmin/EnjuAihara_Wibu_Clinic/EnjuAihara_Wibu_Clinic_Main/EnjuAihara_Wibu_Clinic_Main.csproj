@@ -165,6 +165,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\StartUp.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Permission\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Permission\Controllers\AuthController.cs" />
     <Compile Include="Areas\Permission\Controllers\MenuController.cs" />
     <Compile Include="Areas\Permission\Controllers\PageController.cs" />
@@ -2148,6 +2149,10 @@
     <Content Include="Areas\Permission\Views\Menu\_Search.cshtml" />
     <Content Include="Areas\Permission\Views\Menu\Create.cshtml" />
     <Content Include="Areas\Permission\Views\Menu\Edit.cshtml" />
+    <Content Include="Areas\Permission\Views\Function\Index.cshtml" />
+    <Content Include="Areas\Permission\Views\Function\Create.cshtml" />
+    <Content Include="Areas\Permission\Views\Function\_Search.cshtml" />
+    <Content Include="Areas\Permission\Views\Function\Edit.cshtml" />
     <Content Include="Areas\Permission\Views\Page\Index.cshtml" />
     <Content Include="Areas\Permission\Views\Page\_Search.cshtml" />
     <Content Include="Areas\Permission\Views\Page\Create.cshtml" />
