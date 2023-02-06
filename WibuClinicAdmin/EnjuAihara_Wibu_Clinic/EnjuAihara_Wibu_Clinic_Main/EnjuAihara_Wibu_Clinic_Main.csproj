@@ -182,6 +182,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Picture\AvatarAdmin.jpg" />
+    <Content Include="Picture\Loader.gif" />
     <Content Include="Picture\Sinobu.jpg" />
     <Content Include="Picture\LogoAdmin.jpg" />
     <Content Include="Picture\LogoAdmin.png" />

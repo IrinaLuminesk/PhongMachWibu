@@ -25,6 +25,7 @@ namespace DataGeneration.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AccountModel> AccountModels { get; set; }
         public virtual DbSet<AccountRecoveryTokenModel> AccountRecoveryTokenModels { get; set; }
         public virtual DbSet<CatalogModel> CatalogModels { get; set; }
         public virtual DbSet<CatalogTypeModel> CatalogTypeModels { get; set; }
@@ -53,6 +54,5 @@ namespace DataGeneration.Entities
         public virtual DbSet<UsersModel> UsersModels { get; set; }
         public virtual DbSet<WardModel> WardModels { get; set; }
         public virtual DbSet<WarehouseModel> WarehouseModels { get; set; }
-        public virtual DbSet<AccountModel> AccountModels { get; set; }
     }
 }

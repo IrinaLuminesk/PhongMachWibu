@@ -836,6 +836,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyPhongMachWibuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="QuanLyPhongMachWibuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountModels" EntityType="QuanLyPhongMachWibuModel.AccountModel" />
           <EntitySet Name="AccountRecoveryTokenModels" EntityType="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" />
           <EntitySet Name="CatalogModels" EntityType="QuanLyPhongMachWibuModel.CatalogModel" />
           <EntitySet Name="CatalogTypeModels" EntityType="QuanLyPhongMachWibuModel.CatalogTypeModel" />
@@ -864,6 +865,38 @@
           <EntitySet Name="UsersModels" EntityType="QuanLyPhongMachWibuModel.UsersModel" />
           <EntitySet Name="WardModels" EntityType="QuanLyPhongMachWibuModel.WardModel" />
           <EntitySet Name="WarehouseModels" EntityType="QuanLyPhongMachWibuModel.WarehouseModel" />
+          <AssociationSet Name="FK_AccountModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="AccountModel1" EntitySet="AccountModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountModel_UsersModel" Association="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel">
+            <End Role="UsersModel" EntitySet="UsersModels" />
+            <End Role="AccountModel" EntitySet="AccountModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountRecoveryTokenModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="AccountRecoveryTokenModel" EntitySet="AccountRecoveryTokenModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChangeDataLogModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_ChangeDataLogModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="ChangeDataLogModel" EntitySet="ChangeDataLogModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DateModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="DateModel" EntitySet="DateModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DateModel_AccountModel1" Association="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="DateModel" EntitySet="DateModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DateModel_AccountModel2" Association="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="DateModel" EntitySet="DateModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DescriptionModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="DescriptionModel" EntitySet="DescriptionModels" />
+          </AssociationSet>
           <AssociationSet Name="FK_CatalogModel_CatalogTypeModel" Association="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel">
             <End Role="CatalogTypeModel" EntitySet="CatalogTypeModels" />
             <End Role="CatalogModel" EntitySet="CatalogModels" />
@@ -948,44 +981,37 @@
             <End Role="RolesModel" EntitySet="RolesModels" />
             <End Role="PagePermissionModel" EntitySet="PagePermissionModels" />
           </AssociationSet>
-          <EntitySet Name="AccountModels" EntityType="QuanLyPhongMachWibuModel.AccountModel" />
-          <AssociationSet Name="FK_AccountModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="AccountModel1" EntitySet="AccountModels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccountModel_UsersModel" Association="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel">
-            <End Role="UsersModel" EntitySet="UsersModels" />
-            <End Role="AccountModel" EntitySet="AccountModels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccountRecoveryTokenModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="AccountRecoveryTokenModel" EntitySet="AccountRecoveryTokenModels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChangeDataLogModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_ChangeDataLogModel_AccountModel">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="ChangeDataLogModel" EntitySet="ChangeDataLogModels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DateModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="DateModel" EntitySet="DateModels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DateModel_AccountModel1" Association="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="DateModel" EntitySet="DateModels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DateModel_AccountModel2" Association="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="DateModel" EntitySet="DateModels" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DescriptionModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="DescriptionModel" EntitySet="DescriptionModels" />
-          </AssociationSet>
           <AssociationSet Name="AccountInRoleModel" Association="QuanLyPhongMachWibuModel.AccountInRoleModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="RolesModel" EntitySet="RolesModels" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AccountModel">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Guid" Nullable="false" />
+          <Property Name="AccountCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Guid" />
+          <Property Name="RoleId" Type="Guid" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="Guid" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" FromRole="AccountModel" ToRole="AccountModel1" />
+          <NavigationProperty Name="AccountModel2" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" FromRole="AccountModel1" ToRole="AccountModel" />
+          <NavigationProperty Name="UsersModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel" FromRole="AccountModel" ToRole="UsersModel" />
+          <NavigationProperty Name="AccountRecoveryTokenModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel" FromRole="AccountModel" ToRole="AccountRecoveryTokenModel" />
+          <NavigationProperty Name="ChangeDataLogModels" Relationship="QuanLyPhongMachWibuModel.FK_ChangeDataLogModel_AccountModel" FromRole="AccountModel" ToRole="ChangeDataLogModel" />
+          <NavigationProperty Name="DateModels" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel" FromRole="AccountModel" ToRole="DateModel" />
+          <NavigationProperty Name="DateModels1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="AccountModel" ToRole="DateModel" />
+          <NavigationProperty Name="DateModels2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="AccountModel" ToRole="DateModel" />
+          <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
+          <NavigationProperty Name="RolesModels" Relationship="QuanLyPhongMachWibuModel.AccountInRoleModel" FromRole="AccountModel" ToRole="RolesModel" />
+        </EntityType>
         <EntityType Name="AccountRecoveryTokenModel">
           <Key>
             <PropertyRef Name="TokenId" />
@@ -1058,7 +1084,7 @@
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel" FromRole="DateModel" ToRole="AccountModel" />
           <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="DateModel" ToRole="AccountModel" />
           <NavigationProperty Name="AccountModel2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="DateModel" ToRole="AccountModel" />
-          </EntityType>
+        </EntityType>
         <EntityType Name="DescriptionDetailModel">
           <Key>
             <PropertyRef Name="DescriptionDetailId" />
@@ -1089,9 +1115,9 @@
           <Property Name="Payment" Type="Double" />
           <Property Name="CreateBy" Type="Guid" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="DescriptionModel" ToRole="AccountModel" />
           <NavigationProperty Name="DescriptionDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionDetailModel" />
           <NavigationProperty Name="DescriptionIllnessModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionIllnessModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionIllnessModel" />
-          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="DescriptionModel" ToRole="AccountModel" />
         </EntityType>
         <EntityType Name="DistrictModel">
           <Key>
@@ -1310,6 +1336,102 @@
           <Property Name="BoughtDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="MedicineProvideModel" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_MedicineProvideModel" FromRole="WarehouseModel" ToRole="MedicineProvideModel" />
         </EntityType>
+        <Association Name="FK_AccountModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="AccountModel1">
+              <PropertyRef Name="CreateBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountModel_UsersModel">
+          <End Type="QuanLyPhongMachWibuModel.UsersModel" Role="UsersModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersModel">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AccountModel">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountRecoveryTokenModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" Role="AccountRecoveryTokenModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="AccountRecoveryTokenModel">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChangeDataLogModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.ChangeDataLogModel" Role="ChangeDataLogModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="ChangeDataLogModel">
+              <PropertyRef Name="LastEditBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DateModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DateModel" Role="DateModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="DateModel">
+              <PropertyRef Name="NguoiDatHen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DateModel_AccountModel1">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DateModel" Role="DateModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="DateModel">
+              <PropertyRef Name="BacSiKham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DateModel_AccountModel2">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DateModel" Role="DateModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="DateModel">
+              <PropertyRef Name="YTaXacNhan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DescriptionModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DescriptionModel" Role="DescriptionModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="DescriptionModel">
+              <PropertyRef Name="CreateBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CatalogModel_CatalogTypeModel">
           <End Type="QuanLyPhongMachWibuModel.CatalogTypeModel" Role="CatalogTypeModel" Multiplicity="0..1" />
           <End Type="QuanLyPhongMachWibuModel.CatalogModel" Role="CatalogModel" Multiplicity="*" />
@@ -1562,128 +1684,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="AccountModel">
-          <Key>
-            <PropertyRef Name="AccountId" />
-          </Key>
-          <Property Name="AccountId" Type="Guid" Nullable="false" />
-          <Property Name="AccountCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="Guid" />
-          <Property Name="RoleId" Type="Guid" />
-          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Actived" Type="Boolean" />
-          <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateBy" Type="Guid" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" FromRole="AccountModel" ToRole="AccountModel1" />
-          <NavigationProperty Name="AccountModel2" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" FromRole="AccountModel1" ToRole="AccountModel" />
-          <NavigationProperty Name="UsersModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel" FromRole="AccountModel" ToRole="UsersModel" />
-          <NavigationProperty Name="AccountRecoveryTokenModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel" FromRole="AccountModel" ToRole="AccountRecoveryTokenModel" />
-          <NavigationProperty Name="ChangeDataLogModels" Relationship="QuanLyPhongMachWibuModel.FK_ChangeDataLogModel_AccountModel" FromRole="AccountModel" ToRole="ChangeDataLogModel" />
-          <NavigationProperty Name="DateModels" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel" FromRole="AccountModel" ToRole="DateModel" />
-          <NavigationProperty Name="DateModels1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="AccountModel" ToRole="DateModel" />
-          <NavigationProperty Name="DateModels2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="AccountModel" ToRole="DateModel" />
-          <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
-          <NavigationProperty Name="RolesModels" Relationship="QuanLyPhongMachWibuModel.AccountInRoleModel" FromRole="AccountModel" ToRole="RolesModel" />
-        </EntityType>
-        <Association Name="FK_AccountModel_AccountModel">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountModel">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="AccountModel1">
-              <PropertyRef Name="CreateBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccountModel_UsersModel">
-          <End Type="QuanLyPhongMachWibuModel.UsersModel" Role="UsersModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UsersModel">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="AccountModel">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccountRecoveryTokenModel_AccountModel">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" Role="AccountRecoveryTokenModel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountModel">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="AccountRecoveryTokenModel">
-              <PropertyRef Name="AccountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChangeDataLogModel_AccountModel">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.ChangeDataLogModel" Role="ChangeDataLogModel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountModel">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="ChangeDataLogModel">
-              <PropertyRef Name="LastEditBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DateModel_AccountModel">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.DateModel" Role="DateModel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountModel">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="DateModel">
-              <PropertyRef Name="NguoiDatHen" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DateModel_AccountModel1">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.DateModel" Role="DateModel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountModel">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="DateModel">
-              <PropertyRef Name="BacSiKham" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DateModel_AccountModel2">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.DateModel" Role="DateModel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountModel">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="DateModel">
-              <PropertyRef Name="YTaXacNhan" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DescriptionModel_AccountModel">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
-          <End Type="QuanLyPhongMachWibuModel.DescriptionModel" Role="DescriptionModel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountModel">
-              <PropertyRef Name="AccountId" />
-            </Principal>
-            <Dependent Role="DescriptionModel">
-              <PropertyRef Name="CreateBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AccountInRoleModel">
           <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="*" />
           <End Type="QuanLyPhongMachWibuModel.RolesModel" Role="RolesModel" Multiplicity="*" />
@@ -1694,6 +1694,23 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QuanLyPhongMachWibuModelStoreContainer" CdmEntityContainer="QuanLyPhongMachWibuEntities">
+          <EntitySetMapping Name="AccountModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.AccountModel">
+              <MappingFragment StoreEntitySet="AccountModel">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccountCode" ColumnName="AccountCode" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AccountRecoveryTokenModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel">
               <MappingFragment StoreEntitySet="AccountRecoveryTokenModel">
@@ -1991,23 +2008,6 @@
                 <ScalarProperty Name="BoughtQuantity" ColumnName="BoughtQuantity" />
                 <ScalarProperty Name="MedicineProviderId" ColumnName="MedicineProviderId" />
                 <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AccountModels">
-            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.AccountModel">
-              <MappingFragment StoreEntitySet="AccountModel">
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
-                <ScalarProperty Name="Actived" ColumnName="Actived" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccountCode" ColumnName="AccountCode" />
-                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

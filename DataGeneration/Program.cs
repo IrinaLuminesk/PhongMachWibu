@@ -182,20 +182,30 @@ namespace DataGeneration
             //_context.SaveChanges();
 
 
-            AccountModel model = new AccountModel()
+            //AccountModel model = new AccountModel()
+            //{
+            //    AccountCode = "USER-00002",
+            //    AccountId = Guid.NewGuid(),
+            //    Actived = true,
+            //    ImagePath = "https://res.cloudinary.com/do0kwmira/image/upload/v1662201917/ok3x3kwqelgnusxabxyr.jpg",
+            //    CreateDate = DateTime.Now,
+            //    LastLoginTime = DateTime.Now,
+            //    UserName = "QuyPhuoc123",
+            //    Password = SHA256Encrypt("QuyPhuoc123."),
+            //    UserId = Guid.Parse("E96BF721-09AB-403B-B29E-1F7F4EB2CCAE")
+            //};
+            //_context.AccountModels.Add(model);
+            //_context.SaveChanges();
+
+
+
+            var list = _context.MedicineProvideModels.ToList();
+            foreach (var i in _context.WarehouseModels.ToList())
             {
-                AccountCode = "USER-00002",
-                AccountId = Guid.NewGuid(),
-                Actived = true,
-                ImagePath = "https://res.cloudinary.com/do0kwmira/image/upload/v1662201917/ok3x3kwqelgnusxabxyr.jpg",
-                CreateDate = DateTime.Now,
-                LastLoginTime = DateTime.Now,
-                UserName = "QuyPhuoc123",
-                Password = SHA256Encrypt("QuyPhuoc123."),
-                UserId = Guid.Parse("E96BF721-09AB-403B-B29E-1F7F4EB2CCAE")
-            };
-            _context.AccountModels.Add(model);
-            _context.SaveChanges();
+                int index = ran.Next(0, list.Count());
+                i.MedicineProviderId = list[index].MedicineProvideId;
+                _context.SaveChanges();
+            }
         }
         public static void SaveData(List<Root> lst)
         {

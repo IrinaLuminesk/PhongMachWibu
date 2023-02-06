@@ -20,6 +20,8 @@ function SearchInit(controller) {
         type: "POST",
         url: "/" + controller + "/_Search",
         data: $("#frmSearch").serializeArray(),
+        beforeSend: function () {
+        },
         success: function (data) {
             $("#divSearchResult").html("");
             $("#divSearchResult").html(data);

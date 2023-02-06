@@ -4,6 +4,7 @@ using EnjuAihara.Utilities.SelectListItemCustom;
 
 using EnjuAihara.ViewModels.SelectList;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -35,10 +36,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         public ActionResult Create()
         {
             CreateViewBag();
+            CreateFunctionViewBag(null);
             return View();
         }
         [HttpPost]
-        public JsonResult Create(PageModel model)
+        public JsonResult Create(PageModel model, List<string> Functionlst)
         {
             JsonResult json = ValidatePage(model);
             if (json != null)
@@ -58,6 +60,21 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                     MenuId = model.MenuId
                 };
                 _context.PageModels.Add(newPage);
+
+                if (Functionlst.Count() > 0 && Functionlst != null)
+                {
+                    foreach (var i in Functionlst)
+                    {
+                        PageFunctionModel pageFunction = new PageFunctionModel()
+                        {
+                            PageFunctionId = Guid.NewGuid(),
+                            FunctionId = i,
+                            PageId = newPage.PageId
+                        };
+                        _context.PageFunctionModels.Add(pageFunction);
+                        _context.SaveChanges();
+                    }
+                }
                 _context.SaveChanges();
                 return Json(new
                 {
@@ -86,12 +103,13 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         public ActionResult Edit(Guid Id)
         {
             CreateViewBag();
+            CreateFunctionViewBag(Id);
             var page = _context.PageModels.Where(x => x.PageId == Id).FirstOrDefault();
             return View(page);
         }
 
         [HttpPost]
-        public JsonResult Edit(PageModel model)
+        public JsonResult Edit(PageModel model, List<string> Functionlst)
         {
             JsonResult json = ValidatePage(model);
             if (json != null)
@@ -108,10 +126,35 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                     OrderIndex = model.OrderIndex,
                     Actived = model.Actived,
                     PageUrl = model.PageUrl,
-                    PageId = model.PageId,
+                    PageId = model.PageId
                 };
                 _context.Entry(modifiedPage).State = EntityState.Modified;
                 _context.SaveChanges();
+
+                //Lưu danh mục chức năng cho trang
+                var functionlst = _context.PageFunctionModels.Where(x => x.PageId == model.PageId).ToList();
+                //Xóa hết tạo lại
+                if (functionlst.Count > 0)
+                {
+                    foreach (var i in functionlst)
+                    {
+                        _context.Entry(i).State = EntityState.Deleted;
+                        _context.SaveChanges();
+                    }
+                }
+                if (Functionlst == null)
+                    Functionlst = new List<string>();
+                foreach (var i in Functionlst)
+                {
+                    PageFunctionModel pagefunction = new PageFunctionModel()
+                    {
+                        PageFunctionId = Guid.NewGuid(),
+                        FunctionId = i,
+                        PageId = modifiedPage.PageId,
+                    };
+                    _context.Entry(pagefunction).State = EntityState.Added;
+                    _context.SaveChanges();
+                }    
                 return Json(new
                 {
                     isSucess = true,
@@ -189,6 +232,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             }).ToList();
 
             ViewBag.MenuList = new SelectList(MenuList, "id", "name");
+        }
+
+
+        public void CreateFunctionViewBag(Guid? Id)
+        {
+            var FunctionLst = _context.FunctionModels.ToList();
+            ViewBag.FunctionLst = FunctionLst;
+
+            if (Id != null)
+            {
+                var SelectFunctionLst = _context.PageFunctionModels.Where(x => x.PageId == Id).Select(x => x.FunctionId).ToList();
+                ViewBag.SelectFunctionLst = SelectFunctionLst;
+            }
         }
 
     }
