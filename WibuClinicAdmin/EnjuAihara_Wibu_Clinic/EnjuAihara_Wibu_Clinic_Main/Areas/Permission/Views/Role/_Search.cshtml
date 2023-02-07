@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EnjuAihara.EntityFramework.RolesModel>
+@{
+    int j = 1;
+}
+<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
+    <thead class="table-header">
+        <tr>
+            <th class="text-center">STT</th>
+            <th class="text-center">Mã nhóm người dùng</th>
+            <th class="text-center">Tên nhóm người dùng</th>
+            <th class="text-center">Trạng thái</th>
+            <th class="text-center">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td class="text-center" style="vertical-align: middle;">@j</td>
+                <td class="text-center" style="vertical-align: middle;">@i.RoleCode</td>
+                <td class="text-center" style="vertical-align: middle;">@i.RoleName</td>
+                <td class="text-center" style="vertical-align: middle;">
+                        @if (i.Actived == true)
+                        {
+                            <p>Đang sử dụng</p>
+                        }
+                        else
+                        {
+                            <p>Đã ngừng sử dụng</p>
+                        }
+                    </td>
+                <td class="text-center" style="vertical-align: middle;">
+                    <a class="btn btn-info" href="/Permission/Function/Edit/@i.RoleId"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>
+                    <a class="btn btn-danger" href="/Permission/Function/Delete/@i.RoleId"><i class="fa-solid fa-trash"></i>Xóa</a>
+                </td>
+            </tr>
+            j++;
+        }
+    </tbody>
+</table>

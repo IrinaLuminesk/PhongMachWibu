@@ -169,6 +169,7 @@
     <Compile Include="Areas\Permission\Controllers\AuthController.cs" />
     <Compile Include="Areas\Permission\Controllers\MenuController.cs" />
     <Compile Include="Areas\Permission\Controllers\PageController.cs" />
+    <Compile Include="Areas\Permission\Controllers\RoleController.cs" />
     <Compile Include="Areas\Permission\PermissionAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
@@ -2160,6 +2161,9 @@
     <Content Include="Areas\Permission\Views\Page\Edit.cshtml" />
     <Content Include="Areas\Permission\Views\Auth\Login.cshtml" />
     <Content Include="Areas\Permission\Views\Auth\Login2.cshtml" />
+    <Content Include="Areas\Permission\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Permission\Views\Role\_Search.cshtml" />
+    <Content Include="Areas\Permission\Views\Role\Create.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
