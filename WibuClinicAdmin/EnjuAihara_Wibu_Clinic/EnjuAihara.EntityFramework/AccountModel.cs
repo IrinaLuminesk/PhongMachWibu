@@ -17,6 +17,7 @@ namespace EnjuAihara.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AccountModel()
         {
+            this.AccountInRoleModels = new HashSet<AccountInRoleModel>();
             this.AccountModel1 = new HashSet<AccountModel>();
             this.AccountRecoveryTokenModels = new HashSet<AccountRecoveryTokenModel>();
             this.ChangeDataLogModels = new HashSet<ChangeDataLogModel>();
@@ -24,7 +25,6 @@ namespace EnjuAihara.EntityFramework
             this.DateModels1 = new HashSet<DateModel>();
             this.DateModels2 = new HashSet<DateModel>();
             this.DescriptionModels = new HashSet<DescriptionModel>();
-            this.RolesModels = new HashSet<RolesModel>();
         }
     
         public System.Guid AccountId { get; set; }
@@ -37,7 +37,10 @@ namespace EnjuAihara.EntityFramework
         public Nullable<bool> Actived { get; set; }
         public Nullable<System.DateTime> LastLoginTime { get; set; }
         public Nullable<System.Guid> CreateBy { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AccountInRoleModel> AccountInRoleModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountModel> AccountModel1 { get; set; }
         public virtual AccountModel AccountModel2 { get; set; }
@@ -54,7 +57,5 @@ namespace EnjuAihara.EntityFramework
         public virtual ICollection<DateModel> DateModels2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescriptionModel> DescriptionModels { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RolesModel> RolesModels { get; set; }
     }
 }

@@ -12,15 +12,13 @@ namespace EnjuAihara.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class PagePermissionModel
+    public partial class AccountInRoleModel
     {
+        public Nullable<System.Guid> AccountId { get; set; }
         public Nullable<System.Guid> RoleId { get; set; }
-        public Nullable<System.Guid> PageId { get; set; }
-        public string FuntionId { get; set; }
-        public System.Guid PagePermissionId { get; set; }
+        public System.Guid AccountRoleId { get; set; }
     
-        public virtual FunctionModel FunctionModel { get; set; }
-        public virtual PageModel PageModel { get; set; }
+        public virtual AccountModel AccountModel { get; set; }
         public virtual RolesModel RolesModel { get; set; }
     }
 }

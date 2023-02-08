@@ -19,13 +19,14 @@ namespace EnjuAihara.Utilities.CloudinaryHelper
             if (file == null)
                 return "Lỗi không có file";
             string extension = Path.GetExtension(file.FileName);
-            if (!fileExtension.Contains(extension))
+            if (CheckFileExtension(extension) == false)
                 return "File ảnh không đúng định dạng";
             Cloudinary cloudinary = new Cloudinary(GetCloudinaryConfig());
             cloudinary.Api.Secure = true;
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription(file.FileName, file.InputStream)
+                File = new FileDescription(file.FileName, file.InputStream),
+                Transformation = new Transformation().Width(800).Height(800)
             };
             try
             {
@@ -51,6 +52,14 @@ namespace EnjuAihara.Utilities.CloudinaryHelper
                 ApiSecret = WebConfigurationManager.AppSettings["api_secret"],
             };
             return account;
+        }
+
+
+        public static bool CheckFileExtension(string extension)
+        {
+            if (fileExtension.Contains(extension))
+                return true;
+            return false;
         }
     }
 
