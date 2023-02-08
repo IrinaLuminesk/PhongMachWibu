@@ -37,6 +37,7 @@ namespace EnjuAihara.EntityFramework
         public Nullable<bool> Actived { get; set; }
         public Nullable<System.DateTime> LastLoginTime { get; set; }
         public Nullable<System.Guid> CreateBy { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountModel> AccountModel1 { get; set; }

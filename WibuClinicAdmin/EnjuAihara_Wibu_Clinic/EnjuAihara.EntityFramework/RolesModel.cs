@@ -22,9 +22,9 @@ namespace EnjuAihara.EntityFramework
         }
     
         public System.Guid RoleId { get; set; }
-        public string RoleCode { get; set; }
         public string RoleName { get; set; }
         public Nullable<bool> Actived { get; set; }
+        public string RoleCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagePermissionModel> PagePermissionModels { get; set; }

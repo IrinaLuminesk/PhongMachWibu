@@ -39,7 +39,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         public JsonResult Create(RolesModel model)
         {
             //Báo lỗi
-            JsonResult json = ValidateFunction(model);
+            JsonResult json = ValidateRole(model);
             if (json != null)
             {
                 return json;
@@ -87,7 +87,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 });
             }
         }
-        public JsonResult ValidateFunction(RolesModel model)
+        public JsonResult ValidateRole(RolesModel model)
         {
             if (string.IsNullOrEmpty(model.RoleCode))
             {
@@ -109,16 +109,16 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             }
             return null;
         }
-        public ActionResult Edit(string id)
+        public ActionResult Edit(Guid id)
         {
-            var function = _context.FunctionModels.FirstOrDefault(x => x.FunctionId.Equals(id));
-            return View(function);
+            var role = _context.RolesModels.FirstOrDefault(x => x.RoleId.Equals(id));
+            return View(role);
         }
         [HttpPost]
         public JsonResult Edit(RolesModel model)
         {
             //Báo lỗi
-            JsonResult json = ValidateFunction(model);
+            JsonResult json = ValidateRole(model);
             if (json != null)
             {
                 return json;
@@ -140,7 +140,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 
                 RolesModel role = new RolesModel()
                 {
-                    //RoleId = Guid.NewGuid(),
+                    RoleId = model.RoleId,
                     RoleName = model.RoleName,
                     RoleCode = model.RoleCode.ToUpper(),
                     Actived = model.Actived

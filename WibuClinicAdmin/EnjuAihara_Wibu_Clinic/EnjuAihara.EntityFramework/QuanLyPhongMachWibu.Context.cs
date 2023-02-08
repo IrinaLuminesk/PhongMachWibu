@@ -53,5 +53,6 @@ namespace EnjuAihara.EntityFramework
         public virtual DbSet<StreetModel> StreetModels { get; set; }
         public virtual DbSet<UsersModel> UsersModels { get; set; }
         public virtual DbSet<WardModel> WardModels { get; set; }
+        public virtual DbSet<WarehouseModel> WarehouseModels { get; set; }
     }
 }

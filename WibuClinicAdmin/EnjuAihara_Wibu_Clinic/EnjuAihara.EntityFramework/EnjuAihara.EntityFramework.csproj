@@ -150,6 +150,9 @@
     <Compile Include="WardModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
+    <Compile Include="WarehouseModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="QuanLyPhongMachWibu.edmx">
