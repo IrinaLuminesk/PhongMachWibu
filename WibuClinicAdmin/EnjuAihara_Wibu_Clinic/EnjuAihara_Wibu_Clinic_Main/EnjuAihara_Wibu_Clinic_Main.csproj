@@ -184,6 +184,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Picture\AvatarAdmin.jpg" />
+    <Content Include="Picture\GuraDrum2.gif" />
     <Content Include="Picture\GuraLoader.gif" />
     <Content Include="Picture\GuraLoader2.gif" />
     <Content Include="Picture\Loader.gif" />

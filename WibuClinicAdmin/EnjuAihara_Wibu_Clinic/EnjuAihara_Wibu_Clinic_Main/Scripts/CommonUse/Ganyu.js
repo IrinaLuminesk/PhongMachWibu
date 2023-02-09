@@ -59,12 +59,13 @@ function SearchInit(controller) {
     var $btn = $("#btn-search");
     $btn.button('loading');
 
+    var load = AjaxLoaderRan();
     $.ajax({
         type: "POST",
         url: "/" + controller + "/_Search",
         data: $("#frmSearch").serializeArray(),
         beforeSend: function () {
-            $("#loading").show();
+            $(load).show();
         },
         success: function (data) {
             $("#divSearchResult").html("");
@@ -76,7 +77,7 @@ function SearchInit(controller) {
             AlertPopup(2, "Đã có lỗi xảy ra", error);
         },
         complete: function () {
-            $("#loading").hide();
+            $(load).hide();
         }
     });
 }
@@ -122,7 +123,8 @@ function Pagging() {
 }
 
 //Nếu có dropdown thì cho dropdown = true, còn không thì = false
-function PaggingServerSide(controller,columns, dropdown) {
+function PaggingServerSide(controller, columns, dropdown) {
+    var load = AjaxLoaderRan();
 	$("#tableRes").DataTable().clear().destroy();
 	$("#tableRes").on('processing.dt', function (e, settings, processing) {
         LoadingDataTable(processing, '.dataTableServerSide');
@@ -159,15 +161,14 @@ function PaggingServerSide(controller,columns, dropdown) {
                     form[field.name] = field.value || '';
                 });
                 $.extend(true, d, form);
-                console.log(d);
                 return JSON.stringify(d);
 
             },
             beforeSend: function() {
-                $("#loading").show();
+                $(load).show();
             },
             complete: function () {
-                $("#loading").hide();
+                $(load).hide();
             }
         },
         columns: columns,
@@ -264,7 +265,6 @@ function AlertPopup(id, title, message) {
 
 
 function SaveData(controller, frmCreate) {
- 
     var frm = $(frmCreate),
         formData = new FormData(),
         formParams = frm.serializeArray();
@@ -278,7 +278,7 @@ function SaveData(controller, frmCreate) {
         $.each(formParams, function (i, val) {
             formData.append(val.name, val.value);
         });
-
+    var load = AjaxLoaderRan();
         $.ajax({
             type: "POST",
             url: "/" + controller + "/Create",
@@ -286,7 +286,7 @@ function SaveData(controller, frmCreate) {
             processData: false,
             contentType: false,
             beforeSend: function () {
-                $("#loading").show();
+                $(load).show();
             },
             success: function (data) {
                 if (data.isSucess) {
@@ -306,7 +306,7 @@ function SaveData(controller, frmCreate) {
                 AlertPopup(2, "Lỗi", data.message);
             },
             complete: function () {
-                $("#loading").hide();
+                $(load).hide();
             }
         });
 }
@@ -327,6 +327,7 @@ function Edit(controller, frmEdit) {
         formData.append(val.name, val.value);
     });
 
+    var load = AjaxLoaderRan();
     $.ajax({
         type: "POST",
         url: "/" + controller + "/Edit",
@@ -334,7 +335,7 @@ function Edit(controller, frmEdit) {
         processData: false,
         contentType: false,
         beforeSend: function () {
-            $("#loading").show();
+            $(load).show();
         },
         success: function (data) {
             if (data.isSucess) {
@@ -354,7 +355,7 @@ function Edit(controller, frmEdit) {
             AlertPopup(2, "Lỗi", data.message);
         },
         complete: function () {
-            $("#loading").hide();
+            $(load).hide();
         }
     });
 }
@@ -380,5 +381,13 @@ function Logout() {
             AlertPopup(2, "Lỗi", data.message);
         }
     });
+}
+
+
+function AjaxLoaderRan() {
+    var i = Math.floor(Math.random() * 2) + 1;
+    if (i == 1)
+        return "#loading";
+    return "#loading2";
 }
 
