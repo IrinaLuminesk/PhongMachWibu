@@ -85,10 +85,23 @@
     </div>
 </div>
 
+
+<script src="~/Scripts/CommonUse/Ganyu.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	Select2Init("#Actived");
 	SearchInitialWithClick("Permission/Role");
-	PreventEnterButton();
-});</script>
+    PreventEnterButton();
+    //$(".btn-delete").off("click").on("click", function () {
+    //    alert("Con cá");
+    //    $("#deleteConfirmModal").show();
+    //    var id = $(this).data("id");
+    //    var controller = $(this).data("controller");
+    //    $("#deleteBtn").on("click", function () {
+    //        Delete(controller, id);
+    //    })
+    //});
+});
+    
+</script>
 
