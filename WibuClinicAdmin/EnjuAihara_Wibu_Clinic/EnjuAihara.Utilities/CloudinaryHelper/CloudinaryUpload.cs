@@ -13,7 +13,7 @@ namespace EnjuAihara.Utilities.CloudinaryHelper
 {
     public class CloudinaryUpload
     {
-        public static string[] fileExtension = { ".png", ".jpg", ".jpeg", ".svg" };
+        public static string[] fileExtension = { ".png", ".jpg", ".jpeg", ".svg", ".webp" };
         public static string Upload(HttpPostedFileBase file)
         {
             if (file == null)
@@ -61,6 +61,10 @@ namespace EnjuAihara.Utilities.CloudinaryHelper
                 return true;
             return false;
         }
+
+
+   
+
     }
 
 }

@@ -15,6 +15,7 @@ using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.Utilities.CloudinaryHelper;
 using EnjuAihara.Utilities.EncryptionAlgorithm;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
@@ -100,7 +101,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             if (Id != null)
             {
                 //var SelectRoleList = _context.AccountModels.Where(x => x.AccountId == Id).Select(x => x.RolesModels.ToList()).FirstOrDefault();
-                var SelectRoleList = _context.AccountInRoleModels.Where(x => x.AccountId == Id).Select(x => x.RolesModel).ToList();
+                var SelectRoleList = _context.AccountInRoleModels.Where(x => x.AccountId == Id).Select(x => x.RolesModel.RoleId).ToList();
                 ViewBag.SelectRoleList = SelectRoleList;
             }
         }
@@ -167,10 +168,86 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
 
 
-        public ActionResult Edit()
+        public ActionResult Edit(Guid? Id)
         {
 
-            return View();
+            var model = _context.AccountModels.Where(x => x.AccountId == Id).FirstOrDefault();
+            CreateRolesViewBag(Id);
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public JsonResult Edit(AccountEditViewModel model)
+        {
+            bool flag = true;
+            JsonResult ValidateResult = ValidateAccountEdit(model);
+            if (ValidateResult != null)
+                return ValidateResult;
+            try
+            {
+                var EditAccount = _context.AccountModels.Where(x => x.AccountId == model.AccountId).FirstOrDefault();
+                if (EditAccount == null)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Đã có lỗi xảy ra"
+                    });
+                }
+                if (EditAccount.AccountId == CurrentUser.AccountId)
+                    flag = false;
+                EditAccount.UserName = model.UserName;
+                EditAccount.Password = Encrypt.SHA256Encrypt(model.Password);
+                if (model.Avatar != null)
+                {
+                    EditAccount.ImagePath = CloudinaryUpload.Upload(model.Avatar);
+                }
+
+                EditAccount.Actived = model.Actived;
+
+
+                var listRoles = _context.AccountInRoleModels.Where(x => x.AccountId == model.AccountId).ToList();
+                _context.AccountInRoleModels.RemoveRange(listRoles);
+                _context.SaveChanges();
+                List<AccountInRoleModel> roles = new List<AccountInRoleModel>();
+                foreach (var i in model.Roles)
+                {
+                    roles.Add(new AccountInRoleModel() { AccountRoleId = Guid.NewGuid(), AccountId = EditAccount.AccountId, RoleId = i });
+                }
+                _context.AccountInRoleModels.AddRange(roles);
+                _context.SaveChanges();
+                if (flag == false)
+                {
+                    var ctx = Request.GetOwinContext();
+                    var authManager = ctx.Authentication;
+                    authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return Json(new
+                    {
+                        isSucess = true,
+                        title = "Sửa thành công",
+                        message = string.Format("Sửa {0} thành công, vui lòng đăng nhập lại", EditAccount.UserName),
+                        redirect = "/Permission/Login"
+                    });
+                }
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Sửa thành công",
+                    message = string.Format("Sửa {0} thành công", EditAccount.UserName),
+                    redirect = "/MasterData/Account"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Đã có lỗi xảy ra " + ex.Message.ToString()
+                });
+            }
         }
 
         public JsonResult ValidateAccount(AccountCreateViewModel model)
@@ -183,6 +260,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     title = "Lỗi",
                     message = "Vui lòng không để trống tên tài khoản"
                 });
+            }
+            else
+            {
+                var result = _context.AccountModels.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault();
+                if (result != null)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Tên tài khoản đã tồn tại, vui lòng chọn tên khác"
+                    });
+                }
             }
             if (!model.ForUser.HasValue)
             {
@@ -224,6 +314,71 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                         message = "Vui lòng chọn ảnh đúng định dạng"
                     });
                 }
+            }
+            return null;
+        }
+
+        public JsonResult ValidateAccountEdit(AccountEditViewModel model)
+        {
+            if (model.Avatar != null)
+            {
+                if (CloudinaryUpload.CheckFileExtension(Path.GetExtension(model.Avatar.FileName)) == false)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng chọn ảnh đúng định dạng"
+                    });
+                }
+            }
+            if (string.IsNullOrEmpty(model.UserName))
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống tên tài khoản"
+                });
+            }
+            else
+            {
+                var CurrentEditAccount = _context.AccountModels.Where(x => x.AccountId == model.AccountId).FirstOrDefault();
+                var result = _context.AccountModels.Where(x => x.UserName.Equals(model.UserName)).FirstOrDefault();
+                if (result != null)
+                {
+                    if (!result.UserName.Equals(CurrentEditAccount.UserName))
+                    {
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Tên tài khoản đã tồn tại, vui lòng chọn tên khác"
+                        });
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                model.Password = "123456789@abcd";
+                if (!model.Password.Equals("123456789@abcd"))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng không thay đổi mật khẩu mặc định"
+                    });
+                }
+            }
+            if (model.Roles == null || model.Roles.Count == 0)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng chọn ít nhất 1 nhóm người dùng cho tài khoản"
+                });
             }
             return null;
         }

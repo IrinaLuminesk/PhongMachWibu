@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Datatable\DatatableViewModel.cs" />
     <Compile Include="MasterData\AccountCreateViewModel.cs" />
+    <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />
     <Compile Include="Permission\Auth\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

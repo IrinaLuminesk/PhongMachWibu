@@ -391,3 +391,26 @@ function AjaxLoaderRan() {
     return "#loading2";
 }
 
+function PreviewImg(input, id) {
+    if (input.files && input.files[0]) {
+
+        var filePath = input.value;
+        var allowedExtensions =
+            /(\.jpg|\.png|\.jpeg|\.webp)$/i;
+
+        if (allowedExtensions.exec(filePath)) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(id).attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            input.value = "";
+            AlertPopup(2, "Lỗi định dạng", "Vui lòng chọn file ảnh đúng định dạng");
+        }
+    }
+}
+
