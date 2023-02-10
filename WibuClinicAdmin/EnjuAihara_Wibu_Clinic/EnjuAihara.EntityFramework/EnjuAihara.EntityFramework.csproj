@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountInRoleModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
     <Compile Include="AccountModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>

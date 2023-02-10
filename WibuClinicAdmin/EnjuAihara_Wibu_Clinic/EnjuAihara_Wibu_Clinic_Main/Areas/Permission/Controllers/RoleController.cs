@@ -124,7 +124,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 {
                     _context.PagePermissionModels.RemoveRange(pageRole);
                 }
-                var roleAccount = _context.AccountModels.Where(x => x.RoleId == id).ToList();
+                var accountRole=_context.AccountInRoleModels.Where(x => x.RoleId == id).ToList();
+                if(accountRole != null && accountRole.Count() > 0)
+                {
+                    _context.PagePermissionModels.RemoveRange(pageRole);
+                }
                 var role = _context.RolesModels.FirstOrDefault(x => x.RoleId == id);
                 if (role != null)
                 {

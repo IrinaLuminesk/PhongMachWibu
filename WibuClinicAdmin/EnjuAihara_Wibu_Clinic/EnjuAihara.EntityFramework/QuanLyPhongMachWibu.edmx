@@ -7,11 +7,11 @@
     <Schema Namespace="QuanLyPhongMachWibuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccountInRoleModel">
           <Key>
-            <PropertyRef Name="AccountId" />
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="AccountRoleId" />
           </Key>
-          <Property Name="AccountId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AccountId" Type="uniqueidentifier" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
+          <Property Name="AccountRoleId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="AccountModel">
           <Key>
@@ -230,13 +230,12 @@
         </EntityType>
         <EntityType Name="PagePermissionModel">
           <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="PageId" />
-            <PropertyRef Name="FuntionId" />
+            <PropertyRef Name="PagePermissionId" />
           </Key>
-          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="PageId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="FuntionId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
+          <Property Name="PageId" Type="uniqueidentifier" />
+          <Property Name="FuntionId" Type="nvarchar" MaxLength="100" />
+          <Property Name="PagePermissionId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="ProviderModel">
           <Key>
@@ -304,7 +303,7 @@
           <Property Name="BoughtDate" Type="datetime" />
         </EntityType>
         <Association Name="FK_AccountInRoleModel_AccountModel">
-          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="1" />
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
           <End Role="AccountInRoleModel" Type="Self.AccountInRoleModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AccountModel">
@@ -316,7 +315,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AccountInRoleModel_RolesModel">
-          <End Role="RolesModel" Type="Self.RolesModel" Multiplicity="1" />
+          <End Role="RolesModel" Type="Self.RolesModel" Multiplicity="0..1" />
           <End Role="AccountInRoleModel" Type="Self.AccountInRoleModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RolesModel">
@@ -628,7 +627,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PagePermissionModel_FunctionModel">
-          <End Role="FunctionModel" Type="Self.FunctionModel" Multiplicity="1" />
+          <End Role="FunctionModel" Type="Self.FunctionModel" Multiplicity="0..1" />
           <End Role="PagePermissionModel" Type="Self.PagePermissionModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FunctionModel">
@@ -640,7 +639,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PagePermissionModel_PageModel">
-          <End Role="PageModel" Type="Self.PageModel" Multiplicity="1" />
+          <End Role="PageModel" Type="Self.PageModel" Multiplicity="0..1" />
           <End Role="PagePermissionModel" Type="Self.PagePermissionModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PageModel">
@@ -652,7 +651,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PagePermissionModel_RolesModel">
-          <End Role="RolesModel" Type="Self.RolesModel" Multiplicity="1" />
+          <End Role="RolesModel" Type="Self.RolesModel" Multiplicity="0..1" />
           <End Role="PagePermissionModel" Type="Self.PagePermissionModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RolesModel">
@@ -836,6 +835,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyPhongMachWibuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="QuanLyPhongMachWibuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountInRoleModels" EntityType="QuanLyPhongMachWibuModel.AccountInRoleModel" />
           <EntitySet Name="AccountModels" EntityType="QuanLyPhongMachWibuModel.AccountModel" />
           <EntitySet Name="AccountRecoveryTokenModels" EntityType="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" />
           <EntitySet Name="CatalogModels" EntityType="QuanLyPhongMachWibuModel.CatalogModel" />
@@ -865,6 +865,14 @@
           <EntitySet Name="UsersModels" EntityType="QuanLyPhongMachWibuModel.UsersModel" />
           <EntitySet Name="WardModels" EntityType="QuanLyPhongMachWibuModel.WardModel" />
           <EntitySet Name="WarehouseModels" EntityType="QuanLyPhongMachWibuModel.WarehouseModel" />
+          <AssociationSet Name="FK_AccountInRoleModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="AccountInRoleModel" EntitySet="AccountInRoleModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccountInRoleModel_RolesModel" Association="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_RolesModel">
+            <End Role="RolesModel" EntitySet="RolesModels" />
+            <End Role="AccountInRoleModel" EntitySet="AccountInRoleModels" />
+          </AssociationSet>
           <AssociationSet Name="FK_AccountModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="AccountModel1" EntitySet="AccountModels" />
@@ -981,11 +989,17 @@
             <End Role="RolesModel" EntitySet="RolesModels" />
             <End Role="PagePermissionModel" EntitySet="PagePermissionModels" />
           </AssociationSet>
-          <AssociationSet Name="AccountInRoleModel" Association="QuanLyPhongMachWibuModel.AccountInRoleModel">
-            <End Role="AccountModel" EntitySet="AccountModels" />
-            <End Role="RolesModel" EntitySet="RolesModels" />
-          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AccountInRoleModel">
+          <Key>
+            <PropertyRef Name="AccountRoleId" />
+          </Key>
+          <Property Name="AccountId" Type="Guid" />
+          <Property Name="RoleId" Type="Guid" />
+          <Property Name="AccountRoleId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_AccountModel" FromRole="AccountInRoleModel" ToRole="AccountModel" />
+          <NavigationProperty Name="RolesModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_RolesModel" FromRole="AccountInRoleModel" ToRole="RolesModel" />
+        </EntityType>
         <EntityType Name="AccountModel">
           <Key>
             <PropertyRef Name="AccountId" />
@@ -1001,6 +1015,7 @@
           <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
           <Property Name="CreateBy" Type="Guid" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AccountInRoleModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_AccountModel" FromRole="AccountModel" ToRole="AccountInRoleModel" />
           <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" FromRole="AccountModel" ToRole="AccountModel1" />
           <NavigationProperty Name="AccountModel2" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" FromRole="AccountModel1" ToRole="AccountModel" />
           <NavigationProperty Name="UsersModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel" FromRole="AccountModel" ToRole="UsersModel" />
@@ -1010,7 +1025,6 @@
           <NavigationProperty Name="DateModels1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DateModels2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
-          <NavigationProperty Name="RolesModels" Relationship="QuanLyPhongMachWibuModel.AccountInRoleModel" FromRole="AccountModel" ToRole="RolesModel" />
         </EntityType>
         <EntityType Name="AccountRecoveryTokenModel">
           <Key>
@@ -1253,13 +1267,12 @@
         </EntityType>
         <EntityType Name="PagePermissionModel">
           <Key>
-            <PropertyRef Name="RoleId" />
-            <PropertyRef Name="PageId" />
-            <PropertyRef Name="FuntionId" />
+            <PropertyRef Name="PagePermissionId" />
           </Key>
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="PageId" Type="Guid" Nullable="false" />
-          <Property Name="FuntionId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Guid" />
+          <Property Name="PageId" Type="Guid" />
+          <Property Name="FuntionId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PagePermissionId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="FunctionModel" Relationship="QuanLyPhongMachWibuModel.FK_PagePermissionModel_FunctionModel" FromRole="PagePermissionModel" ToRole="FunctionModel" />
           <NavigationProperty Name="PageModel" Relationship="QuanLyPhongMachWibuModel.FK_PagePermissionModel_PageModel" FromRole="PagePermissionModel" ToRole="PageModel" />
           <NavigationProperty Name="RolesModel" Relationship="QuanLyPhongMachWibuModel.FK_PagePermissionModel_RolesModel" FromRole="PagePermissionModel" ToRole="RolesModel" />
@@ -1285,8 +1298,8 @@
           <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Actived" Type="Boolean" />
           <Property Name="RoleCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AccountInRoleModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_RolesModel" FromRole="RolesModel" ToRole="AccountInRoleModel" />
           <NavigationProperty Name="PagePermissionModels" Relationship="QuanLyPhongMachWibuModel.FK_PagePermissionModel_RolesModel" FromRole="RolesModel" ToRole="PagePermissionModel" />
-          <NavigationProperty Name="AccountModels" Relationship="QuanLyPhongMachWibuModel.AccountInRoleModel" FromRole="RolesModel" ToRole="AccountModel" />
         </EntityType>
         <EntityType Name="StreetModel">
           <Key>
@@ -1336,6 +1349,30 @@
           <Property Name="BoughtDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="MedicineProvideModel" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_MedicineProvideModel" FromRole="WarehouseModel" ToRole="MedicineProvideModel" />
         </EntityType>
+        <Association Name="FK_AccountInRoleModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.AccountInRoleModel" Role="AccountInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="AccountInRoleModel">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccountInRoleModel_RolesModel">
+          <End Type="QuanLyPhongMachWibuModel.RolesModel" Role="RolesModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.AccountInRoleModel" Role="AccountInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RolesModel">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="AccountInRoleModel">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AccountModel_AccountModel">
           <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
           <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel1" Multiplicity="*" />
@@ -1565,7 +1602,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PagePermissionModel_FunctionModel">
-          <End Type="QuanLyPhongMachWibuModel.FunctionModel" Role="FunctionModel" Multiplicity="1" />
+          <End Type="QuanLyPhongMachWibuModel.FunctionModel" Role="FunctionModel" Multiplicity="0..1" />
           <End Type="QuanLyPhongMachWibuModel.PagePermissionModel" Role="PagePermissionModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FunctionModel">
@@ -1661,7 +1698,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PagePermissionModel_PageModel">
-          <End Type="QuanLyPhongMachWibuModel.PageModel" Role="PageModel" Multiplicity="1" />
+          <End Type="QuanLyPhongMachWibuModel.PageModel" Role="PageModel" Multiplicity="0..1" />
           <End Type="QuanLyPhongMachWibuModel.PagePermissionModel" Role="PagePermissionModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PageModel">
@@ -1673,7 +1710,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PagePermissionModel_RolesModel">
-          <End Type="QuanLyPhongMachWibuModel.RolesModel" Role="RolesModel" Multiplicity="1" />
+          <End Type="QuanLyPhongMachWibuModel.RolesModel" Role="RolesModel" Multiplicity="0..1" />
           <End Type="QuanLyPhongMachWibuModel.PagePermissionModel" Role="PagePermissionModel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RolesModel">
@@ -1684,16 +1721,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AccountInRoleModel">
-          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="*" />
-          <End Type="QuanLyPhongMachWibuModel.RolesModel" Role="RolesModel" Multiplicity="*" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QuanLyPhongMachWibuModelStoreContainer" CdmEntityContainer="QuanLyPhongMachWibuEntities">
+          <EntitySetMapping Name="AccountInRoleModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.AccountInRoleModel">
+              <MappingFragment StoreEntitySet="AccountInRoleModel">
+                <ScalarProperty Name="AccountRoleId" ColumnName="AccountRoleId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AccountModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.AccountModel">
               <MappingFragment StoreEntitySet="AccountModel">
@@ -1934,6 +1976,7 @@
           <EntitySetMapping Name="PagePermissionModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.PagePermissionModel">
               <MappingFragment StoreEntitySet="PagePermissionModel">
+                <ScalarProperty Name="PagePermissionId" ColumnName="PagePermissionId" />
                 <ScalarProperty Name="FuntionId" ColumnName="FuntionId" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -2011,14 +2054,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AccountInRoleModel" TypeName="QuanLyPhongMachWibuModel.AccountInRoleModel" StoreEntitySet="AccountInRoleModel">
-            <EndProperty Name="RolesModel">
-              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AccountModel">
-              <ScalarProperty Name="AccountId" ColumnName="AccountId" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
