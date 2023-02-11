@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace EnjuAihara.ViewModels.SelectList
 {
-    public class SelectBoolItem
+    public class SelectStringItem
     {
+        public string id { get; set; }
         public string name { get; set; }
-        public bool id { get; set; }
     }
-
-
 }

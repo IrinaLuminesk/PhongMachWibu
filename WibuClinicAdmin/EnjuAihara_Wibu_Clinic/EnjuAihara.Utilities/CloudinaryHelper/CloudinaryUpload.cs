@@ -13,19 +13,20 @@ namespace EnjuAihara.Utilities.CloudinaryHelper
 {
     public class CloudinaryUpload
     {
-        public static string[] fileExtension = { ".png", ".jpg", ".jpeg", ".svg" };
+        public static string[] fileExtension = { ".png", ".jpg", ".jpeg", ".svg", ".webp" };
         public static string Upload(HttpPostedFileBase file)
         {
             if (file == null)
                 return "Lỗi không có file";
             string extension = Path.GetExtension(file.FileName);
-            if (!fileExtension.Contains(extension))
+            if (CheckFileExtension(extension) == false)
                 return "File ảnh không đúng định dạng";
             Cloudinary cloudinary = new Cloudinary(GetCloudinaryConfig());
             cloudinary.Api.Secure = true;
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription(file.FileName, file.InputStream)
+                File = new FileDescription(file.FileName, file.InputStream),
+                Transformation = new Transformation().Width(800).Height(800)
             };
             try
             {
@@ -52,6 +53,18 @@ namespace EnjuAihara.Utilities.CloudinaryHelper
             };
             return account;
         }
+
+
+        public static bool CheckFileExtension(string extension)
+        {
+            if (fileExtension.Contains(extension))
+                return true;
+            return false;
+        }
+
+
+   
+
     }
 
 }

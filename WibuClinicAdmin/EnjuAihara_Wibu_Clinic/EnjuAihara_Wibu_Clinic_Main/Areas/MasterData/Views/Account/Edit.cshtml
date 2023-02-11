@@ -1,0 +1,154 @@
+﻿@model EnjuAihara.EntityFramework.AccountModel
+@{ 
+	var SelectRoles = (List<Guid>) ViewBag.SelectRoleList;
+}
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Chỉnh sửa @Model.UserName</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/MasterData/Account"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<form id="frmEdit" enctype='multipart/form-data'>
+		<div class="row">
+			@Html.HiddenFor(x => x.AccountId)
+			<div class="col-md-3">
+				<div class="card h-100">
+					<div class="card-body">
+						<img id="Img" src="@Model.ImagePath" class="card-img-top" />
+
+						<div class="row mt-2 text-center">
+							<label for="Avatar" class="col-form-label">Thay đổi ảnh</label>
+
+							<input type="file" id="Avatar" name="Avatar" class="form-control">
+						</div>
+						<div class="btn-group mt-2" style="width:100%">
+							<a class="btn btn-default btn-block" id="Reset-Avatar">Đặt lại ảnh gốc</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-9">
+				<div class="card h-100">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="AccountCode" class="col-form-label">Mã tài khoản</label>
+									</div>
+									<div class="col-md-10">
+										@Html.TextBoxFor(x => x.AccountCode, new { @class = "form-control", @disabled = "disabled", @readonly = "readonly" })
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-3">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="UserName" class="col-form-label">Tên tài khoản</label>
+									</div>
+									<div class="col-md-10">
+										@Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-12 mt-3">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="Password" class="col-form-label">Mật khẩu</label>
+									</div>
+									<div class="col-md-8">
+										@Html.TextBox("Password", "", new { @class = "form-control", @readonly = "readonly", @value = "" })
+									</div>
+									<div class="col-md-2">
+										<button type="button" class="btn btn-info" id="Password-Reset" style="width:100%">Reset mật khẩu</button>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-12 mt-3">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="Roles" class="col-form-label">Nhóm người dùng</label>
+									</div>
+									<div class="col-md-10">
+										<div class="row checklist">
+											@foreach (var i in (List<EnjuAihara.EntityFramework.RolesModel>)ViewBag.RoleList)
+											{
+												if (SelectRoles.Contains(i.RoleId) == true)
+												{
+													@*<div class="checkbox col-xs-6 col-sm-4 col-md-3 col-lg-3">
+														<label style="white-space: nowrap;"><input type="checkbox">Check box 1</label>
+													</div>*@
+													<div class="checkbox col-xs-6 col-sm-4 col-md-3 col-lg-3">
+														<input type="checkbox" id="Roles" name="Roles" value="@i.RoleId" checked>
+														<label for="Roles">@i.RoleName</label>
+													</div>
+												}
+												else
+												{
+													<div class="checkbox col-xs-6 col-sm-4 col-md-3 col-lg-3">
+														<input type="checkbox" id="Roles" name="Roles" value="@i.RoleId">
+														<label for="Roles">@i.RoleName</label>
+													</div>
+												}
+											}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-3">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="Actived" class="col-form-label">Trạng thái</label>
+									</div>
+									<div class="col-md-10">
+										@Html.ActivedRadioButton(x => x.Actived)
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 15px">
+							<div class="col-md-12 text-center">
+								<button type="button" class="btn btn-primary" id="btn-edit" style="width:20%">
+									Lưu
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		$("#Avatar").change(function () {
+			PreviewImg(this, "#Img");
+		});
+
+		$("#Reset-Avatar").on("click", function () {
+			$("#Img").attr('src', "@Model.ImagePath");
+		})
+
+		$("#Password-Reset").on("click", function () {
+			$("#Password").val("123456789@abcd");
+		})
+
+		$("#btn-edit").on("click", function () {
+			Edit("MasterData/Account", "#frmEdit");
+		});
+
+	});
+</script>

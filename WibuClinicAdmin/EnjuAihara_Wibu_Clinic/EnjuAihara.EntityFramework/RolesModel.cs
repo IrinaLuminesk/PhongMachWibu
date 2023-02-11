@@ -17,8 +17,8 @@ namespace EnjuAihara.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RolesModel()
         {
+            this.AccountInRoleModels = new HashSet<AccountInRoleModel>();
             this.PagePermissionModels = new HashSet<PagePermissionModel>();
-            this.AccountModels = new HashSet<AccountModel>();
         }
     
         public System.Guid RoleId { get; set; }
@@ -27,8 +27,8 @@ namespace EnjuAihara.EntityFramework
         public string RoleCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionModel> PagePermissionModels { get; set; }
+        public virtual ICollection<AccountInRoleModel> AccountInRoleModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AccountModel> AccountModels { get; set; }
+        public virtual ICollection<PagePermissionModel> PagePermissionModels { get; set; }
     }
 }

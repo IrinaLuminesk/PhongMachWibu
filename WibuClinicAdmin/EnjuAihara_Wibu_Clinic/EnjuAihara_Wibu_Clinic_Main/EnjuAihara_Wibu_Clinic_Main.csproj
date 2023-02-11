@@ -165,6 +165,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\StartUp.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\MasterData\Controllers\AccountController.cs" />
+    <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
     <Compile Include="Areas\Permission\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Permission\Controllers\AuthController.cs" />
     <Compile Include="Areas\Permission\Controllers\MenuController.cs" />
@@ -183,6 +185,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Picture\AvatarAdmin.jpg" />
+    <Content Include="Picture\GuraDrum2.gif" />
+    <Content Include="Picture\GuraLoader.gif" />
+    <Content Include="Picture\GuraLoader2.gif" />
     <Content Include="Picture\Loader.gif" />
     <Content Include="Picture\Sinobu.jpg" />
     <Content Include="Picture\LogoAdmin.jpg" />
@@ -2161,10 +2166,12 @@
     <Content Include="Areas\Permission\Views\Page\Edit.cshtml" />
     <Content Include="Areas\Permission\Views\Auth\Login.cshtml" />
     <Content Include="Areas\Permission\Views\Auth\Login2.cshtml" />
-    <Content Include="Areas\Permission\Views\Role\Index.cshtml" />
-    <Content Include="Areas\Permission\Views\Role\_Search.cshtml" />
-    <Content Include="Areas\Permission\Views\Role\Create.cshtml" />
-    <Content Include="Areas\Permission\Views\Role\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\web.config" />
+    <Content Include="Areas\MasterData\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\MasterData\Views\Account\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Account\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\Account\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Account\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

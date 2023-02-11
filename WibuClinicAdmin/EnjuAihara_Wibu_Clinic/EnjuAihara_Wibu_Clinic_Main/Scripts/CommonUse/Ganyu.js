@@ -4,9 +4,52 @@
         scroll: true
     });
 };
+
+function Select2MultipleInit(Id) {
+    $(Id).select2({
+        width: '100%',
+        scroll: true,
+        tags: true
+    });
+};
+
+function Select2_AutoComplete(url, id) {
+    $(id).select2({
+        width: '100%',
+        scroll: true,
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term, // search term
+                    page: params.page
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (obj) {
+                        return { id: obj.value, text: obj.text };
+                    })
+                };
+            },
+            minimumInputLength: 0
+
+        }
+    });
+}
 function SearchInitialWithClick(controller) {
     $("#btn-search").click(function () {
         SearchInit(controller);
+    });
+    $("#btn-search").trigger("click");
+}
+
+
+function PaggingServerSideSearchInitialWithClick(controller, columns, dropdown) {
+    $("#btn-search").click(function () {
+        PaggingServerSide(controller, columns, dropdown);
     });
     $("#btn-search").trigger("click");
 }
@@ -16,11 +59,13 @@ function SearchInit(controller) {
     var $btn = $("#btn-search");
     $btn.button('loading');
 
+  /*  var load = AjaxLoaderRan();*/
     $.ajax({
         type: "POST",
         url: "/" + controller + "/_Search",
         data: $("#frmSearch").serializeArray(),
         beforeSend: function () {
+            $("#loading").show();
         },
         success: function (data) {
             $("#divSearchResult").html("");
@@ -30,6 +75,9 @@ function SearchInit(controller) {
         error: function (error) {
             $btn.button('reset');
             AlertPopup(2, "Đã có lỗi xảy ra", error);
+        },
+        complete: function () {
+            $("#loading").hide();
         }
     });
 }
@@ -74,37 +122,69 @@ function Pagging() {
     });
 }
 
-
-function PaggingServerSide(columns) {
+//Nếu có dropdown thì cho dropdown = true, còn không thì = false
+function PaggingServerSide(controller, columns, dropdown) {
+    /*var load = AjaxLoaderRan();*/
 	$("#tableRes").DataTable().clear().destroy();
 	$("#tableRes").on('processing.dt', function (e, settings, processing) {
-		ISD.LoadingDataTable(processing, '.dataTableServerSide');
-	}).DataTable({
-			proccessing: true,
-			serverSide: true,
-			paging: true,
-			scrollX: true,
-			ajax: {
-				type: 'POST',
-				url: "/" + controller + "/_PaggingServerSide",
-				contentType: 'application/json',
-				data: function (d) {
-					var arr = {};
-					//data search
-					var data = $("#frmSearch").serializeArray();
-					$.each(data, function (index, val) {
-						var obj = {};
-						obj[val.name] = val.value;
-						$.extend(true, arr, obj);
-					});
-					$.extend(true, arr, d);
-					return JSON.stringify(arr);
-				}
+        LoadingDataTable(processing, '.dataTableServerSide');
+    }).DataTable({
+        proccessing: true,
+        serverSide: true,
+        paging: true,
+        scrollX: true,
+        pageLength: 10,
+        autoWidth: true,
+        searching: false,
+        bPaginate: true,
+        scrollCollapse: true,
+        ajax: {
+            type: 'POST',
+            url: "/" + controller + "/_PaggingServerSide",
+            contentType: 'application/json',
+            data: function (d) {
+                //var arr = {};
+                ////data search
+                //var data = $("#frmSearch").serializeArray();
+                //$.each(data, function (index, val) {
+                //    var obj = {};
+                //    obj[val.name] = val.value;
+                //    $.extend(true, arr, obj);
+                //});
+                ////data datatable (draw, start, length,...)
+                ///*$.extend(true, arr, data);*/
+                //$.extend(true, arr, d);
+                //console.log(arr);
+                //return JSON.stringify(arr);
+                var form = {};
+                $.each($("#frmSearch").serializeArray(), function (i, field) {
+                    form[field.name] = field.value || '';
+                });
+                $.extend(true, d, form);
+                return JSON.stringify(d);
+
+            },
+            beforeSend: function() {
+                $("#loading").show();
+            },
+            complete: function () {
+                $("#loading").hide();
+            }
         },
         columns: columns,
         destroy: true,
+        initComplete: function (settings) {
+            $(window).resize();
+
+        },
+        drawCallback: function (settings) {
+            $(window).trigger('resize');
+            if (dropdown == true) {
+                Select2Init(".dropdown");
+            }
+        },
         language: {
-            sProcessing: "Đang xử lý...",
+            sProcessing: "Vui lòng đợi xíu.....(๑´•ε •`๑)",
 			sLengthMenu: "Xem _MENU_ mục",
 			sZeroRecords: "Không tìm thấy dòng nào phù hợp",
 			sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
@@ -124,7 +204,7 @@ function PaggingServerSide(columns) {
             { targets: [0, 1], visible: true },
             { targets: 'no-sort', visible: false }
         ],
-        "sDom": '<"top"flp>rt<"bottom"ip><"clear">',
+       /* "sDom": '<"top"flp>rt<"bottom"ip><"clear">',*/
     });
 }
 
@@ -185,45 +265,50 @@ function AlertPopup(id, title, message) {
 
 
 function SaveData(controller, frmCreate) {
- 
-    var frm = $(frmCreate),
-        formData = new FormData(),
-        formParams = frm.serializeArray();
-        $.each(frm.find('input[type="file"]'), function (i, tag) {
-            isHasFile = true;
-            $.each($(tag)[0].files, function (i, file) {
-                formData.append(tag.name, file);
-            });
+    var frm = $(frmCreate);
+    formData = new FormData(),
+    formParams = frm.serializeArray();
+    $.each(frm.find('input[type="file"]'), function (i, tag) {
+        isHasFile = true;
+        $.each($(tag)[0].files, function (i, file) {
+            formData.append(tag.name, file);
         });
+    });
 
-        $.each(formParams, function (i, val) {
-            formData.append(val.name, val.value);
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "/" + controller + "/Create",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                if (data.isSucess) {
-                    if (data.title && data.message)
-                        AlertPopup(1, data.title, data.message);
-                    if (data.redirect) {
-                        setTimeout(function () {
-                            window.location.href = data.redirect;
-                        }, 3000);
-                    }
+    $.each(formParams, function (i, val) {
+        formData.append(val.name, val.value);
+    });
+    /*  var load = AjaxLoaderRan();*/
+    $.ajax({
+        type: "POST",
+        url: "/" + controller + "/Create",
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        success: function (data) {
+            if (data.isSucess) {
+                if (data.title && data.message)
+                    AlertPopup(1, data.title, data.message);
+                if (data.redirect) {
+                    setTimeout(function () {
+                        window.location.href = data.redirect;
+                    }, 3000);
                 }
-                else {
-                    AlertPopup(3, data.title, data.message);
-                }
-            },
-            error: function (data) {
-                AlertPopup(2, "Lỗi", data.message);
             }
-        });
+            else {
+                AlertPopup(3, data.title, data.message);
+            }
+        },
+        error: function (data) {
+            AlertPopup(2, "Lỗi", data.message);
+        },
+        complete: function () {
+            $("#loading").hide();
+        }
+    });
 }
 
 function Edit(controller, frmEdit) {
@@ -242,12 +327,16 @@ function Edit(controller, frmEdit) {
         formData.append(val.name, val.value);
     });
 
+   /* var load = AjaxLoaderRan();*/
     $.ajax({
         type: "POST",
         url: "/" + controller + "/Edit",
         data: formData,
         processData: false,
         contentType: false,
+        beforeSend: function () {
+            $("#loading").show();
+        },
         success: function (data) {
             if (data.isSucess) {
                 if (data.title && data.message)
@@ -264,6 +353,9 @@ function Edit(controller, frmEdit) {
         },
         error: function (data) {
             AlertPopup(2, "Lỗi", data.message);
+        },
+        complete: function () {
+            $("#loading").hide();
         }
     });
 }
@@ -290,3 +382,35 @@ function Logout() {
         }
     });
 }
+
+
+function AjaxLoaderRan() {
+    var i = Math.floor(Math.random() * 2) + 1;
+    if (i == 1)
+        return "#loading";
+    return "#loading2";
+}
+
+function PreviewImg(input, id) {
+    if (input.files && input.files[0]) {
+
+        var filePath = input.value;
+        var allowedExtensions =
+            /(\.jpg|\.png|\.jpeg|\.webp)$/i;
+
+        if (allowedExtensions.exec(filePath)) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(id).attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            input.value = "";
+            AlertPopup(2, "Lỗi định dạng", "Vui lòng chọn file ảnh đúng định dạng");
+        }
+    }
+}
+

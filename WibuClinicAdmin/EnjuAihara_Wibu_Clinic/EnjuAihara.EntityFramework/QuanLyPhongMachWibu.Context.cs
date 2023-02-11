@@ -25,6 +25,7 @@ namespace EnjuAihara.EntityFramework
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AccountInRoleModel> AccountInRoleModels { get; set; }
         public virtual DbSet<AccountModel> AccountModels { get; set; }
         public virtual DbSet<AccountRecoveryTokenModel> AccountRecoveryTokenModels { get; set; }
         public virtual DbSet<CatalogModel> CatalogModels { get; set; }
