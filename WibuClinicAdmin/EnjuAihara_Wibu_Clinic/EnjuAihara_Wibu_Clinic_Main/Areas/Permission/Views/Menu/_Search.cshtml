@@ -8,6 +8,7 @@
 			<th class="text-center">STT</th>
 			<th class="text-center">Tên Menu</th>
 			<th class="text-center">Icon</th>
+			<th class="text-center">Thứ tự</th>
 			<th class="text-center">Trạng thái</th>
 			<th class="text-center">Hành động</th>
 		</tr>
@@ -19,6 +20,7 @@
 				<td class="text-center" style="vertical-align: middle;">@j</td>
 				<td class="text-center" style="vertical-align: middle;">@i.MenuName</td>
 				<td class="text-center" style="vertical-align: middle;"><i class="@i.Icon"></i></td>
+				<td class="text-center" style="vertical-align: middle;">@i.OrderIndex</td>
 				<td class="text-center" style="vertical-align: middle;">
 					@if (i.Actived == true)
 					{

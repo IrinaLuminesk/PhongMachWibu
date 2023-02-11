@@ -84,7 +84,7 @@ function SearchInit(controller) {
 
 function Pagging() {
     $('#tableRes').dataTable({
-        pageLength: 10,
+        pageLength: 5,
         paging: true,
         autoWidth: true,
         scrollX: true,
@@ -133,7 +133,7 @@ function PaggingServerSide(controller, columns, dropdown) {
         serverSide: true,
         paging: true,
         scrollX: true,
-        pageLength: 10,
+        pageLength: 5,
         autoWidth: true,
         searching: false,
         bPaginate: true,
