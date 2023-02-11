@@ -115,6 +115,46 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             return View(role);
         }
         [HttpPost]
+        public JsonResult Delete(Guid id)
+        {
+            try
+            {
+                var pageRole = _context.PagePermissionModels.Where(x => x.RoleId == id).ToList();
+                if (pageRole != null && pageRole.Count() > 0)
+                {
+                    _context.PagePermissionModels.RemoveRange(pageRole);
+                }
+                var accountRole=_context.AccountInRoleModels.Where(x => x.RoleId == id).ToList();
+                if(accountRole != null && accountRole.Count() > 0)
+                {
+                    _context.AccountInRoleModels.RemoveRange(accountRole);
+                }
+                var role = _context.RolesModels.FirstOrDefault(x => x.RoleId == id);
+                if (role != null)
+                {
+                    _context.RolesModels.Remove(role);
+
+                }
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Xóa nhóm người dùng thành công",
+                    redirect = "/Permission/Role"
+                });
+            }catch(Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = ex +" Xóa nhóm người dùng thất bại",
+                    redirect = "/Permission/Role"
+                });
+            }
+        }
+        [HttpPost]
         public JsonResult Edit(RolesModel model)
         {
             //Báo lỗi

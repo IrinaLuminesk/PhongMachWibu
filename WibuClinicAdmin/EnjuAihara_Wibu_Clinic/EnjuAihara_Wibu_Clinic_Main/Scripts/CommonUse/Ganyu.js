@@ -414,3 +414,47 @@ function PreviewImg(input, id) {
     }
 }
 
+}
+function Delete(controller,id) {
+    $.ajax({
+        url: "/"+controller+"/Delete/" + id,
+        type: "POST",
+        dataType: "json",
+        success: function (data) {
+            if (data.isSucess == true) {
+                if (data.title && data.message) {
+                    AlertPopup(1, data.title, data.message);
+                }
+                if (data.redirect) {
+                    setTimeout(function () {
+                        window.location.href = data.redirect;
+                    }, 3000);
+                }
+            }
+
+        },
+        error: function (data) {
+            AlertPopup(2, "Lỗi", data.message);
+        }
+
+    });
+}
+$(document).on("click", ".btn-delete", function (e) {
+    var itemName = $(this).data("item-name");
+    var id = $(this).data("id");
+    var controller = $(this).data("controller");
+    $("#deleteConfirmModal .modal-title .item-name").html(itemName);
+    $("#deleteConfirmModal .modal-question .controller").html(controller);
+    $("#deleteConfirmModal").modal("show");
+    
+    $("#deleteBtn").on("click", function () {
+        Delete(controller, id);
+    });
+});
+$(document).on("click", "#cancel", function (e) {
+    $("#deleteConfirmModal").modal("hide");
+});
+$(document).on("click", ".close", function (e) {
+    $("#deleteConfirmModal").modal("hide");
+});
+

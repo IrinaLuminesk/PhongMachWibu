@@ -23,6 +23,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
+                                        <div class="row">
                                         <div class="col-md-6">
                                             <div class="row g-3 align-items-center">
                                                 <div class="col-md-3 text-center">
@@ -43,6 +44,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                            </div>
+                                        <div class="row">
                                         <div class="col-md-6">
                                             <div class="row g-3 align-items-center">
                                                 <div class="col-md-3 text-center">
@@ -53,6 +56,7 @@
 
                                                 </div>
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 15px">
@@ -85,10 +89,23 @@
     </div>
 </div>
 
+
+<script src="~/Scripts/CommonUse/Ganyu.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	Select2Init("#Actived");
 	SearchInitialWithClick("Permission/Role");
-	PreventEnterButton();
-});</script>
+    PreventEnterButton();
+    //$(".btn-delete").off("click").on("click", function () {
+    //    alert("Con cá");
+    //    $("#deleteConfirmModal").show();
+    //    var id = $(this).data("id");
+    //    var controller = $(this).data("controller");
+    //    $("#deleteBtn").on("click", function () {
+    //        Delete(controller, id);
+    //    })
+    //});
+});
+    
+</script>
 
