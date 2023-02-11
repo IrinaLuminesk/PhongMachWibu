@@ -59,13 +59,13 @@ function SearchInit(controller) {
     var $btn = $("#btn-search");
     $btn.button('loading');
 
-    var load = AjaxLoaderRan();
+  /*  var load = AjaxLoaderRan();*/
     $.ajax({
         type: "POST",
         url: "/" + controller + "/_Search",
         data: $("#frmSearch").serializeArray(),
         beforeSend: function () {
-            $(load).show();
+            $("#loading").show();
         },
         success: function (data) {
             $("#divSearchResult").html("");
@@ -77,7 +77,7 @@ function SearchInit(controller) {
             AlertPopup(2, "Đã có lỗi xảy ra", error);
         },
         complete: function () {
-            $(load).hide();
+            $("#loading").hide();
         }
     });
 }
@@ -124,7 +124,7 @@ function Pagging() {
 
 //Nếu có dropdown thì cho dropdown = true, còn không thì = false
 function PaggingServerSide(controller, columns, dropdown) {
-    var load = AjaxLoaderRan();
+    /*var load = AjaxLoaderRan();*/
 	$("#tableRes").DataTable().clear().destroy();
 	$("#tableRes").on('processing.dt', function (e, settings, processing) {
         LoadingDataTable(processing, '.dataTableServerSide');
@@ -141,7 +141,7 @@ function PaggingServerSide(controller, columns, dropdown) {
         ajax: {
             type: 'POST',
             url: "/" + controller + "/_PaggingServerSide",
-           contentType: 'application/json',
+            contentType: 'application/json',
             data: function (d) {
                 //var arr = {};
                 ////data search
@@ -165,10 +165,10 @@ function PaggingServerSide(controller, columns, dropdown) {
 
             },
             beforeSend: function() {
-                $(load).show();
+                $("#loading").show();
             },
             complete: function () {
-                $(load).hide();
+                $("#loading").hide();
             }
         },
         columns: columns,
@@ -265,57 +265,9 @@ function AlertPopup(id, title, message) {
 
 
 function SaveData(controller, frmCreate) {
-    var frm = $(frmCreate),
-        formData = new FormData(),
-        formParams = frm.serializeArray();
-        $.each(frm.find('input[type="file"]'), function (i, tag) {
-            isHasFile = true;
-            $.each($(tag)[0].files, function (i, file) {
-                formData.append(tag.name, file);
-            });
-        });
-
-        $.each(formParams, function (i, val) {
-            formData.append(val.name, val.value);
-        });
-    var load = AjaxLoaderRan();
-        $.ajax({
-            type: "POST",
-            url: "/" + controller + "/Create",
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function () {
-                $(load).show();
-            },
-            success: function (data) {
-                if (data.isSucess) {
-                    if (data.title && data.message)
-                        AlertPopup(1, data.title, data.message);
-                    if (data.redirect) {
-                        setTimeout(function () {
-                            window.location.href = data.redirect;
-                        }, 3000);
-                    }
-                }
-                else {
-                    AlertPopup(3, data.title, data.message);
-                }
-            },
-            error: function (data) {
-                AlertPopup(2, "Lỗi", data.message);
-            },
-            complete: function () {
-                $(load).hide();
-            }
-        });
-}
-
-function Edit(controller, frmEdit) {
-
-    var frm = $(frmEdit),
-        formData = new FormData(),
-        formParams = frm.serializeArray();
+    var frm = $(frmCreate);
+    formData = new FormData(),
+    formParams = frm.serializeArray();
     $.each(frm.find('input[type="file"]'), function (i, tag) {
         isHasFile = true;
         $.each($(tag)[0].files, function (i, file) {
@@ -326,16 +278,15 @@ function Edit(controller, frmEdit) {
     $.each(formParams, function (i, val) {
         formData.append(val.name, val.value);
     });
-
-    var load = AjaxLoaderRan();
+    /*  var load = AjaxLoaderRan();*/
     $.ajax({
         type: "POST",
-        url: "/" + controller + "/Edit",
+        url: "/" + controller + "/Create",
         data: formData,
         processData: false,
         contentType: false,
         beforeSend: function () {
-            $(load).show();
+            $("#loading").show();
         },
         success: function (data) {
             if (data.isSucess) {
@@ -355,7 +306,56 @@ function Edit(controller, frmEdit) {
             AlertPopup(2, "Lỗi", data.message);
         },
         complete: function () {
-            $(load).hide();
+            $("#loading").hide();
+        }
+    });
+}
+
+function Edit(controller, frmEdit) {
+
+    var frm = $(frmEdit),
+        formData = new FormData(),
+        formParams = frm.serializeArray();
+    $.each(frm.find('input[type="file"]'), function (i, tag) {
+        isHasFile = true;
+        $.each($(tag)[0].files, function (i, file) {
+            formData.append(tag.name, file);
+        });
+    });
+
+    $.each(formParams, function (i, val) {
+        formData.append(val.name, val.value);
+    });
+
+   /* var load = AjaxLoaderRan();*/
+    $.ajax({
+        type: "POST",
+        url: "/" + controller + "/Edit",
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        success: function (data) {
+            if (data.isSucess) {
+                if (data.title && data.message)
+                    AlertPopup(1, data.title, data.message);
+                if (data.redirect) {
+                    setTimeout(function () {
+                        window.location.href = data.redirect;
+                    }, 3000);
+                }
+            }
+            else {
+                AlertPopup(3, data.title, data.message);
+            }
+        },
+        error: function (data) {
+            AlertPopup(2, "Lỗi", data.message);
+        },
+        complete: function () {
+            $("#loading").hide();
         }
     });
 }
