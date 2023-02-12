@@ -71,20 +71,20 @@
 				</li>
 			</ul>
 		</nav>
-		
+
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-		
+
 			<a href="/" class="brand-link">
 				<img src="~/Picture/LogoAdmin.jpg" class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">Phòng mạch Wibu</span>
 			</a>
 
-			
+
 			@Html.Action("Sidebar", "Shared", new { area = "" })
-			
+
 		</aside>
 
-		
+
 		<div class="content-wrapper">
 			@RenderBody()
 			<div id="loading" class="modal" style="background-position: center; background-repeat: no-repeat; position: fixed; top: 0; left: 0; height: 100%; width: 100%; background-image:url(/Picture/GuraLoader2.gif)">
@@ -92,7 +92,7 @@
 			@*<div id="loading2" class="modal" style="background-position: center; background-repeat: no-repeat; position: fixed; top: 0; left: 0; height: 100%; width: 100%; background-image:url(/Picture/GuraDrum2.gif)">
 				</div>*@
 		</div>
-		
+
 		<aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
 		</aside>
@@ -142,8 +142,26 @@
 		</div>
 
 	</div>
-
-
-
+	<div id="deleteConfirmModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">
+						<h4 class="modal-title">Xóa "<span class="item-name"></span>"</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<p class="modal-question">Bạn có chắc bạn muốn xóa "<span class="controller"></span>" này không?</p>
+						<p class="text-warning"><small>Hành động này sẽ không thể khôi phục được</small></p>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" id="cancel" data-dismiss="modal" value="Cancel">
+						<input type="button" class="btn btn-danger" value="Delete" id="deleteBtn">
+						<input type="hidden" id="id" name="id" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
