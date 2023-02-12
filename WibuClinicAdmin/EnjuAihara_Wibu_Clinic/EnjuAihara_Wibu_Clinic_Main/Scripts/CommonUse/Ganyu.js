@@ -59,7 +59,7 @@ function SearchInit(controller) {
     var $btn = $("#btn-search");
     $btn.button('loading');
 
-  /*  var load = AjaxLoaderRan();*/
+    /*  var load = AjaxLoaderRan();*/
     $.ajax({
         type: "POST",
         url: "/" + controller + "/_Search",
@@ -125,8 +125,8 @@ function Pagging() {
 //Nếu có dropdown thì cho dropdown = true, còn không thì = false
 function PaggingServerSide(controller, columns, dropdown) {
     /*var load = AjaxLoaderRan();*/
-	$("#tableRes").DataTable().clear().destroy();
-	$("#tableRes").on('processing.dt', function (e, settings, processing) {
+    $("#tableRes").DataTable().clear().destroy();
+    $("#tableRes").on('processing.dt', function (e, settings, processing) {
         LoadingDataTable(processing, '.dataTableServerSide');
     }).DataTable({
         proccessing: true,
@@ -164,7 +164,7 @@ function PaggingServerSide(controller, columns, dropdown) {
                 return JSON.stringify(d);
 
             },
-            beforeSend: function() {
+            beforeSend: function () {
                 $("#loading").show();
             },
             complete: function () {
@@ -185,26 +185,26 @@ function PaggingServerSide(controller, columns, dropdown) {
         },
         language: {
             sProcessing: "Vui lòng đợi xíu.....(๑´•ε •`๑)",
-			sLengthMenu: "Xem _MENU_ mục",
-			sZeroRecords: "Không tìm thấy dòng nào phù hợp",
-			sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-			sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
-			sInfoFiltered: "(được lọc từ _MAX_ mục)",
-			sInfoPostFix: "",
-			sSearch: "Tìm nội dung:",
-			sUrl: "",
-			oPaginate: {
-				sFirst: "Đầu",
-				sPrevious: "&laquo;",
-				sNext: "&raquo;",
-				sLast: "Cuối"
+            sLengthMenu: "Xem _MENU_ mục",
+            sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+            sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+            sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+            sInfoFiltered: "(được lọc từ _MAX_ mục)",
+            sInfoPostFix: "",
+            sSearch: "Tìm nội dung:",
+            sUrl: "",
+            oPaginate: {
+                sFirst: "Đầu",
+                sPrevious: "&laquo;",
+                sNext: "&raquo;",
+                sLast: "Cuối"
             }
         },
         columnDefs: [
             { targets: [0, 1], visible: true },
             { targets: 'no-sort', visible: false }
         ],
-       /* "sDom": '<"top"flp>rt<"bottom"ip><"clear">',*/
+        /* "sDom": '<"top"flp>rt<"bottom"ip><"clear">',*/
     });
 }
 
@@ -257,7 +257,7 @@ function AlertPopup(id, title, message) {
     });
     $(alertId).removeClass("hide");
     $(alertId).addClass("show");
-    setTimeout(function(){
+    setTimeout(function () {
         $(alertId).removeClass("show");
         $(alertId).addClass("hide");
     }, 5000);
@@ -267,7 +267,7 @@ function AlertPopup(id, title, message) {
 function SaveData(controller, frmCreate) {
     var frm = $(frmCreate);
     formData = new FormData(),
-    formParams = frm.serializeArray();
+        formParams = frm.serializeArray();
     $.each(frm.find('input[type="file"]'), function (i, tag) {
         isHasFile = true;
         $.each($(tag)[0].files, function (i, file) {
@@ -327,7 +327,7 @@ function Edit(controller, frmEdit) {
         formData.append(val.name, val.value);
     });
 
-   /* var load = AjaxLoaderRan();*/
+    /* var load = AjaxLoaderRan();*/
     $.ajax({
         type: "POST",
         url: "/" + controller + "/Edit",
@@ -413,48 +413,4 @@ function PreviewImg(input, id) {
         }
     }
 }
-
-}
-function Delete(controller,id) {
-    $.ajax({
-        url: "/"+controller+"/Delete/" + id,
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
-            if (data.isSucess == true) {
-                if (data.title && data.message) {
-                    AlertPopup(1, data.title, data.message);
-                }
-                if (data.redirect) {
-                    setTimeout(function () {
-                        window.location.href = data.redirect;
-                    }, 3000);
-                }
-            }
-
-        },
-        error: function (data) {
-            AlertPopup(2, "Lỗi", data.message);
-        }
-
-    });
-}
-$(document).on("click", ".btn-delete", function (e) {
-    var itemName = $(this).data("item-name");
-    var id = $(this).data("id");
-    var controller = $(this).data("controller");
-    $("#deleteConfirmModal .modal-title .item-name").html(itemName);
-    $("#deleteConfirmModal .modal-question .controller").html(controller);
-    $("#deleteConfirmModal").modal("show");
-    
-    $("#deleteBtn").on("click", function () {
-        Delete(controller, id);
-    });
-});
-$(document).on("click", "#cancel", function (e) {
-    $("#deleteConfirmModal").modal("hide");
-});
-$(document).on("click", ".close", function (e) {
-    $("#deleteConfirmModal").modal("hide");
-});
 
