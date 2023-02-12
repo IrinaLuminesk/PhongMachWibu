@@ -1,0 +1,163 @@
+﻿<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Phân quyền web</h1>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="row g-3 align-items-center">
+											<div class="col-md-3 text-center">
+												<label for="RoleCode" class="col-form-label">Nhóm người dùng</label>
+											</div>
+											<div class="col-md-9">
+												@Html.DropDownList("Role", (SelectList)ViewBag.Roles, new { @class = "form-control" })
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="card">
+						<div class="card-body">
+							<div id="Result">
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+	function GetPagePermission(RoleId) {
+
+		var form = new FormData();
+		form.append("RoleId", RoleId);
+
+		$.ajax({
+			type: "POST",
+			url: "/Permission/Access/GetPermissionPages",
+			data: form,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+				$("#Result").html("");
+			},
+			success: function (data) {
+				$("#Result").html("");
+				$("#Result").html(data);
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	}
+
+
+	function CreatePermission(id) {
+		var formdata = new FormData();
+		formdata.append("RoleId", $(id).data("roleid"));
+		formdata.append("PageId", $(id).data("pageid"));
+		formdata.append("FunctionId", $(id).data("functionid"));
+
+
+		$.ajax({
+			type: "POST",
+			url: "/Permission/Access/CreatePermissionPages",
+			data: formdata,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				if (data.IsSuccess == true)
+					AlertPopup(1, "Thành công", "Phân quyền thành công");
+				else
+					AlertPopup(2, "Lỗi", "Đã có lỗi xảy ra");
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	}
+
+
+	function DeletePermission(id) {
+		var formdata = new FormData();
+		formdata.append("RoleId", $(id).data("roleid"));
+		formdata.append("PageId", $(id).data("pageid"));
+		formdata.append("FunctionId", $(id).data("functionid"));
+
+
+		$.ajax({
+			type: "POST",
+			url: "/Permission/Access/DeletePermissionPages",
+			data: formdata,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				if (data.IsSuccess == true)
+					AlertPopup(1, "Thành công", "Phân quyền thành công");
+				else
+					AlertPopup(2, "Lỗi", "Đã có lỗi xảy ra");
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	}
+
+	$(document).ready(function () {
+		Select2Init("#Role");
+		$("#Role").change(function () {
+			GetPagePermission($("#Role").val());
+		});
+		$("#Role").trigger("change");
+	});
+
+	$(document).on("change", ".PageFunction", function (e) {
+		var id = $(this).attr('id');
+		var ischecked = $(this).is(':checked');
+		if (ischecked) {
+			CreatePermission("#" + id);
+
+		}
+		else {
+			DeletePermission("#" + id);
+		}
+	});
+</script>

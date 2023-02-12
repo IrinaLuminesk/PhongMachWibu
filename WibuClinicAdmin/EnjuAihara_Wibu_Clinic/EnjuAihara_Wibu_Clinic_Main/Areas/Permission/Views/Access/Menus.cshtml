@@ -1,0 +1,48 @@
+﻿@model IEnumerable<EnjuAihara.EntityFramework.MenuModel>
+@{
+	bool flag = true;
+	bool flag2 = true;
+}
+<ul class="nav nav-pills mb-3 nav-fill" id="pills-tab" role="tablist">
+	@foreach (var i in Model)
+	{
+		if (flag == true)
+		{
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="pills-@i.MenuId-tab" data-id="@i.MenuId" data-bs-toggle="pill" data-bs-target="#pills-@i.MenuId" type="button" role="tab" aria-controls="fills-@i.MenuName" aria-selected="@flag"><i class="@i.Icon"></i>@i.MenuName</button>
+			</li>
+			flag = false;
+		}
+		else
+		{
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="pills-@i.MenuId-tab" data-id="@i.MenuId" data-bs-toggle="pill" data-bs-target="#pills-@i.MenuId" type="button" role="tab" aria-controls="fills-@i.MenuName" aria-selected="@flag">	<i class="@i.Icon"></i>@i.MenuName</button>
+			</li>
+		}
+	}
+</ul>
+<div class="tab-content" id="pills-tabContent">
+	@foreach (var i in Model)
+	{
+		if (flag2 == true)
+		{
+			<div class="tab-pane fade show active" id="pills-@i.MenuId" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+				@{ Html.RenderAction("GetAllMenuPages", "Access", new { pages = i.PageModels.ToList(), RoleId = (Guid)ViewBag.RoleId }); }
+			</div>
+			flag2 = false;
+		}
+		else
+		{
+			<div class="tab-pane fade" id="pills-@i.MenuId" role="tabpanel" aria-labelledby="@i.MenuName-tab" tabindex="0">
+				@{ Html.RenderAction("GetAllMenuPages", "Access", new { pages = i.PageModels.ToList(), RoleId = (Guid)ViewBag.RoleId }); }
+			</div>
+		}
+
+	}
+</div>
+	@*<div class="tab-content" id="pills-tabContent">
+			<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">...</div>
+			<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">...</div>
+			<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">...</div>
+			<div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
+		</div>*@

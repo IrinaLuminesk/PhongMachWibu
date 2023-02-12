@@ -260,7 +260,7 @@ function AlertPopup(id, title, message) {
     setTimeout(function () {
         $(alertId).removeClass("show");
         $(alertId).addClass("hide");
-    }, 5000);
+    }, 3000);
 }
 
 
@@ -295,7 +295,7 @@ function SaveData(controller, frmCreate) {
                 if (data.redirect) {
                     setTimeout(function () {
                         window.location.href = data.redirect;
-                    }, 3000);
+                    }, 1500);
                 }
             }
             else {
@@ -344,7 +344,7 @@ function Edit(controller, frmEdit) {
                 if (data.redirect) {
                     setTimeout(function () {
                         window.location.href = data.redirect;
-                    }, 3000);
+                    }, 1500);
                 }
             }
             else {
@@ -428,7 +428,7 @@ function Delete(controller, id) {
                 if (data.redirect) {
                     setTimeout(function () {
                         window.location.href = data.redirect;
-                    }, 3000);
+                    }, 1500);
                 }
             }
 

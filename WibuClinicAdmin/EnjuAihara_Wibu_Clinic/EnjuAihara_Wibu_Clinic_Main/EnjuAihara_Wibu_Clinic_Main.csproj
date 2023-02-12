@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\MasterData\Controllers\AccountController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
+    <Compile Include="Areas\Permission\Controllers\AccessController.cs" />
     <Compile Include="Areas\Permission\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Permission\Controllers\AuthController.cs" />
     <Compile Include="Areas\Permission\Controllers\MenuController.cs" />
@@ -2176,6 +2177,10 @@
     <Content Include="Areas\Permission\Views\Role\Edit.cshtml" />
     <Content Include="Areas\Permission\Views\Role\Index.cshtml" />
     <Content Include="Areas\Permission\Views\Role\_Search.cshtml" />
+    <Content Include="Areas\Permission\Views\Access\Index.cshtml" />
+    <Content Include="Areas\Permission\Views\Access\Menus.cshtml" />
+    <Content Include="Areas\Permission\Views\Access\Pages.cshtml" />
+    <Content Include="Areas\Permission\Views\Access\PageFunction.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

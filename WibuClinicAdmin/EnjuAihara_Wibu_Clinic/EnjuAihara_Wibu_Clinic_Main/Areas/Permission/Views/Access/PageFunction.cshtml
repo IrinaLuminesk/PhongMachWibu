@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EnjuAihara.EntityFramework.PageFunctionModel>
+@{
+	int j = 1;
+	List<PagePermissionModel> PagePermission = (List<PagePermissionModel>)ViewBag.SelectPageFuntion;
+}
+<table class="table table-bordered table-striped table-hover" id="tableRes" style="width:100%">
+	<thead class="table-header">
+		<tr>
+			<th class="text-center">STT</th>
+			<th class="text-center">Tên chức năng</th>
+			<th class="text-center">Quyền</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var i in Model)
+		{
+			<tr>
+				<td class="text-center" style="vertical-align: middle;">@j</td>
+				<td class="text-center" style="vertical-align: middle;">@i.FunctionModel.FunctionName</td>
+				<td class="text-center align-items-center" style="vertical-align: middle; text-align:center">
+					@if (PagePermission.Any(x => x.FuntionId == i.FunctionId))
+					{
+						<input class="PageFunction" id="@i.FunctionId@i.PageId@ViewBag.RoleId" type="checkbox" value="@i.FunctionId" data-functionid="@i.FunctionId" data-PageId="@ViewBag.PageId" data-RoleId="@ViewBag.RoleId" checked>
+					}
+					else
+					{
+						<input class="PageFunction" id="@i.FunctionId@i.PageId@ViewBag.RoleId" type="checkbox" value="@i.FunctionId" data-functionid="@i.FunctionId" data-PageId="@ViewBag.PageId" data-RoleId="@ViewBag.RoleId">
+					}
+				</td>
+			</tr>
+			j++;
+		}
+	</tbody>
+	<tfoot class="table-footer">
+		<tr>
+			<th class="text-center">STT</th>
+			<th class="text-center">Tên chức năng</th>
+			<th class="text-center">Quyền</th>
+		</tr>
+	</tfoot>
+</table>
+
