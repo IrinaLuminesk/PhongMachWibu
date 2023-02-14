@@ -19,7 +19,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 
         public void CreateViewBag()
         {
-            var RoleList = _context.RolesModels.Select(x =>
+            var RoleList = _context.RolesModels.Where(x => !x.RoleName.Equals("Khách hàng")).Select(x =>
             new SelectGuidItem
             {
                 id = x.RoleId,
@@ -56,7 +56,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         }
 
         [HttpPost]
-        public JsonResult CreatePermissionPages(Guid PageId, Guid RoleId, string FunctionId)
+        public JsonResult Create(Guid PageId, Guid RoleId, string FunctionId)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeletePermissionPages(Guid PageId, Guid RoleId, string FunctionId)
+        public JsonResult Delete(Guid PageId, Guid RoleId, string FunctionId)
         {
             try
             {

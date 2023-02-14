@@ -80,6 +80,16 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 ModelState.AddModelError("", "Tài khoản không tồn tại");
                 return false;
             }
+
+            if (account.AccountInRoleModels.Count() == 1)
+            {
+                if (account.AccountInRoleModels.Any(x => x.RolesModel.RoleName.Equals("Khách hàng")))
+                {
+                    ModelState.AddModelError("", "Tài khoản không tồn tại");
+                    return false;
+                }
+            }
+
             if (model.RememberMe == true)
             {
                 HttpCookie userInfo = new HttpCookie("userInfo");
