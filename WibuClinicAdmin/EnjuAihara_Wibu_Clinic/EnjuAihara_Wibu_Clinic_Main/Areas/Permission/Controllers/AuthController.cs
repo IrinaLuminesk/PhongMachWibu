@@ -88,7 +88,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 userInfo["Password"] = model.Password;
                 userInfo.Expires = DateTime.Now.AddDays(1);
                 Response.Cookies.Add(userInfo);
-                Request.Cookies["userInfo"].Expires = DateTime.Now.AddDays(1);
+                Request.Cookies["userInfo"].Expires = DateTime.Now.AddDays(30);
             }
             var identity = new ClaimsIdentity(new[] 
             {

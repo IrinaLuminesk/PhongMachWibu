@@ -47,6 +47,8 @@
     <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />
     <Compile Include="Permission\Auth\LoginViewModel.cs" />
+    <Compile Include="Permission\MenuViewModel.cs" />
+    <Compile Include="Permission\PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectList\SelectBoolItem.cs" />
     <Compile Include="SelectList\SelectGuidItem.cs" />
