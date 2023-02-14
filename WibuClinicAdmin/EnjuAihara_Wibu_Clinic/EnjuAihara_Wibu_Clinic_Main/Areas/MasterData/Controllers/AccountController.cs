@@ -229,7 +229,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                         isSucess = true,
                         title = "Sửa thành công",
                         message = string.Format("Sửa {0} thành công, vui lòng đăng nhập lại", EditAccount.UserName),
-                        redirect = "/Permission/Login"
+                        redirect = "/Permission/Auth/Login"
                     });
                 }
                 return Json(new
