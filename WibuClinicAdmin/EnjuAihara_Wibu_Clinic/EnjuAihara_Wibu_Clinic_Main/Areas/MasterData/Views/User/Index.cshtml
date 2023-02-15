@@ -1,17 +1,17 @@
-﻿@*<style>
+﻿<style>
 	table.dataTable td, table.dataTable th {
 		white-space: nowrap;
 	}
-</style>*@
+</style>
 <div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="m-0">Quản lý tài khoản người dùng</h1>
+				<h1 class="m-0">Quản lý người dùng</h1>
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
-					<a class="btn btn-primary" href="/Masterdata/Account/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+					<a class="btn btn-primary" href="/Masterdata/User/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
 				</div>
 			</div>
 		</div>
@@ -30,34 +30,92 @@
 										<div class="col-md-6">
 											<div class="row g-3 align-items-center">
 												<div class="col-md-3 text-center">
-													<label for="AccountCodeSearch" class="col-form-label">Mã tài khoản</label>
+													<label for="UserCode" class="col-form-label">Mã nguời dùng</label>
 												</div>
 												<div class="col-md-9">
-													<input type="text" id="AccountCodeSearch" name="AccountCodeSearch" class="form-control">
+													<input type="text" id="UserCode" name="UserCode" class="form-control">
 												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="row g-3 align-items-center">
 												<div class="col-md-3 text-center">
-													<label for="AccountName" class="col-form-label">Tên tài khoản</label>
+													<label for="UserName" class="col-form-label">Tên người dùng</label>
 												</div>
 												<div class="col-md-9">
-													<input type="text" id="AccountName" name="AccountName" class="form-control">
+													<input type="text" id="UserName" name="UserName" class="form-control">
 
 												</div>
 											</div>
 										</div>
 									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-12">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-12 text-center">
+													<label class="col-form-label">Ngày sinh</label>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
 									<div class="row mt-3">
 										<div class="col-md-6">
 											<div class="row g-3 align-items-center">
 												<div class="col-md-3 text-center">
-													<label for="RoleNameSearch" class="col-form-label">Vai trò người dùng</label>
+													<label for="BirthdayFrom" class="col-form-label">Từ ngày</label>
 												</div>
 												<div class="col-md-9">
-													@*<input type="text" id="AccountCodeSearch" name="AccountCodeSearch" class="form-control">*@
-													@Html.DropDownList("RoleNameSearch", (SelectList)ViewBag.RoleNameSearch, "-- Tất cả --", new { @class = "form-control" })
+													<input type="date" id="BirthdayFrom" name="BirthdayFrom" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="BirthdayTo" class="col-form-label">Đến ngày</label>
+												</div>
+												<div class="col-md-9">
+													<input type="date" id="BirthdayTo" name="BirthdayTo" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Address" class="col-form-label">Địa chỉ</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="Address" name="Address" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Email" class="col-form-label">Email</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="Email" name="Email" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Phone" class="col-form-label">Số điện thoại</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="Phone" name="Phone" class="form-control">
 												</div>
 											</div>
 										</div>
@@ -67,34 +125,12 @@
 													<label for="Actived" class="col-form-label">Trạng thái</label>
 												</div>
 												<div class="col-md-9">
-													@*<input type="text" id="AccountName" name="AccountName" class="form-control">*@
 													@Html.DropDownList("Actived", (SelectList)ViewBag.Actived, "-- Tất cả --", new { @class = "form-control" })
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="row mt-3">
-										<div class="col-md-6">
-											<div class="row g-3 align-items-center">
-												<div class="col-md-3 text-center">
-													<label for="FromDate" class="col-form-label">Được tạo từ ngày</label>
-												</div>
-												<div class="col-md-9">
-													<input type="date" id="FromDate" name="FromDate" class="form-control">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="row g-3 align-items-center">
-												<div class="col-md-3 text-center">
-													<label for="ToDate" class="col-form-label">Được tạo đến ngày</label>
-												</div>
-												<div class="col-md-9">
-													<input type="date" id="ToDate" name="ToDate" class="form-control">
-												</div>
-											</div>
-										</div>
-									</div>
+
 									<div class="row" style="margin-top: 15px">
 										<div class="col-md-12 text-center">
 											<button type="button" class="btn btn-primary" id="btn-search">
@@ -113,7 +149,7 @@
 				<div class="panel-body">
 					<div class="card">
 						<div class="card-body">
-							<div id="divSearchResult">
+							<div id="divSearchResult" style="overflow-x:auto;" class="table-responsive">
 								@Html.Partial("_PaggingServerSide")
 							</div>
 						</div>
@@ -124,9 +160,10 @@
 		</div>
 	</div>
 </div>
-
 <script type="text/javascript">
 	$(document).ready(function () {
+		Select2Init("#Actived");
+		CloseSideBar();
 		var columns = [
 			{
 				"data": "STT",
@@ -134,22 +171,42 @@
 				"orderable": true,
 			},
 			{
-				"data": "AccountCode",
+				"data": "UserCodeResult",
 				"className": "text-center",
 				"orderable": true,
 			},
 			{
-				"data": "UserName",
+				"data": "LastName",
 				"className": "text-center",
 				"orderable": true,
 			},
 			{
-				"data": "RealName",
+				"data": "FirstName",
 				"className": "text-center",
 				"orderable": true,
 			},
 			{
-				"data": "RoleName",
+				"data": "BirthdayString",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "AddressResult",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "PhoneResult",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "EmailResult",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "AccountName",
 				"orderable": false,
 				"className": "text-center",
 				"render": function (data, type, row) {
@@ -161,23 +218,8 @@
 						s += '</select >';
 						return s;
 					}
-					return "Người dùng hiện chưa có vai trò";
+					return "Người dùng hiện chưa có tài khoản";
 				}
-			},
-			{
-				"data": "CreateDateString",
-				"className": "text-center",
-				"orderable": true,
-			},
-			{
-				"data": "CreateBy",
-				"className": "text-center",
-				"orderable": true,
-			},
-			{
-				"data": "LastLoginTimeString",
-				"className": "text-center",
-				"orderable": true,
 			},
 			{
 				"data": "Status",
@@ -185,24 +227,21 @@
 				"orderable": true,
 			},
 			{
-				"data": "AccountId",
+				"data": "UserId",
 				"className": "text-center",
 				"orderable": false,
 				"render": function (data, type, row) {
 					if (data != "" && data != null) {
-						var s = '<a class="btn btn-info" href="/MasterData/Account/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+						var s = '<a class="btn btn-info" href="/MasterData/User/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
 						return s;
 					}
 					return "";
 				}
 			}
 		];
-		//$("#btn-search").on("click", function () {
-		//	PaggingServerSide("MasterData/Account", columns, true);
-		//});
-		PaggingServerSideSearchInitialWithClick("MasterData/Account", columns, true);
-		Select2Init("#RoleNameSearch");
-		Select2Init("#Actived");
+		PaggingServerSideSearchInitialWithClick("MasterData/User", columns, true);
+
+
+		
 	});
 </script>
-

@@ -111,6 +111,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             var authManager = ctx.Authentication;
 
             authManager.SignIn(identity);
+            account.LastLoginTime = DateTime.Now;
+            _context.SaveChanges();
             return true;
         }
 

@@ -48,5 +48,9 @@ namespace EnjuAihara.ViewModels.MasterData
 
         public Guid? AccountId { get; set; }
 
+        public DateTime? LastLoginTime { get; set; }
+
+        public string LastLoginTimeString { get; set; }
+
     }
 }

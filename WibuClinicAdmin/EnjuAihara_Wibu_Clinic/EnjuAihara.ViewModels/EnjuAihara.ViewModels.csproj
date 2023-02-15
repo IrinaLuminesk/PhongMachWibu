@@ -46,6 +46,7 @@
     <Compile Include="MasterData\AccountCreateViewModel.cs" />
     <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />
+    <Compile Include="MasterData\UserViewModel.cs" />
     <Compile Include="Permission\Auth\LoginViewModel.cs" />
     <Compile Include="Permission\MenuViewModel.cs" />
     <Compile Include="Permission\PageViewModel.cs" />
@@ -54,6 +55,11 @@
     <Compile Include="SelectList\SelectGuidItem.cs" />
     <Compile Include="SelectList\SelectStringItem.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EnjuAihara.EntityFramework\EnjuAihara.EntityFramework.csproj">
+      <Project>{2c7f252b-7cdc-4f5a-8625-d595a7e6aaa1}</Project>
+      <Name>EnjuAihara.EntityFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
