@@ -14,9 +14,10 @@ namespace DataGeneration.Entities
     
     public partial class PagePermissionModel
     {
-        public System.Guid RoleId { get; set; }
-        public System.Guid PageId { get; set; }
+        public Nullable<System.Guid> RoleId { get; set; }
+        public Nullable<System.Guid> PageId { get; set; }
         public string FuntionId { get; set; }
+        public System.Guid PagePermissionId { get; set; }
     
         public virtual FunctionModel FunctionModel { get; set; }
         public virtual PageModel PageModel { get; set; }

@@ -199,11 +199,20 @@ namespace DataGeneration
 
 
 
-            var list = _context.MedicineProvideModels.ToList();
-            foreach (var i in _context.WarehouseModels.ToList())
+            //var list = _context.MedicineProvideModels.ToList();
+            //foreach (var i in _context.WarehouseModels.ToList())
+            //{
+            //    int index = ran.Next(0, list.Count());
+            //    i.MedicineProviderId = list[index].MedicineProvideId;
+            //    _context.SaveChanges();
+            //}
+
+
+            var MedicinePro = _context.MedicineProvideModels.ToList();
+            foreach (var i in _context.MedicineCompoundModels.ToList())
             {
-                int index = ran.Next(0, list.Count());
-                i.MedicineProviderId = list[index].MedicineProvideId;
+                int ra = ran.Next(0, MedicinePro.Count() - 1);
+                i.MedicineId = MedicinePro[ra].MedicineProvideId;
                 _context.SaveChanges();
             }
         }

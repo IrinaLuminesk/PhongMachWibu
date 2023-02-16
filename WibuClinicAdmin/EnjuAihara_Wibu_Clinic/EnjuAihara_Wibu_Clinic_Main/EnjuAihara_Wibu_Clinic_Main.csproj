@@ -2185,6 +2185,7 @@
     <Content Include="Areas\Permission\Views\Access\PageFunction.cshtml" />
     <Content Include="Areas\MasterData\Views\User\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\User\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\User\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

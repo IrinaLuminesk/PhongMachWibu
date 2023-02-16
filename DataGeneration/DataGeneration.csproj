@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\AccountInRoleModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\AccountModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>

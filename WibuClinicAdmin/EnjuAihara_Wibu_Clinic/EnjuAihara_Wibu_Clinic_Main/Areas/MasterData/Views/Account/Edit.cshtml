@@ -35,7 +35,7 @@
 						</div>
 					</div>
 				</div>
-
+				<input name="AvatarIsChange" id="AvatarIsChange" value="false" type="hidden"/>
 			</div>
 			<div class="col-md-9">
 				<div class="card h-100">
@@ -140,6 +140,7 @@
 
 		$("#Reset-Avatar").on("click", function () {
 			$("#Img").attr('src', "@Model.ImagePath");
+			$("#Avatar").val('');
 		})
 
 		$("#Password-Reset").on("click", function () {

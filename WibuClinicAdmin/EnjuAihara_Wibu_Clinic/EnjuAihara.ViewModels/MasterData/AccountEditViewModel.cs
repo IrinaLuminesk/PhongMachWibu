@@ -20,5 +20,7 @@ namespace EnjuAihara.ViewModels.MasterData
         public bool Actived { get; set; }
 
         public Guid AccountId { get; set; }
+
+        public bool AvatarIsChange { get; set; }
     }
 }
