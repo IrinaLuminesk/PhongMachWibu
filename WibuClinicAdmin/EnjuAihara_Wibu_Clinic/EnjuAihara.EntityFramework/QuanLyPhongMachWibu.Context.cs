@@ -52,6 +52,7 @@ namespace EnjuAihara.EntityFramework
         public virtual DbSet<ProviderModel> ProviderModels { get; set; }
         public virtual DbSet<RolesModel> RolesModels { get; set; }
         public virtual DbSet<StreetModel> StreetModels { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UsersModel> UsersModels { get; set; }
         public virtual DbSet<WardModel> WardModels { get; set; }
         public virtual DbSet<WarehouseModel> WarehouseModels { get; set; }

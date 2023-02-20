@@ -39,6 +39,34 @@ function Select2_AutoComplete(url, id) {
         }
     });
 }
+
+function Select2_MultipleAutoComplete(url, id) {
+    $(id).select2({
+        width: '100%',
+        scroll: true,
+        multiple: true,
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term, // search term
+                    page: params.page
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (obj) {
+                        return { id: obj.value, text: obj.text };
+                    })
+                };
+            },
+            minimumInputLength: 0
+
+        }
+    });
+}
 function SearchInitialWithClick(controller) {
     $("#btn-search").click(function () {
         SearchInit(controller);

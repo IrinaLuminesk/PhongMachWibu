@@ -46,12 +46,19 @@
     <Compile Include="MasterData\AccountCreateViewModel.cs" />
     <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />
+    <Compile Include="MasterData\MedicineCreateViewModel.cs" />
+    <Compile Include="MasterData\MedicineSearchViewModel.cs" />
     <Compile Include="Permission\Auth\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectList\SelectBoolItem.cs" />
     <Compile Include="SelectList\SelectGuidItem.cs" />
     <Compile Include="SelectList\SelectStringItem.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EnjuAihara.EntityFramework\EnjuAihara.EntityFramework.csproj">
+      <Project>{2C7F252B-7CDC-4F5A-8625-D595A7E6AAA1}</Project>
+      <Name>EnjuAihara.EntityFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

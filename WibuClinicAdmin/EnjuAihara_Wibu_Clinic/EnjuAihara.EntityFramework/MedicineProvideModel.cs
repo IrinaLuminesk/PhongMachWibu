@@ -25,6 +25,7 @@ namespace EnjuAihara.EntityFramework
         public Nullable<System.Guid> ProviderId { get; set; }
         public Nullable<System.Guid> MedicineId { get; set; }
         public Nullable<bool> Actived { get; set; }
+        public string ProductImage { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }

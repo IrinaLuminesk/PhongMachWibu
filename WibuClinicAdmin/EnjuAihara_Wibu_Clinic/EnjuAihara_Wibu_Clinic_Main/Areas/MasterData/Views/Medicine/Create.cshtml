@@ -1,0 +1,144 @@
+﻿<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Tạo mới thuốc</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="pull-right">
+                    <a class="btn btn-info" href="/MasterData/Medicine"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="frmCreate" enctype='multipart/form-data'>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        @*<div class="col-md-12">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-2 text-center">
+                    <label for="ForUser" class="col-form-label">Tạo tài khoản cho người dùng</label>
+                </div>
+                <div class="col-md-10">
+                    <select id="ForUser" name="ForUser" class="form-control"></select>
+                </div>
+            </div>
+        </div>*@
+                                        <div class="col-md-12">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="MedicineCode" class="col-form-label">Mã thuốc</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input type="text" id="MedicineCode" name="MedicineCode" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="MedicineName" class="col-form-label">Tên thuốc</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input type="text" id="MedicineName" name="MedicineName" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="Unit" class="col-form-label">Đơn vị tính</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input type="text" id="Unit" name="Unit" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="Password" class="col-form-label">Các nhà cung cấp</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <select name="NccList" class = "form-control" id="NccList"></select>-->
+                                                    @*@Html.DropDownList("NccList", (SelectList)ViewBag.NccList, null, new { @class = "form-control with-search" })*@
+                                                <!--</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="Password" class="col-form-label">Thành phần thuốc</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <select name="ThanhPhanList" class="form-control" id="ThanhPhanList"></select>-->
+                                                    @*@Html.DropDownList("ThanhPhanList", (SelectList)ViewBag.ThanhPhanList, null, new { @class = "form-control with-search" })*@
+                                                <!--</div>
+                                            </div>
+                                        </div>-->
+                                        @*<div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="Avatar" class="col-form-label">Ảnh thực tế</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input type="file" id="DrugImage" name="DrugImage" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                        <!--<div class="col-md-12 mt-3">
+                                            <div class="row g-3 align-items-top">
+                                                <div class="col-md-2 text-center">
+                                                    <label for="Roles" class="col-form-label">Nhóm người dùng</label>
+                                                </div>
+                                                <div class="col-md-10">-->
+                                                    @*@foreach (var i in (List<EnjuAihara.EntityFramework.RolesModel>)ViewBag.RoleList)
+                    {
+
+                        <input type="checkbox" id="Roles" name="Roles" value="@i.RoleId">
+                        <label for="Roles">@i.RoleName</label>
+                        <br />
+                    }*@
+                                                <!--</div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="row" style="margin-top: 15px">
+                                        <div class="col-md-12 text-center">
+                                            <button type="button" class="btn btn-primary" id="btn-add">
+                                                <i class="fa fa-plus-square"></i>
+                                                Thêm mới
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+        /*Select2_AutoComplete("/MasterData/Account/AutoComplete", "#ForUser");*/
+        Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete", "#NccList")
+        Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2", "#ThanhPhanList")
+		$("#btn-add").on("click", function () {
+			SaveData("MasterData/Medicine", "#frmCreate");
+			PreventEnterButton();
+		});
+	});
+
+</script>
+
+
