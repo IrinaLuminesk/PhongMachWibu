@@ -17,6 +17,14 @@ namespace EnjuAihara.Utilities.RandomString
             return CreateCode(temp[1], temp[0]);
         }
 
+
+        public static string NguoiDungCodeGen()
+        {
+            string code = _context.UsersModels.OrderByDescending(x => x.UserCode).Take(1).FirstOrDefault().UserCode;
+            string[] temp = code.Split('-');
+            return CreateCode(temp[1], temp[0]);
+        }
+
         public static string CreateCode(string num, string table)
         {
             string code = table;

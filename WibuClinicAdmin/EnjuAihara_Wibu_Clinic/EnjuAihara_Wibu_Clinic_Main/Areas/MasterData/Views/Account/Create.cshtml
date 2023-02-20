@@ -99,9 +99,9 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		Select2_AutoComplete("/MasterData/Account/AutoComplete", "#ForUser");
+		PreventEnterButton();
 		$("#btn-add").on("click", function () {
 			SaveData("MasterData/Account", "#frmCreate");
-			PreventEnterButton();
 		});
 	});
 

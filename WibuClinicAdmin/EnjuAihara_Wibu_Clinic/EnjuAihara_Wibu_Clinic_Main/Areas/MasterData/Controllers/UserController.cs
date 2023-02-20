@@ -1,10 +1,12 @@
 ﻿using EnjuAihara.Core;
+using EnjuAihara.EntityFramework;
 using EnjuAihara.Utilities.CloudinaryHelper;
 using EnjuAihara.Utilities.Datatable;
 using EnjuAihara.Utilities.DateTimeFormat;
 using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.Datatable;
 using EnjuAihara.ViewModels.MasterData;
+using EnjuAihara.Utilities.RandomString;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -91,6 +93,55 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
 
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public JsonResult Create(EditUserViewModel model)
+        {
+            try
+            {
+                JsonResult result = ValidateUser(model);
+                if (result != null)
+                    return result;
+                var newuser = new UsersModel()
+                {
+                    UserID = Guid.NewGuid(),
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    ImagePath = model.Avatar == null ? "" : CloudinaryUpload.Upload(model.Avatar),
+                    Actived = true,
+                    Address = model.Address,
+                    Birthday = model.Birthday,
+                    Email = model.Email,
+                    Phone = model.Phone,
+                    UserCode = DataCodeGenerate.NguoiDungCodeGen()
+                };
+                _context.Entry(newuser).State = System.Data.Entity.EntityState.Added;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thêm thành công",
+                    message = "Thêm người dùng mới thành công",
+                    redirect = "/MasterData/User"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Đã có lỗi xảy ra trong quá trình tạo người dùng"
+                });
+            }
+        }
+
+
         public ActionResult Edit(Guid id)
         {
             var user = _context.UsersModels.Where(x => x.UserID == id).FirstOrDefault();
@@ -174,7 +225,28 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     message = "Vui lòng không để trống điện thoại người dùng"
                 });
             }
-
+            else
+            {
+                bool flag = int.TryParse(model.Phone, out _);
+                if (flag == false)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng nhập đúng định dạng số điện thoại"
+                    });
+                }
+                if (model.Phone.Length > 10)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng nhập đúng định dạng số điện thoại"
+                    });
+                }
+            }
             if (string.IsNullOrEmpty(model.Email))
             {
                 return Json(new
@@ -193,6 +265,27 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                         isSucess = false,
                         title = "Lỗi",
                         message = "Vui lòng nhập đúng định dạng Email người dùng"
+                    });
+                }
+            }
+            if (model.Birthday == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống ngày sinh người dùng"
+                });
+            }
+            else
+            {
+                if (model.Birthday > DateTime.Now)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng không nhập ngày sinh người dùng lớn hơn ngày hiện tại"
                     });
                 }
             }
