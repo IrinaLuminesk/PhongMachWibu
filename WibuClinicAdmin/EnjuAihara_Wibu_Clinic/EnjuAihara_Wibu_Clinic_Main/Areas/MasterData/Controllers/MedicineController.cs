@@ -47,15 +47,15 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 .Select(x =>
             new MedicineSearchViewModel
             {
-                MedicineId = x.MedicineId,
+                MedicineId = x.MedicineProvideId,
                 MedicineName = x.MedicineModel.MedicineName,
                 Unit = x.MedicineModel.Unit,
-                IngredientName = _context.MedicineCompoundModels.Where(y => y.MedicineId == x.MedicineId).Select(y => y.IngredientModel.IngredientName).ToList(),
+                IngredientName = _context.MedicineCompoundModels.Where(y => y.MedicineId == x.MedicineProvideId).Select(y => y.IngredientModel.IngredientName).ToList(),
                 //RoleName = x.RolesModels.Select(y => y.RoleName).ToList(),
                 //RoleName = x.AccountInRoleModels.Select(y => y.RolesModel.RoleName).ToList(),
                 ProviderName = x.ProviderModel.ProviderName,
 
-                Status2=x.WarehouseModels.Select(y=>y.InstockQuantity).Sum() <= 0 ? "Đã hết trong kho":"Còn tồn trong kho",
+                
                 MedicineOnHandQuantity= x.WarehouseModels.Select(y => y.InstockQuantity).Sum(),
                 MaxPrice= x.WarehouseModels.Max(y=>y.BoughtPrice),
                 Expiry=x.WarehouseModels.OrderByDescending(y=>y.ExpiredDate).Select(y=>y.ExpiredDate).FirstOrDefault(),
@@ -71,6 +71,23 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     i++;
                     item.STT = i;
                     item.ExpiryString = FormatDateTime.FormatDateTimeWithString(item.Expiry);
+                    var inStockQuantity = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineId).Select(y => y.InstockQuantity).Sum();
+                    if(inStockQuantity <=0 || inStockQuantity == null)
+                    {
+                        if (inStockQuantity <= 0)
+                        {
+                            item.MaxPrice = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineId).Max(y => y.BoughtPrice);
+                        }
+                        if (inStockQuantity ==null)
+                        {
+                            item.MaxPrice = 0;
+                        }
+                        item.Status2 = "Đã hết trong kho";
+                    }
+                    else
+                    {
+                        item.Status2 = "Còn trong kho";
+                    }
                 }
             }
             return Json(new
