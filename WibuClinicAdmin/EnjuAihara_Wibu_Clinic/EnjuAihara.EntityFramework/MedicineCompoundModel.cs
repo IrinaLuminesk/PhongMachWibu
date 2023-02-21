@@ -19,6 +19,6 @@ namespace EnjuAihara.EntityFramework
         public Nullable<System.Guid> MedicineId { get; set; }
     
         public virtual IngredientModel IngredientModel { get; set; }
-        public virtual MedicineModel MedicineModel { get; set; }
+        public virtual MedicineProvideModel MedicineProvideModel { get; set; }
     }
 }

@@ -17,7 +17,6 @@ using EnjuAihara.Utilities.EncryptionAlgorithm;
 using System.IO;
 using Microsoft.AspNet.Identity;
 using EnjuAihara.Utilities.RandomString;
-using System.Security.Principal;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
@@ -29,7 +28,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             CreateViewBag();
             return View();
         }
-        public JsonResult _PaggingServerSide(DatatableViewModel model,  search, string AccountCodeSearch, string AccountName, Guid? RoleNameSearch, DateTime? FromDate, DateTime? ToDate, bool? Actived)
+        public JsonResult _PaggingServerSide(DatatableViewModel model,MedicineSearchViewModel  search, string MedicineNameSearch, string MedicineCodeSearch, Guid? ProviderNameSearch, Guid? IngredientNameSearch, bool? Actived)
         {
             int filteredResultsCount;
             int totalResultsCount = model.length;
@@ -38,29 +37,32 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             search.PageSize = model.length;
             search.PageNumber = model.start / model.length + 1;
 
-            var query = _context.AccountModels.
-                Where(x => (x.AccountCode.Contains(AccountCodeSearch) || string.IsNullOrEmpty(AccountCodeSearch))
-                && (x.UserName.Contains(AccountName) || string.IsNullOrEmpty(AccountName))
-                && (x.AccountInRoleModels.Any(z => z.RoleId == RoleNameSearch) || RoleNameSearch == null)
-                && (x.Actived == Actived || Actived == null)
-                && (x.CreateDate >= FromDate || FromDate == null)
-                && (x.CreateDate <= ToDate || ToDate == null)
-                )
+            var query = _context.MedicineProvideModels
+                //Where(x => (x.MedicineCode.Contains(MedicineCodeSearch) || string.IsNullOrEmpty(MedicineCodeSearch))
+                //&& (x.MedicineName.Contains(MedicineNameSearch) || string.IsNullOrEmpty(MedicineNameSearch))
+                //&& (x.MedicineProvideModels.Any(z => z.ProviderId == ProviderNameSearch) || ProviderNameSearch == null)
+                ////&& (x.MedicineProvideModels.Any(z => z.ProviderId == ProviderNameSearch) || ProviderNameSearch == null)
+                //&& (x.Actived == Actived || Actived == null)
+                //)
                 .Select(x =>
-            new AccountSearchViewModel
+            new MedicineSearchViewModel
             {
-                AccountId = x.AccountId,
-                AccountCode = x.AccountCode,
-                UserName = x.UserName,
+                MedicineId = x.MedicineId,
+                MedicineName = x.MedicineModel.MedicineName,
+                Unit = x.MedicineModel.Unit,
+                IngredientName = _context.MedicineCompoundModels.Where(y => y.MedicineId == x.MedicineId).Select(y => y.IngredientModel.IngredientName).ToList(),
                 //RoleName = x.RolesModels.Select(y => y.RoleName).ToList(),
-                RoleName = x.AccountInRoleModels.Select(y => y.RolesModel.RoleName).ToList(),
-                CreateDate = x.CreateDate,
-                RealName = x.UsersModel.LastName + " " + x.UsersModel.FirstName,
-                CreateBy = x.AccountModel2.UserName,
+                //RoleName = x.AccountInRoleModels.Select(y => y.RolesModel.RoleName).ToList(),
+                ProviderName = x.ProviderModel.ProviderName,
+
+                Status2=x.WarehouseModels.Select(y=>y.InstockQuantity).Sum() <= 0 ? "Đã hết trong kho":"Còn tồn trong kho",
+                MedicineOnHandQuantity= x.WarehouseModels.Select(y => y.InstockQuantity).Sum(),
+                MaxPrice= x.WarehouseModels.Max(y=>y.BoughtPrice),
+                Expiry=x.WarehouseModels.OrderByDescending(y=>y.ExpiredDate).Select(y=>y.ExpiredDate).FirstOrDefault(),
                 Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng"
 
-            }).OrderBy(x => x.CreateDate).ToList();
-            var finalResult = PaggingServerSideDatatable.DatatableSearch<AccountSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
+            }).ToList();
+            var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
                 int i = model.start;
@@ -68,7 +70,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 {
                     i++;
                     item.STT = i;
-                    item.CreateDateString = FormatDateTime.FormatDateTimeWithString(item.CreateDate);
+                    item.ExpiryString = FormatDateTime.FormatDateTimeWithString(item.Expiry);
                 }
             }
             return Json(new

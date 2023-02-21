@@ -14,37 +14,31 @@ namespace EnjuAihara.ViewModels.MasterData
 
 
         //Các tham số search
-        public string AccountName { get; set; }
+        public string MedicineNameSearch { get; set; }
 
-        public string AccountCodeSearch { get; set; }
-
-        public Guid? RoleNameSearch { get; set; }
-
+        public string MedicineCodeSearch { get; set; }
+        public string IngredientNameSearch { get; set; }
+        public string ProviderNameSearch { get; set; }
+        
         public bool Actived { get; set; }
-
-        public DateTime FromDate { get; set; }
-
-        public DateTime ToDate { get; set; }
 
         //Các tham số trả về
         public int STT { get; set; }
 
-        public string AccountCode { get; set; }
+        public string MedicineName { get; set; }
 
-        public string UserName { get; set; }
+        public string Unit { get; set; }
 
-        public List<string> RoleName { get; set; }
+        public List<string> IngredientName { get; set; }
+        public string ProviderName { get; set; }
 
-        public DateTime? CreateDate { get; set; }
+        public decimal? MedicineOnHandQuantity { get; set; }
+        public decimal? MaxPrice { get; set; }
+        public DateTime? Expiry { get; set; }
 
-        public string CreateDateString { get; set; }
-
-        public string RealName { get; set; }
-
-        public string CreateBy { get; set; }
-
+        public string ExpiryString { get; set; }
+        public Guid? MedicineId { get; set; }
         public string Status { get; set; }
-
-        public Guid? AccountId { get; set; }
+        public string Status2 { get; set; }
     }
 }

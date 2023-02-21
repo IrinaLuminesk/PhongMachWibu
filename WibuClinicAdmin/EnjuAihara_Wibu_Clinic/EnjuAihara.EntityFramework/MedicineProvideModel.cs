@@ -18,6 +18,7 @@ namespace EnjuAihara.EntityFramework
         public MedicineProvideModel()
         {
             this.DescriptionDetailModels = new HashSet<DescriptionDetailModel>();
+            this.MedicineCompoundModels = new HashSet<MedicineCompoundModel>();
             this.WarehouseModels = new HashSet<WarehouseModel>();
         }
     
@@ -29,6 +30,8 @@ namespace EnjuAihara.EntityFramework
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicineCompoundModel> MedicineCompoundModels { get; set; }
         public virtual MedicineModel MedicineModel { get; set; }
         public virtual ProviderModel ProviderModel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

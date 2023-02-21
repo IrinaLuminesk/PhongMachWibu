@@ -28,7 +28,7 @@
                                                     <label for="MedicineName" class="col-form-label">Tên thuốc</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <input type="text" id="MedicineName" name="MedicineName" class="form-control">
+                                                    <input type="text" id="MedicineNameSearch" name="MedicineNameSearch" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -38,7 +38,7 @@
                                                     <label for="MedicineCode" class="col-form-label">Mã thuốc</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <input type="text" id="MedicineCode" name="MedicineCode" class="form-control">
+                                                    <input type="text" id="MedicineCodeSearch" name="MedicineCodeSearch" class="form-control">
 
                                                 </div>
                                             </div>
@@ -51,7 +51,7 @@
                                                     <label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <input type="text" id="ProviderName" name="ProviderName" class="form-control">
+                                                    <input type="text" id="ProviderNameSearch" name="ProviderNameSearch" class="form-control">
 
                                                 </div>
                                             </div>
@@ -62,7 +62,7 @@
                                                     <label for="ProviderName" class="col-form-label">Tên thành phần</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <input type="text" id="IngredientName" name="IngredientName" class="form-control">
+                                                    <input type="text" id="IngredientNameSearch" name="IngredientNameSearch" class="form-control">
 
                                                 </div>
                                             </div>
@@ -100,7 +100,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div id="divSearchResult">
-                                @*@Html.Partial("_PaggingServerSide")*@
+                                @Html.Partial("_PaggingServerSide")
                             </div>
                         </div>
 
@@ -110,3 +110,100 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		var columns = [
+			{
+				"data": "STT",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "MedicineName",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Unit",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+                "data": "IngredientName",
+				"orderable": false,
+				"className": "text-center",
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s = '<select class="form-control dropdown">';
+						$.each(data, function (index, value) {
+							s += '<option>' + value + '</option>';
+						});
+						s += '</select >';
+						return s;
+					}
+					return "Thuốc chưa rõ thành phần";
+				}
+			},
+			{
+                "data": "ProviderName",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Status",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Status2",
+				"className": "text-center",
+				"orderable": true,
+            },
+            {
+                "data": "MedicineOnHandQuantity",
+                "className": "text-center",
+                "orderable": true,
+            },
+            {
+                "data": "MaxPrice",
+                "className": "text-center",
+                "orderable": true,
+            },
+            {
+                "data": "ExpiryString",
+                "className": "text-center",
+                "orderable": true,
+            },
+            {
+                "data": "MedicineId",
+                "className": "text-center",
+                "orderable": false,
+                "render": function (data, type, row) {
+                    if (data != "" && data != null) {
+                        var s = '<a class="btn btn-info" href="/MasterData/Medicine/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+                        return s;
+                    }
+                    return "";
+                }
+            },
+			{
+				"data": "MedicineId",
+				"className": "text-center",
+				"orderable": false,
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s = '<a class="btn btn-info" href="/MasterData/Medicine/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+						return s;
+					}
+					return "";
+				}
+			}
+		];
+		//$("#btn-search").on("click", function () {
+		//	PaggingServerSide("MasterData/Account", columns, true);
+		//});
+		PaggingServerSideSearchInitialWithClick("MasterData/Medicine", columns, true);
+		Select2Init("#RoleNameSearch");
+		Select2Init("#Actived");
+	});
+</script>

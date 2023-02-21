@@ -18,7 +18,7 @@ namespace EnjuAihara.EntityFramework
         public Nullable<System.Guid> MedicineProviderId { get; set; }
         public Nullable<decimal> BoughtQuantity { get; set; }
         public Nullable<System.DateTime> ExpiredDate { get; set; }
-        public string BoughtPrice { get; set; }
+        public Nullable<decimal> BoughtPrice { get; set; }
         public Nullable<decimal> InstockQuantity { get; set; }
         public Nullable<System.DateTime> BoughtDate { get; set; }
     
