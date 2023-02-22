@@ -1,0 +1,116 @@
+﻿<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Thêm mới nguời dùng</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/MasterData/User"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<form id="frmCreate" enctype='multipart/form-data'>
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="FirstName" class="col-form-label">Tên người dùng</label>
+								</div>
+								<div class="col-md-10">
+									<input type="text" id="FirstName" name="FirstName" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 mt-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="LastName" class="col-form-label">Họ người dùng</label>
+								</div>
+								<div class="col-md-10">
+									<input type="text" id="LastName" name="LastName" class="form-control">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 mt-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="Birthday" class="col-form-label">Ngày sinh</label>
+								</div>
+								<div class="col-md-10">
+									<input type="date" id="Birthday" name="Birthday" class="form-control">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12 mt-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="Address" class="col-form-label">Địa chỉ</label>
+								</div>
+								<div class="col-md-10">
+									<input type="text" id="Address" name="Address" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 mt-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="Phone" class="col-form-label">Điện thoại</label>
+								</div>
+								<div class="col-md-10">
+									<input type="text" id="Phone" name="Phone" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 mt-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="Email" class="col-form-label">Email</label>
+								</div>
+								<div class="col-md-10">
+									<input type="email" id="Email" name="Email" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 mt-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="Avatar" class="col-form-label">Ảnh nguời dùng</label>
+								</div>
+								<div class="col-md-10">
+									<input type="file" id="Avatar" name="Avatar" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-top: 15px">
+						<div class="col-md-12 text-center">
+							<button type="button" class="btn btn-primary" id="btn-add">
+								<i class="fa fa-plus-square"></i>
+								Thêm mới
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		PreventEnterButton();
+		$("#btn-add").on("click", function () {
+			SaveData("MasterData/User", "#frmCreate");
+		});
+	});
+</script>
+

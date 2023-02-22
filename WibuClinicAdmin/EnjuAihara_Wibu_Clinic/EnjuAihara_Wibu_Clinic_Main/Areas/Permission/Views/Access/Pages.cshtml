@@ -1,0 +1,18 @@
+﻿@model IEnumerable<EnjuAihara.EntityFramework.PageModel>
+<div class="accordion" id="accordionPanelsStayOpenExample">
+	@foreach (var i in Model)
+	{
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="panelsStayOpen-header-@i.PageId">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-@i.PageId" aria-expanded="true" aria-controls="panelsStayOpen-@i.PageId">
+						<i class="@i.Icon"></i>@i.PageName
+					</button>
+				</h2>
+				<div id="panelsStayOpen-@i.PageId" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-header-@i.PageId">
+					<div class="accordion-body">
+						@{ Html.RenderAction("GetAllPageFunction", "Access", new { PageId = i.PageId,  RoleId = (Guid)ViewBag.RoleId }); }
+					</div>
+				</div>
+			</div>
+	}
+</div>

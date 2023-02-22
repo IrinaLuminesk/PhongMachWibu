@@ -1,4 +1,5 @@
-﻿@model IEnumerable<EnjuAihara.EntityFramework.MenuModel>
+﻿@*@model IEnumerable<EnjuAihara.EntityFramework.MenuModel>*@
+@model IEnumerable<EnjuAihara.ViewModels.Permission.MenuViewModel>
 @{ 
 	var CurrentUser = (EnjuAihara.EntityFramework.AccountModel)ViewBag.CurrentUser;
 }
@@ -16,26 +17,29 @@
 
 			@foreach (var i in Model)
 			{
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="@i.Icon"></i>
-						<p>
-							@i.MenuName
-							<i class="right fas fa-angle-left"></i>
-						</p>
-					</a>
-					<ul class="nav nav-treeview">
-						@foreach (var j in i.PageModels.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList())
-						{
-							<li class="nav-item">
-								<a href="@j.PageUrl" class="nav-link" style="margin-left:10px" target="_blank">
-									<i class="@j.Icon"></i>
-									<p style="margin-left:5px">@j.PageName</p>
-								</a>
-							</li>
-						}
-					</ul>
-				</li>
+				if (i.Pages.Count > 0 && i.Pages != null)
+				{
+					<li class="nav-item">
+						<a href="#" class="nav-link">
+							<i class="@i.Icon"></i>
+							<p>
+								@i.MenuName
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							@foreach (var j in i.Pages.Where(x => x.Actived == true).OrderByDescending(x => x.OrderIndex).ToList())
+							{
+								<li class="nav-item">
+									<a href="@j.PageUrl" class="nav-link" style="margin-left:10px" target="_blank">
+										<i class="@j.Icon"></i>
+										<p style="margin-left:5px">@j.PageName</p>
+									</a>
+								</li>
+							}
+						</ul>
+					</li>
+				}
 			}
 			<li class="nav-item">
 				<button class="nav-link" onclick="Logout()">

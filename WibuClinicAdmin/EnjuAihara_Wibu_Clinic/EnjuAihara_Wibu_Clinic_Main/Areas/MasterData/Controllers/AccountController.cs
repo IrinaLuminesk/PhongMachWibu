@@ -35,6 +35,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             int filteredResultsCount;
             int totalResultsCount = model.length;
 
+            if (ToDate != null)
+                ToDate = ((DateTime)ToDate).AddDays(1).AddSeconds(-1);
 
             search.PageSize = model.length;
             search.PageNumber = model.start / model.length + 1;
@@ -58,7 +60,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 CreateDate = x.CreateDate,
                 RealName = x.UsersModel.LastName + " " + x.UsersModel.FirstName,
                 CreateBy = x.AccountModel2.UserName,
-                Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng"
+                Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng",
+                LastLoginTime = x.LastLoginTime
 
             }).OrderBy(x => x.CreateDate).ToList();
             var finalResult = PaggingServerSideDatatable.DatatableSearch<AccountSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
@@ -70,6 +73,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     i++;
                     item.STT = i;
                     item.CreateDateString = FormatDateTime.FormatDateTimeWithString(item.CreateDate);
+                    item.LastLoginTimeString = FormatDateTime.FormatDateTimeWithString(item.LastLoginTime);
                 }
             }
             return Json(new
@@ -229,7 +233,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                         isSucess = true,
                         title = "Sửa thành công",
                         message = string.Format("Sửa {0} thành công, vui lòng đăng nhập lại", EditAccount.UserName),
-                        redirect = "/Permission/Login"
+                        redirect = "/Permission/Auth/Login"
                     });
                 }
                 return Json(new

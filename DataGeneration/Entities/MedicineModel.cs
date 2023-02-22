@@ -17,7 +17,6 @@ namespace DataGeneration.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MedicineModel()
         {
-            this.MedicineCompoundModels = new HashSet<MedicineCompoundModel>();
             this.MedicineProvideModels = new HashSet<MedicineProvideModel>();
         }
     
@@ -27,8 +26,6 @@ namespace DataGeneration.Entities
         public string Unit { get; set; }
         public Nullable<bool> Actived { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicineCompoundModel> MedicineCompoundModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MedicineProvideModel> MedicineProvideModels { get; set; }
     }

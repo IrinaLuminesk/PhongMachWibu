@@ -80,6 +80,16 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 ModelState.AddModelError("", "Tài khoản không tồn tại");
                 return false;
             }
+
+            if (account.AccountInRoleModels.Count() == 1)
+            {
+                if (account.AccountInRoleModels.Any(x => x.RolesModel.RoleName.Equals("Khách hàng")))
+                {
+                    ModelState.AddModelError("", "Tài khoản không tồn tại");
+                    return false;
+                }
+            }
+
             if (model.RememberMe == true)
             {
                 HttpCookie userInfo = new HttpCookie("userInfo");
@@ -88,7 +98,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 userInfo["Password"] = model.Password;
                 userInfo.Expires = DateTime.Now.AddDays(1);
                 Response.Cookies.Add(userInfo);
-                Request.Cookies["userInfo"].Expires = DateTime.Now.AddDays(1);
+                Request.Cookies["userInfo"].Expires = DateTime.Now.AddDays(30);
             }
             var identity = new ClaimsIdentity(new[] 
             {
@@ -101,6 +111,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             var authManager = ctx.Authentication;
 
             authManager.SignIn(identity);
+            account.LastLoginTime = DateTime.Now;
+            _context.SaveChanges();
             return true;
         }
 

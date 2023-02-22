@@ -112,7 +112,7 @@ function SearchInit(controller) {
 
 function Pagging() {
     $('#tableRes').dataTable({
-        pageLength: 5,
+        pageLength: 10,
         paging: true,
         autoWidth: true,
         scrollX: true,
@@ -122,6 +122,8 @@ function Pagging() {
         },
         drawCallback: function (settings) {
             $(window).trigger('resize');
+            $("table.dataTable td").css('white-space', 'nowrap')
+            $("table.dataTable th").css('white-space', 'nowrap')
         },
         destroy: true,
         language: {
@@ -156,12 +158,14 @@ function PaggingServerSide(controller, columns, dropdown) {
     $("#tableRes").DataTable().clear().destroy();
     $("#tableRes").on('processing.dt', function (e, settings, processing) {
         LoadingDataTable(processing, '.dataTableServerSide');
+        $("table.dataTable td").css('white-space', 'nowrap')
+        $("table.dataTable th").css('white-space', 'nowrap')
     }).DataTable({
         proccessing: true,
         serverSide: true,
         paging: true,
         scrollX: true,
-        pageLength: 5,
+        pageLength: 10,
         autoWidth: true,
         searching: false,
         bPaginate: true,
@@ -230,7 +234,7 @@ function PaggingServerSide(controller, columns, dropdown) {
         },
         columnDefs: [
             { targets: [0, 1], visible: true },
-            { targets: 'no-sort', visible: false }
+            { targets: 'no-sort', visible: false },
         ],
         /* "sDom": '<"top"flp>rt<"bottom"ip><"clear">',*/
     });
@@ -288,7 +292,7 @@ function AlertPopup(id, title, message) {
     setTimeout(function () {
         $(alertId).removeClass("show");
         $(alertId).addClass("hide");
-    }, 5000);
+    }, 3000);
 }
 
 
@@ -323,7 +327,7 @@ function SaveData(controller, frmCreate) {
                 if (data.redirect) {
                     setTimeout(function () {
                         window.location.href = data.redirect;
-                    }, 3000);
+                    }, 1500);
                 }
             }
             else {
@@ -372,7 +376,7 @@ function Edit(controller, frmEdit) {
                 if (data.redirect) {
                     setTimeout(function () {
                         window.location.href = data.redirect;
-                    }, 3000);
+                    }, 1500);
                 }
             }
             else {
@@ -456,7 +460,7 @@ function Delete(controller, id) {
                 if (data.redirect) {
                     setTimeout(function () {
                         window.location.href = data.redirect;
-                    }, 3000);
+                    }, 1500);
                 }
             }
 
@@ -485,4 +489,9 @@ $(document).on("click", "#cancel", function (e) {
 $(document).on("click", ".close", function (e) {
     $("#deleteConfirmModal").modal("hide");
 });
+
+
+function CloseSideBar() {
+    $("#bodytag").addClass("sidebar-mini sidebar-collapse")
+}
 
