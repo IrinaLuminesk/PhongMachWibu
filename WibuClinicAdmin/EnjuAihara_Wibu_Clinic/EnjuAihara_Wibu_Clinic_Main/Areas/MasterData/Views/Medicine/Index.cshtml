@@ -51,7 +51,9 @@
                                                     <label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <input type="text" id="ProviderNameSearch" name="ProviderNameSearch" class="form-control">
+                                                    <select id="ProviderNameSearch" name="ProviderNameSearch" class="form-control">
+                                                        <option>--Chọn tất cả--</option>
+                                                    </select>
 
                                                 </div>
                                             </div>
@@ -62,7 +64,9 @@
                                                     <label for="ProviderName" class="col-form-label">Tên thành phần</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <input type="text" id="IngredientNameSearch" name="IngredientNameSearch" class="form-control">
+                                                    <select id="IngredientNameSearch" name="IngredientNameSearch" class="form-control">
+                                                        <option>--Chọn tất cả--</option>
+                                                    </select>
 
                                                 </div>
                                             </div>
@@ -203,7 +207,7 @@
 		//	PaggingServerSide("MasterData/Account", columns, true);
 		//});
 		PaggingServerSideSearchInitialWithClick("MasterData/Medicine", columns, true);
-		Select2Init("#RoleNameSearch");
-		Select2Init("#Actived");
+        Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#ProviderNameSearch")
+        Select2_AutoComplete("/MasterData/Medicine/AutoComplete2", "#IngredientNameSearch")
 	});
 </script>

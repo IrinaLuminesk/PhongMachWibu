@@ -38,21 +38,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             search.PageNumber = model.start / model.length + 1;
 
             var query = _context.MedicineProvideModels
-                //Where(x => (x.MedicineCode.Contains(MedicineCodeSearch) || string.IsNullOrEmpty(MedicineCodeSearch))
-                //&& (x.MedicineName.Contains(MedicineNameSearch) || string.IsNullOrEmpty(MedicineNameSearch))
-                //&& (x.MedicineProvideModels.Any(z => z.ProviderId == ProviderNameSearch) || ProviderNameSearch == null)
-                ////&& (x.MedicineProvideModels.Any(z => z.ProviderId == ProviderNameSearch) || ProviderNameSearch == null)
-                //&& (x.Actived == Actived || Actived == null)
-                //)
-                .Select(x =>
+                .Where(x => (x.MedicineModel.MedicineCode.Contains(MedicineCodeSearch) || string.IsNullOrEmpty(MedicineCodeSearch))
+                && (x.MedicineModel.MedicineName.Contains(MedicineNameSearch) || string.IsNullOrEmpty(MedicineNameSearch))
+                && (x.ProviderModel.ProviderId==ProviderNameSearch|| ProviderNameSearch == null)
+                && (x.MedicineCompoundModels.Any(y=>y.IngredientModel.IngredientId==IngredientNameSearch)||IngredientNameSearch==null)
+                && (x.Actived == Actived || Actived==null)
+                ).Select(x =>
             new MedicineSearchViewModel
             {
                 MedicineId = x.MedicineProvideId,
                 MedicineName = x.MedicineModel.MedicineName,
                 Unit = x.MedicineModel.Unit,
                 IngredientName = _context.MedicineCompoundModels.Where(y => y.MedicineId == x.MedicineProvideId).Select(y => y.IngredientModel.IngredientName).ToList(),
-                //RoleName = x.RolesModels.Select(y => y.RoleName).ToList(),
-                //RoleName = x.AccountInRoleModels.Select(y => y.RolesModel.RoleName).ToList(),
+
                 ProviderName = x.ProviderModel.ProviderName,
 
                 
