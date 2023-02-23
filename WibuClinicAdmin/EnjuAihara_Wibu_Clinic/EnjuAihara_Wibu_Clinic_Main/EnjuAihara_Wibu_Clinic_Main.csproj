@@ -220,6 +220,7 @@
     <Content Include="Scripts\build\npm\Publish.js" />
     <Content Include="Scripts\build\npm\vnu-jar.js" />
     <Content Include="Scripts\CommonUse\Ganyu.js" />
+    <Content Include="Scripts\CommonUse\Map.js" />
     <Content Include="Scripts\dist\css\adminlte.css" />
     <Content Include="Scripts\dist\css\adminlte.min.css" />
     <Content Include="Scripts\dist\css\alt\adminlte.components.css" />
@@ -2192,6 +2193,7 @@
     <Content Include="Areas\MasterData\Views\Medicine\Create.cshtml" />
     <Content Include="Areas\MasterData\Views\Medicine\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\Medicine\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\ViewMap.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
@@ -2420,6 +2422,10 @@
     <Content Include="Views\Shared\Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EnjuAihara.Constant\EnjuAihara.Constant.csproj">
+      <Project>{e9bce9ad-5e57-4b54-a76b-82a149a0c962}</Project>
+      <Name>EnjuAihara.Constant</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EnjuAihara.Core\EnjuAihara.Core.csproj">
       <Project>{181e89c3-8578-4bc6-a314-2c4ca3625dd3}</Project>
       <Name>EnjuAihara.Core</Name>

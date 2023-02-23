@@ -122,8 +122,9 @@ function Pagging() {
         },
         drawCallback: function (settings) {
             $(window).trigger('resize');
-            $("table.dataTable td").css('white-space', 'nowrap')
-            $("table.dataTable th").css('white-space', 'nowrap')
+            $("table.dataTable td").css('white-space', 'nowrap');
+            $("table.dataTable th").css('white-space', 'nowrap');
+            $(window).trigger('resize');
         },
         destroy: true,
         language: {
@@ -158,8 +159,6 @@ function PaggingServerSide(controller, columns, dropdown) {
     $("#tableRes").DataTable().clear().destroy();
     $("#tableRes").on('processing.dt', function (e, settings, processing) {
         LoadingDataTable(processing, '.dataTableServerSide');
-        $("table.dataTable td").css('white-space', 'nowrap')
-        $("table.dataTable th").css('white-space', 'nowrap')
     }).DataTable({
         proccessing: true,
         serverSide: true,
@@ -214,6 +213,9 @@ function PaggingServerSide(controller, columns, dropdown) {
             if (dropdown == true) {
                 Select2Init(".dropdown");
             }
+            $("table.dataTable td").css('white-space', 'nowrap');
+            $("table.dataTable th").css('white-space', 'nowrap');
+            $(window).trigger('resize');
         },
         language: {
             sProcessing: "Vui lòng đợi xíu.....(๑´•ε •`๑)",

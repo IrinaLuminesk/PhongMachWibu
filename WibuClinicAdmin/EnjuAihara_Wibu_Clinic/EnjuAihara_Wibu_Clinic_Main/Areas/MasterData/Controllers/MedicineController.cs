@@ -156,5 +156,43 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             }).Take(10).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public ActionResult ViewMap(Guid Id)
+        {
+            ViewBag.MedicineId = Id;    
+            return View();
+        }
+
+
+        public JsonResult GetCoord(Guid Id)
+        {
+            var medicine = _context.MedicineModels.Where(x => x.MedicineId == Id).FirstOrDefault();
+            List<MedicineProvideModel> Pro = medicine.MedicineProvideModels.ToList();
+            List<Coordinate> coords = new List<Coordinate>();
+            foreach (var i in Pro)
+            {
+                if (i.ProviderModel.Latitude != null && i.ProviderModel.longitude != null)
+                {
+                    coords.Add(new Coordinate()
+                    {
+                        Latitude = i.ProviderModel.Latitude,
+                        Longitude = i.ProviderModel.longitude
+                    });
+                }
+            }
+            return Json(coords);
+        }
     }
 }
