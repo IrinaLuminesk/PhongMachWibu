@@ -110,15 +110,14 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult Create(MedicineModel medicine)
+        public JsonResult Create(MedicineCreateViewModel medicine)
         {
-            MedicineModel m = new MedicineModel()
+
+            MedicineModel model = new MedicineModel()
             {
                 MedicineId = Guid.NewGuid(),
-                MedicineCode=medicine.MedicineCode,
-                MedicineName=medicine.MedicineName,
-                Unit=medicine.Unit,
-                Actived=medicine.Actived
+                MedicineCode = DataCodeGenerate.ThuocCodeGen(),
+                MedicineName = medicine.MedicineName
             };
             _context.Entry(medicine).State = EntityState.Added;
             _context.SaveChanges();

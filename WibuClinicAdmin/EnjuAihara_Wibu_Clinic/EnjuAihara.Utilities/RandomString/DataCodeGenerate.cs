@@ -24,7 +24,12 @@ namespace EnjuAihara.Utilities.RandomString
             string[] temp = code.Split('-');
             return CreateCode(temp[1], temp[0]);
         }
-
+        public static string ThuocCodeGen()
+        {
+            string code = _context.MedicineModels.OrderByDescending(x => x.MedicineCode).Take(1).FirstOrDefault().MedicineCode;
+            string[] temp = code.Split('-');
+            return CreateCode(temp[1], temp[0]);
+        }
         public static string CreateCode(string num, string table)
         {
             string code = table;
