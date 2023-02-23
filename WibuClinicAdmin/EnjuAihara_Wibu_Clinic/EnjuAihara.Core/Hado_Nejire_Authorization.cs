@@ -45,12 +45,10 @@ namespace EnjuAihara.Core
                             base.OnActionExecuting(filterContext);
                             return;
                         }
-                        else
-                        {
-                            filterContext.Result = new RedirectResult("/Shared/Error");
-                            return;
-                        }
                     }
+                    filterContext.Result = new RedirectResult("/Shared/Error");
+                    return;
+                    //bool flag = ac.AccountInRoleModels.Any(x => CheckAccessPermission(AreaName, Action, Controller, (Guid)x.RoleId));
                 }
             }
             else
