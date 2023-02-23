@@ -166,6 +166,7 @@
     <Compile Include="App_Start\StartUp.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\MasterData\Controllers\AccountController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\ProviderController.cs" />
     <Compile Include="Areas\MasterData\Controllers\UserController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
     <Compile Include="Areas\Permission\Controllers\AccessController.cs" />
@@ -2149,6 +2150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\MasterData\Views\Provider\" />
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
   </ItemGroup>
