@@ -40,9 +40,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             var query = _context.MedicineProvideModels
                 .Where(x => (x.MedicineModel.MedicineCode.Contains(MedicineCodeSearch) || string.IsNullOrEmpty(MedicineCodeSearch))
                 && (x.MedicineModel.MedicineName.Contains(MedicineNameSearch) || string.IsNullOrEmpty(MedicineNameSearch))
-                && (x.ProviderModel.ProviderId==ProviderNameSearch|| ProviderNameSearch == null)
-                && (x.MedicineCompoundModels.Any(y=>y.IngredientModel.IngredientId==IngredientNameSearch)||IngredientNameSearch==null)
-                && (x.Actived == Actived || Actived==null)
+                && (x.ProviderModel.ProviderId == ProviderNameSearch || ProviderNameSearch == Guid.Empty || ProviderNameSearch == null)
+                && (x.MedicineCompoundModels.Any(y => y.IngredientModel.IngredientId == IngredientNameSearch) || IngredientNameSearch == null || IngredientNameSearch == Guid.Empty)
+                && (x.Actived == Actived || Actived == null)
                 ).Select(x =>
             new MedicineSearchViewModel
             {
@@ -53,10 +53,10 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
                 ProviderName = x.ProviderModel.ProviderName,
 
-                
-                MedicineOnHandQuantity= x.WarehouseModels.Select(y => y.InstockQuantity).Sum(),
-                MaxPrice= x.WarehouseModels.Max(y=>y.BoughtPrice),
-                Expiry=x.WarehouseModels.OrderByDescending(y=>y.ExpiredDate).Select(y=>y.ExpiredDate).FirstOrDefault(),
+
+                MedicineOnHandQuantity = x.WarehouseModels.Select(y => y.InstockQuantity).Sum(),
+                MaxPrice = x.WarehouseModels.Max(y => y.BoughtPrice),
+                Expiry = x.WarehouseModels.OrderByDescending(y => y.ExpiredDate).Select(y => y.ExpiredDate).FirstOrDefault(),
                 Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng"
 
             }).ToList();
@@ -70,13 +70,13 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     item.STT = i;
                     item.ExpiryString = FormatDateTime.FormatDateTimeWithString(item.Expiry);
                     var inStockQuantity = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineId).Select(y => y.InstockQuantity).Sum();
-                    if(inStockQuantity <=0 || inStockQuantity == null)
+                    if (inStockQuantity <= 0 || inStockQuantity == null)
                     {
                         if (inStockQuantity <= 0)
                         {
                             item.MaxPrice = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineId).Max(y => y.BoughtPrice);
                         }
-                        if (inStockQuantity ==null)
+                        if (inStockQuantity == null)
                         {
                             item.MaxPrice = 0;
                         }
@@ -110,21 +110,41 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult Create(MedicineCreateViewModel medicine)
+        public JsonResult Create(List<MedicineCreateViewModel> Med, string MedicineName, string Unit)
         {
 
-            MedicineModel model = new MedicineModel()
+            MedicineModel medicine = new MedicineModel()
             {
                 MedicineId = Guid.NewGuid(),
                 MedicineCode = DataCodeGenerate.ThuocCodeGen(),
-                MedicineName = medicine.MedicineName
+                MedicineName = MedicineName,
+                Unit = Unit
             };
             _context.Entry(medicine).State = EntityState.Added;
+
+            //foreach (var i in Med)
+            //{
+            //    MedicineProvideModel detal = new MedicineProvideModel()
+            //    {
+            //        MedicineProvideId = Guid.NewGuid(),
+            //        Actived = true,
+            //        MedicineId = medicine.MedicineId,
+            //        ProviderId = i.Provider,
+            //        MedicineCompoundModels = new List<MedicineCompoundModel>()
+            //        {
+            //            new MedicineCompoundModel()
+            //            {
+                            
+            //            }
+            //        }
+            //    }
+            //}
+
             _context.SaveChanges();
             return Json(new
             {
-                isSucess = true,
-                title = "Thành công",
+                isSucess = false,
+                title = "Đang thí nghiệm",
                 message = "Tạo tài khoản mới thành công"
             });
         }
@@ -133,32 +153,78 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             var thuoc = _context.MedicineModels.FirstOrDefault(x => x.MedicineId == id);
             return View(thuoc);
         }
+
+        public PartialViewResult MedicineDetail(int index)
+        {
+            ViewBag.index = index;
+            return PartialView();
+        }
+
         public JsonResult AutoComplete(string searchTerm)
         {
-            var result = _context.ProviderModels.Where(x => x.ProviderName.Contains(searchTerm) || x.ProviderCode
+            List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>()
+            {
+                new SelectListGuidForAutoComplete()
+                {
+                    text = "--Chọn tất cả--",
+                    value = Guid.Empty
+                }
+            };
+            result.AddRange(_context.ProviderModels.Where(x => x.ProviderName.Contains(searchTerm) || x.ProviderCode
             .Contains(searchTerm) ).Select(x =>
-            new
+            new SelectListGuidForAutoComplete
             {
                 value = x.ProviderId,
                 text = x.ProviderCode + " | " + x.ProviderName
-            }).Take(10).ToList();
+            }).Take(10).ToList());
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public JsonResult AutoComplete2(string searchTerm)
         {
-            var result = _context.IngredientModels.Where(x => x.IngredientCode.Contains(searchTerm) || x.IngredientName
+            List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>()
+            {
+                new SelectListGuidForAutoComplete()
+                {
+                    text = "--Chọn tất cả--",
+                    value = Guid.Empty
+                }
+            };
+            result.AddRange(_context.IngredientModels.Where(x => x.IngredientCode.Contains(searchTerm) || x.IngredientName
             .Contains(searchTerm)).Select(x =>
-            new
+            new SelectListGuidForAutoComplete
             {
                 value = x.IngredientId,
                 text = x.IngredientCode + " | " + x.IngredientName
-            }).Take(10).ToList();
+            }).Take(10).ToList());
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 
 
-
+        public JsonResult AutoCompleteNotAll(string searchTerm)
+        {
+            List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>();
+            result.AddRange(_context.ProviderModels.Where(x => x.ProviderName.Contains(searchTerm) || x.ProviderCode
+            .Contains(searchTerm)).Select(x =>
+           new SelectListGuidForAutoComplete
+           {
+               value = x.ProviderId,
+               text = x.ProviderCode + " | " + x.ProviderName
+           }).Take(10).ToList());
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult AutoComplete2NotAll(string searchTerm)
+        {
+            List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>();
+            result.AddRange(_context.IngredientModels.Where(x => x.IngredientCode.Contains(searchTerm) || x.IngredientName
+            .Contains(searchTerm)).Select(x =>
+            new SelectListGuidForAutoComplete
+            {
+                value = x.IngredientId,
+                text = x.IngredientCode + " | " + x.IngredientName
+            }).Take(10).ToList());
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
 
 

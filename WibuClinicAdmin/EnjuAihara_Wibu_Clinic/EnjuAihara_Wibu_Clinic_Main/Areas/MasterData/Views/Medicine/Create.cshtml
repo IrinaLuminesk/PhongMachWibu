@@ -1,217 +1,253 @@
 ﻿@*@model EnjuAihara.ViewModels.MasterData.MedicineCreateViewModel*@
 <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Tạo mới thuốc</h1>
-            </div>
-            <div class="col-sm-6 text-right">
-                <div class="pull-right">
-                    <a class="btn btn-info" href="/MasterData/Medicine"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Tạo mới thuốc</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/MasterData/Medicine"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+					<button type="button" class="btn btn-primary" id="btn-add">
+						<i class="fa fa-plus-square"></i>
+						Lưu
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </div>
-<div class="content">
-    <div class="form-horizontal">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form id="frmCreate" enctype='multipart/form-data'>
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        @*<div class="col-md-12">
-                <div class="row g-3 align-items-center">
-                    <div class="col-md-2 text-center">
-                        <label for="ForUser" class="col-form-label">Tạo tài khoản cho người dùng</label>
-                    </div>
-                    <div class="col-md-10">
-                        <select id="ForUser" name="ForUser" class="form-control"></select>
-                    </div>
-                </div>
-            </div>*@
-                                        @*<div class="col-md-12">
-                <div class="row g-3 align-items-center">
-                    <div class="col-md-2 text-center">
-                        <label for="MedicineCode" class="col-form-label">Mã thuốc</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input type="text" id="MedicineCode" name="MedicineCode" class="form-control">
-                    </div>
-                </div>
-            </div>*@
-                                        <div class="col-md-12 mt-3">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-2 text-center">
-                                                    <label for="MedicineName" class="col-form-label">Tên thuốc</label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="MedicineName" name="MedicineName" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 mt-3">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-2 text-center">
-                                                    <label for="Unit" class="col-form-label">Đơn vị tính</label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="Unit" name="Unit" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 mt-3">
-           
-            </div>
-        </div>
-        @*<div class="col-md-12 mt-3">
-            <div class="row g-3 align-items-center">
-                <div class="col-md-2 text-center">
-                    <label for="Password" class="col-form-label">Thành phần thuốc</label>
-                </div>
-                <div class="col-md-10">
-                    <select name="ThanhPhanList" class="form-control" id="ThanhPhanList"></select>*@
-                                        @*@Html.DropDownList("ThanhPhanList", (SelectList)ViewBag.ThanhPhanList, null, new { @class = "form-control with-search" })*@
-                                        <!--</div>
-            </div>
-        </div>-->
-                                        @*<div class="col-md-12 mt-3">
-                <div class="row g-3 align-items-center">
-                    <div class="col-md-2 text-center">
-                        <label for="Avatar" class="col-form-label">Ảnh thực tế</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input type="file" id="DrugImage" name="DrugImage" class="form-control">
-                    </div>
-                </div>
-            </div>*@
-                                        <!--<div class="col-md-12 mt-3">
-            <div class="row g-3 align-items-top">
-                <div class="col-md-2 text-center">
-                    <label for="Roles" class="col-form-label">Nhóm người dùng</label>
-                </div>
-                <div class="col-md-10">-->
-                                        @*@foreach (var i in (List<EnjuAihara.EntityFramework.RolesModel>)ViewBag.RoleList)
-            {
+<form id="frmCreate" enctype='multipart/form-data'>
+	<div class="content">
+		<div class="form-horizontal">
+			<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="MedicineName" class="col-form-label">Tên thuốc</label>
+												</div>
+												<div class="col-md-10">
+													<input type="text" id="MedicineName" name="MedicineName" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Unit" class="col-form-label">Đơn vị tính</label>
+												</div>
+												<div class="col-md-10">
+													<input type="text" id="Unit" name="Unit" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                <input type="checkbox" id="Roles" name="Roles" value="@i.RoleId">
-                <label for="Roles">@i.RoleName</label>
-                <br />
-            }*@
-                                        <!--</div>
-            </div>
-        </div>-->
-                                    </div>
-                                    <div class="text-right pull-right align-items-center">
-                                        <button type="button" class="btn btn-primary btn-add-provider" id="btn-add-provider">
-                                            <i class="fa fa-plus-square"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="card h-100">
-                                            <div class="card-body">
-                                                <img id="Img" src="" class="card-img-top" />
-                                                
-                                                <div class="row mt-2 text-center">
-                                                    <label for="Avatar" class="col-form-label">Thay đổi ảnh</label>
+					</div>
+				</div>
+				<div class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 class="m-0">Thông tin chi tiết về thuốc</h1>
+							</div>
+							<div class="col-sm-6 text-right">
+								<div class="pull-right">
+									<button type="button" class="btn btn-primary" id="btn-add-item">
+										<i class="fa fa-plus-square"></i>
+										Thêm thông tin
+									</button>
+								</div>
 
-                                                    <input type="file" id="ThuocAvatar" name="ThuocAvatar" class="form-control">
-                                                </div>
-                                                <div class="row mt-2 text-center">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div id="Detail-result">
+										<div class="accordion" id="Detail-Container">
+											<div class="accordion-item">
+												<h2 class="accordion-header">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+														Thông tin chi tiết #1
+													</button>
+												</h2>
+												<div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+													<div class="accordion-body">
+														<div class="row g-0">
+															<div class="col-md-4">
+																<img src="" id="Image-0" class="img-fluid img-preview">
+															</div>
+															<div class="col-md-8">
 
-                                                    <label for="Password" class="col-form-label">Các nhà cung cấp</label>
+																<div class="row">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Img" class="col-form-label">Ảnh thuốc</label>
+																			</div>
+																			<div class="col-md-9">
+																				<input type="file" name="Med[0].Img" class="form-control med-file" id="Med-0-Img" />
+																			</div>
+																		</div>
+																	</div>
+																</div>
 
+																<div class="row mt-3">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Provider" class="col-form-label">Nhà cung cấp</label>
+																			</div>
+																			<div class="col-md-7">
+																				<select name="Med[0].Provider" class="form-control med-NCC" id="Med-0-Provider"></select>
+																			</div>
+																			<div class="col-md-2">
+																				<button type="button" class="remove-Provider btn btn-labeled btn-danger w-100">
+																					<span class="btn-label">
+																						<i class="fa fa-remove"></i>
+																						Xóa
+																					</span>
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
 
-                                                    <select name="NccList" class="form-control" id="NccList"></select>
-                                                    @*@Html.DropDownList("NccList", (SelectList)ViewBag.NccList, null, new { @class = "form-control with-search" })*@
+																<div class="row mt-3">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Ingredient" class="col-form-label">Thành phần</label>
+																			</div>
+																			<div class="col-md-9">
+																				<select name="Med[0].Ingredient" class="form-control med-Ingre" id="Med-0-Ingredient"></select>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                                                </div>
-                                                <div class="row mt-2 text-center">
-
-                                                    <label for="Password" class="col-form-label">Thành phần thuốc</label>
-
-                                                    @if (1 == 1)
-                                                    {
-                                                        int indexAssign = 0;
-                                                    <select name="ThanhPhanList[indexAssign]" class="form-control" id="ThanhPhanList"></select>
-                                                    @*@Html.DropDownList("NccList", (SelectList)ViewBag.NccList, null, new { @class = "form-control with-search" })*@
-                                                    }
-                                                </div>
-                                            </div>
-                                        <input name="AvatarIsChange" id="AvatarIsChange" value="false" type="hidden" />
-                                    </div>
-                                    <div class="row" style="margin-top: 15px">
-                                        <div class="col-md-12 text-center">
-                                            <button type="button" class="btn btn-primary" id="btn-add">
-                                                <i class="fa fa-plus-square"></i>
-                                                Thêm mới
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#ThuocAvatar").change(function () {
-            PreviewImg(this, "#Img");
-        });
-        /*Select2_AutoComplete("/MasterData/Account/AutoComplete", "#ForUser");*/
-        Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#NccList")
-        Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2", "#ThanhPhanList")
+	$(document).ready(function () {
+		$("#Med-0-Img").change(function () {
+			PreviewImg(this, "#Image-0");
+		});
+		PreventEnterButton();
+		Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", "#Med-0-Provider");
+		Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", "#Med-0-Ingredient");
 		$("#btn-add").on("click", function () {
 			SaveData("MasterData/Medicine", "#frmCreate");
-			PreventEnterButton();
 		});
-    });
-    //Hàm này chưa đúng do sai id tùm lum
-    $(document).on('click', '.btn-add-provider', function (e) {
-        //e.preventDefault();
-        //$(".person").each(function (index, value) {
-        //    indexRowPerson = index;
-        //});
-        //indexRowPerson++;
 
-        var controlForm = $('.personControls:first'),
-            currentEntry = $(this).parents('.person:last'),
-            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+		$("#btn-add-item").on('click', function () {
+			$("#loading").show();
+			$.when(LoopThrough()).done(function () {
+				$("#loading").hide();
+			});
+		});
+	});
 
-        newEntry.find('.employeeCode').attr('name', 'taskAssignList[' + indexRowPerson + '].SalesEmployeeCode').val('');
-        newEntry.find('.employeeCode').data('row', indexRowPerson);
-        newEntry.find('.typeCode').attr('name', 'taskAssignList[' + indexRowPerson + '].TaskAssignTypeCode').val('');
-        newEntry.find('.roleName').removeClass('roleName_0');
-        newEntry.find('.roleName').addClass('roleName_' + indexRowPerson);
+	function LoopThrough() {
+		var i = 0;
+		$("#Detail-Container").find('div[class^="accordion-item"').each(function () {
 
-        newEntry.find('.select2').remove();
-        newEntry.find('.roleName').html('');
-        $("select").select2();
+			
+			$(this).find('button[class^="accordion-button"').attr('data-bs-target', '#collapse-' + (i + 1));
+			$(this).find('div[class^="accordion-collapse"').attr('id', 'collapse-' + (i + 1));
+			$(this).find('button[class^="accordion-button"').text("Thông tin chi tiết #" + (i + 1));
 
-        controlForm.find('.person:not(:first) .btn-addPerson')
-            .removeClass('btn-addPerson').addClass('btn-removePerson')
-            .removeClass('btn-success').addClass('btn-danger')
-            .html('<span class="glyphicon glyphicon-minus"></span>');
-    });
-    //Này cũng thế :))
-    $(document).on('click', '.btn-removePerson', function (e) {
-        $(this).parents('.person:last').remove();
 
-        $(".person").each(function (index, value) {
-            $(this).find('.employeeCode').attr("name", "taskAssignList[" + index + "].SalesEmployeeCode");
-            $(this).find('.typeCode').attr("name", "taskAssignList[" + index + "].TaskAssignTypeCode");
-        });
-        e.preventDefault();
-        return false;
-    });
+			//Ảnh Preview
+			var ImageName = 'Image-' + i;
+			$(this).find('img[class*="img-preview"').attr('id', ImageName);
+
+			//Input Ảnh
+			$.Img = $(this).find('input[class*="med-file"');
+			var ImgStringName = 'Med[' + i + '].Img';
+			var ImgStringId = 'Med-' + i + '-Img';
+			$.Img.attr('id', ImgStringId);
+			$.Img.attr('name', ImgStringName);
+			$(document).on("change", "#" + ImgStringId, function (e) {
+				PreviewImg(this, "#" + ImageName);
+			});
+
+			//Input Nhà cung cấp
+			var NCCStringName = 'Med[' + i + '].Provider';
+			var NCCStringId = 'Med-' + i + '-Provider';
+			$.NSX = $(this).find('select[class*="med-NCC"');
+			$.NSX.attr('id', NCCStringId);
+			$.NSX.attr('name', NCCStringName);
+			Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#" + NCCStringId);
+
+			//Input Nguyên Liệu
+			var NLStringName = 'Med[' + i + '].Ingredient';
+			var NLStringId = 'Med-' + i + '-Ingredient';
+			$.NL = $(this).find('select[class*="med-Ingre"');
+			$.NL.attr('id', NLStringId);
+			$.NL.attr('name', NLStringName);
+			Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2", "#" + NLStringId);
+			i++;
+
+
+
+		});
+		AppendNew(i);
+	}
+
+	function AppendNew(index) {
+		var formdata = new FormData();
+		formdata.append("index", index);
+		$.ajax({
+			type: "POST",
+			url: "/MasterData/Medicine/MedicineDetail",
+			processData: false,
+			contentType: false,
+			data: formdata,
+			success: function (data) {
+				$("#Detail-Container").append(data);
+				$(document).on("change", '#Med-' + index + '-Img', function (e) {
+					PreviewImg(this, '#Image-' + index);
+				});
+				Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", '#Med-' + index + '-Provider');
+				Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", '#Med-' + index + '-Ingredient');
+				$(document).on("click", "#remove-item-" + index, function (e) {
+					$("#item-" + index).remove();
+				});
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			}
+		});
+	}
 
 </script>
-
-

@@ -27,8 +27,16 @@
 												<div class="col-md-2 text-center">
 													<label for="ForUser" class="col-form-label">Tạo tài khoản cho người dùng</label>
 												</div>
-												<div class="col-md-10">
+												<div class="col-md-9">
 													<select id="ForUser" name="ForUser" class="form-control"></select>
+												</div>
+												<div class="col-md-1">
+													<button id="remove-user" type="button" class="btn btn-labeled btn-danger w-100"> 
+														<span class="btn-label">
+															<i class="fa fa-remove"></i>
+															Xóa
+														</span>
+													</button>
 												</div>
 											</div>
 										</div>
@@ -102,6 +110,9 @@
 		PreventEnterButton();
 		$("#btn-add").on("click", function () {
 			SaveData("MasterData/Account", "#frmCreate");
+		});
+		$("#remove-user").on('click', function () {
+			$("#ForUser").val(null).trigger("change");
 		});
 	});
 

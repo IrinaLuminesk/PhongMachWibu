@@ -207,7 +207,8 @@
 		//	PaggingServerSide("MasterData/Account", columns, true);
 		//});
 		PaggingServerSideSearchInitialWithClick("MasterData/Medicine", columns, true);
-        Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#ProviderNameSearch")
-        Select2_AutoComplete("/MasterData/Medicine/AutoComplete2", "#IngredientNameSearch")
+        Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#ProviderNameSearch");
+        Select2_AutoComplete("/MasterData/Medicine/AutoComplete2", "#IngredientNameSearch");
+		Select2Init("#Actived");
 	});
 </script>

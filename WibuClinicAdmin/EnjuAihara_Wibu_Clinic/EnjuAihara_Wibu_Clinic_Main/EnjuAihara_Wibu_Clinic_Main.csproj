@@ -2194,6 +2194,7 @@
     <Content Include="Areas\MasterData\Views\Medicine\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\Medicine\_PaggingServerSide.cshtml" />
     <Content Include="Areas\MasterData\Views\Medicine\ViewMap.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\MedicineDetail.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
