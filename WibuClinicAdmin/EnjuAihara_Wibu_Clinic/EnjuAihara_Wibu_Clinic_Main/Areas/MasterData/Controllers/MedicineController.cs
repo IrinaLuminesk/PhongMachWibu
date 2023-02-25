@@ -47,6 +47,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             new MedicineSearchViewModel
             {
                 MedicineId = x.MedicineProvideId,
+                MapId = x.MedicineId,
                 MedicineName = x.MedicineModel.MedicineName,
                 Unit = x.MedicineModel.Unit,
                 IngredientName = _context.MedicineCompoundModels.Where(y => y.MedicineId == x.MedicineProvideId).Select(y => y.IngredientModel.IngredientName).ToList(),
@@ -114,6 +115,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         {
             try
             {
+                JsonResult validate = ValidateCreate(Med, MedicineName, Unit);
+                if (validate != null)
+                    return validate;
 
                 MedicineModel medicine = new MedicineModel()
                 {
@@ -138,16 +142,20 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                         };
                         _context.Entry(provideModel).State = EntityState.Added;
                         _context.SaveChanges();
-                        foreach (var j in i.Ingredient)
+                        if (i.Ingredient != null && i.Ingredient.Count > 0)
                         {
-                            MedicineCompoundModel Ingredient = new MedicineCompoundModel()
+
+                            foreach (var j in i.Ingredient)
                             {
-                                Id = Guid.NewGuid(),
-                                IngredientId = j,
-                                MedicineId = provideModel.MedicineProvideId,
-                            };
-                            _context.Entry(Ingredient).State = EntityState.Added;
-                            _context.SaveChanges();
+                                MedicineCompoundModel Ingredient = new MedicineCompoundModel()
+                                {
+                                    Id = Guid.NewGuid(),
+                                    IngredientId = j,
+                                    MedicineId = provideModel.MedicineProvideId,
+                                };
+                                _context.Entry(Ingredient).State = EntityState.Added;
+                                _context.SaveChanges();
+                            }
                         }
                     }
                 }
@@ -175,6 +183,63 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return View(thuoc);
         }
 
+        [HttpPost]
+        public JsonResult Edit(MedicineEditViewModel Med)
+        {
+            try
+            {
+                List<MedicineCreateViewModel> temp = new List<MedicineCreateViewModel>();
+                {
+                    new MedicineCreateViewModel()
+                    {
+                        Ingredient = Med.Ingredient,
+                        Img = Med.Img,
+                        Provider = Med.Provider
+                    };
+                };
+                JsonResult validate = ValidateCreate(temp, "Temp", "Temp");
+                if (validate != null)
+                    return validate;
+                var EditModel = _context.MedicineProvideModels.Where(x => x.MedicineProvideId == Med.MedicineProvideId).FirstOrDefault();
+                EditModel.Actived = Med.Actived;
+                EditModel.ProviderId = Med.Provider;
+                if (Med.Img != null)
+                {
+                    EditModel.ProductImage = CloudinaryUpload.Upload(Med.Img);
+                }
+                _context.Entry(EditModel).State = EntityState.Modified;
+                var Ingredient = _context.MedicineCompoundModels.Where(x => x.MedicineId == EditModel.MedicineProvideId).ToList();
+                _context.MedicineCompoundModels.RemoveRange(Ingredient);
+                _context.SaveChanges();
+                foreach (var i in Med.Ingredient)
+                {
+                    MedicineCompoundModel Ing = new MedicineCompoundModel()
+                    {
+                        Id = Guid.NewGuid(),
+                        MedicineId = EditModel.MedicineProvideId,
+                        IngredientId = i
+                    };
+                    _context.Entry(Ing).State = EntityState.Added;
+                    _context.SaveChanges();
+                }
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Sửa thuốc thành công"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Đã có lỗi xảy ra: {0}", ex.Message.ToString())
+                });
+            }
+        }
+
         public PartialViewResult MedicineDetail(int index)
         {
             ViewBag.index = index;
@@ -191,8 +256,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     value = Guid.Empty
                 }
             };
-            result.AddRange(_context.ProviderModels.Where(x => x.ProviderName.Contains(searchTerm) || x.ProviderCode
-            .Contains(searchTerm) ).Select(x =>
+            result.AddRange(_context.ProviderModels.Where(x => (x.ProviderName.Contains(searchTerm) || x.ProviderCode
+            .Contains(searchTerm)) && x.Actived == true ).Select(x =>
             new SelectListGuidForAutoComplete
             {
                 value = x.ProviderId,
@@ -210,8 +275,10 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     value = Guid.Empty
                 }
             };
-            result.AddRange(_context.IngredientModels.Where(x => x.IngredientCode.Contains(searchTerm) || x.IngredientName
-            .Contains(searchTerm)).Select(x =>
+            result.AddRange(_context.IngredientModels.Where(x => 
+            (x.IngredientCode.Contains(searchTerm) || x.IngredientName.Contains(searchTerm)) 
+            && x.Actived == true)
+                .Select(x =>
             new SelectListGuidForAutoComplete
             {
                 value = x.IngredientId,
@@ -225,8 +292,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public JsonResult AutoCompleteNotAll(string searchTerm)
         {
             List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>();
-            result.AddRange(_context.ProviderModels.Where(x => x.ProviderName.Contains(searchTerm) || x.ProviderCode
-            .Contains(searchTerm)).Select(x =>
+            result.AddRange(_context.ProviderModels.Where(x => (x.ProviderName.Contains(searchTerm) || x.ProviderCode
+            .Contains(searchTerm)) && x.Actived == true).Select(x =>
            new SelectListGuidForAutoComplete
            {
                value = x.ProviderId,
@@ -237,8 +304,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public JsonResult AutoComplete2NotAll(string searchTerm)
         {
             List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>();
-            result.AddRange(_context.IngredientModels.Where(x => x.IngredientCode.Contains(searchTerm) || x.IngredientName
-            .Contains(searchTerm)).Select(x =>
+            result.AddRange(_context.IngredientModels.Where(x => (x.IngredientCode.Contains(searchTerm) || x.IngredientName
+            .Contains(searchTerm)) && x.Actived == true).Select(x =>
             new SelectListGuidForAutoComplete
             {
                 value = x.IngredientId,
@@ -249,7 +316,61 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
 
 
-
+        public JsonResult ValidateCreate(List<MedicineCreateViewModel> Med, string MedicineName, string Unit)
+        {
+            if (string.IsNullOrEmpty(MedicineName))
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng nhập tên thuốc"
+                });
+            }
+            if (string.IsNullOrEmpty(Unit))
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng nhập đơn vị tính của thuốc"
+                });
+            }
+            var duplicate = Med.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => new { Element = y.Key, Counter = y.Count() }).ToList();
+            if (duplicate != null && duplicate.Count() > 0)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không chọn giá trị lập cho nhà cung cấp"
+                });
+            }
+            int j = 1;
+            foreach (var i in Med)
+            {
+                if (i.Provider == null || i.Provider.Equals(Guid.Empty))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = string.Format("Vui lòng không chọn nhà cung cấp cho thông tin chi tiết #{0}", j)
+                    });
+                }
+                //if (i.Ingredient == null || i.Ingredient.Count <= 0)
+                //{
+                //    return Json(new
+                //    {
+                //        isSucess = false,
+                //        title = "Lỗi",
+                //        message = string.Format("Vui lòng không chọn ít nhất 1 thành phần cho thông tin chi tiết #{0}", j)
+                //    });
+                //}
+                j++;
+            }
+            return null;
+        }
 
 
 

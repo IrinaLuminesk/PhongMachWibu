@@ -35,7 +35,7 @@
 													<label for="MedicineName" class="col-form-label">Tên thuốc</label>
 												</div>
 												<div class="col-md-10">
-													@Html.TextBoxFor(x => x.MedicineModel.MedicineName, new { @class = "form-control" })
+													@Html.TextBoxFor(x => x.MedicineModel.MedicineName, new { @class = "form-control", Name = "MedicineName" , @readonly = "readonly", @disabled = "disabled"})
 													@*<input type="text" id="MedicineName" name="MedicineName" class="form-control">*@
 												</div>
 											</div>
@@ -46,7 +46,7 @@
 													<label for="Unit" class="col-form-label">Đơn vị tính</label>
 												</div>
 												<div class="col-md-10">
-													@Html.TextBoxFor(x => x.MedicineModel.Unit, new { @class = "form-control" })
+													@Html.TextBoxFor(x => x.MedicineModel.Unit, new { @class = "form-control", Name = "Unit", @readonly = "readonly", @disabled = "disabled" })
 													@*<input type="text" id="Unit" name="Unit" class="form-control">*@
 												</div>
 											</div>
@@ -187,5 +187,8 @@
 			$("#Image").attr('src', "@Model.ProductImage");
 			$("#Img").val('');
 		})
+		$("#btn-edit").on("click", function () {
+			Edit("MasterData/Medicine", "#frmEdit");
+		});
 	});
 </script>

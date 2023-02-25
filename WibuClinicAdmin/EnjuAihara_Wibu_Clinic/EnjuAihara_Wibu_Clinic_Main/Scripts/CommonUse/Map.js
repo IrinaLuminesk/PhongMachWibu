@@ -1,22 +1,15 @@
 ﻿function initMap() {
 
-    defaultZoom = 12; // Zoom to
-    defaultLatLng = { lat: 14.0583, lng: 108.2772 }; // Việt Nam
+    //defaultZoom = 12; // Zoom to
+    //defaultLatLng = { lat: 14.0583, lng: 108.2772 }; // Việt Nam
 
-    // new Maps
-    map = new google.maps.Map(document.getElementById('googleMaps'), {
-        zoom: defaultZoom,
-        center: defaultLatLng,
-        draggableCursor: 'default',
-        streetViewControl: false,
-        clickableIcons: false
-    });
-
-
-    //new google.maps.Marker({
-    //    position: myLatLng,
-    //    map,
-    //    title: "Hello World!",
+    //// new Maps
+    //map = new google.maps.Map(document.getElementById('googleMaps'), {
+    //    zoom: defaultZoom,
+    //    center: defaultLatLng,
+    //    draggableCursor: 'default',
+    //    streetViewControl: false,
+    //    clickableIcons: false
     //});
 
 } // end initMap

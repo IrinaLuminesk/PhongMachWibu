@@ -40,5 +40,7 @@ namespace EnjuAihara.ViewModels.MasterData
         public Guid? MedicineId { get; set; }
         public string Status { get; set; }
         public string Status2 { get; set; }
+
+        public Guid? MapId { get; set; }
     }
 }
