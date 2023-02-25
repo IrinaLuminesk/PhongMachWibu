@@ -10,7 +10,7 @@ namespace EnjuAihara.ViewModels.MasterData
 {
     public class MedicineCreateViewModel
     {
-        public List<HttpPostedFileBase> Img { get; set; }
+        public HttpPostedFileBase Img { get; set; }
         public List<Guid> Ingredient { get; set; }
         public Guid Provider { get; set; }
 

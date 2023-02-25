@@ -59,7 +59,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 Expiry = x.WarehouseModels.OrderByDescending(y => y.ExpiredDate).Select(y => y.ExpiredDate).FirstOrDefault(),
                 Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng"
 
-            }).ToList();
+            }).OrderBy(x => x.MedicineName).ToList();
             var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
@@ -106,51 +106,72 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
         public ActionResult Create()
         {
-            CreateViewBag();
+            //CreateViewBag();
             return View();
         }
         [HttpPost]
         public JsonResult Create(List<MedicineCreateViewModel> Med, string MedicineName, string Unit)
         {
-
-            MedicineModel medicine = new MedicineModel()
+            try
             {
-                MedicineId = Guid.NewGuid(),
-                MedicineCode = DataCodeGenerate.ThuocCodeGen(),
-                MedicineName = MedicineName,
-                Unit = Unit
-            };
-            _context.Entry(medicine).State = EntityState.Added;
 
-            //foreach (var i in Med)
-            //{
-            //    MedicineProvideModel detal = new MedicineProvideModel()
-            //    {
-            //        MedicineProvideId = Guid.NewGuid(),
-            //        Actived = true,
-            //        MedicineId = medicine.MedicineId,
-            //        ProviderId = i.Provider,
-            //        MedicineCompoundModels = new List<MedicineCompoundModel>()
-            //        {
-            //            new MedicineCompoundModel()
-            //            {
-                            
-            //            }
-            //        }
-            //    }
-            //}
-
-            _context.SaveChanges();
-            return Json(new
+                MedicineModel medicine = new MedicineModel()
+                {
+                    MedicineId = Guid.NewGuid(),
+                    MedicineCode = DataCodeGenerate.ThuocCodeGen(),
+                    MedicineName = MedicineName,
+                    Unit = Unit
+                };
+                _context.Entry(medicine).State = EntityState.Added;
+                _context.SaveChanges();
+                foreach (var i in Med)
+                {
+                    if (i != null)
+                    {
+                        MedicineProvideModel provideModel = new MedicineProvideModel()
+                        {
+                            Actived = true,
+                            MedicineProvideId = Guid.NewGuid(),
+                            MedicineId = medicine.MedicineId,
+                            ProviderId = i.Provider,
+                            ProductImage = i.Img == null ? "" : CloudinaryUpload.Upload(i.Img),
+                        };
+                        _context.Entry(provideModel).State = EntityState.Added;
+                        _context.SaveChanges();
+                        foreach (var j in i.Ingredient)
+                        {
+                            MedicineCompoundModel Ingredient = new MedicineCompoundModel()
+                            {
+                                Id = Guid.NewGuid(),
+                                IngredientId = j,
+                                MedicineId = provideModel.MedicineProvideId,
+                            };
+                            _context.Entry(Ingredient).State = EntityState.Added;
+                            _context.SaveChanges();
+                        }
+                    }
+                }
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Tạo thuốc thành công",
+                    message = "Tạo thuốc thành công"
+                });
+            }
+            catch (Exception ex)
             {
-                isSucess = false,
-                title = "Đang thí nghiệm",
-                message = "Tạo tài khoản mới thành công"
-            });
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Đã có lỗi xảy ra: {0}", ex.Message.ToString())
+                });
+            }
         }
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid? Id)
         {
-            var thuoc = _context.MedicineModels.FirstOrDefault(x => x.MedicineId == id);
+            //CreateViewBag();
+            var thuoc = _context.MedicineProvideModels.Where(x => x.MedicineProvideId == Id).FirstOrDefault();
             return View(thuoc);
         }
 

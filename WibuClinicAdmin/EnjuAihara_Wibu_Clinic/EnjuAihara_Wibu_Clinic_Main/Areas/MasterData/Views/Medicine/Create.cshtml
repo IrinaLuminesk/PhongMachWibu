@@ -80,7 +80,7 @@
 								<div class="card-body">
 									<div id="Detail-result">
 										<div class="accordion" id="Detail-Container">
-											<div class="accordion-item">
+											<div class="accordion-item" id="item-0">
 												<h2 class="accordion-header">
 													<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
 														Thông tin chi tiết #1
@@ -113,17 +113,17 @@
 																			<div class="col-md-3 text-center">
 																				<label for="Provider" class="col-form-label">Nhà cung cấp</label>
 																			</div>
-																			<div class="col-md-7">
+																			<div class="col-md-9">
 																				<select name="Med[0].Provider" class="form-control med-NCC" id="Med-0-Provider"></select>
 																			</div>
-																			<div class="col-md-2">
-																				<button type="button" class="remove-Provider btn btn-labeled btn-danger w-100">
+																			@*<div class="col-md-2">
+																				<button type="button" class="remove-Provider btn btn-labeled btn-danger w-100" id="Remove-Provider-0">
 																					<span class="btn-label">
 																						<i class="fa fa-remove"></i>
 																						Xóa
 																					</span>
 																				</button>
-																			</div>
+																			</div>*@
 																		</div>
 																	</div>
 																</div>
@@ -168,7 +168,9 @@
 		$("#btn-add").on("click", function () {
 			SaveData("MasterData/Medicine", "#frmCreate");
 		});
-
+		$("#Remove-Provider-0").on('click', function () {
+			$("#Med-0-Provider").val(null).trigger("change");
+		});
 		$("#btn-add-item").on('click', function () {
 			$("#loading").show();
 			$.when(LoopThrough()).done(function () {
@@ -181,11 +183,12 @@
 		var i = 0;
 		$("#Detail-Container").find('div[class^="accordion-item"').each(function () {
 
-			
+			$(this).attr('id', "item-" + i);
+			$(this).find('button[id^="remove-item"').attr('id', 'remove-item-' + i);
 			$(this).find('button[class^="accordion-button"').attr('data-bs-target', '#collapse-' + (i + 1));
 			$(this).find('div[class^="accordion-collapse"').attr('id', 'collapse-' + (i + 1));
 			$(this).find('button[class^="accordion-button"').text("Thông tin chi tiết #" + (i + 1));
-
+			$(this).find('button[id^="Remove-Provider"').attr('id', 'Remove-Provider-' + i);
 
 			//Ảnh Preview
 			var ImageName = 'Image-' + i;
@@ -207,7 +210,14 @@
 			$.NSX = $(this).find('select[class*="med-NCC"');
 			$.NSX.attr('id', NCCStringId);
 			$.NSX.attr('name', NCCStringName);
-			Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#" + NCCStringId);
+			Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", "#" + NCCStringId);
+			//$("#remove-item-" + i).on('click', function () {
+			//	$("#item-" + i).remove();
+			//});
+			//$("#Remove-Provider-" + i).on('click', function () {
+			//	$("#" + NCCStringId).val(null).trigger("change");
+			//});
+			
 
 			//Input Nguyên Liệu
 			var NLStringName = 'Med[' + i + '].Ingredient';
@@ -215,7 +225,7 @@
 			$.NL = $(this).find('select[class*="med-Ingre"');
 			$.NL.attr('id', NLStringId);
 			$.NL.attr('name', NLStringName);
-			Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2", "#" + NLStringId);
+			Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", "#" + NLStringId);
 			i++;
 
 
@@ -242,6 +252,9 @@
 				Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", '#Med-' + index + '-Ingredient');
 				$(document).on("click", "#remove-item-" + index, function (e) {
 					$("#item-" + index).remove();
+				});
+				$(document).on("click", "#Remove-Provider-" + index, function (e) {
+					$("#Med-" + index + "-Provider").val(null).trigger("change");
 				});
 			},
 			error: function (event, xhr, options, exc) {
