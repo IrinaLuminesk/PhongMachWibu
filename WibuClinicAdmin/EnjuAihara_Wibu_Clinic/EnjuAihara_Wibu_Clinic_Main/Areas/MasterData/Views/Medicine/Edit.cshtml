@@ -1,0 +1,194 @@
+﻿@model EnjuAihara.EntityFramework.MedicineProvideModel
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Chỉnh sửa thuốc @Model.MedicineModel.MedicineName của nhà cung cấp @Model.ProviderModel.ProviderName</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/MasterData/Medicine"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+					<button type="button" class="btn btn-primary" id="btn-edit" style="width:20%">
+						<i class="fa-solid fa-pen-to-square"></i>
+						Lưu
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<form id="frmEdit" enctype='multipart/form-data'>
+	@Html.HiddenFor(x => x.MedicineProvideId)
+	<div class="content">
+		<div class="form-horizontal">
+			<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="MedicineName" class="col-form-label">Tên thuốc</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.MedicineModel.MedicineName, new { @class = "form-control", Name = "MedicineName" , @readonly = "readonly", @disabled = "disabled"})
+													@*<input type="text" id="MedicineName" name="MedicineName" class="form-control">*@
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Unit" class="col-form-label">Đơn vị tính</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextBoxFor(x => x.MedicineModel.Unit, new { @class = "form-control", Name = "Unit", @readonly = "readonly", @disabled = "disabled" })
+													@*<input type="text" id="Unit" name="Unit" class="form-control">*@
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Actived" class="col-form-label">Trạng thái</label>
+												</div>
+												<div class="col-md-10">
+													@Html.ActivedRadioButton(x => x.Actived)
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 class="m-0">Thông tin chi tiết về thuốc</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div id="Detail-result">
+										<div class="accordion" id="Detail-Container">
+											<div class="accordion-item" id="item-0">
+												<h2 class="accordion-header">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+														Thông tin chi tiết
+													</button>
+												</h2>
+												<div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+													<div class="accordion-body">
+														<div class="row g-0">
+															<div class="col-md-4">
+																<img src="@Model.ProductImage" id="Image" class="img-fluid img-preview">
+															</div>
+															<div class="col-md-8">
+
+																<div class="row">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Img" class="col-form-label">Ảnh thuốc</label>
+																			</div>
+																			<div class="col-md-7">
+																				<input type="file" name="Img" class="form-control med-file" id="Img" />
+																			</div>
+																			<div class="col-md-2">
+																				<div class="btn-group mt-2" style="width:100%">
+																					<a class="btn btn-default btn-block" id="Reset-Img">Đặt lại ảnh gốc</a>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="row mt-3">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Provider" class="col-form-label">Nhà cung cấp</label>
+																			</div>
+																			<div class="col-md-9">
+																				@*@Html.DropDownListFor(x => x.ProviderId,null, new { @class = "form-control" })*@
+																				<select name="Provider" class="form-control med-NCC" id="Provider">
+																					<option value="@Model.ProviderId" selected>@Model.ProviderModel.ProviderName</option>
+																				</select>
+																			</div>
+																			@*<div class="col-md-2">
+																					<button type="button" class="remove-Provider btn btn-labeled btn-danger w-100" id="Remove-Provider-0">
+																						<span class="btn-label">
+																							<i class="fa fa-remove"></i>
+																							Xóa
+																						</span>
+																					</button>
+																				</div>*@
+																		</div>
+																	</div>
+																</div>
+
+																<div class="row mt-3">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Ingredient" class="col-form-label">Thành phần</label>
+																			</div>
+																			<div class="col-md-9">
+																				<select name="Ingredient" class="form-control med-Ingre" id="Ingredient" multiple>
+																					@foreach (var i in Model.MedicineCompoundModels.ToList())
+																					{
+																						<option value="@i.IngredientId" selected>@i.IngredientModel.IngredientName</option>
+																						
+																					}
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	$(document).ready(function () {
+		Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", "#Provider");
+		Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", "#Ingredient");
+		$("#Img").change(function () {
+			PreviewImg(this, "#Image");
+		});
+
+		$("#Reset-Img").on("click", function () {
+			$("#Image").attr('src', "@Model.ProductImage");
+			$("#Img").val('');
+		})
+		$("#btn-edit").on("click", function () {
+			Edit("MasterData/Medicine", "#frmEdit");
+		});
+	});
+</script>

@@ -1,0 +1,266 @@
+﻿@*@model EnjuAihara.ViewModels.MasterData.MedicineCreateViewModel*@
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Tạo mới thuốc</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/MasterData/Medicine"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+					<button type="button" class="btn btn-primary" id="btn-add">
+						<i class="fa fa-plus-square"></i>
+						Lưu
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<form id="frmCreate" enctype='multipart/form-data'>
+	<div class="content">
+		<div class="form-horizontal">
+			<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="MedicineName" class="col-form-label">Tên thuốc</label>
+												</div>
+												<div class="col-md-10">
+													<input type="text" id="MedicineName" name="MedicineName" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Unit" class="col-form-label">Đơn vị tính</label>
+												</div>
+												<div class="col-md-10">
+													<input type="text" id="Unit" name="Unit" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 class="m-0">Thông tin chi tiết về thuốc</h1>
+							</div>
+							<div class="col-sm-6 text-right">
+								<div class="pull-right">
+									<button type="button" class="btn btn-primary" id="btn-add-item">
+										<i class="fa fa-plus-square"></i>
+										Thêm thông tin
+									</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div id="Detail-result">
+										<div class="accordion" id="Detail-Container">
+											<div class="accordion-item" id="item-0">
+												<h2 class="accordion-header">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+														Thông tin chi tiết #1
+													</button>
+												</h2>
+												<div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+													<div class="accordion-body">
+														<div class="row g-0">
+															<div class="col-md-4">
+																<img src="" id="Image-0" class="img-fluid img-preview">
+															</div>
+															<div class="col-md-8">
+
+																<div class="row">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Img" class="col-form-label">Ảnh thuốc</label>
+																			</div>
+																			<div class="col-md-9">
+																				<input type="file" name="Med[0].Img" class="form-control med-file" id="Med-0-Img" />
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="row mt-3">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Provider" class="col-form-label">Nhà cung cấp</label>
+																			</div>
+																			<div class="col-md-9">
+																				<select name="Med[0].Provider" class="form-control med-NCC" id="Med-0-Provider"></select>
+																			</div>
+																			@*<div class="col-md-2">
+																				<button type="button" class="remove-Provider btn btn-labeled btn-danger w-100" id="Remove-Provider-0">
+																					<span class="btn-label">
+																						<i class="fa fa-remove"></i>
+																						Xóa
+																					</span>
+																				</button>
+																			</div>*@
+																		</div>
+																	</div>
+																</div>
+
+																<div class="row mt-3">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Ingredient" class="col-form-label">Thành phần</label>
+																			</div>
+																			<div class="col-md-9">
+																				<select name="Med[0].Ingredient" class="form-control med-Ingre" id="Med-0-Ingredient"></select>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#Med-0-Img").change(function () {
+			PreviewImg(this, "#Image-0");
+		});
+		PreventEnterButton();
+		Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", "#Med-0-Provider");
+		Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", "#Med-0-Ingredient");
+		$("#btn-add").on("click", function () {
+			SaveData("MasterData/Medicine", "#frmCreate");
+		});
+		$("#Remove-Provider-0").on('click', function () {
+			$("#Med-0-Provider").val(null).trigger("change");
+		});
+		$("#btn-add-item").on('click', function () {
+			$("#loading").show();
+			$.when(LoopThrough()).done(function () {
+				$("#loading").hide();
+			});
+		});
+	});
+
+	function LoopThrough() {
+		var i = 0;
+		$("#Detail-Container").find('div[class^="accordion-item"').each(function () {
+
+			$(this).attr('id', "item-" + i);
+			$(this).find('button[id^="remove-item"').attr('id', 'remove-item-' + i);
+			$(this).find('button[class^="accordion-button"').attr('data-bs-target', '#collapse-' + (i + 1));
+			$(this).find('div[class^="accordion-collapse"').attr('id', 'collapse-' + (i + 1));
+			$(this).find('button[class^="accordion-button"').text("Thông tin chi tiết #" + (i + 1));
+			$(this).find('button[id^="Remove-Provider"').attr('id', 'Remove-Provider-' + i);
+
+			//Ảnh Preview
+			var ImageName = 'Image-' + i;
+			$(this).find('img[class*="img-preview"').attr('id', ImageName);
+
+			//Input Ảnh
+			$.Img = $(this).find('input[class*="med-file"');
+			var ImgStringName = 'Med[' + i + '].Img';
+			var ImgStringId = 'Med-' + i + '-Img';
+			$.Img.attr('id', ImgStringId);
+			$.Img.attr('name', ImgStringName);
+			$(document).on("change", "#" + ImgStringId, function (e) {
+				PreviewImg(this, "#" + ImageName);
+			});
+
+			//Input Nhà cung cấp
+			var NCCStringName = 'Med[' + i + '].Provider';
+			var NCCStringId = 'Med-' + i + '-Provider';
+			$.NSX = $(this).find('select[class*="med-NCC"');
+			$.NSX.attr('id', NCCStringId);
+			$.NSX.attr('name', NCCStringName);
+			Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", "#" + NCCStringId);
+			//$("#remove-item-" + i).on('click', function () {
+			//	$("#item-" + i).remove();
+			//});
+			//$("#Remove-Provider-" + i).on('click', function () {
+			//	$("#" + NCCStringId).val(null).trigger("change");
+			//});
+			
+
+			//Input Nguyên Liệu
+			var NLStringName = 'Med[' + i + '].Ingredient';
+			var NLStringId = 'Med-' + i + '-Ingredient';
+			$.NL = $(this).find('select[class*="med-Ingre"');
+			$.NL.attr('id', NLStringId);
+			$.NL.attr('name', NLStringName);
+			Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", "#" + NLStringId);
+			i++;
+
+
+
+		});
+		AppendNew(i);
+	}
+
+	function AppendNew(index) {
+		var formdata = new FormData();
+		formdata.append("index", index);
+		$.ajax({
+			type: "POST",
+			url: "/MasterData/Medicine/MedicineDetail",
+			processData: false,
+			contentType: false,
+			data: formdata,
+			success: function (data) {
+				$("#Detail-Container").append(data);
+				$(document).on("change", '#Med-' + index + '-Img', function (e) {
+					PreviewImg(this, '#Image-' + index);
+				});
+				Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", '#Med-' + index + '-Provider');
+				Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", '#Med-' + index + '-Ingredient');
+				$(document).on("click", "#remove-item-" + index, function (e) {
+					$("#item-" + index).remove();
+				});
+				$(document).on("click", "#Remove-Provider-" + index, function (e) {
+					$("#Med-" + index + "-Provider").val(null).trigger("change");
+				});
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			}
+		});
+	}
+
+</script>

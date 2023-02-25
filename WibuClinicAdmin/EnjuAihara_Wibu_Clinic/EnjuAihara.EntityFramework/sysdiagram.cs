@@ -12,13 +12,12 @@ namespace EnjuAihara.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class MedicineCompoundModel
+    public partial class sysdiagram
     {
-        public System.Guid Id { get; set; }
-        public Nullable<System.Guid> IngredientId { get; set; }
-        public Nullable<System.Guid> MedicineId { get; set; }
-    
-        public virtual IngredientModel IngredientModel { get; set; }
-        public virtual MedicineProvideModel MedicineProvideModel { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

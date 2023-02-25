@@ -39,6 +39,34 @@ function Select2_AutoComplete(url, id) {
         }
     });
 }
+
+function Select2_MultipleAutoComplete(url, id) {
+    $(id).select2({
+        width: '100%',
+        scroll: true,
+        multiple: true,
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term, // search term
+                    page: params.page
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (obj) {
+                        return { id: obj.value, text: obj.text };
+                    })
+                };
+            },
+            minimumInputLength: 0
+
+        }
+    });
+}
 function SearchInitialWithClick(controller) {
     $("#btn-search").click(function () {
         SearchInit(controller);
@@ -94,8 +122,9 @@ function Pagging() {
         },
         drawCallback: function (settings) {
             $(window).trigger('resize');
-            $("table.dataTable td").css('white-space', 'nowrap')
-            $("table.dataTable th").css('white-space', 'nowrap')
+            $("table.dataTable td").css('white-space', 'nowrap');
+            $("table.dataTable th").css('white-space', 'nowrap');
+            $(window).trigger('resize');
         },
         destroy: true,
         language: {
@@ -130,8 +159,6 @@ function PaggingServerSide(controller, columns, dropdown) {
     $("#tableRes").DataTable().clear().destroy();
     $("#tableRes").on('processing.dt', function (e, settings, processing) {
         LoadingDataTable(processing, '.dataTableServerSide');
-        $("table.dataTable td").css('white-space', 'nowrap')
-        $("table.dataTable th").css('white-space', 'nowrap')
     }).DataTable({
         proccessing: true,
         serverSide: true,
@@ -186,6 +213,9 @@ function PaggingServerSide(controller, columns, dropdown) {
             if (dropdown == true) {
                 Select2Init(".dropdown");
             }
+            $("table.dataTable td").css('white-space', 'nowrap');
+            $("table.dataTable th").css('white-space', 'nowrap');
+            $(window).trigger('resize');
         },
         language: {
             sProcessing: "Vui lòng đợi xíu.....(๑´•ε •`๑)",

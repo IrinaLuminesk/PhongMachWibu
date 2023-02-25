@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -26,6 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -167,6 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\MasterData\Controllers\AccountController.cs" />
     <Compile Include="Areas\MasterData\Controllers\UserController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\MedicineController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
     <Compile Include="Areas\Permission\Controllers\AccessController.cs" />
     <Compile Include="Areas\Permission\Controllers\FunctionController.cs" />
@@ -219,6 +222,7 @@
     <Content Include="Scripts\build\npm\Publish.js" />
     <Content Include="Scripts\build\npm\vnu-jar.js" />
     <Content Include="Scripts\CommonUse\Ganyu.js" />
+    <Content Include="Scripts\CommonUse\Map.js" />
     <Content Include="Scripts\dist\css\adminlte.css" />
     <Content Include="Scripts\dist\css\adminlte.min.css" />
     <Content Include="Scripts\dist\css\alt\adminlte.components.css" />
@@ -2151,6 +2155,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\GoogleMapApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Permission\Views\web.config" />
@@ -2187,6 +2192,12 @@
     <Content Include="Areas\MasterData\Views\User\_PaggingServerSide.cshtml" />
     <Content Include="Areas\MasterData\Views\User\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\User\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\ViewMap.cshtml" />
+    <Content Include="Areas\MasterData\Views\Medicine\MedicineDetail.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
@@ -2415,6 +2426,10 @@
     <Content Include="Views\Shared\Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EnjuAihara.Constant\EnjuAihara.Constant.csproj">
+      <Project>{e9bce9ad-5e57-4b54-a76b-82a149a0c962}</Project>
+      <Name>EnjuAihara.Constant</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EnjuAihara.Core\EnjuAihara.Core.csproj">
       <Project>{181e89c3-8578-4bc6-a314-2c4ca3625dd3}</Project>
       <Name>EnjuAihara.Core</Name>
@@ -2432,11 +2447,15 @@
       <Name>EnjuAihara.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
