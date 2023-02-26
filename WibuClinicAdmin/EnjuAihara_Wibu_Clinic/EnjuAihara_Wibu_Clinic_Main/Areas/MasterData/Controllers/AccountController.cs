@@ -390,7 +390,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
         public JsonResult AutoComplete(string searchTerm)
         {
-            var result = _context.UsersModels.Where(x => x.UserCode.Contains(searchTerm) || x.FirstName.Contains(searchTerm) || x.LastName.Contains(searchTerm)).Select(x =>
+            var result = _context.UsersModels.Where(x => 
+            (x.UserCode.Contains(searchTerm) || x.FirstName.Contains(searchTerm) || x.LastName.Contains(searchTerm)) && x.Actived == true
+            ).Select(x =>
             new
             {
                 value = x.UserID,
