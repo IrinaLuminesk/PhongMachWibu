@@ -156,7 +156,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 var provider = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == viewModel.ProviderId);
                 provider.ProviderName = viewModel.ProviderName;
                 provider.Actived = viewModel.Actived;
-                provider.ProviderCode = viewModel.ProviderCode;
+                //provider.ProviderCode = viewModel.ProviderCode;
                 _context.SaveChanges();
                 return Json(new
                 {
