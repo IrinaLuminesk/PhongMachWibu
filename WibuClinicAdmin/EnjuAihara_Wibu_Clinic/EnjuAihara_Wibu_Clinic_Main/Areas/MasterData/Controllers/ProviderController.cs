@@ -100,7 +100,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 ProviderModel newNcc = new ProviderModel()
                 {
                     ProviderId = Guid.NewGuid(),
-                    ProviderCode = DataCodeGenerate.UserCodeGen(),
+                    ProviderCode = DataCodeGenerate.ProviderCodeGen(),
                     Actived = true,
                     ProviderName = model.ProviderName,
                     
@@ -111,7 +111,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 {
                     isSucess = true,
                     title = "Thành công",
-                    message = "Thêm tài khoản mới thành công"
+                    message = "Thêm tài khoản mới thành công",
+                    redirect = "/MasterData/Provider"
                 });
             }
             catch (Exception ex)
@@ -126,7 +127,54 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
         public ActionResult Edit(Guid id)
         {
-            return View();
+            var pro = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == id);
+            return View(pro);
+        }
+        [HttpPost]
+        public JsonResult Edit(ProviderModel viewModel)
+        {
+            if (string.IsNullOrEmpty(viewModel.ProviderName))
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống tên nhà cung cấp"
+                });
+            }
+            if (viewModel.Actived==null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống trạng thái nhà cung cấp"
+                });
+            }
+            try
+            {
+                var provider = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == viewModel.ProviderId);
+                provider.ProviderName = viewModel.ProviderName;
+                provider.Actived = viewModel.Actived;
+                provider.ProviderCode = viewModel.ProviderCode;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Sửa tài khoản mới thành công",
+                    redirect = "/MasterData/Provider"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Đã có lỗi xảy ra " + ex.Message.ToString()
+                });
+            }
         }
         public void CreateViewBag()
         {

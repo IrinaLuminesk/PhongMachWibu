@@ -2191,6 +2191,7 @@
     <Content Include="Areas\MasterData\Views\Provider\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\Provider\_PaggingServerSide.cshtml" />
     <Content Include="Areas\MasterData\Views\Provider\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
