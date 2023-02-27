@@ -372,6 +372,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return null;
         }
 
+        public JsonResult JqueryAutoCompleteMediName(string kq)
+        {
+            var MediLst = _context.MedicineModels.Where(x => x.MedicineName.Contains(kq)).Select(x => x.MedicineName).Take(10).ToList();
+            return Json(MediLst, JsonRequestBehavior.AllowGet);
+        }
 
 
 

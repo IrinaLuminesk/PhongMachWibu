@@ -108,10 +108,10 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function () {
+		PreventEnterButton();
 		Select2Init("#MenuId");
 		$("#btn-add").on("click", function () {
 			SaveData("Permission/Page", "#frmCreate");
-			PreventEnterButton();
 		});
 	});
 

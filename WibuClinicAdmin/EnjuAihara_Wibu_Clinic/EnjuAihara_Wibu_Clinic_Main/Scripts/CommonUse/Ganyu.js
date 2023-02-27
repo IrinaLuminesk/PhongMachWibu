@@ -497,3 +497,44 @@ function CloseSideBar() {
     $("#bodytag").addClass("sidebar-mini sidebar-collapse")
 }
 
+
+function JqueryAutoComplete(url, id) {
+        $(id).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: url,
+                    data: JSON.stringify({"kq": $(id).val()}),
+                    dataType: "json",
+                    success: function (data) {
+                        response(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alertPopup(false, xhr.responseText);
+                    }
+                });
+            }
+            ////prevent another value except dropdown value
+            //change: function (event, ui) {
+            //    if (ui.item == null) {
+            //        $(id).val("");
+            //        $(id).focus();
+            //    }
+            //}
+        });
+}
+
+function CurrencyFormat(number) {
+    var currency = new Intl.NumberFormat('ja-JP', {
+        style: 'currency',
+        currency: 'VND'
+    }).format(number);
+    return currency;
+
+}
+
+function NumberFormat(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+

@@ -115,7 +115,8 @@
     </div>
 </div>
 <script type="text/javascript">
-	$(document).ready(function () {
+    $(document).ready(function () {
+        JqueryAutoComplete("/MasterData/Medicine/JqueryAutoCompleteMediName", "#MedicineNameSearch");
 		var columns = [
 			{
 				"data": "STT",
@@ -167,11 +168,23 @@
                 "data": "MedicineOnHandQuantity",
                 "className": "text-center",
                 "orderable": true,
+				"render": function (data, type, row) {
+                    if (data != null && data != 0) {
+                        return NumberFormat(data);
+                    }
+                    return data;
+				}
             },
             {
                 "data": "MaxPrice",
                 "className": "text-center",
                 "orderable": true,
+                "render": function (data, type, row) {
+                    if (data != null) {
+                        return CurrencyFormat(data);
+                    }
+                    return data;
+                }
             },
             {
                 "data": "ExpiryString",
