@@ -2150,7 +2150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\MasterData\Views\Provider\" />
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
   </ItemGroup>
@@ -2189,6 +2188,9 @@
     <Content Include="Areas\MasterData\Views\User\_PaggingServerSide.cshtml" />
     <Content Include="Areas\MasterData\Views\User\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\User\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\Create.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
