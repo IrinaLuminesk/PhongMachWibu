@@ -1,0 +1,113 @@
+﻿<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Quản lý thành phố</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-primary" href="/Masterdata/City/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmSearch">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="StreetName" class="col-form-label">Tên thành phố</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="CityName" name="CityName" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Actived" class="col-form-label">Trạng thái</label>
+												</div>
+												<div class="col-md-9">
+													@Html.DropDownList("Actived", (SelectList)ViewBag.Actived, "-- Tất cả --", new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row" style="margin-top: 15px">
+										<div class="col-md-12 text-center">
+											<button type="button" class="btn btn-primary" id="btn-search">
+												<i class="fas fa-search"></i>
+												Tìm Kiếm
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="card">
+						<div class="card-body">
+							<div id="divSearchResult" style="overflow-x:auto;" class="table-responsive">
+								@Html.Partial("_PaggingServerSide")
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		CloseSideBar();
+		JqueryAutoComplete("/MasterData/City/AutoCompleteCityName", "#CityName");
+		Select2Init("#Actived");
+		var columns = [
+			{
+				"data": "STT",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "CityName",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Status",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "CityId",
+				"className": "text-center",
+				"orderable": false,
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s = '<a class="btn btn-info" href="/MasterData/City/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+						return s;
+					}
+					return "";
+				}
+			}
+		];
+		PaggingServerSideSearchInitialWithClick("MasterData/City", columns, true);
+	});
+</script>

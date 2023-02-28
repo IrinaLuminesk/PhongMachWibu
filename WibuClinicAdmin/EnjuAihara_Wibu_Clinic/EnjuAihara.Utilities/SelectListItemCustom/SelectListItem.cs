@@ -14,7 +14,7 @@ namespace EnjuAihara.Utilities.SelectListItemCustom
             List<SelectBoolItem> StatusList = new List<SelectBoolItem>()
             {
                 new SelectBoolItem() { id = true, name = "Đang sử dụng"},
-                new SelectBoolItem() { id = false, name = "Ngừng sử dụng"}
+                new SelectBoolItem() { id = false, name = "Đã ngừng sử dụng"}
             };
             return StatusList;
         }

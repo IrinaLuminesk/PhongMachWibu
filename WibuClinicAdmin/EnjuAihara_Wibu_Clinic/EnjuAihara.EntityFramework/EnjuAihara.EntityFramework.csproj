@@ -147,9 +147,6 @@
     <Compile Include="StreetModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
-    </Compile>
     <Compile Include="UsersModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>

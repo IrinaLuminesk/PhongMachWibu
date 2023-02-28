@@ -17,6 +17,7 @@ namespace EnjuAihara.EntityFramework
         public System.Guid DistrictStreetId { get; set; }
         public Nullable<System.Guid> DistrictId { get; set; }
         public Nullable<System.Guid> StreetId { get; set; }
+        public Nullable<bool> Actived { get; set; }
     
         public virtual DistrictModel DistrictModel { get; set; }
         public virtual StreetModel StreetModel { get; set; }

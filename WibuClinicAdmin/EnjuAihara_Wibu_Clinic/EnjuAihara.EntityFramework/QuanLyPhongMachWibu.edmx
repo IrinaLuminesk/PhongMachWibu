@@ -138,6 +138,7 @@
           <Property Name="DistrictStreetId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DistrictId" Type="uniqueidentifier" />
           <Property Name="StreetId" Type="uniqueidentifier" />
+          <Property Name="Actived" Type="bit" />
         </EntityType>
         <EntityType Name="DistrictWardModel">
           <Key>
@@ -266,16 +267,6 @@
           <Property Name="StreetId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StreetName" Type="nvarchar" MaxLength="100" />
           <Property Name="Actived" Type="bit" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="UsersModel">
           <Key>
@@ -713,7 +704,6 @@
           <EntitySet Name="ProviderModel" EntityType="Self.ProviderModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolesModel" EntityType="Self.RolesModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetModel" EntityType="Self.StreetModel" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersModel" EntityType="Self.UsersModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WardModel" EntityType="Self.WardModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseModel" EntityType="Self.WarehouseModel" Schema="dbo" store:Type="Tables" />
@@ -874,7 +864,6 @@
           <EntitySet Name="ProviderModels" EntityType="QuanLyPhongMachWibuModel.ProviderModel" />
           <EntitySet Name="RolesModels" EntityType="QuanLyPhongMachWibuModel.RolesModel" />
           <EntitySet Name="StreetModels" EntityType="QuanLyPhongMachWibuModel.StreetModel" />
-          <EntitySet Name="sysdiagrams" EntityType="QuanLyPhongMachWibuModel.sysdiagram" />
           <EntitySet Name="UsersModels" EntityType="QuanLyPhongMachWibuModel.UsersModel" />
           <EntitySet Name="WardModels" EntityType="QuanLyPhongMachWibuModel.WardModel" />
           <EntitySet Name="WarehouseModels" EntityType="QuanLyPhongMachWibuModel.WarehouseModel" />
@@ -1166,6 +1155,7 @@
           <Property Name="DistrictStreetId" Type="Guid" Nullable="false" />
           <Property Name="DistrictId" Type="Guid" />
           <Property Name="StreetId" Type="Guid" />
+          <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="DistrictModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_DistrictModel" FromRole="DistrictStreetModel" ToRole="DistrictModel" />
           <NavigationProperty Name="StreetModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel" FromRole="DistrictStreetModel" ToRole="StreetModel" />
         </EntityType>
@@ -1323,16 +1313,6 @@
           <Property Name="StreetName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="DistrictStreetModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel" FromRole="StreetModel" ToRole="DistrictStreetModel" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="UsersModel">
           <Key>
@@ -1892,6 +1872,7 @@
           <EntitySetMapping Name="DistrictStreetModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DistrictStreetModel">
               <MappingFragment StoreEntitySet="DistrictStreetModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
                 <ScalarProperty Name="StreetId" ColumnName="StreetId" />
                 <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
                 <ScalarProperty Name="DistrictStreetId" ColumnName="DistrictStreetId" />
@@ -2037,17 +2018,6 @@
                 <ScalarProperty Name="Actived" ColumnName="Actived" />
                 <ScalarProperty Name="StreetName" ColumnName="StreetName" />
                 <ScalarProperty Name="StreetId" ColumnName="StreetId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
