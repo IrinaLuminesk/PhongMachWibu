@@ -118,10 +118,60 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 }), "id", "name");
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(Guid Id)
         {
-            return View();
+            var Street = _context.DistrictStreetModels.Where(x => x.DistrictStreetId == Id).FirstOrDefault();
+            ViewBag.CityList = new SelectList(_context.CityModels.Where(x => x.Actived == true).
+                Select(x => new SelectGuidItem
+                {
+                    id = x.CityId,
+                    name = x.CityName
+                }), "id", "name", Street.DistrictModel.CityId);
+            ViewBag.DistrictList = new SelectList(_context.DistrictModels.Where(x => x.Actived == true && x.CityId == Street.DistrictModel.CityId).
+                Select(x => new SelectGuidItem
+                {
+                    id = x.DistrictId,
+                    name = x.DistrictName
+                }), "id", "name", Street.DistrictModel.DistrictId);
+            return View(Street);
         }
+
+        [HttpPost]
+        public JsonResult Edit(Guid DistrictId, Guid CityId, bool Actived, Guid DistrictStreetId)
+        {
+            try
+            {
+                StreetCreateViewModel EditModel = new StreetCreateViewModel()
+                {
+                    CityId = CityId,
+                    DistrictId = new List<Guid>() { DistrictId },
+                    StreetName = "aa"
+                };
+                JsonResult result = Validate(EditModel);
+                if (result != null)
+                    return result;
+                var Edit = _context.DistrictStreetModels.Where(x => x.DistrictStreetId == DistrictStreetId).FirstOrDefault();
+                Edit.DistrictId = DistrictId;
+                Edit.Actived = Actived;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Sửa thành công",
+                    message = string.Format("Sửa đường thành công")
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Đã có lỗi xảy ra {0}", ex.Message.ToString())
+                });
+            }
+        }
+
 
         public void CreateViewBag()
         {

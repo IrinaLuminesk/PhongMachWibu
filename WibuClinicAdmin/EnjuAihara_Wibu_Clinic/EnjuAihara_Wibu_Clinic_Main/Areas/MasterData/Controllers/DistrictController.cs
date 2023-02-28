@@ -90,8 +90,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
 
 
-        public PartialViewResult GetDistrictByCity(Guid CityId)
+        public PartialViewResult GetDistrictByCity(Guid CityId, bool? Multiple)
         {
+            ViewBag.Multiple = Multiple;
             ViewBag.DistrictList = new SelectList(_context.DistrictModels.Where(x => x.CityId == CityId && x.Actived == true).
                 Select(x => new SelectGuidItem
                 {
