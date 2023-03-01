@@ -79,12 +79,18 @@
 				processData: false,
 				contentType: false,
 				data: formdata,
+				beforeSend: function () {
+					$("#loading").show();
+				},
 				success: function (data) {
 					$("#divSearchResult").html("");
 					$("#divSearchResult").append(data);
 				},
 				error: function (event, xhr, options, exc) {
 					AlertPopup(2, "Lỗi", event.message);
+				},
+				complete: function () {
+					$("#loading").hide();
 				}
 			});
 		})

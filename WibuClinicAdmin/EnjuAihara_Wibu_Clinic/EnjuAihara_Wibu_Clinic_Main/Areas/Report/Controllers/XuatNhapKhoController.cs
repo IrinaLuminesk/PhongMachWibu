@@ -49,7 +49,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Report.Controllers
                     Price = x.BoughtPrice,
                     Provider = x.MedicineProvideModel.ProviderModel.ProviderName,
                     Unit = x.MedicineProvideModel.MedicineModel.Unit
-                }).OrderBy(x => x.Price).ToList();
+                }).OrderBy(x => x.Price).Take(100).ToList();
             data.Tables["Detail"].Merge(ListtoDataTableConverter.ToDataTable<XuatNhapKhoDetailViewModel>(detail));
             return data;
         }
