@@ -47,6 +47,7 @@
     <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />
     <Compile Include="MasterData\EditUserViewModel.cs" />
+    <Compile Include="MasterData\IngredientSearchViewModel.cs" />
     <Compile Include="MasterData\ProviderSearchViewModel.cs" />
     <Compile Include="MasterData\UserViewModel.cs" />
     <Compile Include="Permission\Auth\LoginViewModel.cs" />

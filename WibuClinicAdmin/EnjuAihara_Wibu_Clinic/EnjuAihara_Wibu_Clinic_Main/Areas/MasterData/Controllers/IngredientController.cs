@@ -18,15 +18,15 @@ using System.Web.Mvc;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
-    public class ProviderController : IrinaLumineskController
+    public class IngredientController : IrinaLumineskController
     {
-        // GET: MasterData/Provider
+        // GET: MasterData/Ingredient
         public ActionResult Index()
         {
             CreateViewBag();
             return View();
         }
-        public JsonResult _PaggingServerSide(DatatableViewModel model, ProviderSearchViewModel search, string ProviderCodeSearch, string ProviderNameSearch,string AddressSearch , bool? Actived)
+        public JsonResult _PaggingServerSide(DatatableViewModel model, IngredientSearchViewModel search, string IngredientCodeSearch, string IngredientNameSearch, bool? Actived)
         {
             int filteredResultsCount;
             int totalResultsCount = model.length;
@@ -37,29 +37,27 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             search.PageSize = model.length;
             search.PageNumber = model.start / model.length + 1;
 
-            var query = _context.ProviderModels.
-                Where(x => (x.ProviderCode.Contains(ProviderCodeSearch) || string.IsNullOrEmpty(ProviderCodeSearch))
-                && (x.ProviderName.Contains(ProviderNameSearch) || string.IsNullOrEmpty(ProviderNameSearch))
-                && (x.Address.Contains(AddressSearch) || string.IsNullOrEmpty(AddressSearch))
-                //&& (x.AccountInRoleModels.Any(z => z.RoleId == RoleNameSearch) || RoleNameSearch == null)
+            var query = _context.IngredientModels.
+                Where(x => (x.IngredientCode.Contains(IngredientCodeSearch) || string.IsNullOrEmpty(IngredientCodeSearch))
+                && (x.IngredientName.Contains(IngredientNameSearch) || string.IsNullOrEmpty(IngredientNameSearch))
+         
                 && (x.Actived == Actived || Actived == null)
                 //&& (x.CreateDate >= FromDate || FromDate == null)
                 //&& (x.CreateDate <= ToDate || ToDate == null)
                 )
                 .Select(x =>
-            new ProviderSearchViewModel
+            new IngredientSearchViewModel
             {
-                ProviderId = x.ProviderId,
-                ProviderCode = x.ProviderCode,
-                ProviderName = x.ProviderName,
+                IngredientId = x.IngredientId,
+                IngredientCode = x.IngredientCode,
+                IngredientName = x.IngredientName,
                 //RoleName = x.RolesModels.Select(y => y.RoleName).ToList(),
                 //RoleName = x.AccountInRoleModels.Select(y => y.RolesModel.RoleName).ToList(),
-                Address=x.Address,
-                Status=x.Actived==true? "Đang sử dụng":"Đã ngừng",
-                
+                Status = x.Actived == true ? "Đang sử dụng" : "Đã ngừng",
+
 
             }).ToList();
-            var finalResult = PaggingServerSideDatatable.DatatableSearch<ProviderSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
+            var finalResult = PaggingServerSideDatatable.DatatableSearch<IngredientSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
                 int i = model.start;
@@ -85,34 +83,35 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult Create(ProviderModel model)
+        public JsonResult Create(IngredientModel model)
         {
-            if (string.IsNullOrEmpty(model.ProviderName))
+            if (string.IsNullOrEmpty(model.IngredientName))
             {
                 return Json(new
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Vui lòng không để trống tên nhà cung cấp"
+                    message = "Vui lòng không để trống tên thành phần thuốc"
                 });
             }
-            try {
-                ProviderModel newNcc = new ProviderModel()
+            try
+            {
+                IngredientModel newtpt = new IngredientModel()
                 {
-                    ProviderId = Guid.NewGuid(),
-                    ProviderCode = DataCodeGenerate.ProviderCodeGen(),
+                    IngredientId = Guid.NewGuid(),
+                    IngredientCode = DataCodeGenerate.IngredientCodeGen(),
                     Actived = true,
-                    ProviderName = model.ProviderName,
-                    
+                    IngredientName = model.IngredientName,
+
                 };
-                _context.Entry(newNcc).State = EntityState.Added;
+                _context.Entry(newtpt).State = EntityState.Added;
                 _context.SaveChanges();
                 return Json(new
                 {
                     isSucess = true,
                     title = "Thành công",
-                    message = "Thêm nhà cung cấp mới thành công",
-                    redirect = "/MasterData/Provider"
+                    message = "Thêm thành phần thuốc thành công",
+                    redirect = "/MasterData/Ingredient"
                 });
             }
             catch (Exception ex)
@@ -127,43 +126,43 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
         public ActionResult Edit(Guid id)
         {
-            var pro = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == id);
-            return View(pro);
+            var tp = _context.IngredientModels.FirstOrDefault(x => x.IngredientId == id);
+            return View(tp);
         }
         [HttpPost]
-        public JsonResult Edit(ProviderModel viewModel)
+        public JsonResult Edit(IngredientModel viewModel)
         {
-            if (string.IsNullOrEmpty(viewModel.ProviderName))
+            if (string.IsNullOrEmpty(viewModel.IngredientName))
             {
                 return Json(new
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Vui lòng không để trống tên nhà cung cấp"
+                    message = "Vui lòng không để trống tên thành phần thuốc"
                 });
             }
-            if (viewModel.Actived==null)
+            if (viewModel.Actived == null)
             {
                 return Json(new
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Vui lòng không để trống trạng thái nhà cung cấp"
+                    message = "Vui lòng không để trống trạng thái thành phần thuốc"
                 });
             }
             try
             {
-                var provider = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == viewModel.ProviderId);
-                provider.ProviderName = viewModel.ProviderName;
-                provider.Actived = viewModel.Actived;
+                var ingre = _context.IngredientModels.FirstOrDefault(x => x.IngredientId == viewModel.IngredientId);
+                ingre.IngredientName = viewModel.IngredientName;
+                ingre.Actived = viewModel.Actived;
                 //provider.ProviderCode = viewModel.ProviderCode;
                 _context.SaveChanges();
                 return Json(new
                 {
                     isSucess = true,
                     title = "Thành công",
-                    message = "Sửa nhà cung cấp thành công",
-                    redirect = "/MasterData/Provider"
+                    message = "Sửa thành phần thuốc thành công",
+                    redirect = "/MasterData/Ingredient"
                 });
             }
             catch (Exception ex)
@@ -180,5 +179,6 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         {
             ViewBag.Actived = new SelectList(SelectListItemCustom.GetStatusSelectList(), "id", "name");
         }
+
     }
 }
