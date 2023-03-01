@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloudinaryHelper\CloudinaryUpload.cs" />
+    <Compile Include="Datatable\ListtoDataTableConverter.cs" />
     <Compile Include="Datatable\PaggingServerSideDatatable.cs" />
     <Compile Include="DateTimeFormat\FormatDateTime.cs" />
     <Compile Include="EncryptionAlgorithm\Encrypt.cs" />

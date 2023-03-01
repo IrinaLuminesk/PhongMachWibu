@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TonKho" targetNamespace="http://tempuri.org/TonKho.xsd" xmlns:mstns="http://tempuri.org/TonKho.xsd" xmlns="http://tempuri.org/TonKho.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TonKho" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TonKho" msprop:Generator_UserDSName="TonKho">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Detail" msprop:Generator_TableClassName="DetailDataTable" msprop:Generator_TableVarName="tableDetail" msprop:Generator_TablePropName="Detail" msprop:Generator_RowDeletingName="DetailRowDeleting" msprop:Generator_RowChangingName="DetailRowChanging" msprop:Generator_RowEvHandlerName="DetailRowChangeEventHandler" msprop:Generator_RowDeletedName="DetailRowDeleted" msprop:Generator_UserTableName="Detail" msprop:Generator_RowChangedName="DetailRowChanged" msprop:Generator_RowEvArgName="DetailRowChangeEvent" msprop:Generator_RowClassName="DetailRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MedicineCode" msprop:Generator_ColumnVarNameInTable="columnMedicineCode" msprop:Generator_ColumnPropNameInRow="MedicineCode" msprop:Generator_ColumnPropNameInTable="MedicineCodeColumn" msprop:Generator_UserColumnName="MedicineCode" type="xs:string" minOccurs="0" />
+              <xs:element name="MedicineName" msprop:Generator_ColumnVarNameInTable="columnMedicineName" msprop:Generator_ColumnPropNameInRow="MedicineName" msprop:Generator_ColumnPropNameInTable="MedicineNameColumn" msprop:Generator_UserColumnName="MedicineName" type="xs:string" minOccurs="0" />
+              <xs:element name="Unit" msprop:Generator_ColumnVarNameInTable="columnUnit" msprop:Generator_ColumnPropNameInRow="Unit" msprop:Generator_ColumnPropNameInTable="UnitColumn" msprop:Generator_UserColumnName="Unit" type="xs:string" minOccurs="0" />
+              <xs:element name="ImportTotal" msprop:Generator_ColumnVarNameInTable="columnImportTotal" msprop:Generator_ColumnPropNameInRow="ImportTotal" msprop:Generator_ColumnPropNameInTable="ImportTotalColumn" msprop:Generator_UserColumnName="ImportTotal" type="xs:string" minOccurs="0" />
+              <xs:element name="Provider" msprop:Generator_ColumnVarNameInTable="columnProvider" msprop:Generator_ColumnPropNameInRow="Provider" msprop:Generator_ColumnPropNameInTable="ProviderColumn" msprop:Generator_UserColumnName="Provider" type="xs:string" minOccurs="0" />
+              <xs:element name="ImportDate" msprop:Generator_ColumnVarNameInTable="columnImportDate" msprop:Generator_ColumnPropNameInRow="ImportDate" msprop:Generator_ColumnPropNameInTable="ImportDateColumn" msprop:Generator_UserColumnName="ImportDate" type="xs:string" minOccurs="0" />
+              <xs:element name="Price" msprop:Generator_ColumnVarNameInTable="columnPrice" msprop:Generator_ColumnPropNameInRow="Price" msprop:Generator_ColumnPropNameInTable="PriceColumn" msprop:Generator_UserColumnName="Price" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="HeaderDetail" msprop:Generator_TableClassName="HeaderDetailDataTable" msprop:Generator_TableVarName="tableHeaderDetail" msprop:Generator_TablePropName="HeaderDetail" msprop:Generator_RowDeletingName="HeaderDetailRowDeleting" msprop:Generator_RowChangingName="HeaderDetailRowChanging" msprop:Generator_RowEvHandlerName="HeaderDetailRowChangeEventHandler" msprop:Generator_RowDeletedName="HeaderDetailRowDeleted" msprop:Generator_UserTableName="HeaderDetail" msprop:Generator_RowChangedName="HeaderDetailRowChanged" msprop:Generator_RowEvArgName="HeaderDetailRowChangeEvent" msprop:Generator_RowClassName="HeaderDetailRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fromdate" msprop:Generator_ColumnVarNameInTable="columnFromdate" msprop:Generator_ColumnPropNameInRow="Fromdate" msprop:Generator_ColumnPropNameInTable="FromdateColumn" msprop:Generator_UserColumnName="Fromdate" type="xs:string" minOccurs="0" />
+              <xs:element name="ToDate" msprop:Generator_ColumnVarNameInTable="columnToDate" msprop:Generator_ColumnPropNameInRow="ToDate" msprop:Generator_ColumnPropNameInTable="ToDateColumn" msprop:Generator_UserColumnName="ToDate" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

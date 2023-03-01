@@ -1,0 +1,8 @@
+﻿@{ 
+	var i = (EnjuAihara_Wibu_Clinic_Main.Areas.Report.XtraReport.ReportXuatNhapKho)ViewBag.Report;
+}
+@Html.DevExpress().WebDocumentViewer(
+	settings =>
+	{
+		settings.Name = "WebDocumentViewer";
+	}).Bind(new DevExpress.XtraReports.Web.CachedReportSourceWeb(@i)).GetHtml()

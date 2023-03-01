@@ -57,6 +57,7 @@
     <Compile Include="Permission\MenuViewModel.cs" />
     <Compile Include="Permission\PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\XuatNhapKhoDetailViewModel.cs" />
     <Compile Include="SelectList\SelectBoolItem.cs" />
     <Compile Include="SelectList\SelectGuidItem.cs" />
     <Compile Include="SelectList\SelectListGuidForAutoComplete.cs" />
