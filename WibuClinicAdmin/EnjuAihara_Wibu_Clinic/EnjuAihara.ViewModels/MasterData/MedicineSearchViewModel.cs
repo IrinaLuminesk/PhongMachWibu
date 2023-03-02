@@ -27,6 +27,9 @@ namespace EnjuAihara.ViewModels.MasterData
 
         public string MedicineName { get; set; }
 
+        public string MedicineCode { get; set; }
+
+
         public string Unit { get; set; }
 
         public List<string> IngredientName { get; set; }
@@ -38,6 +41,7 @@ namespace EnjuAihara.ViewModels.MasterData
 
         public string ExpiryString { get; set; }
         public Guid? MedicineId { get; set; }
+        public Guid? MedicineProvideId { get; set; }
         public string Status { get; set; }
         public string Status2 { get; set; }
 

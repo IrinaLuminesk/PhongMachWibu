@@ -122,6 +122,11 @@
 				"data": "STT",
 				"className": "text-center",
 				"orderable": true,
+            },
+			{
+				"data": "MedicineCode",
+				"className": "text-center",
+				"orderable": true,
 			},
 			{
 				"data": "MedicineName",
@@ -204,12 +209,13 @@
                 }
             },
 			{
-				"data": "MedicineId",
+				"data": "MedicineProvideId",
 				"className": "text-center",
 				"orderable": false,
 				"render": function (data, type, row) {
 					if (data != "" && data != null) {
-						var s = '<a class="btn btn-info" href="/MasterData/Medicine/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+                        var s = '<a class="btn btn-info" href="/MasterData/Medicine/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+						s += '<a class="btn btn-info ml-2" href="/MasterData/Medicine/Create/' + row.MedicineId + '"><i class="fa-solid fa-pen-to-square"></i>Thêm nhà cung cấp</a>';
 						return s;
 					}
 					return "";

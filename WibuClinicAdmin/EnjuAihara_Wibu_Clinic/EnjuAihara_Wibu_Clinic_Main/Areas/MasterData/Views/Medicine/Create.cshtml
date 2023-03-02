@@ -1,9 +1,19 @@
-﻿@*@model EnjuAihara.ViewModels.MasterData.MedicineCreateViewModel*@
+﻿@model EnjuAihara.EntityFramework.MedicineModel
+@{
+	int j = 0;
+}
 <div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="m-0">Tạo mới thuốc</h1>
+				@if (Model == null)
+				{
+					<h1 class="m-0">Tạo mới thuốc</h1>
+				}
+				else
+				{
+					<h1 class="m-0">Thêm nhà cung cấp cho thuốc</h1>
+				}
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
@@ -19,6 +29,10 @@
 	</div>
 </div>
 <form id="frmCreate" enctype='multipart/form-data'>
+	@if (Model != null)
+	{
+		@Html.HiddenFor(x => x.MedicineId)
+	}
 	<div class="content">
 		<div class="form-horizontal">
 			<div class="panel-group">
@@ -28,26 +42,54 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="row">
-										<div class="col-md-12 mt-3">
-											<div class="row g-3 align-items-center">
-												<div class="col-md-2 text-center">
-													<label for="MedicineName" class="col-form-label">Tên thuốc</label>
-												</div>
-												<div class="col-md-10">
-													<input type="text" id="MedicineName" name="MedicineName" class="form-control">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-12 mt-3">
-											<div class="row g-3 align-items-center">
-												<div class="col-md-2 text-center">
-													<label for="Unit" class="col-form-label">Đơn vị tính</label>
-												</div>
-												<div class="col-md-10">
-													<input type="text" id="Unit" name="Unit" class="form-control">
+										@if (Model == null)
+										{
+											<div class="col-md-12 mt-3">
+												<div class="row g-3 align-items-center">
+													<div class="col-md-2 text-center">
+														<label for="MedicineName" class="col-form-label">Tên thuốc</label>
+													</div>
+													<div class="col-md-10">
+														<input type="text" id="MedicineName" name="MedicineName" class="form-control">
+													</div>
 												</div>
 											</div>
-										</div>
+											<div class="col-md-12 mt-3">
+												<div class="row g-3 align-items-center">
+													<div class="col-md-2 text-center">
+														<label for="Unit" class="col-form-label">Đơn vị tính</label>
+													</div>
+													<div class="col-md-10">
+														<input type="text" id="Unit" name="Unit" class="form-control">
+													</div>
+												</div>
+											</div>
+										}
+										else
+										{
+											<div class="col-md-12 mt-3">
+												<div class="row g-3 align-items-center">
+													<div class="col-md-2 text-center">
+														<label for="MedicineName" class="col-form-label">Tên thuốc</label>
+													</div>
+													<div class="col-md-10">
+														@*<input type="text" id="MedicineName" name="MedicineName" class="form-control">*@
+														@Html.TextBoxFor(x => x.MedicineName, new { @class = "form-control", @disabled = "disabled", @readonly = "readonly" })
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 mt-3">
+												<div class="row g-3 align-items-center">
+													<div class="col-md-2 text-center">
+														<label for="Unit" class="col-form-label">Đơn vị tính</label>
+													</div>
+													<div class="col-md-10">
+														@*<input type="text" id="Unit" name="Unit" class="form-control">*@
+														@Html.TextBoxFor(x => x.Unit, new { @class = "form-control", @disabled = "disabled", @readonly = "readonly" })
+													</div>
+												</div>
+											</div>
+										}
 									</div>
 								</div>
 							</div>
@@ -55,6 +97,99 @@
 
 					</div>
 				</div>
+				@if (Model != null)
+				{
+					<div class="content-header">
+						<div class="container-fluid">
+							<div class="row mb-2">
+								<div class="col-sm-6">
+									<h1 class="m-0">Thông tin đã lưu trước đó</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="accordion">
+										@foreach (var i in Model.MedicineProvideModels)
+										{
+											var r = j + 1;
+											<div class="accordion-item" id="already-item-@j">
+												<h2 class="accordion-header">
+													<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#already-collapse-@r" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+														Thông tin chi tiết @r
+													</button>
+												</h2>
+												<div id="already-collapse-@r" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+													<div class="accordion-body">
+														<div class="row g-0">
+															<div class="col-md-4">
+																<img src="@i.ProductImage" id="Image-@j" class="img-fluid img-preview">
+															</div>
+															<div class="col-md-8">
+
+																@*<div class="row">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Img" class="col-form-label">Ảnh thuốc</label>
+																			</div>
+																			<div class="col-md-9">
+																				<input type="file" name="already Med[@j].Img" class="form-control med-file" id="already Med-@j-Img" readonly="readonly" disabled />
+																			</div>
+																		</div>
+																	</div>
+																</div>*@
+
+																<div class="row">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Provider" class="col-form-label">Nhà cung cấp</label>
+																			</div>
+																			<div class="col-md-9">
+																				<select name="already Med[@j].Provider" class="form-control med-NCC" id="already Med-@j-Provider" readonly="readonly">
+																					<option value="@i.ProviderModel.ProviderId" selected>@i.ProviderModel.ProviderName</option>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="row mt-3">
+																	<div class="col-md-12">
+																		<div class="row g-3 align-items-center">
+																			<div class="col-md-3 text-center">
+																				<label for="Ingredient" class="col-form-label">Thành phần</label>
+																			</div>
+																			<div class="col-md-9">
+																				<select name="already Med[@j].Ingredient" class="form-control med-Ingre" id="already Med-@j-Ingredient" multiple readonly="readonly" disabled>
+																					@foreach (var u in i.MedicineCompoundModels.ToList())
+																					{
+																						<option value="@u.IngredientId" selected>@u.IngredientModel.IngredientName</option>
+																					}
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											j++;
+										}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
 				<div class="content-header">
 					<div class="container-fluid">
 						<div class="row mb-2">
@@ -116,14 +251,6 @@
 																			<div class="col-md-9">
 																				<select name="Med[0].Provider" class="form-control med-NCC" id="Med-0-Provider"></select>
 																			</div>
-																			@*<div class="col-md-2">
-																				<button type="button" class="remove-Provider btn btn-labeled btn-danger w-100" id="Remove-Provider-0">
-																					<span class="btn-label">
-																						<i class="fa fa-remove"></i>
-																						Xóa
-																					</span>
-																				</button>
-																			</div>*@
 																		</div>
 																	</div>
 																</div>
@@ -211,13 +338,7 @@
 			$.NSX.attr('id', NCCStringId);
 			$.NSX.attr('name', NCCStringName);
 			Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", "#" + NCCStringId);
-			//$("#remove-item-" + i).on('click', function () {
-			//	$("#item-" + i).remove();
-			//});
-			//$("#Remove-Provider-" + i).on('click', function () {
-			//	$("#" + NCCStringId).val(null).trigger("change");
-			//});
-			
+
 
 			//Input Nguyên Liệu
 			var NLStringName = 'Med[' + i + '].Ingredient';
@@ -243,6 +364,7 @@
 			processData: false,
 			contentType: false,
 			data: formdata,
+
 			success: function (data) {
 				$("#Detail-Container").append(data);
 				$(document).on("change", '#Med-' + index + '-Img', function (e) {

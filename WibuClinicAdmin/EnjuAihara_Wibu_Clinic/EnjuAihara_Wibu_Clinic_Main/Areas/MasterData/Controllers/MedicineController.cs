@@ -46,7 +46,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 ).Select(x =>
             new MedicineSearchViewModel
             {
-                MedicineId = x.MedicineProvideId,
+                MedicineId = x.MedicineId,
+                MedicineProvideId = x.MedicineProvideId,
+                MedicineCode = x.MedicineModel.MedicineCode,
                 MapId = x.MedicineId,
                 MedicineName = x.MedicineModel.MedicineName,
                 Unit = x.MedicineModel.Unit,
@@ -60,7 +62,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 Expiry = x.WarehouseModels.OrderByDescending(y => y.ExpiredDate).Select(y => y.ExpiredDate).FirstOrDefault(),
                 Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng"
 
-            }).OrderBy(x => x.MedicineName).ToList();
+            }).OrderBy(x => x.MedicineCode).ToList();
             var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
@@ -105,16 +107,78 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             var dsThanhPhanList = _context.IngredientModels.ToList();
             ViewBag.ThanhPhanList = new SelectList(dsThanhPhanList, "IngredientId", "IngredientName");
         }
-        public ActionResult Create()
+        public ActionResult Create(Guid? Id)
         {
-            //CreateViewBag();
-            return View();
+            if (Id == null)
+            {
+                //CreateViewBag();
+                return View();
+            }
+            else
+            {
+                var medicine = _context.MedicineModels.Where(x => x.MedicineId == Id).FirstOrDefault();
+                return View(medicine);
+            }
         }
         [HttpPost]
-        public JsonResult Create(List<MedicineCreateViewModel> Med, string MedicineName, string Unit)
+        public JsonResult Create(List<MedicineCreateViewModel> Med, string MedicineName, string Unit, Guid? MedicineId)
         {
             try
             {
+                if(MedicineId != null)
+                {
+                    List<MedicineCreateViewModel> temp = new List<MedicineCreateViewModel>();
+                    var temp2 = _context.MedicineProvideModels.Where(x => x.MedicineId == MedicineId && x.Actived == true).Select(x => x.ProviderId).ToList();
+                    foreach (var i in temp2)
+                    {
+                        temp.Add(new MedicineCreateViewModel() { Img = null, Ingredient = null, Provider = (Guid)i });
+                    }
+                    temp.AddRange(Med);
+                    JsonResult validateAddNCC = ValidateCreate(temp, "Temp", "Temp");
+                    if (validateAddNCC != null)
+                        return validateAddNCC;
+                    if (Med != null && Med.Count() > 0)
+                    {
+                        Med.Skip(_context.MedicineProvideModels.Where(x => x.MedicineId == MedicineId).Count());
+                        foreach (var i in Med)
+                        {
+                            if (i != null)
+                            {
+                                MedicineProvideModel provideModel = new MedicineProvideModel()
+                                {
+                                    Actived = true,
+                                    MedicineProvideId = Guid.NewGuid(),
+                                    MedicineId = MedicineId,
+                                    ProviderId = i.Provider,
+                                    ProductImage = i.Img == null ? "" : CloudinaryUpload.Upload(i.Img),
+                                };
+                                _context.Entry(provideModel).State = EntityState.Added;
+                                _context.SaveChanges();
+                                if (i.Ingredient != null && i.Ingredient.Count > 0)
+                                {
+
+                                    foreach (var j in i.Ingredient)
+                                    {
+                                        MedicineCompoundModel Ingredient = new MedicineCompoundModel()
+                                        {
+                                            Id = Guid.NewGuid(),
+                                            IngredientId = j,
+                                            MedicineId = provideModel.MedicineProvideId,
+                                        };
+                                        _context.Entry(Ingredient).State = EntityState.Added;
+                                        _context.SaveChanges();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return Json(new
+                    {
+                        isSucess = true,
+                        title = "Thành công",
+                        message = "Thêm nhà sản xuất thành công"
+                    });
+                }
                 JsonResult validate = ValidateCreate(Med, MedicineName, Unit);
                 if (validate != null)
                     return validate;
@@ -336,7 +400,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     message = "Vui lòng nhập đơn vị tính của thuốc"
                 });
             }
-            var duplicate = Med.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => new { Element = y.Key, Counter = y.Count() }).ToList();
+            var duplicate = Med.GroupBy(x => x.Provider).Where(g => g.Count() > 1).Select(y => new { Element = y.Key, Counter = y.Count() }).ToList();
             if (duplicate != null && duplicate.Count() > 0)
             {
                 return Json(new
