@@ -77,9 +77,63 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return View();
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(Guid Id)
         {
-            return View();
+            var district = _context.DistrictModels.Where(x => x.DistrictId == Id).FirstOrDefault();
+            ViewBag.CityList = new SelectList(_context.CityModels.Where(x => x.Actived == true).Select(x => new SelectGuidItem()
+            {
+
+                id = x.CityId,
+                name = x.CityName
+            }).ToList(), "id", "name", district.CityId );
+            return View(district);
+        }
+
+        [HttpPost]
+        public JsonResult Edit(string DistrictName, Guid CityName, bool Actived, Guid DistrictId)
+        {
+            try
+            {
+                if (CityName == null)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Sửa thất bại",
+                        message = "Vui lòng không để trống tên thành phố"
+                    });
+                }
+                if (string.IsNullOrEmpty(DistrictName))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Tạo thất bại",
+                        message = "Vui lòng không để trống tên quận"
+                    });
+                }
+                var Edit = _context.DistrictModels.Where(x => x.DistrictId == DistrictId).FirstOrDefault();
+                Edit.DistrictName = DistrictName;
+                Edit.CityId = CityName;
+                Edit.Actived = Actived;
+                _context.Entry(Edit).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Sửa thành công",
+                    message = string.Format("Sửa quận thành công")
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Đã có lỗi xảy ra {0}", ex.Message.ToString())
+                });
+            }
         }
 
         [HttpPost]

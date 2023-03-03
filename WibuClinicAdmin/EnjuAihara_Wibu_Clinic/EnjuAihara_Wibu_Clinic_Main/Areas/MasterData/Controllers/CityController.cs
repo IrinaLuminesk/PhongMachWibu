@@ -1,4 +1,5 @@
 ﻿using EnjuAihara.Core;
+using EnjuAihara.EntityFramework;
 using EnjuAihara.Utilities.Datatable;
 using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.Datatable;
@@ -72,9 +73,88 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return View();
         }
 
-        public ActionResult Edit()
+        [HttpPost]
+        public JsonResult Create(string CityName)
         {
-            return View();
+            try
+            {
+                if (string.IsNullOrEmpty(CityName))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Tạo thất bại",
+                        message = "Vui lòng không để trống tên đường"
+                    });
+                }
+                CityModel create = new CityModel()
+                {
+                    CityName = CityName,
+                    Actived = true,
+                    CityId = Guid.NewGuid()
+                };
+                _context.Entry(create).State = System.Data.Entity.EntityState.Added;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Tạo thành công",
+                    message = string.Format("Tạo thành phố thành công")
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Đã có lỗi xảy ra {0}", ex.Message.ToString())
+                });
+            }
+        }
+
+        public ActionResult Edit(Guid Id)
+        {
+            var City = _context.CityModels.Where(x => x.CityId == Id).FirstOrDefault();
+            return View(City);
+        }
+
+
+        [HttpPost]
+        public JsonResult Edit(string CityName, bool Actived, Guid CityId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(CityName))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Tạo thất bại",
+                        message = "Vui lòng không để trống tên đường"
+                    });
+                }
+                var Edit = _context.CityModels.Where(x => x.CityId == CityId).FirstOrDefault();
+                Edit.CityName = CityName;
+                Edit.Actived = Actived;
+                _context.Entry(Edit).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Sửa thành công",
+                    message = string.Format("Sửa thành phố thành công")
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Đã có lỗi xảy ra {0}", ex.Message.ToString())
+                });
+            }
         }
 
         [HttpPost]
