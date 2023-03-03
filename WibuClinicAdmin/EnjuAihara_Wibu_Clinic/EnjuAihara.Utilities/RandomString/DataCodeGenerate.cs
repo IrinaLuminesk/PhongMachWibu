@@ -16,8 +16,18 @@ namespace EnjuAihara.Utilities.RandomString
             string[] temp = code.Split('-');
             return CreateCode(temp[1], temp[0]);
         }
-
-
+        public static string ProviderCodeGen()
+        {
+            string code = _context.ProviderModels.OrderByDescending(x => x.ProviderCode).Take(1).FirstOrDefault().ProviderCode;
+            string[] temp = code.Split('-');
+            return CreateCode(temp[1], temp[0]);
+        }
+        public static string IngredientCodeGen()
+        {
+            string code = _context.IngredientModels.OrderByDescending(x => x.IngredientCode).Take(1).FirstOrDefault().IngredientCode;
+            string[] temp = code.Split('-');
+            return CreateCode(temp[1], temp[0]);
+        }
         public static string NguoiDungCodeGen()
         {
             string code = _context.UsersModels.OrderByDescending(x => x.UserCode).Take(1).FirstOrDefault().UserCode;

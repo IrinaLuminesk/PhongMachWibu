@@ -169,6 +169,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\MasterData\Controllers\AccountController.cs" />
     <Compile Include="Areas\MasterData\Controllers\IllnessController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\IngredientController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\ProviderController.cs" />
     <Compile Include="Areas\MasterData\Controllers\UserController.cs" />
     <Compile Include="Areas\MasterData\Controllers\MedicineController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
@@ -2203,6 +2205,14 @@
     <Content Include="Areas\MasterData\Views\Illness\_PaggingServerSide.cshtml" />
     <Content Include="Areas\MasterData\Views\Illness\Create.cshtml" />
     <Content Include="Areas\MasterData\Views\Illness\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Provider\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Ingredient\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Ingredient\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\Ingredient\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Ingredient\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

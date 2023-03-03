@@ -1,0 +1,88 @@
+﻿@model EnjuAihara.EntityFramework.IngredientModel
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Chỉnh sửa @Model.IngredientName</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="pull-right">
+                    <a class="btn btn-info" href="/MasterData/Ingredient"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <form id="frmEdit" enctype='multipart/form-data'>
+        <div class="row">
+            @Html.HiddenFor(x => x.IngredientId)
+
+            <div class="col-md-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <label for="AccountCode" class="col-form-label">Mã thành phần thuốc</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(x => x.IngredientCode, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <label for="ProviderName" class="col-form-label">Tên thành phần thuốc</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(x => x.IngredientName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-12 mt-3">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <label for="Actived" class="col-form-label">Trạng thái</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.ActivedRadioButton(x => x.Actived)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 15px">
+                            <div class="col-md-12 text-center">
+                                <button type="button" class="btn btn-primary" id="btn-edit">
+                                    Lưu
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+
+		$("#btn-edit").on("click", function () {
+			Edit("MasterData/Ingredient", "#frmEdit");
+		});
+
+	});
+
+
+</script>
+
+
+
+
