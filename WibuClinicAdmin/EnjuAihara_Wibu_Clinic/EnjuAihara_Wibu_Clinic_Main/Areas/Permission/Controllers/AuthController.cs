@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using EnjuAihara.Utilities.EncryptionAlgorithm;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
+using EnjuAihara.EntityFramework;
+
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 {
     public class AuthController : IrinaLumineskController
@@ -113,6 +116,15 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             authManager.SignIn(identity);
             account.LastLoginTime = DateTime.Now;
             _context.SaveChanges();
+
+            //Lấy các quyền của tài khoản 
+            //var AllRole = account.AccountInRoleModels.Select(x => x.RoleId).ToList();
+            //List<PagePermissionModel> Permissions = new List<PagePermissionModel>();
+            //foreach (var i in AllRole)
+            //{
+            //    Permissions.AddRange(_context.PagePermissionModels.Where(x => x.RoleId == i).ToList());
+            //}
+            //Session["Permission"] = Permissions;
             return true;
         }
 

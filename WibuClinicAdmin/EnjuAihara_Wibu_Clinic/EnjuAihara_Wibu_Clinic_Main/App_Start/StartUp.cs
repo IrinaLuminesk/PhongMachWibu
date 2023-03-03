@@ -20,5 +20,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.App_Start
                 LoginPath = new PathString("/Permission/Auth/Login")
             });
         }
+
+
     }
 }

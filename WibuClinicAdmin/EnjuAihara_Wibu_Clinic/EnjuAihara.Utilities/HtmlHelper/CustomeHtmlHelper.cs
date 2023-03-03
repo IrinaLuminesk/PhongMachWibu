@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EnjuAihara.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,6 +20,21 @@ namespace System.Web.Mvc.Html
                "Ngừng sử dụng");
 
             return MvcHtmlString.Create(result.ToString());
+        }
+
+
+        public static bool CheckPermission(string PageUrl, string Function)
+        {
+            string FormatUrl = string.Format("{0}", PageUrl);
+            List<PagePermissionModel> Permissions = (List<PagePermissionModel>)HttpContext.Current.Session["Permission"];
+            if (Permissions != null)
+            {
+                List<PagePermissionModel> temp = Permissions.Where(x => x.PageModel.PageUrl.Equals(FormatUrl)).ToList();
+                if (temp.Any(x => x.FuntionId.Equals(Function.ToUpper())))
+                    return true;
+                return false;
+            }
+            return true;
         }
     }
 }

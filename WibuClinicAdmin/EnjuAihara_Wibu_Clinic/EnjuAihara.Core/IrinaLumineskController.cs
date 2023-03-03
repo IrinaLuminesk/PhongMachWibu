@@ -9,6 +9,7 @@ using EnjuAihara.ViewModels;
 using EnjuAihara.Utilities;
 using EnjuAihara.Utilities.CloudinaryHelper;
 using System.Security.Claims;
+using System.Web.Routing;
 
 namespace EnjuAihara.Core
 {
@@ -37,6 +38,31 @@ namespace EnjuAihara.Core
                     return ac;
                 }
                 return null;
+            }
+        }
+
+
+        protected override void Initialize(RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+            SetPermissionSession();
+        }
+
+
+        public void SetPermissionSession()
+        {
+            if (Session["Permission"] == null)
+            {
+                if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(CurrentUser.UserName))
+                {
+                    var AllRole = CurrentUser.AccountInRoleModels.Select(x => x.RoleId).ToList();
+                    List<PagePermissionModel> Permissions = new List<PagePermissionModel>();
+                    foreach (var i in AllRole)
+                    {
+                        Permissions.AddRange(_context.PagePermissionModels.Where(x => x.RoleId == i).ToList());
+                    }
+                    Session["Permission"] = Permissions;
+                }
             }
         }
     }
