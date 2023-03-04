@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EnjuAihara.EntityFramework
+namespace DataGeneration.Entities
 {
     using System;
     using System.Collections.Generic;

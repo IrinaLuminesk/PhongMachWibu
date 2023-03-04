@@ -36,7 +36,7 @@ namespace EnjuAihara.ViewModels.MasterData
         public string ProviderName { get; set; }
 
         public decimal? MedicineOnHandQuantity { get; set; }
-        public decimal? MaxPrice { get; set; }
+        public double? MaxPrice { get; set; }
         public DateTime? Expiry { get; set; }
 
         public string ExpiryString { get; set; }

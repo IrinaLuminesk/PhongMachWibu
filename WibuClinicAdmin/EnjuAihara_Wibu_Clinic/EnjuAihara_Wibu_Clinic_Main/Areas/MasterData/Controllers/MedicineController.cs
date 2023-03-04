@@ -58,7 +58,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
 
                 MedicineOnHandQuantity = x.WarehouseModels.Select(y => y.InstockQuantity).Sum(),
-                MaxPrice = x.WarehouseModels.Max(y => y.BoughtPrice),
+                MaxPrice = x.WarehouseModels.Max(y => y.SalePrice),
                 Expiry = x.WarehouseModels.OrderByDescending(y => y.ExpiredDate).Select(y => y.ExpiredDate).FirstOrDefault(),
                 Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng"
 
@@ -72,12 +72,12 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     i++;
                     item.STT = i;
                     item.ExpiryString = FormatDateTime.FormatDateTimeWithString(item.Expiry);
-                    var inStockQuantity = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineId).Select(y => y.InstockQuantity).Sum();
+                    var inStockQuantity = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineProvideId).Select(y => y.InstockQuantity).Sum();
                     if (inStockQuantity <= 0 || inStockQuantity == null)
                     {
                         if (inStockQuantity <= 0)
                         {
-                            item.MaxPrice = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineId).Max(y => y.BoughtPrice);
+                            item.MaxPrice = _context.WarehouseModels.Where(x => x.MedicineProviderId == item.MedicineProvideId).Max(y => y.BoughtPrice);
                         }
                         if (inStockQuantity == null)
                         {

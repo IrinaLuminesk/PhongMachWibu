@@ -138,6 +138,7 @@
           <Property Name="DistrictStreetId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DistrictId" Type="uniqueidentifier" />
           <Property Name="StreetId" Type="uniqueidentifier" />
+          <Property Name="Actived" Type="bit" />
         </EntityType>
         <EntityType Name="DistrictWardModel">
           <Key>
@@ -267,16 +268,6 @@
           <Property Name="StreetName" Type="nvarchar" MaxLength="100" />
           <Property Name="Actived" Type="bit" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="UsersModel">
           <Key>
             <PropertyRef Name="UserID" />
@@ -309,9 +300,14 @@
           <Property Name="MedicineProviderId" Type="uniqueidentifier" />
           <Property Name="BoughtQuantity" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ExpiredDate" Type="datetime" />
-          <Property Name="BoughtPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="BoughtPrice" Type="float" />
           <Property Name="InstockQuantity" Type="decimal" Precision="18" Scale="0" />
           <Property Name="BoughtDate" Type="datetime" />
+          <Property Name="CreateBy" Type="uniqueidentifier" />
+          <Property Name="SalePrice" Type="float" />
+          <Property Name="SalePercentage" Type="float" />
+          <Property Name="ImportCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <Association Name="FK_AccountInRoleModel_AccountModel">
           <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
@@ -673,6 +669,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WarehouseModel_AccountModel">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
+          <End Role="WarehouseModel" Type="Self.WarehouseModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="WarehouseModel">
+              <PropertyRef Name="CreateBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WarehouseModel_MedicineProvideModel">
           <End Role="MedicineProvideModel" Type="Self.MedicineProvideModel" Multiplicity="0..1" />
           <End Role="WarehouseModel" Type="Self.WarehouseModel" Multiplicity="*" />
@@ -713,7 +721,6 @@
           <EntitySet Name="ProviderModel" EntityType="Self.ProviderModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolesModel" EntityType="Self.RolesModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetModel" EntityType="Self.StreetModel" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersModel" EntityType="Self.UsersModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WardModel" EntityType="Self.WardModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseModel" EntityType="Self.WarehouseModel" Schema="dbo" store:Type="Tables" />
@@ -837,6 +844,10 @@
             <End Role="RolesModel" EntitySet="RolesModel" />
             <End Role="PagePermissionModel" EntitySet="PagePermissionModel" />
           </AssociationSet>
+          <AssociationSet Name="FK_WarehouseModel_AccountModel" Association="Self.FK_WarehouseModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="WarehouseModel" EntitySet="WarehouseModel" />
+          </AssociationSet>
           <AssociationSet Name="FK_WarehouseModel_MedicineProvideModel" Association="Self.FK_WarehouseModel_MedicineProvideModel">
             <End Role="MedicineProvideModel" EntitySet="MedicineProvideModel" />
             <End Role="WarehouseModel" EntitySet="WarehouseModel" />
@@ -874,7 +885,6 @@
           <EntitySet Name="ProviderModels" EntityType="QuanLyPhongMachWibuModel.ProviderModel" />
           <EntitySet Name="RolesModels" EntityType="QuanLyPhongMachWibuModel.RolesModel" />
           <EntitySet Name="StreetModels" EntityType="QuanLyPhongMachWibuModel.StreetModel" />
-          <EntitySet Name="sysdiagrams" EntityType="QuanLyPhongMachWibuModel.sysdiagram" />
           <EntitySet Name="UsersModels" EntityType="QuanLyPhongMachWibuModel.UsersModel" />
           <EntitySet Name="WardModels" EntityType="QuanLyPhongMachWibuModel.WardModel" />
           <EntitySet Name="WarehouseModels" EntityType="QuanLyPhongMachWibuModel.WarehouseModel" />
@@ -917,6 +927,10 @@
           <AssociationSet Name="FK_DescriptionModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="DescriptionModel" EntitySet="DescriptionModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_WarehouseModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="WarehouseModel" EntitySet="WarehouseModels" />
           </AssociationSet>
           <AssociationSet Name="FK_CatalogModel_CatalogTypeModel" Association="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel">
             <End Role="CatalogTypeModel" EntitySet="CatalogTypeModels" />
@@ -1038,6 +1052,7 @@
           <NavigationProperty Name="DateModels1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DateModels2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
+          <NavigationProperty Name="WarehouseModels" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_AccountModel" FromRole="AccountModel" ToRole="WarehouseModel" />
         </EntityType>
         <EntityType Name="AccountRecoveryTokenModel">
           <Key>
@@ -1166,6 +1181,7 @@
           <Property Name="DistrictStreetId" Type="Guid" Nullable="false" />
           <Property Name="DistrictId" Type="Guid" />
           <Property Name="StreetId" Type="Guid" />
+          <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="DistrictModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_DistrictModel" FromRole="DistrictStreetModel" ToRole="DistrictModel" />
           <NavigationProperty Name="StreetModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel" FromRole="DistrictStreetModel" ToRole="StreetModel" />
         </EntityType>
@@ -1324,16 +1340,6 @@
           <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="DistrictStreetModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_StreetModel" FromRole="StreetModel" ToRole="DistrictStreetModel" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="UsersModel">
           <Key>
             <PropertyRef Name="UserID" />
@@ -1368,9 +1374,15 @@
           <Property Name="MedicineProviderId" Type="Guid" />
           <Property Name="BoughtQuantity" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ExpiredDate" Type="DateTime" Precision="3" />
-          <Property Name="BoughtPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BoughtPrice" Type="Double" />
           <Property Name="InstockQuantity" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="BoughtDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="Guid" />
+          <Property Name="SalePrice" Type="Double" />
+          <Property Name="SalePercentage" Type="Double" />
+          <Property Name="ImportCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_AccountModel" FromRole="WarehouseModel" ToRole="AccountModel" />
           <NavigationProperty Name="MedicineProvideModel" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_MedicineProvideModel" FromRole="WarehouseModel" ToRole="MedicineProvideModel" />
         </EntityType>
         <Association Name="FK_AccountInRoleModel_AccountModel">
@@ -1489,6 +1501,18 @@
               <PropertyRef Name="AccountId" />
             </Principal>
             <Dependent Role="DescriptionModel">
+              <PropertyRef Name="CreateBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.WarehouseModel" Role="WarehouseModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="WarehouseModel">
               <PropertyRef Name="CreateBy" />
             </Dependent>
           </ReferentialConstraint>
@@ -1892,6 +1916,7 @@
           <EntitySetMapping Name="DistrictStreetModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DistrictStreetModel">
               <MappingFragment StoreEntitySet="DistrictStreetModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
                 <ScalarProperty Name="StreetId" ColumnName="StreetId" />
                 <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
                 <ScalarProperty Name="DistrictStreetId" ColumnName="DistrictStreetId" />
@@ -2040,17 +2065,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UsersModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.UsersModel">
               <MappingFragment StoreEntitySet="UsersModel">
@@ -2080,6 +2094,11 @@
           <EntitySetMapping Name="WarehouseModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.WarehouseModel">
               <MappingFragment StoreEntitySet="WarehouseModel">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ImportCode" ColumnName="ImportCode" />
+                <ScalarProperty Name="SalePercentage" ColumnName="SalePercentage" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="BoughtDate" ColumnName="BoughtDate" />
                 <ScalarProperty Name="InstockQuantity" ColumnName="InstockQuantity" />
                 <ScalarProperty Name="BoughtPrice" ColumnName="BoughtPrice" />

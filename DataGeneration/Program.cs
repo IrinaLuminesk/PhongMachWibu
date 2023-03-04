@@ -208,13 +208,49 @@ namespace DataGeneration
             //}
 
 
-            var MedicinePro = _context.MedicineProvideModels.ToList();
-            foreach (var i in _context.MedicineCompoundModels.ToList())
+            //var MedicinePro = _context.MedicineProvideModels.ToList();
+            //foreach (var i in _context.MedicineCompoundModels.ToList())
+            //{
+            //    int ra = ran.Next(0, MedicinePro.Count() - 1);
+            //    i.MedicineId = MedicinePro[ra].MedicineProvideId;
+            //    _context.SaveChanges();
+            //}
+
+            var ware = _context.WarehouseModels.ToList();
+            int m = 1;
+            foreach (var i in ware)
             {
-                int ra = ran.Next(0, MedicinePro.Count() - 1);
-                i.MedicineId = MedicinePro[ra].MedicineProvideId;
+                string code = "WARE-";
+                if (m.ToString().Length < 6)
+                {
+                    switch (m.ToString().Length)
+                    {
+                        case 1:
+                            code += "00000" + m.ToString();
+                            break;
+                        case 2:
+                            code += "0000" + m.ToString();
+                            break;
+                        case 3:
+                            code += "000" + m.ToString();
+                            break;
+                        case 4:
+                            code += "00" + m.ToString();
+                            break;
+                        case 5:
+                            code += "0" + m.ToString();
+                            break;
+                    }
+                }
+                m++;
+                i.ImportCode = code;
+                i.SalePercentage = 1.1;
+                i.SalePrice = i.BoughtPrice * 1.1;
+                i.CreateDate = DateTime.Now;
+                i.CreateBy = Guid.Parse("4BD00E35-2342-483F-85C2-0997B30414E7");
                 _context.SaveChanges();
             }
+
         }
         public static void SaveData(List<Root> lst)
         {

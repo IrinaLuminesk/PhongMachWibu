@@ -151,6 +151,9 @@
     <Compile Include="Entities\StreetModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sysdiagram.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\UsersModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
