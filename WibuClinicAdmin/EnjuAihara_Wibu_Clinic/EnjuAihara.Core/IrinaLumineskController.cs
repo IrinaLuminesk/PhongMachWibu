@@ -55,15 +55,27 @@ namespace EnjuAihara.Core
             {
                 if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(CurrentUser.UserName))
                 {
-                    var AllRole = CurrentUser.AccountInRoleModels.Select(x => x.RoleId).ToList();
-                    List<PagePermissionModel> Permissions = new List<PagePermissionModel>();
-                    foreach (var i in AllRole)
-                    {
-                        Permissions.AddRange(_context.PagePermissionModels.Where(x => x.RoleId == i).ToList());
-                    }
+                    List<PagePermissionModel> Permissions = new List<PagePermissionModel>(GetAllCurrentPermission());
                     Session["Permission"] = Permissions;
                 }
             }
+            else
+            {
+                Session["Permission"] = null;
+                List<PagePermissionModel> Permissions = new List<PagePermissionModel>(GetAllCurrentPermission());
+                Session["Permission"] = Permissions;
+            }
+        }
+
+        public List<PagePermissionModel> GetAllCurrentPermission()
+        {
+            var AllRole = CurrentUser.AccountInRoleModels.Select(x => x.RoleId).ToList();
+            List<PagePermissionModel> Permissions = new List<PagePermissionModel>();
+            foreach (var i in AllRole)
+            {
+                Permissions.AddRange(_context.PagePermissionModels.Where(x => x.RoleId == i).ToList());
+            }
+            return Permissions;
         }
     }
 }
