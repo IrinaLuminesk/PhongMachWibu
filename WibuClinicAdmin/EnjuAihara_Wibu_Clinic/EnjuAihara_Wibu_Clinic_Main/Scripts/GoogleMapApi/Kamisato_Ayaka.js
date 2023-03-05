@@ -3,13 +3,16 @@ function initMap(Coords) {
     var map = new google.maps.Map(document.getElementById("map"), {
         zoom: 3,
         center: myLatLng,
+        mapTypeId: 'satellite'
     });
-    for (var i = 0; i < Coords.length; i++) {
-        new google.maps.Marker({
-            position: { lat: Coords[i].Latitude, lng: Coords[i].Longitude },
+    for (var i = 0; i < Coords.data.length; i++) {
+        var marker = new google.maps.Marker({
+            position: { lat: Coords.data[i].Latitude, lng: Coords.data[i].Longitude },
             map: map,
-            title: "Hello World!",
+            title: "Tên nhà cung cấp: " + Coords.data[i].Name + "\nĐịa chỉ: " + Coords.data[i].Address,
+            optimized: false
         });
+        marker.setMap(map);
     }
 }
 //# sourceMappingURL=Kamisato_Ayaka.js.map

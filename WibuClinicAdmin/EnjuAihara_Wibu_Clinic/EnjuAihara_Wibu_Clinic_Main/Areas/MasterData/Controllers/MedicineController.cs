@@ -448,35 +448,22 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public ActionResult ViewMap(Guid Id)
         {
             ViewBag.MedicineId = Id;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult GetMap(Guid Id)
+        {
             var Coord = _context.MedicineProvideModels.Where(x => x.MedicineId == Id && ((x.ProviderModel.Latitude != null && x.ProviderModel.longitude != null) || !string.IsNullOrEmpty(x.ProviderModel.Address)))
-            .Select(x => 
+            .Select(x =>
             new Coordinate()
             {
                 Latitude = x.ProviderModel.Latitude,
                 Longitude = x.ProviderModel.longitude,
-                Address = x.ProviderModel.Address
+                Address = x.ProviderModel.Address,
+                Name = x.ProviderModel.ProviderName
             }).ToList();
-            return View(Coord);
-        }
-
-
-        public JsonResult GetCoord(Guid Id)
-        {
-            var medicine = _context.MedicineModels.Where(x => x.MedicineId == Id).FirstOrDefault();
-            List<MedicineProvideModel> Pro = medicine.MedicineProvideModels.ToList();
-            List<Coordinate> coords = new List<Coordinate>();
-            foreach (var i in Pro)
-            {
-                if (i.ProviderModel.Latitude != null && i.ProviderModel.longitude != null)
-                {
-                    coords.Add(new Coordinate()
-                    {
-                        Latitude = i.ProviderModel.Latitude,
-                        Longitude = i.ProviderModel.longitude
-                    });
-                }
-            }
-            return Json(coords);
+            return Json(new { data = Coord, count = Coord.Count });
         }
     }
 }

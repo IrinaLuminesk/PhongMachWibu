@@ -2,7 +2,6 @@
 @{
 	var GoogleMapApiKey = EnjuAihara.Constant.Config.Key.MapApi;
 	var Id = (Guid)ViewBag.MedicineId;
-	var CoordLst = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
 <style>
 	#googleMapsHolder {
@@ -116,7 +115,29 @@
 
 
 	$(document).ready(function () {
-		const Coords = JSON.parse('@Html.Raw(@CoordLst)');
-		initMap(Coords);
+		var formdata = new FormData();
+		formdata.append("Id", "@Id");
+		$.ajax({
+			type: "POST",
+			url: "/MasterData/Medicine/GetMap",
+			processData: false,
+			contentType: false,
+			data: formdata,
+			dataType: "json",
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				$("#loading").hide();
+				console.log(data);
+				initMap(data);
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
 	});
 </script>
