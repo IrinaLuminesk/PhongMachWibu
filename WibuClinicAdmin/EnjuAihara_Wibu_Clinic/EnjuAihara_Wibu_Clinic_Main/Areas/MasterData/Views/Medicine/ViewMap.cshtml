@@ -1,6 +1,8 @@
-﻿@{
+﻿@model IEnumerable<EnjuAihara.ViewModels.MasterData.Coordinate>
+@{
 	var GoogleMapApiKey = EnjuAihara.Constant.Config.Key.MapApi;
 	var Id = (Guid)ViewBag.MedicineId;
+	var CoordLst = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
 }
 <style>
 	#googleMapsHolder {
@@ -8,7 +10,7 @@
 		padding-top: 5px;
 	}
 
-	#googleMaps {
+	#map {
 		position: relative;
 		padding-bottom: 90%;
 		// This is the aspect ratio height: 0;
@@ -16,12 +18,12 @@
 	}
 
 	@@media (min-width: 992px) {
-		#googleMaps {
+		#map {
 			padding-bottom: 650px;
 		}
 	}
 
-	#googleMaps iframe {
+	#map iframe {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -98,7 +100,7 @@
 						<div class="card">
 							<div class="card-body">
 								<div id="googleMapsHolder">
-									<div id="googleMaps"></div>
+									<div id="map"></div>
 								</div>
 							</div>
 						</div>
@@ -109,11 +111,12 @@
 	</div>
 </div>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=@GoogleMapApiKey&callback=initMap&language=vi"></script>
-@*<script src="~/Scripts/CommonUse/Map.js"></script>*@
 <script src="~/Scripts/GoogleMapApi/Kamisato_Ayaka.js"></script>
 <script type="text/javascript">
+
+
 	$(document).ready(function () {
-		initMap();
-		@*CreateMarker('@Id')*@
+		const Coords = JSON.parse('@Html.Raw(@CoordLst)');
+		initMap(Coords);
 	});
 </script>

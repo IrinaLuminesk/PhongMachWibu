@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -2158,7 +2159,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\GoogleMapApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Permission\Views\web.config" />
@@ -2213,6 +2213,14 @@
     <Content Include="Areas\MasterData\Views\Ingredient\_PaggingServerSide.cshtml" />
     <Content Include="Areas\MasterData\Views\Ingredient\Create.cshtml" />
     <Content Include="Areas\MasterData\Views\Ingredient\Edit.cshtml" />
+    <Content Include="package.json" />
+    <Content Include="node_modules\%40types\google.maps\LICENSE" />
+    <Content Include="node_modules\%40types\google.maps\package.json" />
+    <Content Include="node_modules\%40types\google.maps\README.md" />
+    <Content Include="node_modules\%40types\node\LICENSE" />
+    <Content Include="node_modules\%40types\node\package.json" />
+    <Content Include="node_modules\%40types\node\README.md" />
+    <Content Include="node_modules\.package-lock.json" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
@@ -2439,6 +2447,7 @@
     <Content Include="Scripts\plugins\summernote\summernote.min.js.map" />
     <Content Include="Scripts\plugins\toastr\toastr.js.map" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnjuAihara.Constant\EnjuAihara.Constant.csproj">
@@ -2464,6 +2473,118 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="node_modules\%40types\google.maps\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\assert.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\assert\strict.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\async_hooks.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\buffer.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\child_process.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\cluster.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\console.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\constants.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\crypto.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\dgram.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\diagnostics_channel.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\dns.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\dns\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\dom-events.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\domain.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\events.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\fs.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\fs\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\globals.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\globals.global.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\http.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\http2.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\https.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\inspector.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\module.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\net.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\os.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\path.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\perf_hooks.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\process.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\punycode.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\querystring.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\readline.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\readline\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\repl.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\stream.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\stream\consumers.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\stream\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\stream\web.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\string_decoder.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\test.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\timers.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\timers\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\tls.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\trace_events.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\assert.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\assert\strict.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\async_hooks.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\buffer.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\child_process.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\cluster.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\console.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\constants.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\crypto.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\dgram.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\diagnostics_channel.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\dns.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\dns\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\dom-events.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\domain.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\events.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\fs.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\fs\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\globals.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\globals.global.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\http.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\http2.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\https.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\inspector.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\module.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\net.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\os.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\path.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\perf_hooks.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\process.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\punycode.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\querystring.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\readline.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\readline\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\repl.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\stream.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\stream\consumers.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\stream\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\stream\web.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\string_decoder.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\test.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\timers.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\timers\promises.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\tls.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\trace_events.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\tty.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\url.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\util.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\v8.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\vm.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\wasi.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\worker_threads.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\ts4.8\zlib.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\tty.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\url.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\util.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\v8.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\vm.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\wasi.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\worker_threads.d.ts" />
+    <TypeScriptCompile Include="node_modules\%40types\node\zlib.d.ts" />
+    <TypeScriptCompile Include="Scripts\GoogleMapApi\Kamisato_Ayaka.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -2501,8 +2622,11 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

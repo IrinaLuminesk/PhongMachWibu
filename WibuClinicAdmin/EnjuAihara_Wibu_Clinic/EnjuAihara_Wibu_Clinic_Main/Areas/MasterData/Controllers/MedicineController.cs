@@ -447,8 +447,16 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
         public ActionResult ViewMap(Guid Id)
         {
-            ViewBag.MedicineId = Id;    
-            return View();
+            ViewBag.MedicineId = Id;
+            var Coord = _context.MedicineProvideModels.Where(x => x.MedicineId == Id && ((x.ProviderModel.Latitude != null && x.ProviderModel.longitude != null) || !string.IsNullOrEmpty(x.ProviderModel.Address)))
+            .Select(x => 
+            new Coordinate()
+            {
+                Latitude = x.ProviderModel.Latitude,
+                Longitude = x.ProviderModel.longitude,
+                Address = x.ProviderModel.Address
+            }).ToList();
+            return View(Coord);
         }
 
 
