@@ -46,12 +46,16 @@
     <Compile Include="MasterData\AccountCreateViewModel.cs" />
     <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />
+    <Compile Include="MasterData\CitySearchViewModel.cs" />
     <Compile Include="MasterData\Coordinate.cs" />
+    <Compile Include="MasterData\DistrictSearchViewModel.cs" />
     <Compile Include="MasterData\EditUserViewModel.cs" />
     <Compile Include="MasterData\IllnessSearchViewModel.cs" />
     <Compile Include="MasterData\MedicineEditViewModel.cs" />
     <Compile Include="MasterData\IngredientSearchViewModel.cs" />
     <Compile Include="MasterData\ProviderSearchViewModel.cs" />
+    <Compile Include="MasterData\StreetCreateViewModel.cs" />
+    <Compile Include="MasterData\StreetSearchViewModel.cs" />
     <Compile Include="MasterData\UserViewModel.cs" />
     <Compile Include="MasterData\MedicineCreateViewModel.cs" />
     <Compile Include="MasterData\MedicineSearchViewModel.cs" />

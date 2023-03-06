@@ -275,16 +275,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 var Ingredient = _context.MedicineCompoundModels.Where(x => x.MedicineId == EditModel.MedicineProvideId).ToList();
                 _context.MedicineCompoundModels.RemoveRange(Ingredient);
                 _context.SaveChanges();
-                foreach (var i in Med.Ingredient)
+                if (Med.Ingredient != null && Med.Ingredient.Count > 0)
                 {
-                    MedicineCompoundModel Ing = new MedicineCompoundModel()
+                    foreach (var i in Med.Ingredient)
                     {
-                        Id = Guid.NewGuid(),
-                        MedicineId = EditModel.MedicineProvideId,
-                        IngredientId = i
-                    };
-                    _context.Entry(Ing).State = EntityState.Added;
-                    _context.SaveChanges();
+                        MedicineCompoundModel Ing = new MedicineCompoundModel()
+                        {
+                            Id = Guid.NewGuid(),
+                            MedicineId = EditModel.MedicineProvideId,
+                            IngredientId = i
+                        };
+                        _context.Entry(Ing).State = EntityState.Added;
+                        _context.SaveChanges();
+                    }
                 }
                 return Json(new
                 {

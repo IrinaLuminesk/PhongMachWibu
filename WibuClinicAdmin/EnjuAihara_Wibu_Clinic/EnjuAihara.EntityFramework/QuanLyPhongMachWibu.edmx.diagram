@@ -35,6 +35,7 @@
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.UsersModel" Width="1.5" PointX="0.75" PointY="13" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WardModel" Width="1.5" PointX="13" PointY="10.875" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WarehouseModel" Width="1.5" PointX="5.25" PointY="12.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WarehouseModel" Width="1.5" PointX="7.5" PointY="25" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_AccountModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_RolesModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" />

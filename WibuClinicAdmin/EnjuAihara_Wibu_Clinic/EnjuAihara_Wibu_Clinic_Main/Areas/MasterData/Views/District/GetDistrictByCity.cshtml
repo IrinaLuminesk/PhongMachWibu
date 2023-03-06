@@ -1,0 +1,19 @@
+﻿@{ 
+	var flag = (bool?)ViewBag.Multiple;
+}
+<div class="row g-3 align-items-center">
+	<div class="col-md-2 text-center">
+		<label for="DistrictId" class="col-form-label">Thuộc quận</label>
+	</div>
+	<div class="col-md-10">
+		@*<select name="DistrictId" class="form-control" id="DistrictId" multiple disabled></select>*@
+		@if (flag == true || flag == null)
+		{
+			@Html.DropDownList("DistrictId", (SelectList)ViewBag.DistrictList, new { @class = "form-control", @multiple = "multiple" })
+		}
+		else
+		{
+			@Html.DropDownList("DistrictId", (SelectList)ViewBag.DistrictList, new { @class = "form-control" })
+		}
+	</div>
+</div>
