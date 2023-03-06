@@ -20,6 +20,6 @@ namespace EnjuAihara.EntityFramework
         public Nullable<decimal> Quantity { get; set; }
     
         public virtual DescriptionModel DescriptionModel { get; set; }
-        public virtual MedicineProvideModel MedicineProvideModel { get; set; }
+        public virtual WarehouseModel WarehouseModel { get; set; }
     }
 }

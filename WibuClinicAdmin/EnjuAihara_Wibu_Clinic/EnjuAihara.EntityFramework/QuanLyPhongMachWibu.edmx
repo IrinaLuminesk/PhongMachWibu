@@ -444,12 +444,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DescriptionDetailModel_MedicineProvideModel">
-          <End Role="MedicineProvideModel" Type="Self.MedicineProvideModel" Multiplicity="0..1" />
+        <Association Name="FK_DescriptionDetailModel_WarehouseModel">
+          <End Role="WarehouseModel" Type="Self.WarehouseModel" Multiplicity="0..1" />
           <End Role="DescriptionDetailModel" Type="Self.DescriptionDetailModel" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MedicineProvideModel">
-              <PropertyRef Name="MedicineProvideId" />
+            <Principal Role="WarehouseModel">
+              <PropertyRef Name="WarehouseId" />
             </Principal>
             <Dependent Role="DescriptionDetailModel">
               <PropertyRef Name="MedicineId" />
@@ -783,8 +783,8 @@
             <End Role="DescriptionModel" EntitySet="DescriptionModel" />
             <End Role="DescriptionDetailModel" EntitySet="DescriptionDetailModel" />
           </AssociationSet>
-          <AssociationSet Name="FK_DescriptionDetailModel_MedicineProvideModel" Association="Self.FK_DescriptionDetailModel_MedicineProvideModel">
-            <End Role="MedicineProvideModel" EntitySet="MedicineProvideModel" />
+          <AssociationSet Name="FK_DescriptionDetailModel_WarehouseModel" Association="Self.FK_DescriptionDetailModel_WarehouseModel">
+            <End Role="WarehouseModel" EntitySet="WarehouseModel" />
             <End Role="DescriptionDetailModel" EntitySet="DescriptionDetailModel" />
           </AssociationSet>
           <AssociationSet Name="FK_DescriptionIllnessModel_DescriptionModel" Association="Self.FK_DescriptionIllnessModel_DescriptionModel">
@@ -967,8 +967,8 @@
             <End Role="DescriptionModel" EntitySet="DescriptionModels" />
             <End Role="DescriptionDetailModel" EntitySet="DescriptionDetailModels" />
           </AssociationSet>
-          <AssociationSet Name="FK_DescriptionDetailModel_MedicineProvideModel" Association="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_MedicineProvideModel">
-            <End Role="MedicineProvideModel" EntitySet="MedicineProvideModels" />
+          <AssociationSet Name="FK_DescriptionDetailModel_WarehouseModel" Association="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_WarehouseModel">
+            <End Role="WarehouseModel" EntitySet="WarehouseModels" />
             <End Role="DescriptionDetailModel" EntitySet="DescriptionDetailModels" />
           </AssociationSet>
           <AssociationSet Name="FK_DescriptionIllnessModel_DescriptionModel" Association="QuanLyPhongMachWibuModel.FK_DescriptionIllnessModel_DescriptionModel">
@@ -1160,7 +1160,7 @@
           <Property Name="MedicineId" Type="Guid" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="DescriptionModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionDetailModel" ToRole="DescriptionModel" />
-          <NavigationProperty Name="MedicineProvideModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_MedicineProvideModel" FromRole="DescriptionDetailModel" ToRole="MedicineProvideModel" />
+          <NavigationProperty Name="WarehouseModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_WarehouseModel" FromRole="DescriptionDetailModel" ToRole="WarehouseModel" />
         </EntityType>
         <EntityType Name="DescriptionIllnessModel">
           <Key>
@@ -1281,7 +1281,6 @@
           <Property Name="MedicineId" Type="Guid" />
           <Property Name="Actived" Type="Boolean" />
           <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DescriptionDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_MedicineProvideModel" FromRole="MedicineProvideModel" ToRole="DescriptionDetailModel" />
           <NavigationProperty Name="MedicineCompoundModels" Relationship="QuanLyPhongMachWibuModel.FK_MedicineCompoundModel_MedicineProvideModel" FromRole="MedicineProvideModel" ToRole="MedicineCompoundModel" />
           <NavigationProperty Name="MedicineModel" Relationship="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_MedicineModel" FromRole="MedicineProvideModel" ToRole="MedicineModel" />
           <NavigationProperty Name="ProviderModel" Relationship="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_ProviderModel" FromRole="MedicineProvideModel" ToRole="ProviderModel" />
@@ -1411,6 +1410,7 @@
           <Property Name="ImportCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_AccountModel" FromRole="WarehouseModel" ToRole="AccountModel" />
+          <NavigationProperty Name="DescriptionDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_WarehouseModel" FromRole="WarehouseModel" ToRole="DescriptionDetailModel" />
           <NavigationProperty Name="MedicineProvideModel" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_MedicineProvideModel" FromRole="WarehouseModel" ToRole="MedicineProvideModel" />
         </EntityType>
         <Association Name="FK_AccountInRoleModel_AccountModel">
@@ -1593,12 +1593,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DescriptionDetailModel_MedicineProvideModel">
-          <End Type="QuanLyPhongMachWibuModel.MedicineProvideModel" Role="MedicineProvideModel" Multiplicity="0..1" />
+        <Association Name="FK_DescriptionDetailModel_WarehouseModel">
+          <End Type="QuanLyPhongMachWibuModel.WarehouseModel" Role="WarehouseModel" Multiplicity="0..1" />
           <End Type="QuanLyPhongMachWibuModel.DescriptionDetailModel" Role="DescriptionDetailModel" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MedicineProvideModel">
-              <PropertyRef Name="MedicineProvideId" />
+            <Principal Role="WarehouseModel">
+              <PropertyRef Name="WarehouseId" />
             </Principal>
             <Dependent Role="DescriptionDetailModel">
               <PropertyRef Name="MedicineId" />

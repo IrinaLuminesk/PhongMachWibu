@@ -14,6 +14,12 @@ namespace EnjuAihara.EntityFramework
     
     public partial class WarehouseModel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WarehouseModel()
+        {
+            this.DescriptionDetailModels = new HashSet<DescriptionDetailModel>();
+        }
+    
         public System.Guid WarehouseId { get; set; }
         public Nullable<System.Guid> MedicineProviderId { get; set; }
         public Nullable<decimal> BoughtQuantity { get; set; }
@@ -28,6 +34,8 @@ namespace EnjuAihara.EntityFramework
         public Nullable<System.DateTime> CreateDate { get; set; }
     
         public virtual AccountModel AccountModel { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }
         public virtual MedicineProvideModel MedicineProvideModel { get; set; }
     }
 }

@@ -17,7 +17,6 @@ namespace EnjuAihara.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MedicineProvideModel()
         {
-            this.DescriptionDetailModels = new HashSet<DescriptionDetailModel>();
             this.MedicineCompoundModels = new HashSet<MedicineCompoundModel>();
             this.WarehouseModels = new HashSet<WarehouseModel>();
         }
@@ -28,8 +27,6 @@ namespace EnjuAihara.EntityFramework
         public Nullable<bool> Actived { get; set; }
         public string ProductImage { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MedicineCompoundModel> MedicineCompoundModels { get; set; }
         public virtual MedicineModel MedicineModel { get; set; }
