@@ -1,4 +1,5 @@
 ﻿using EnjuAihara.Core;
+using EnjuAihara.EntityFramework;
 using EnjuAihara.Utilities.Datatable;
 using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.Datatable;
@@ -74,7 +75,63 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.CityList = new SelectList(_context.CityModels.Where(x => x.Actived == true).Select(x => new SelectGuidItem()
+            {
+
+                id = x.CityId,
+                name = x.CityName
+            }).ToList(), "id", "name");
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Create(string DistrictName, Guid CityName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(DistrictName))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng không để trống tên quận"
+                    });
+                }
+                if (CityName == null ||CityName == Guid.Empty)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng chọn thành phố"
+                    });
+                }
+                DistrictModel create = new DistrictModel()
+                {
+                    DistrictId = Guid.NewGuid(),
+                    Actived = true,
+                    CityId = CityName,
+                    DistrictName = DistrictName
+                };
+                _context.Entry(create).State = System.Data.Entity.EntityState.Added;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Tạo thành công",
+                    message = "Tạo quận thành công"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Đã có lỗi xảy ra {0}", ex.Message.ToString())
+                });
+            }
         }
 
         public ActionResult Edit(Guid Id)

@@ -1,9 +1,8 @@
-﻿@model EnjuAihara.EntityFramework.DistrictModel
-<div class="content-header">
+﻿<div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="m-0">Chỉnh sửa @Model.DistrictName</h1>
+				<h1 class="m-0">Thêm mới quận</h1>
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
@@ -18,8 +17,7 @@
 		<div class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form id="frmEdit" enctype='multipart/form-data'>
-						@Html.HiddenFor(x => x.DistrictId)
+					<form id="frmCreate" enctype='multipart/form-data'>
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">
@@ -30,8 +28,7 @@
 													<label for="DistrictName" class="col-form-label">Tên quận</label>
 												</div>
 												<div class="col-md-10">
-													@*<input id="CityName" name="CityName" class="form-control" />*@
-													@Html.TextBoxFor(x => x.DistrictName, new { @class = "form-control" })
+													<input type="text" id="DistrictName" name="DistrictName" class="form-control" />
 												</div>
 											</div>
 										</div>
@@ -46,25 +43,10 @@
 												</div>
 											</div>
 										</div>
-
-										<div class="col-md-12 mt-3">
-											<div class="row g-3 align-items-center">
-												<div class="col-md-2 text-center">
-													<label for="Actived" class="col-form-label">Trạng thái</label>
-												</div>
-												<div class="col-md-10">
-													@*<input id="CityName" name="CityName" class="form-control" />*@
-													@Html.ActivedRadioButton(x => x.Actived)
-												</div>
-											</div>
-										</div>
-
-
-
 									</div>
 									<div class="row" style="margin-top: 15px">
 										<div class="col-md-12 text-center">
-											<button type="button" class="btn btn-primary" id="btn-edit" style="width:20%">
+											<button type="button" class="btn btn-primary" id="btn-add" style="width:20%">
 												Lưu
 											</button>
 										</div>
@@ -80,8 +62,9 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$("#btn-edit").on("click", function () {
-			Edit("MasterData/District", "#frmEdit");
+		PreventEnterButton();
+		$("#btn-add").on("click", function () {
+			SaveData("MasterData/District", "#frmCreate");
 		});
 		Select2Init("#CityName");
 	});
