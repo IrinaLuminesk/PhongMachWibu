@@ -1,0 +1,114 @@
+﻿<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Quản lý kê toa thuốc</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-primary" href="/Services/Prescription/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Tạo toa thuốc</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmSearch">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="RoleCode" class="col-form-label">Mã toa thuốc</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="PrescriptionCode" name="PrescriptionCode" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Client" class="col-form-label">Tên bệnh nhân</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="Client" name="Client" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-md-12">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-12 text-center">
+													<label class="col-form-label">Ngày tạo</label>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="FromDate" class="col-form-label">Từ ngày</label>
+												</div>
+												<div class="col-md-9">
+													<input type="date" id="FromDate" name="FromDate" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="ToDate" class="col-form-label">Đến ngày</label>
+												</div>
+												<div class="col-md-9">
+													<input type="date" id="ToDate" name="ToDate" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row" style="margin-top: 15px">
+										<div class="col-md-12 text-center">
+											<button type="button" class="btn btn-primary" id="btn-search">
+												<i class="fas fa-search"></i>
+												Tìm Kiếm
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="card">
+						<div class="card-body">
+							<div id="divSearchResult">
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		JqueryAutoComplete("/Services/Prescription/ClientSearch", "#Client");
+	});
+</script>
+

@@ -185,6 +185,8 @@
     <Compile Include="Areas\Permission\Controllers\PageController.cs" />
     <Compile Include="Areas\Permission\Controllers\RoleController.cs" />
     <Compile Include="Areas\Permission\PermissionAreaRegistration.cs" />
+    <Compile Include="Areas\Services\Controllers\PrescriptionController.cs" />
+    <Compile Include="Areas\Services\ServicesAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2237,6 +2239,10 @@
     <Content Include="node_modules\%40types\node\package.json" />
     <Content Include="node_modules\%40types\node\README.md" />
     <Content Include="node_modules\.package-lock.json" />
+    <Content Include="Areas\Services\Views\web.config" />
+    <Content Include="Areas\Services\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Services\Views\Prescription\Index.cshtml" />
+    <Content Include="Areas\Services\Views\Prescription\_PaggingServerSide.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

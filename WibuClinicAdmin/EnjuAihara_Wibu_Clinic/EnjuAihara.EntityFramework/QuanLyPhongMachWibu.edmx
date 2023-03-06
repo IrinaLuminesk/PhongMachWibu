@@ -120,6 +120,9 @@
           <Property Name="Payment" Type="float" />
           <Property Name="CreateBy" Type="uniqueidentifier" />
           <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="CreateFor" Type="uniqueidentifier" />
+          <Property Name="AnonymousClient" Type="nvarchar" MaxLength="100" />
+          <Property Name="AnonymousPhone" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="DistrictModel">
           <Key>
@@ -489,6 +492,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DescriptionModel_CreateFor">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
+          <End Role="DescriptionModel" Type="Self.DescriptionModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="DescriptionModel">
+              <PropertyRef Name="CreateFor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DistrictModel_CityModel">
           <End Role="CityModel" Type="Self.CityModel" Multiplicity="0..1" />
           <End Role="DistrictModel" Type="Self.DistrictModel" Multiplicity="*" />
@@ -784,6 +799,10 @@
             <End Role="AccountModel" EntitySet="AccountModel" />
             <End Role="DescriptionModel" EntitySet="DescriptionModel" />
           </AssociationSet>
+          <AssociationSet Name="FK_DescriptionModel_CreateFor" Association="Self.FK_DescriptionModel_CreateFor">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="DescriptionModel" EntitySet="DescriptionModel" />
+          </AssociationSet>
           <AssociationSet Name="FK_DistrictModel_CityModel" Association="Self.FK_DistrictModel_CityModel">
             <End Role="CityModel" EntitySet="CityModel" />
             <End Role="DistrictModel" EntitySet="DistrictModel" />
@@ -928,6 +947,10 @@
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="DescriptionModel" EntitySet="DescriptionModels" />
           </AssociationSet>
+          <AssociationSet Name="FK_DescriptionModel_CreateFor" Association="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="DescriptionModel" EntitySet="DescriptionModels" />
+          </AssociationSet>
           <AssociationSet Name="FK_WarehouseModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_WarehouseModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="WarehouseModel" EntitySet="WarehouseModels" />
@@ -1052,6 +1075,7 @@
           <NavigationProperty Name="DateModels1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DateModels2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
+          <NavigationProperty Name="DescriptionModels1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="AccountModel" ToRole="DescriptionModel" />
           <NavigationProperty Name="WarehouseModels" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseModel_AccountModel" FromRole="AccountModel" ToRole="WarehouseModel" />
         </EntityType>
         <EntityType Name="AccountRecoveryTokenModel">
@@ -1157,7 +1181,11 @@
           <Property Name="Payment" Type="Double" />
           <Property Name="CreateBy" Type="Guid" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateFor" Type="Guid" />
+          <Property Name="AnonymousClient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AnonymousPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="DescriptionModel" ToRole="AccountModel" />
+          <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="DescriptionModel" ToRole="AccountModel" />
           <NavigationProperty Name="DescriptionDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionDetailModel" />
           <NavigationProperty Name="DescriptionIllnessModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionIllnessModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionIllnessModel" />
         </EntityType>
@@ -1502,6 +1530,18 @@
             </Principal>
             <Dependent Role="DescriptionModel">
               <PropertyRef Name="CreateBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DescriptionModel_CreateFor">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.DescriptionModel" Role="DescriptionModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="DescriptionModel">
+              <PropertyRef Name="CreateFor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1894,6 +1934,9 @@
           <EntitySetMapping Name="DescriptionModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DescriptionModel">
               <MappingFragment StoreEntitySet="DescriptionModel">
+                <ScalarProperty Name="AnonymousPhone" ColumnName="AnonymousPhone" />
+                <ScalarProperty Name="AnonymousClient" ColumnName="AnonymousClient" />
+                <ScalarProperty Name="CreateFor" ColumnName="CreateFor" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="Payment" ColumnName="Payment" />
