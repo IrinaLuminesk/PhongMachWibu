@@ -1,0 +1,374 @@
+﻿<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Tạo toa thuốc</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/Services/Prescription"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+					<button class="btn btn-primary" id="btn-edit" style="width:20%">
+						<i class="fa-solid fa-pen-to-square"></i>
+						Lưu
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<form id="frmCreate" enctype='multipart/form-data'>
+	<div class="row">
+		<div class="col-md-2">
+			<div class="card h-100">
+				<div class="card-header" style="background-color: #e2d9c7">
+					<label class="col-form-label">Tìm nhanh (Không áp dụng với bệnh nhân vãng lai)</label>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-12">
+									<input type="text" id="FastSearch" name="FastSearch" class="form-control" placeholder="Tìm nhanh tên bệnh nhân">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-10">
+			<div class="card h-100">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-6">
+							<label class="col-form-label">Thông tin bệnh nhân</label>
+						</div>
+						<div class="col-md-6 text-right">
+							<label class="col-form-label">Bệnh nhân vãng lai</label>
+							<input type="checkbox" id="PatientType" name="PatientType" value="true">
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-3 text-center">
+									<label for="PatientName" class="col-form-label">Họ bệnh nhân</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="PatientLastName" name="PatientLastName" class="form-control" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-3 text-center">
+									<label for="PatientFirstName" class="col-form-label">Tên bệnh nhân</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="PatientFirstName" name="PatientFirstName" class="form-control" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-4 text-center">
+									<label for="PatientPhone" class="col-form-label">Số điện thoại bệnh nhân</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="PatientPhone" name="PatientPhone" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-4 text-center">
+									<label for="PatientBirthday" class="col-form-label">Ngày sinh bệnh nhân</label>
+								</div>
+								<div class="col-md-8">
+									<input type="date" id="PatientBirthday" name="PatientBirthday" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-3 text-center">
+									<label for="PatientAddress" class="col-form-label">Địa chỉ</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" id="PatientAddress" name="PatientAddress" class="form-control" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-3 text-center">
+									<label for="Email" class="col-form-label">Email</label>
+								</div>
+								<div class="col-md-8">
+									<input type="email" id="Email" name="Email" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+
+						</div>
+						<div class="col-md-3">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<label class="col-form-label">Kết luận của bác sĩ</label>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="IllnessLst" class="col-form-label">Các bệnh gặp phải</label>
+								</div>
+								<div class="col-md-10">
+									<input type="text" id="IllnessLst" name="IllnessLst" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 mt-3">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-center">
+									<label for="Note" class="col-form-label">Kết luận</label>
+								</div>
+								<div class="col-md-10">
+									<textarea id="Note" name="Note" style="width: 100%" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-4">
+							<label class="col-form-label">Danh sách thuốc và cách sử dụng</label>
+						</div>
+						<div class="col-md-4">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-4 text-left">
+									<label for="DayOfMedicine" class="col-form-label">Số ngày thuốc (/Ngày)</label>
+								</div>
+								<div class="col-md-3">
+									<input type="number" id="DayOfMedicine" name="DayOfMedicine" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 text-right">
+							<button type="button" class="btn btn-danger" id="DeleteAllMed">Xóa hết</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-right">
+									<label for="ProviderList" class="col-form-label">Nhà cung cấp</label>
+								</div>
+								<div class="col-md-10">
+									<input id="ProviderList" name="ProviderList" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="row g-3 align-items-center">
+								<div class="col-md-2 text-right">
+									<label for="MedList" class="col-form-label">Thuốc</label>
+								</div>
+								<div class="col-md-10">
+									<input id="MedList" name="MedList" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-primary" id="SearchMedi"><i class="fas fa-search"></i>Tìm kiếm</button>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div id="divSearchResult">
+							@Html.Partial("_PaggingServerSideMedicine")
+						</div>
+					</div>
+					<hr />
+					<div class="row">
+						<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
+							<thead class="table-header">
+								<tr>
+									<th class="text-center">STT</th>
+									<th class="text-center">Tên thuốc</th>
+									<th class="text-center">Nhà cung cấp</th>
+									<th class="text-center">Số lượng</th>
+									<th class="text-center">Đơn vị tính</th>
+									<th class="text-center">Giá tiền</th>
+									<th class="text-center">Tổng cộng</th>
+								</tr>
+							</thead>
+						</table> 
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	function PaggingServerSideCustom(url, columns) {
+		/*var load = AjaxLoaderRan();*/
+		$("#tableRes").DataTable().clear().destroy();
+		$("#tableRes").on('processing.dt', function (e, settings, processing) {
+			LoadingDataTable(processing, '.dataTableServerSide');
+		}).DataTable({
+			proccessing: true,
+			serverSide: true,
+			paging: true,
+			scrollX: true,
+			pageLength: 10,
+			autoWidth: true,
+			searching: false,
+			bPaginate: true,
+			scrollCollapse: true,
+			lengthChange: false,
+			ajax: {
+				type: 'POST',
+				url: "/" + url,
+				contentType: 'application/json',
+				data: function (d) {
+					var form = {};
+					$.each($("#frmSearch").serializeArray(), function (i, field) {
+						form[field.name] = field.value || '';
+					});
+					$.extend(true, d, form);
+					return JSON.stringify(d);
+
+				},
+				beforeSend: function () {
+					$("#loading").show();
+				},
+				complete: function () {
+					$("#loading").hide();
+				}
+			},
+			columns: columns,
+			destroy: true,
+			initComplete: function (settings) {
+				$(window).resize();
+
+			},
+			drawCallback: function (settings) {
+				$(window).trigger('resize');
+				$("table.dataTable td").css('white-space', 'nowrap');
+				$("table.dataTable th").css('white-space', 'nowrap');
+				$(window).trigger('resize');
+			},
+			language: {
+				sProcessing: "Vui lòng đợi xíu.....(๑´•ε •`๑)",
+				sLengthMenu: "Xem _MENU_ mục",
+				sZeroRecords: "Không tìm thấy dòng nào phù hợp",
+				sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+				sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
+				sInfoFiltered: "(được lọc từ _MAX_ mục)",
+				sInfoPostFix: "",
+				sSearch: "Tìm nội dung:",
+				sUrl: "",
+				oPaginate: {
+					sFirst: "Đầu",
+					sPrevious: "&laquo;",
+					sNext: "&raquo;",
+					sLast: "Cuối"
+				}
+			},
+			columnDefs: [
+				{ targets: [0, 1], visible: true },
+				{ targets: 'no-sort', visible: false },
+			],
+			/* "sDom": '<"top"flp>rt<"bottom"ip><"clear">',*/
+		});
+	}
+	$(document).ready(function () {
+		CloseSideBar();
+		const InputLst = ["#PatientBirthday", "#FastSearch"];
+		$("#PatientType").change(function () {
+			if ($(this).is(':checked')) {
+				$.each(InputLst, function (index, value) {
+					$(value).attr("disabled", "disabled");
+				});
+			}
+			else {
+				$.each(InputLst, function (index, value) {
+					$(value).removeAttr("disabled");
+				});
+			}
+		});
+
+
+
+
+		//Danh Sách thuốc tìm kiếm
+		var columns = [
+			{
+				"data": "STT",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "MediName",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "ProName",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Price",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Status",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "WarehouseId",
+				"className": "text-center",
+				"orderable": false,
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s = '<a class="btn btn-info" href="/MasterData/User/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+						return s;
+					}
+					return "";
+				}
+			}
+		];
+		$("#SearchMedi").on('click', function () {
+			PaggingServerSideCustom("Services/Prescription/_PaggingServerSideMedicine", columms);
+		});
+	});
+</script>

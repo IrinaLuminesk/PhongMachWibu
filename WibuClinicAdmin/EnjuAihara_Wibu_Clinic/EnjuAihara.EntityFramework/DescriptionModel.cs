@@ -29,6 +29,8 @@ namespace EnjuAihara.EntityFramework
         public Nullable<System.Guid> CreateFor { get; set; }
         public string AnonymousClient { get; set; }
         public string AnonymousPhone { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<bool> IsPay { get; set; }
     
         public virtual AccountModel AccountModel { get; set; }
         public virtual AccountModel AccountModel1 { get; set; }

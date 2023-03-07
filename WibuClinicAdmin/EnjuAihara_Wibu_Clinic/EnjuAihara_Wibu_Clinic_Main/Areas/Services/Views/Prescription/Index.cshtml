@@ -96,7 +96,7 @@
 					<div class="card">
 						<div class="card-body">
 							<div id="divSearchResult">
-
+								@Html.Partial("_PaggingServerSide")
 							</div>
 						</div>
 
@@ -109,6 +109,94 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		JqueryAutoComplete("/Services/Prescription/ClientSearch", "#Client");
+		var columns = [
+			{
+				"data": "STT",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "PrescriptionCode",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "PatientName",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "DoctorName",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "MedicineList",
+				"orderable": false,
+				"className": "text-center",
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s = '<select class="form-control dropdown">';
+						$.each(data, function (index, value) {
+							s += '<option>' + value + '</option>';
+						});
+						s += '</select >';
+						return s;
+					}
+					return "";
+				}
+			},
+			{
+				"data": "IllnessList",
+				"orderable": false,
+				"className": "text-center",
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s = '<select class="form-control dropdown">';
+						$.each(data, function (index, value) {
+							s += '<option>' + value + '</option>';
+						});
+						s += '</select >';
+						return s;
+					}
+					return "";
+				}
+			},
+			{
+				"data": "Note",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "TotalMoney",
+				"className": "text-center",
+				"orderable": true,
+				"render": function (data, type, row) {
+					if (data != null) {
+						return CurrencyFormat(data);
+					}
+					return data;
+				}
+			},
+			{
+				"data": "Status",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "PrescriptionId",
+				"className": "text-center",
+				"orderable": false,
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s = '<a class="btn btn-info" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+						return s;
+					}
+					return "";
+				}
+			}
+		];
+		PaggingServerSideSearchInitialWithClick("Services/Prescription", columns, true);
 	});
 </script>
 

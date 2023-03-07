@@ -123,6 +123,8 @@
           <Property Name="CreateFor" Type="uniqueidentifier" />
           <Property Name="AnonymousClient" Type="nvarchar" MaxLength="100" />
           <Property Name="AnonymousPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="IsPay" Type="bit" />
         </EntityType>
         <EntityType Name="DistrictModel">
           <Key>
@@ -1184,6 +1186,8 @@
           <Property Name="CreateFor" Type="Guid" />
           <Property Name="AnonymousClient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AnonymousPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsPay" Type="Boolean" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="DescriptionModel" ToRole="AccountModel" />
           <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="DescriptionModel" ToRole="AccountModel" />
           <NavigationProperty Name="DescriptionDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionDetailModel" />
@@ -1934,6 +1938,8 @@
           <EntitySetMapping Name="DescriptionModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DescriptionModel">
               <MappingFragment StoreEntitySet="DescriptionModel">
+                <ScalarProperty Name="IsPay" ColumnName="IsPay" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="AnonymousPhone" ColumnName="AnonymousPhone" />
                 <ScalarProperty Name="AnonymousClient" ColumnName="AnonymousClient" />
                 <ScalarProperty Name="CreateFor" ColumnName="CreateFor" />

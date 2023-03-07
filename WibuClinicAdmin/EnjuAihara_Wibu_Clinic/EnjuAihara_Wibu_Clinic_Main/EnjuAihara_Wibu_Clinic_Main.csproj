@@ -185,6 +185,8 @@
     <Compile Include="Areas\Permission\Controllers\PageController.cs" />
     <Compile Include="Areas\Permission\Controllers\RoleController.cs" />
     <Compile Include="Areas\Permission\PermissionAreaRegistration.cs" />
+    <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
+    <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\Services\Controllers\PrescriptionController.cs" />
     <Compile Include="Areas\Services\ServicesAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2162,6 +2164,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Personal\Controllers\" />
+    <Folder Include="Areas\Reports\Controllers\" />
+    <Folder Include="Areas\Reports\Data\" />
+    <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
   </ItemGroup>
@@ -2243,6 +2249,11 @@
     <Content Include="Areas\Services\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Services\Views\Prescription\Index.cshtml" />
     <Content Include="Areas\Services\Views\Prescription\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\Reports\Views\web.config" />
+    <Content Include="Areas\Personal\Views\web.config" />
+    <Content Include="Areas\Personal\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Services\Views\Prescription\Create.cshtml" />
+    <Content Include="Areas\Services\Views\Prescription\_PaggingServerSideMedicine.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

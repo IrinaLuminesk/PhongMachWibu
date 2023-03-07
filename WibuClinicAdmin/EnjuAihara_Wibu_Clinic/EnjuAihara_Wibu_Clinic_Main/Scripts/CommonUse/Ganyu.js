@@ -525,6 +525,29 @@ function JqueryAutoComplete(url, id) {
         });
 }
 
+function JqueryAutoCompleteWithHiddenValue(url, id, hidden) {
+    $(id).autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: url,
+                data: JSON.stringify({ "kq": $(id).val() }),
+                dataType: "json",
+                success: function (data) {
+                    response(data);
+                },
+                error: function (xhr, status, error) {
+                    alertPopup(false, xhr.responseText);
+                }
+            });
+        },
+        select: function (event, ui) {
+            $(hidden).val(ui.item.id);
+        }
+    });
+}
+
 function CurrencyFormat(number) {
     var currency = new Intl.NumberFormat('ja-JP', {
         style: 'currency',
