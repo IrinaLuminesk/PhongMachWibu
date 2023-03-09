@@ -12,15 +12,12 @@ namespace EnjuAihara.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class DescriptionDetailModel
+    public partial class sysdiagram
     {
-        public System.Guid DescriptionDetailId { get; set; }
-        public Nullable<System.Guid> DescriptionId { get; set; }
-        public Nullable<System.Guid> MedicineId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public string HowToUseNote { get; set; }
-    
-        public virtual DescriptionModel DescriptionModel { get; set; }
-        public virtual WarehouseDetailModel WarehouseDetailModel { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

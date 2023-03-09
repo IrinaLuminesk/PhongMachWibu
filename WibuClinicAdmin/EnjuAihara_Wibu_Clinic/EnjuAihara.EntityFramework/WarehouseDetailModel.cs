@@ -12,22 +12,27 @@ namespace EnjuAihara.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class WarehouseModel
+    public partial class WarehouseDetailModel
     {
-        public System.Guid WarehouseId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WarehouseDetailModel()
+        {
+            this.DescriptionDetailModels = new HashSet<DescriptionDetailModel>();
+        }
+    
+        public Nullable<System.Guid> WarehouseMasterId { get; set; }
         public Nullable<System.Guid> MedicineProviderId { get; set; }
         public Nullable<decimal> BoughtQuantity { get; set; }
         public Nullable<System.DateTime> ExpiredDate { get; set; }
         public Nullable<double> BoughtPrice { get; set; }
         public Nullable<decimal> InstockQuantity { get; set; }
-        public Nullable<System.DateTime> BoughtDate { get; set; }
-        public Nullable<System.Guid> CreateBy { get; set; }
         public Nullable<double> SalePrice { get; set; }
         public Nullable<double> SalePercentage { get; set; }
-        public string ImportCode { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.Guid WarehouseDetailId { get; set; }
     
-        public virtual AccountModel AccountModel { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }
         public virtual MedicineProvideModel MedicineProvideModel { get; set; }
+        public virtual WarehouseMasterModel WarehouseMasterModel { get; set; }
     }
 }
