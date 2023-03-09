@@ -21,5 +21,6 @@ namespace EnjuAihara.ViewModels.Services
         public string Status { get; set; }
 
         public Guid? WarehouseId { get; set; }
+        public Guid? MedicineProviderId { get; set; }
     }
 }

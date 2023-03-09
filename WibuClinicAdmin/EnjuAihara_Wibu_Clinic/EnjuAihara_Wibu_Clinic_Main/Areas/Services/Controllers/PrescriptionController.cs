@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using EnjuAihara.ViewModels.Services;
 using EnjuAihara.Utilities.Datatable;
+using System.Data.SqlClient;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
 {
@@ -81,17 +82,21 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
 
             search.PageSize = model.length;
             search.PageNumber = model.start / model.length + 1;
-
-            var Med = _context.MedicineProvideModels.ToList();
-            var Warehouse = _context.WarehouseModels.ToList();
-            var query = Med.GroupJoin(Warehouse, m => m.MedicineProvideId, w => w.MedicineProviderId, (m, ws) =>
-            new MedicineSearchViewModel
+            List<SqlParameter> param = new List<SqlParameter>()
             {
-                MedName = m.MedicineModel.MedicineName,
-                ProName = m.ProviderModel.ProviderName,
-                Price = m.WarehouseModels.
-            });
-            var finalResult = PaggingServerSideDatatable.DatatableSearch<PrescriptionSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
+                new SqlParameter()
+                {
+                    ParameterName = "@MedList",
+                    Value = MedList
+                },
+                new SqlParameter()
+                {
+                    ParameterName = "@ProList",
+                    Value = ProList
+                }
+            };
+            var query = _context.Database.SqlQuery<MedicineSearchViewModel>("exec GetMedicieInWarehouse @MedList, @ProList", param.ToArray()).ToList();
+            var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
                 int i = model.start;
@@ -99,6 +104,14 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 {
                     i++;
                     item.STT = i;
+                    if (string.IsNullOrEmpty(item.Status))
+                    {
+                        item.Status = "Đã hết hàng";
+                    }
+                    if (item.Price == null)
+                    {
+                        item.Price = 0;
+                    }
                 }
             }
             return Json(new
