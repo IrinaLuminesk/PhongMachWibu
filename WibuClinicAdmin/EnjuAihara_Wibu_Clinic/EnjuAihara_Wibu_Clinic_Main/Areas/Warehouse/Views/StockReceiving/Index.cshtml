@@ -6,7 +6,7 @@
             </div>
             <div class="col-sm-6 text-right">
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="/Masterdata/StockReceiving/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+                    <a class="btn btn-primary" href="/Warehouse/StockReceiving/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
                 </div>
             </div>
         </div>
@@ -134,63 +134,73 @@
                 "className": "text-center",
                 "orderable": true,
             },
-			{
-                "data": "MedicineCode",
-				"className": "text-center",
-				"orderable": true,
-			},
-			{
-                "data": "MedicineName",
-				"className": "text-center",
-				"orderable": true,
-			},
-            {
-                "data": "ProviderName",
-                "className": "text-center",
-                "orderable": true,
-            },
-            {
-                "data": "BoughtQuantity",
-                "className": "text-center",
-                "orderable": true,
-            },
+			//{
+   //             "data": "MedicineCode",
+			//	"className": "text-center",
+			//	"orderable": true,
+			//},
+			//{
+   //             "data": "MedicineName",
+			//	"className": "text-center",
+			//	"orderable": true,
+			//},
+   //         {
+   //             "data": "ProviderName",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
+   //         {
+   //             "data": "BoughtQuantity",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
 
-			{
-				"data": "Status",
-				"className": "text-center",
-				"orderable": true,
-            },
+			//{
+			//	"data": "Status",
+			//	"className": "text-center",
+			//	"orderable": true,
+   //         },
+   //         {
+   //             "data": "ExpiryString",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
+   //         {
+   //             "data": "BroughtPrice",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //             "render": function (data, type, row) {
+   //                 if (data != null && data != 0) {
+   //                     return CurrencyFormat(data);
+   //                 }
+   //                 return data;
+   //             }
+   //         },
+   //         {
+   //             "data": "SalePercentage",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
+   //         {
+   //             "data": "SalePrice",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //             "render": function (data, type, row) {
+   //                 if (data != null && data != 0) {
+   //                     return CurrencyFormat(data);
+   //                 }
+   //                 return data;
+   //             }
+   //         },
             {
-                "data": "ExpiryString",
+                "data": "BoughtDateString",
                 "className": "text-center",
                 "orderable": true,
             },
             {
-                "data": "BroughtPrice",
+                "data": "CreateDateString",
                 "className": "text-center",
                 "orderable": true,
-                "render": function (data, type, row) {
-                    if (data != null && data != 0) {
-                        return CurrencyFormat(data);
-                    }
-                    return data;
-                }
-            },
-            {
-                "data": "SalePercentage",
-                "className": "text-center",
-                "orderable": true,
-            },
-            {
-                "data": "SalePrice",
-                "className": "text-center",
-                "orderable": true,
-                "render": function (data, type, row) {
-                    if (data != null && data != 0) {
-                        return CurrencyFormat(data);
-                    }
-                    return data;
-                }
             },
             {
                 "data": "CreateBy",
@@ -198,13 +208,13 @@
                 "orderable": true,
             },
 			{
-                "data": "WarehouseId",
+                "data": "WarehouseMasterId",
 				"className": "text-center",
 				"orderable": false,
 				"render": function (data, type, row) {
 					if (data != "" && data != null) {
-                        var s = '<a class="btn btn-info" href="/Warehouse/StockReceiving/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
-						return s;
+                        var s = '<a class="btn btn-info" href="/Warehouse/StockReceiving/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>' +'<a class="btn btn-secondary ml-2" href="/Warehouse/StockReceiving/Detail/' + data + '"><i class="fa fa-book"></i>Xem chi tiết</a>';
+                        return s;
 					}
 					return "";
 				}

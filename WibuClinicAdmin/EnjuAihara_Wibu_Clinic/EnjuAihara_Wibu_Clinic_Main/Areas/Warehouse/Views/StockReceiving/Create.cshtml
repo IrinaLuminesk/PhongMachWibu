@@ -62,7 +62,7 @@
                                                         <label for="Password" class="col-form-label">Người tạo</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="text" id="CreateBy" name="CreateBy" class="form-control" readonly value="">
+                                                        <input type="text" id="CreateBy" name="CreateBy" class="form-control" readonly value=@ViewBag.CreateBy>
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,7 +74,7 @@
                                                         <label for="Password" class="col-form-label">Ngày nhập kho</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="date" id="BoughtDate" name="BoughtDate" class="form-control">
+                                                        <input type="datetime" id="BoughtDate" name="BoughtDate" class="form-control" value="@ViewBag.DateNow">
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@
                                                         <label for="Password" class="col-form-label">Ngày tạo</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                        <input type="datetime" id="CreateDate" name="CreateDate" class="form-control" readonly value="@ViewBag.DateNow">
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,13 +119,35 @@
                                             </div>
                                         </div>
                                         <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="UserName" class="col-form-label">Số lượng còn tồn</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="number" id="InStockQuantity" name="InStockQuantity" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Số lượng nhập</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="number" id="BoughtQuantity" name="BoughtQuantity" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
                                             <div class="col-md-5 ">
                                                 <div class="row g-3 align-items-center">
                                                     <div class="col-md-2 text-center">
                                                         <label for="Password" class="col-form-label">Giá mua vào</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="date" id="BoughtDate" name="BoughtDate" class="form-control">
+                                                        <input type="number" id="BoughtPrice" name="BoughtPrice" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -135,7 +157,7 @@
                                                         <label for="Password" class="col-form-label">Chiết khấu</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                        <input type="number" id="SalePercentage" name="SalePercentage" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,7 +167,7 @@
                                                         <label for="Password" class="col-form-label">Giá bán</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                        <input type="number" id="SalePrice" name="SalePrice" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -157,21 +179,159 @@
                                                         <label for="Password" class="col-form-label">Hạn sử dụng</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                        <input type="date" id="ExpiredDate" name="ExpiredDate" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                            </div>
+                                            <div class="col-md-2">
+
+                                                <a class="btn btn-danger" id="btn-del-product">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+                                                <a class="btn btn-primary" id="btn-add-stockReceivingDetail">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+
+                                            </div>
+
+
+
                                         </div>
                                     </div>
+                                    <table id="stockReceivingDetailTable" class="table table-bordered table-hover no-footer detail-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">STT</th>
+                                                <th>Mã sản phẩm</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Số lượng</th>
+                                                <th>Giá mua</th>
+                                                <th>Chiết khấu</th>
+                                                <th>Hạn sử dụng</th>
+                                                <th>Giá bán</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stockReceivingDetailList">
+                                            @if (Model != null && Model.Count() > 0)
+                                            {
+                                                @*@Html.Partial("_MedicineStockDetailInner")*@
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td class="text-center" colspan="9">
+                                                        Vui lòng thêm sản phẩm
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        @*<tfoot id="accessoryDetail">
+                                                <tr>
+                                                    <td colspan="5" class="text-right">
+                                                        <strong>@LanguageResource.SaleOrder_SubTotal</strong>
+                                                    </td>
+                                                    <td id="total" class="text-right"></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>*@
+                                    </table>
 
-
-                                </div>
                                 </div>
                             </div>
-                        
+                        </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).on("click", "#btn-add-stockReceivingDetail", function () {
+        var $btn = $(this);
+        $btn.button('loading');
+
+        var MedicineId = $("#MedicineId").val();
+        var ProviderId = $("#ProviderId").val();
+        var BoughtPrice = $("#BoughtPrice").val();
+        var SalePercentage = $("#SalePercentage").val();
+        var SalePrice = $("#SalePrice").val();
+        var BoughtQuantity = $("#BoughtQuantity").val();
+        var InstockQuantity = $("#InstockQuantity").val();
+
+        //if (MedicineId === "") {
+        //    $btn.button('reset');
+        //    alertPopup(false, "Vui lòng chọn thuốc trước khi nhập!");
+        //}
+        //else {
+        //    if (ProductQuantity < 0 || ProductQuantity == "") {
+        //        $btn.button('reset');
+        //        alertPopup(false, "Vui lòng nhập số lượng lớn hơn 0!");
+        //    }
+        //    else {
+        //        if (ProductPrice !== "") {
+                    var frmId = "frmCreate";
+                    //var isThemMoi = true;
+
+                    //var $frmEdit = $("body #frmEdit");
+                    var $frmCreate = $("body #frmCreate");
+                    //if ($frmEdit.length === 0) {
+                    //    frmId = "frmCreate";
+                    //}
+                    //else {
+                    //    frmId = "frmEdit";
+                    //    isThemMoi = false;
+                    //}
+                    var data = $("#" + frmId).serialize();
+
+                    //data = data + "&ProductId=" + ProductId;
+                    //data = data + "&ProductCode=" + ProductCode;
+                    //data = data + "&ProductName=" + ProductName;
+                    //data = data + "&Serial=" + Serial;
+                    //data = data + "&Quantity=" + ProductQuantity;
+                    //data = data + "&Price=" + ProductPrice;
+                    //data = data + "&StockId=" + StockId;
+                    //data = data + "&StockCode=" + StockCode;
+                    //data = data + "&StockName=" + StockName;
+                    //data = data + "&DetailNote=" + ProductStockNote;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Warehouse/StockReceiving/InsertProductStock",
+                        data: data,
+                        success: function (xhr, status, error) {
+                            $btn.button('reset');
+                            if (xhr.Message !== "" && xhr.Message !== null && xhr.Message !== undefined) {
+                                alertPopup(false, xhr.Message);
+                            }
+                            else {
+                                $("#stockReceivingDetailTable tbody").html(xhr);
+                                TotalPrice();
+
+                                $("#ProductId").val("");
+                                $("#ProductCode").val("");
+                                $("#ProductCode").prop("disabled", false);
+                                $("#ProductName").val("");
+                                $("#SerialOfProduct").val("");
+                                $("#ProductPrice").val("");
+                                $("#ProductStockNote").val("");
+                                $("#ProductCode").focus();
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            $btn.button('reset');
+                            alertPopup(false, xhr.responseText);
+                        }
+                    });
+                //} else {
+                //    $btn.button('reset');
+                //    alertPopup(false, "Catalogue chưa thiết lập giá, vui lòng cấu hình giá trong danh mục!");
+                //}
+           // }
+        //}
+    });
+
+</script>

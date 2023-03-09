@@ -28,12 +28,18 @@ namespace EnjuAihara.ViewModels.Warehouse
         public string MedicineName { get; set; }
         public decimal? BoughtQuantity { get; set; }
         public string Status { get; set; }
-        public DateTime? ExpireDate { get; set; }
-        public double? BroughtPrice { get; set; }
+        public DateTime? ExpiredDate { get; set; }
+        public double? BoughtPrice { get; set; }
         public double? SalePercentage { get; set; }
         public double? SalePrice { get; set; }
         public string CreateBy { get; set; }
-        public Guid? WarehouseId { get; set; }
+        public Guid? WarehouseMasterId { get; set; }
+        public Guid? WarehouseDetailId { get; set; }
         public string ExpiryString { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public DateTime? BoughtDate { get; set; }
+        public string CreateDateString { get; set; }
+        public string BoughtDateString { get; set; }
+
     }
 }
