@@ -1,0 +1,177 @@
+﻿<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Nhập kho</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="pull-right">
+
+                    <button type="button" class="btn btn-primary" id="btn-add">
+                        <i class="fa fa-plus-square"></i>
+                        Thêm mới
+                    </button>
+                    <a class="btn btn-info" href="/Warehouse/StockReceiving"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="frmCreate" enctype='multipart/form-data'>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        @*<div class="col-md-12">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="ForUser" class="col-form-label">Tạo tài khoản cho người dùng</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select id="ForUser" name="ForUser" class="form-control"></select>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button id="remove-user" type="button" class="btn btn-labeled btn-danger w-100">
+                                                            <span class="btn-label">
+                                                                <i class="fa fa-remove"></i>
+                                                                Xóa
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="UserName" class="col-form-label">Kho</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="text" value="Phòng mạch wibu" disabled="disabled" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Người tạo</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="text" id="CreateBy" name="CreateBy" class="form-control" readonly value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 ">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Ngày nhập kho</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="BoughtDate" name="BoughtDate" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Ngày tạo</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="UserName" class="col-form-label">Nhà cung cấp</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @Html.DropDownList("ProviderId", (SelectList)ViewBag.ProviderIdSearch, "-- Tất cả --", new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Tên sản phẩm</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @Html.DropDownList("MedicineId", (SelectList)ViewBag.MedicineIdSearch, "-- Tất cả --", new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-5 ">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Giá mua vào</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="BoughtDate" name="BoughtDate" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Chiết khấu</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Giá bán</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Hạn sử dụng</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                </div>
+                            </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

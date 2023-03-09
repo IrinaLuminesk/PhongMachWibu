@@ -88,6 +88,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
                 data = finalResult
             });
         }
+        public ActionResult Create()
+        {
+            CreateViewBag();
+            return View();
+        }
         public void CreateViewBag()
         {
             var medicine = _context.MedicineModels.Select(x =>
