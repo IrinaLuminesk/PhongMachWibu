@@ -67,6 +67,7 @@
     <Compile Include="SelectList\SelectGuidItem.cs" />
     <Compile Include="SelectList\SelectListGuidForAutoComplete.cs" />
     <Compile Include="SelectList\SelectStringItem.cs" />
+    <Compile Include="Warehouse\StockReceivingDetailViewModel.cs" />
     <Compile Include="Warehouse\StockReceivingSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

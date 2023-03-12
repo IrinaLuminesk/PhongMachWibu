@@ -103,7 +103,7 @@
                                                         <label for="UserName" class="col-form-label">Nhà cung cấp</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        @Html.DropDownList("ProviderId", (SelectList)ViewBag.ProviderIdSearch, "-- Tất cả --", new { @class = "form-control" })
+                                                        @Html.DropDownList("ProviderId", (SelectList)ViewBag.ProviderIdSearch, "Vui lòng chọn nhà cung cấp", new { @class = "form-control" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -113,7 +113,8 @@
                                                         <label for="Password" class="col-form-label">Tên sản phẩm</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        @Html.DropDownList("MedicineId", (SelectList)ViewBag.MedicineIdSearch, "-- Tất cả --", new { @class = "form-control" })
+                                                        @*@Html.DropDownList("MedicineId", null, null, new { @class = "form-control" })*@
+                                                        <select class="form-control" id="MedicineId" name="MedicineId"></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -167,7 +168,7 @@
                                                         <label for="Password" class="col-form-label">Giá bán</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="number" id="SalePrice" name="SalePrice" class="form-control">
+                                                        <input type="number" id="SalePrice" name="SalePrice" class="form-control" readonly="readonly">
                                                     </div>
                                                 </div>
                                             </div>
@@ -179,11 +180,12 @@
                                                         <label for="Password" class="col-form-label">Hạn sử dụng</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="date" id="ExpiredDate" name="ExpiredDate" class="form-control">
+                                                        <input type="date" id="ExpiredDate" name="ExpiredDate" class="form-control" >
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
+                                                <input type="hidden" id="MedicineProviderId" name="MedicineProviderId" class="form-control">
                                             </div>
                                             <div class="col-md-2">
 
@@ -217,7 +219,7 @@
                                         <tbody id="stockReceivingDetailList">
                                             @if (Model != null && Model.Count() > 0)
                                             {
-                                                @*@Html.Partial("_MedicineStockDetailInner")*@
+                                                @Html.Partial("_ProductStockDetailInner")
                                             }
                                             else
                                             {
@@ -250,6 +252,12 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn-add").on("click", function () {
+            SaveData("Warehouse/StockReceiving", "#frmCreate");
+            PreventEnterButton();
+        });
+    });
     $(document).on("click", "#btn-add-stockReceivingDetail", function () {
         var $btn = $(this);
         $btn.button('loading');
@@ -261,7 +269,8 @@
         var SalePrice = $("#SalePrice").val();
         var BoughtQuantity = $("#BoughtQuantity").val();
         var InstockQuantity = $("#InstockQuantity").val();
-
+        var ExpiredDate = $("#ExpiredDate").val();
+        var MedicineProviderId = $("#MedicineProviderId").val();
         //if (MedicineId === "") {
         //    $btn.button('reset');
         //    alertPopup(false, "Vui lòng chọn thuốc trước khi nhập!");
@@ -273,65 +282,125 @@
         //    }
         //    else {
         //        if (ProductPrice !== "") {
-                    var frmId = "frmCreate";
-                    //var isThemMoi = true;
+        var frmId = "frmCreate";
+        //var isThemMoi = true;
 
-                    //var $frmEdit = $("body #frmEdit");
-                    var $frmCreate = $("body #frmCreate");
-                    //if ($frmEdit.length === 0) {
-                    //    frmId = "frmCreate";
-                    //}
-                    //else {
-                    //    frmId = "frmEdit";
-                    //    isThemMoi = false;
-                    //}
-                    var data = $("#" + frmId).serialize();
+        //var $frmEdit = $("body #frmEdit");
+        var $frmCreate = $("body #frmCreate");
+        //if ($frmEdit.length === 0) {
+        //    frmId = "frmCreate";
+        //}
+        //else {
+        //    frmId = "frmEdit";
+        //    isThemMoi = false;
+        //}
+        var data = $("#" + frmId).serialize();
 
-                    //data = data + "&ProductId=" + ProductId;
-                    //data = data + "&ProductCode=" + ProductCode;
-                    //data = data + "&ProductName=" + ProductName;
-                    //data = data + "&Serial=" + Serial;
-                    //data = data + "&Quantity=" + ProductQuantity;
-                    //data = data + "&Price=" + ProductPrice;
-                    //data = data + "&StockId=" + StockId;
-                    //data = data + "&StockCode=" + StockCode;
-                    //data = data + "&StockName=" + StockName;
-                    //data = data + "&DetailNote=" + ProductStockNote;
+        data = data + "&MedicineId=" + MedicineId;
+        data = data + "&MedicineProviderId=" + MedicineProviderId;
+        data = data + "&ProviderId=" + ProviderId;
+        data = data + "&BoughtPrice=" + BoughtPrice;
+        data = data + "&SalePercentage=" + SalePercentage;
+        data = data + "&SalePrice=" + SalePrice;
+        data = data + "&BoughtQuantity=" + BoughtQuantity;
+        data = data + "&InstockQuantity=" + InstockQuantity;
+        data = data + "&ExpiredDate=" + ExpiredDate;
+        //data = data + "&StockCode=" + StockCode;
+        //data = data + "&StockName=" + StockName;
+        //data = data + "&DetailNote=" + ProductStockNote;
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/Warehouse/StockReceiving/InsertProductStock",
-                        data: data,
-                        success: function (xhr, status, error) {
-                            $btn.button('reset');
-                            if (xhr.Message !== "" && xhr.Message !== null && xhr.Message !== undefined) {
-                                alertPopup(false, xhr.Message);
-                            }
-                            else {
-                                $("#stockReceivingDetailTable tbody").html(xhr);
-                                TotalPrice();
+        $.ajax({
+            type: "POST",
+            url: "/Warehouse/StockReceiving/InsertProductStock",
+            data: data,
+            success: function (xhr, status, error) {
+                $btn.button('reset');
+                if (xhr.Message !== "" && xhr.Message !== null && xhr.Message !== undefined) {
+                    alertPopup(false, xhr.Message);
+                }
+                else {
+                    $("#stockReceivingDetailTable tbody").html(xhr);
 
-                                $("#ProductId").val("");
-                                $("#ProductCode").val("");
-                                $("#ProductCode").prop("disabled", false);
-                                $("#ProductName").val("");
-                                $("#SerialOfProduct").val("");
-                                $("#ProductPrice").val("");
-                                $("#ProductStockNote").val("");
-                                $("#ProductCode").focus();
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            $btn.button('reset');
-                            alertPopup(false, xhr.responseText);
-                        }
-                    });
-                //} else {
-                //    $btn.button('reset');
-                //    alertPopup(false, "Catalogue chưa thiết lập giá, vui lòng cấu hình giá trong danh mục!");
-                //}
-           // }
+
+                    $("#MedicineId").val("");
+                    $("#ProviderId").val("");
+                    $("#BoughtPrice").val("");
+                    $("#SalePercentage").val("");
+                    $("#SalePrice").val("");
+                    $("#BoughtQuantity").val("");
+                    $("#InstockQuantity").val("");
+                    $("#ExpiredDate").val("");
+                }
+            },
+            error: function (xhr, status, error) {
+                $btn.button('reset');
+                alertPopup(false, xhr.responseText);
+            }
+        });
+        //} else {
+        //    $btn.button('reset');
+        //    alertPopup(false, "Catalogue chưa thiết lập giá, vui lòng cấu hình giá trong danh mục!");
+        //}
+        // }
         //}
     });
-
+    $(document).on("change", "#BoughtPrice", function () {
+        if ($("#SalePercentage").val() != null) {
+            var money = $("#SalePercentage").val() * $("#BoughtPrice").val();
+            $("#SalePrice").val(parseFloat(money));
+        }
+    });
+    $(document).on("change", "#SalePercentage", function () {
+        if ($("#BoughtPrice").val() != null) {
+            var money = $("#SalePercentage").val() * $("#BoughtPrice").val();
+            $("#SalePrice").val(parseFloat(money));
+        }
+    });
+     $(document).on("change", "#ProviderId", function () {
+            var provider = $(this).val();
+            if (provider != "") {
+                UpdateMedicineDropdownProviderId(provider);
+            }
+     });
+    $(document).on("change", "#MedicineId", function () {
+        var medicine = $(this).val();
+        var provider = $("#ProviderId").val();
+        if (provider != "" && medicine!="") {
+            UpdateMedicineProviderId(provider,medicine);
+        }
+    });
+        // Cập nhật dropdown Product nếu thay đổi entity
+        function UpdateMedicineDropdownProviderId(provider) {
+            $.ajax({
+                type: "POST",
+                url: "/Warehouse/StockReceiving/SearchMedicineByProvider",
+                data: {
+                    ProviderId: provider
+                },
+                success: function (thuoc) {
+                    $("#MedicineId").html("");
+                    $("#MedicineId").append("<option value=''>Vui lòng chọn thuốc</option>");
+                    if (thuoc.length > 0) {
+                        $.each(thuoc, function (index, value) {
+                            $("#MedicineId").append("<option value='" + value.Id + "'>" + value.Name + "</option>");
+                        });
+                    }
+                }
+            });
+    }
+    function UpdateMedicineProviderId(provider,medicine) {
+        $.ajax({
+            type: "POST",
+            url: "/Warehouse/StockReceiving/SearchMedicineProviderIdByProviderAndMedicine",
+            data: {
+                ProviderId: provider,
+                MedicineId:medicine
+            },
+            success: function (thuocncc) {
+                $("#MedicineProviderId").val(thuocncc);
+            }
+        });
+    }
+    Select2Init("#ProviderId");
+    Select2Init("#MedicineId");
 </script>

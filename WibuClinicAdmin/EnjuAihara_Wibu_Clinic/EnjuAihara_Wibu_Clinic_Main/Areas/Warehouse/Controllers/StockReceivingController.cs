@@ -115,5 +115,57 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
             };
             ViewBag.Actived = new SelectList(StatusList, "id", "name");
         }
+
+        public ActionResult InsertProductStock(StockReceivingDetailViewModel model, List<StockReceivingDetailViewModel> stockReceivingDetailList)
+        {
+            if (stockReceivingDetailList == null)
+            {
+                stockReceivingDetailList = new List<StockReceivingDetailViewModel>();
+            }
+            #region //Bổ sung MedicineCode và Name, ProviderName
+            //var stock = _context.StockModel.FirstOrDefault(p => p.StockId == model.StockId);
+            //if (stock != null)
+            //{
+            //    model.StockCode = stock.StockCode;
+            //    model.StockName = stock.StockName;
+            //}
+            var medicine =_context.MedicineModels.FirstOrDefault(p=>p.MedicineId==model.MedicineId);
+            if (medicine != null)
+            {
+                model.MedicineCode = medicine.MedicineCode;
+                model.MedicineName = medicine.MedicineName;
+            }
+            var provider = _context.ProviderModels.FirstOrDefault(p => p.ProviderId == model.ProviderId);
+            if (provider != null)
+            {
+                model.MedicineCode = provider.ProviderCode;
+                model.MedicineName = provider.ProviderName;
+            }
+            #endregion
+            //Nếu chưa có model trong stockReceivingDetailList
+            //Add thêm model vào stockReceivingDetailList
+            //if (stockReceivingDetailList.FirstOrDefault(p => p.MedicineProvideModel.MedicineId == model.MedicineProvideModel.MedicineId) == null)
+            //{
+                //Add thêm data
+                stockReceivingDetailList.Add(model);
+            
+
+
+            return PartialView("_ProductStockDetailInner", stockReceivingDetailList);
+        }
+        public ActionResult SearchMedicineByProvider(Guid ProviderId)
+        {
+            var thuoc = _context.MedicineProvideModels.Where(x => x.ProviderId == ProviderId).Select(x => new
+            {
+                Name=x.MedicineModel.MedicineName,
+                Id=x.MedicineModel.MedicineId,
+            }).ToList();
+            return Json(thuoc, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult SearchMedicineProviderIdByProviderAndMedicine(Guid ProviderId,Guid MedicineId)
+        {
+            var thuocncc = _context.MedicineProvideModels.Where(x => x.ProviderId == ProviderId&& x.MedicineId==MedicineId).Select(x => x.MedicineProvideId).ToList();
+            return Json(thuocncc, JsonRequestBehavior.AllowGet);
+        }
     }
 }
