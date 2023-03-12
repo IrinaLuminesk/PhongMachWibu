@@ -147,13 +147,19 @@
     <Compile Include="StreetModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
     <Compile Include="UsersModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
     <Compile Include="WardModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
-    <Compile Include="WarehouseModel.cs">
+    <Compile Include="WarehouseDetailModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseMasterModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
   </ItemGroup>

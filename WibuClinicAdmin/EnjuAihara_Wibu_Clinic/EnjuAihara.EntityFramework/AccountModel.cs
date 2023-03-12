@@ -26,7 +26,7 @@ namespace EnjuAihara.EntityFramework
             this.DateModels2 = new HashSet<DateModel>();
             this.DescriptionModels = new HashSet<DescriptionModel>();
             this.DescriptionModels1 = new HashSet<DescriptionModel>();
-            this.WarehouseModels = new HashSet<WarehouseModel>();
+            this.WarehouseMasterModels = new HashSet<WarehouseMasterModel>();
         }
     
         public System.Guid AccountId { get; set; }
@@ -62,6 +62,6 @@ namespace EnjuAihara.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescriptionModel> DescriptionModels1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseModel> WarehouseModels { get; set; }
+        public virtual ICollection<WarehouseMasterModel> WarehouseMasterModels { get; set; }
     }
 }
