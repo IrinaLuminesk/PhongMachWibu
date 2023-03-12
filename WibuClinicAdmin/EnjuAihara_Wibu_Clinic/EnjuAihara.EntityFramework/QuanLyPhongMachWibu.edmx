@@ -103,6 +103,7 @@
           <Property Name="MedicineId" Type="uniqueidentifier" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="0" />
           <Property Name="HowToUseNote" Type="nvarchar(max)" />
+          <Property Name="TotalPay" Type="float" />
         </EntityType>
         <EntityType Name="DescriptionIllnessModel">
           <Key>
@@ -1206,6 +1207,7 @@
           <Property Name="HowToUseNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DescriptionModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionDetailModel" ToRole="DescriptionModel" />
           <NavigationProperty Name="WarehouseDetailModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_WarehouseDetailModel" FromRole="DescriptionDetailModel" ToRole="WarehouseDetailModel" />
+          <Property Name="TotalPay" Type="Double" />
         </EntityType>
         <EntityType Name="DescriptionIllnessModel">
           <Key>
@@ -1993,6 +1995,7 @@
           <EntitySetMapping Name="DescriptionDetailModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DescriptionDetailModel">
               <MappingFragment StoreEntitySet="DescriptionDetailModel">
+                <ScalarProperty Name="TotalPay" ColumnName="TotalPay" />
                 <ScalarProperty Name="HowToUseNote" ColumnName="HowToUseNote" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />

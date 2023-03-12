@@ -1,13 +1,18 @@
-﻿<div class="content-header">
+﻿@model EnjuAihara.EntityFramework.DescriptionModel
+@{
+	var PatientType = (bool)ViewBag.PatientType;
+	var Birthday = Model.AccountModel.UsersModel.Birthday == null ? "" : ((DateTime)Model.AccountModel.UsersModel.Birthday).ToString("yyyy-MM-dd");
+}
+<div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="m-0">Tạo toa thuốc</h1>
+				<h1 class="m-0">Sửa toa thuốc</h1>
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
 					<a class="btn btn-info" href="/Services/Prescription"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
-					<button class="btn btn-primary" id="btn-add" style="width:20%">
+					<button class="btn btn-primary" id="btn-edit" style="width:20%">
 						<i class="fa-solid fa-pen-to-square"></i>
 						Lưu
 					</button>
@@ -20,25 +25,7 @@
 </div>
 <form id="frmCreate" enctype='multipart/form-data'>
 	<div class="row">
-		<div class="col-md-2">
-			<div class="card h-100">
-				<div class="card-header" style="background-color: #e2d9c7">
-					<label class="col-form-label">Tìm nhanh (Không áp dụng với bệnh nhân vãng lai)</label>
-				</div>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="row g-3 align-items-center">
-								<div class="col-md-12">
-									<select type="text" id="FastSearch" name="FastSearch" class="form-control" placeholder="Tìm nhanh tên bệnh nhân"></select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-10">
+		<div class="col-md-12">
 			<div class="card h-100">
 				<div class="card-header">
 					<div class="row">
@@ -48,10 +35,20 @@
 						<div class="col-md-6 text-right">
 							<label class="col-form-label">Bệnh nhân vãng lai</label>
 							@*<input type="checkbox" id="PatientType" name="PatientType">*@
-							@Html.CheckBox("PatientType")
+							@if (PatientType == true)
+							{
+								@Html.CheckBox("PatientType", true, new { @disabled = "disabled" })
+							}
+							else
+							{
+								@Html.CheckBox("PatientType", new { @disabled = "disabled" })
+							}
 						</div>
+
 					</div>
+
 				</div>
+
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-3">
@@ -60,7 +57,15 @@
 									<label for="PatientName" class="col-form-label">Họ bệnh nhân</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientLastName" name="PatientLastName" class="form-control" readonly>
+									@*<input type = "text" id="PatientLastName" name="PatientLastName" class="form-control" readonly>*@
+									@if (PatientType == true)
+									{
+										@Html.TextBoxFor(x => x.AnonymousClient, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
+									else
+									{
+										@Html.TextBoxFor(x => x.AccountModel.UsersModel.LastName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
 								</div>
 							</div>
 						</div>
@@ -70,7 +75,15 @@
 									<label for="PatientFirstName" class="col-form-label">Tên bệnh nhân</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientFirstName" name="PatientFirstName" class="form-control" readonly>
+									@*<input type = "text" id="PatientFirstName" name="PatientFirstName" class="form-control" readonly>*@
+									@if (PatientType == true)
+									{
+										@Html.TextBoxFor(x => x.AnonymousClient, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
+									else
+									{
+										@Html.TextBoxFor(x => x.AccountModel.UsersModel.FirstName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
 								</div>
 							</div>
 						</div>
@@ -80,7 +93,15 @@
 									<label for="PatientPhone" class="col-form-label">Điện thoại</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientPhone" name="PatientPhone" class="form-control" readonly>
+									@*<input type = "text" id="PatientPhone" name="PatientPhone" class="form-control" readonly>*@
+									@if (PatientType == true)
+									{
+										@Html.TextBoxFor(x => x.AnonymousPhone, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
+									else
+									{
+										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Phone, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
 								</div>
 							</div>
 						</div>
@@ -90,7 +111,14 @@
 									<label for="PatientBirthday" class="col-form-label">Ngày sinh</label>
 								</div>
 								<div class="col-md-8">
-									<input type="date" id="PatientBirthday" name="PatientBirthday" class="form-control" readonly>
+									@if (PatientType == true)
+									{
+										<input type="date" id="PatientBirthday" name="PatientBirthday" class="form-control" readonly disabled>
+									}
+									else
+									{
+										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Birthday, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", Value = Birthday })
+									}
 								</div>
 							</div>
 						</div>
@@ -102,7 +130,15 @@
 									<label for="PatientAddress" class="col-form-label">Địa chỉ</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientAddress" name="PatientAddress" class="form-control" readonly>
+									@*<input type = "text" id="PatientAddress" name="PatientAddress" class="form-control" readonly>*@
+									@if (PatientType == true)
+									{
+										<input type="text" id="PatientAddress" name="PatientAddress" class="form-control" readonly disabled>
+									}
+									else
+									{
+										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Address, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
 								</div>
 							</div>
 						</div>
@@ -112,16 +148,17 @@
 									<label for="Email" class="col-form-label">Email</label>
 								</div>
 								<div class="col-md-8">
-									<input type="email" id="Email" name="Email" class="form-control" readonly>
+									@if (PatientType == true)
+									{
+										<input type="email" id="Email" name="Email" class="form-control" readonly disabled>
+									}
+									else
+									{
+										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Email, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									}
 								</div>
 							</div>
 						</div>
-						@*<div class="col-md-3">
-
-						</div>
-						<div class="col-md-3">
-
-						</div>*@
 					</div>
 				</div>
 			</div>
@@ -131,7 +168,7 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					<label class="col-form-label">Kết luận của bác sĩ</label>
+					<label class="col-form-label">Kết luận của bác sĩ @Model.AccountModel1.UsersModel.LastName @Model.AccountModel1.UsersModel.FirstName </label>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -141,7 +178,12 @@
 									<label for="IllnessLst" class="col-form-label">Các bệnh gặp phải</label>
 								</div>
 								<div class="col-md-10">
-									<select type="text" id="IllnessLst" name="IllnessLst" class="form-control" multiple></select>
+									<select type="text" id="IllnessLst" name="IllnessLst" class="form-control" multiple>
+										@foreach (var i in Model.DescriptionIllnessModels.Select(x => new { text = x.IllnessModel.IllnessName, value = x.IllnessId }).ToList())
+										{
+											<option selected value="@i.value">@i.text</option>
+										}
+									</select>
 								</div>
 							</div>
 						</div>
@@ -192,7 +234,7 @@
 									<label for="ProList" class="col-form-label">Nhà cung cấp</label>
 								</div>
 								<div class="col-md-10">
-									<input id="ProList" name="ProList" class="form-control"/>
+									<input id="ProList" name="ProList" class="form-control" />
 								</div>
 							</div>
 						</div>
@@ -202,7 +244,7 @@
 									<label for="MedList" class="col-form-label">Thuốc</label>
 								</div>
 								<div class="col-md-10">
-									<input id="MedList" name="MedList" class="form-control"/>
+									<input id="MedList" name="MedList" class="form-control" />
 								</div>
 							</div>
 						</div>
@@ -232,8 +274,9 @@
 								</tr>
 							</thead>
 							<tbody>
+
 							</tbody>
-						</table> 
+						</table>
 					</div>
 
 				</div>
@@ -242,201 +285,10 @@
 	</div>
 </form>
 <script type="text/javascript">
-	function PaggingServerSideCustom(url, columns) {
-		/*var load = AjaxLoaderRan();*/
-		$("#tableRes").DataTable().clear().destroy();
-		$("#tableRes").on('processing.dt', function (e, settings, processing) {
-			LoadingDataTable(processing, '.dataTableServerSide');
-		}).DataTable({
-			proccessing: true,
-			serverSide: true,
-			paging: true,
-			scrollX: true,
-			pageLength: 5,
-			autoWidth: true,
-			searching: false,
-			bPaginate: true,
-			scrollCollapse: true,
-			lengthChange: false,
-			ajax: {
-				type: 'POST',
-				url: "/" + url,
-				contentType: 'application/json',
-				data: function (d) {
-					var form = {};
-					$.each($("#MediSearching :input").serializeArray(), function (i, field) {
-						form[field.name] = field.value || '';
-					});
-					$.extend(true, d, form);
-					return JSON.stringify(d);
-
-				},
-				beforeSend: function () {
-					$("#loading").show();
-				},
-				complete: function () {
-					$("#loading").hide();
-				}
-			},
-			columns: columns,
-			destroy: true,
-			initComplete: function (settings) {
-				$(window).resize();
-
-			},
-			drawCallback: function (settings) {
-				$(window).trigger('resize');
-				$("table.dataTable td").css('white-space', 'nowrap');
-				$("table.dataTable th").css('white-space', 'nowrap');
-				$(window).trigger('resize');
-			},
-			language: {
-				sProcessing: "Vui lòng đợi xíu.....(๑´•ε •`๑)",
-				sLengthMenu: "Xem _MENU_ mục",
-				sZeroRecords: "Không tìm thấy dòng nào phù hợp",
-				sInfo: "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
-				sInfoEmpty: "Đang xem 0 đến 0 trong tổng số 0 mục",
-				sInfoFiltered: "(được lọc từ _MAX_ mục)",
-				sInfoPostFix: "",
-				sSearch: "Tìm nội dung:",
-				sUrl: "",
-				oPaginate: {
-					sFirst: "Đầu",
-					sPrevious: "&laquo;",
-					sNext: "&raquo;",
-					sLast: "Cuối"
-				}
-			},
-			columnDefs: [
-				{ targets: [0, 1], visible: true },
-				{ targets: 'no-sort', visible: false },
-			],
-			/* "sDom": '<"top"flp>rt<"bottom"ip><"clear">',*/
-		});
-	}
-
-
-	function AddToPrescription(id, quantity, index) {
-		var formdata = new FormData();
-		formdata.append("WarehouseDetailId", id);
-		formdata.append("InstockQuantity", quantity);
-		formdata.append("Index", index);
-		$.ajax({
-			type: "POST",
-			url: "/Services/Prescription/AddNewMedi",
-			data: formdata,
-			processData: false,
-			contentType: false,
-			beforeSend: function () {
-				$("#loading").show();
-			},
-			success: function (response, status, xhr) {
-				var ct = xhr.getResponseHeader("content-type") || "";
-				if (ct.indexOf('html') > -1) {
-					$("#DanhMuchKeToa tbody").append(response)
-				}
-				if (ct.indexOf('json') > -1) {
-					AlertPopup(3, "Lỗi", response);
-				}
-			},
-			error: function (event, xhr, options, exc) {
-				AlertPopup(2, "Lỗi", event.message);
-			},
-			complete: function () {
-				$("#loading").hide();
-			}
-		});
-	}
-
-
-	function ShowClientInfo(id) {
-		var formdata = new FormData();
-		formdata.append("ClientId", id);
-		$.ajax({
-			type: "POST",
-			url: "/Services/Prescription/GetInfo",
-			data: formdata,
-			processData: false,
-			contentType: false,
-			beforeSend: function () {
-				$("#loading").show();
-			},
-			success: function (response, status, xhr) {
-				var data = JSON.parse(JSON.stringify(response));
-				ClearInfo();
-				$("#PatientFirstName").val(data.FirstName);
-				$("#PatientLastName").val(data.LastName);
-				$("#PatientPhone").val(data.Phone);
-				$("#PatientBirthday").val(data.Birthday);
-				$("#PatientAddress").val(data.Address);
-				$("#Email").val(data.Email);
-
-			},
-			error: function (xhr, status, error) {
-				var err = eval("(" + xhr.responseText + ")");
-				AlertPopup(2, "Lỗi", err);
-			},
-			complete: function () {
-				$("#loading").hide();
-			}
-		});
-	}
-
-	function ClearInfo() {
-		var id = ["#PatientFirstName", "#PatientLastName", "#PatientPhone", "#PatientBirthday", "#PatientAddress", "#Email"];
-		$.each(id, function (index, value) {
-			$(value).val("");
-		});
-	}
-
-	function LoopThrough(obj, WarehouseDetailId) {
-		var flag = true;
-		$("#DanhMuchKeToa").find('tbody>tr').each(function () {
-			if ($(this).find('input[class^="WarehouseDetailId"').val() == WarehouseDetailId)
-				flag = false;
-		});
-		if (flag == true) {
-			$("#DanhMuchKeToa").find('tbody>tr').each(function () {
-				var temp = obj.index + 1;
-				$(this).find('input[class^="WarehouseDetailId"').attr('name', 'Prescription[' + obj.index + '].WarehouseDetailId');
-				$(this).find('input[class^="SoluongKe"').attr('name', 'Prescription[' + obj.index + '].PrescriptionNumber');
-				$(this).find('textarea[class^="CachDung"').attr('name', 'Prescription[' + obj.index + '].HowToUse');
-			/*	$(this).find('td[class^="STT"').text(temp);*/
-				$(this).find('label[class^="STT"').text(temp);
-				obj.index++;
-			});
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	$(document).ready(function () {
 		CloseSideBar();
 		PreventEnterButton();
-		const InputLst = ["#FastSearch"];
-		$("#PatientType").change(function () {
-			ClearInfo();
-			if ($(this).is(':checked')) {
-				$.each(InputLst, function (index, value) {
-					$(value).attr("disabled", "disabled");
-				});
-				$("#PatientLastName").removeAttr("readonly");
-				$("#PatientFirstName").removeAttr("readonly");
-				$("#PatientPhone").removeAttr("readonly");
-			}
-			else {
-				$.each(InputLst, function (index, value) {
-					$(value).removeAttr("disabled");
-				});
-				$("#PatientLastName").attr("readonly", "readonly");
-				$("#PatientFirstName").attr("readonly", "readonly");
-				$("#PatientPhone").attr("readonly", "readonly");
-			}
-		});
 
-		Select2_AutoComplete("/Services/Prescription/ClientSearch", "#FastSearch");
 
 		Select2_MultipleAutoComplete("/Services/Prescription/IllnessSearch", "#IllnessLst");
 
@@ -557,9 +409,6 @@
 			$("#DanhMuchKeToa > tbody").empty();
 		});
 
-		$("#btn-add").on("click", function () {
-			SaveData("Services/Prescription", "#frmCreate");
-		});
 
 	});
 </script>

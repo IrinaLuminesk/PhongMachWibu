@@ -22,5 +22,9 @@ namespace EnjuAihara.ViewModels.Services
 
         public Guid? WarehouseId { get; set; }
         public Guid? MedicineProviderId { get; set; }
+
+        public string Unit { get; set; }
+
+        public decimal? SoLuongTon { get; set; }
     }
 }

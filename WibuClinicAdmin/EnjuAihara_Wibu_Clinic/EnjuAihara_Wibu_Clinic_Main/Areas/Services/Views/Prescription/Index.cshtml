@@ -189,7 +189,14 @@
 				"orderable": false,
 				"render": function (data, type, row) {
 					if (data != "" && data != null) {
-						var s = '<a class="btn btn-info" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+						var s;
+						if (row.IsPay == false) {
+							s = '<a class="btn btn-info" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+							s += '<button class="btn btn-danger btn-delete" data-controller="Services/Prescription" data-id="' + data + '" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Xóa</button>';
+						}
+						else {
+							s = '<a class="btn btn-info" href="/Services/Prescription/Detail/' + data + '"><i class="fa-solid fa-eye"></i>Xem chi tiết</a>';
+						}
 						return s;
 					}
 					return "";

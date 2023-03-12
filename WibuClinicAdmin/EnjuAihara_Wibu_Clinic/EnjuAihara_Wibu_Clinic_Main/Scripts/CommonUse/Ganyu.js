@@ -336,8 +336,9 @@ function SaveData(controller, frmCreate) {
                 AlertPopup(3, data.title, data.message);
             }
         },
-        error: function (data) {
-            AlertPopup(2, "Lỗi", data.message);
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            AlertPopup(3, "Lỗi", err);
         },
         complete: function () {
             $("#loading").hide();
@@ -559,5 +560,26 @@ function CurrencyFormat(number) {
 
 function NumberFormat(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+function PrintElem(Id) {
+    var mywindow = window.open('', 'PRINT', 'height=1000,width=1000');
+  
+    mywindow.document.write('<html><head><title>' + document.title + '</title>');
+    mywindow.document.write('<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">');
+    mywindow.document.write('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>');
+    mywindow.document.write('</head><body>');
+/*    mywindow.document.write('<h1>' + document.title + '</h1>');*/
+    mywindow.document.write($(Id).html());
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
 }
 

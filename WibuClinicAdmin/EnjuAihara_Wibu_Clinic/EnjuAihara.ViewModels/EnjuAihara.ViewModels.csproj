@@ -68,6 +68,8 @@
     <Compile Include="SelectList\SelectListGuidForAutoComplete.cs" />
     <Compile Include="SelectList\SelectStringItem.cs" />
     <Compile Include="Services\MedicineSearchViewModel.cs" />
+    <Compile Include="Services\PrescriptionCreateViewModel.cs" />
+    <Compile Include="Services\PrescriptionDetailCreateViewModel.cs" />
     <Compile Include="Services\PrescriptionSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

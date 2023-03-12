@@ -40,6 +40,13 @@ namespace EnjuAihara.Utilities.RandomString
             string[] temp = code.Split('-');
             return CreateCode(temp[1], temp[0]);
         }
+
+        public static string KeToaCodeGen()
+        {
+            string code = _context.DescriptionModels.OrderByDescending(x => x.DescriptionCode).Take(1).FirstOrDefault().DescriptionCode;
+            string[] temp = code.Split('-');
+            return CreateCode(temp[1], temp[0]);
+        }
         public static string CreateCode(string num, string table)
         {
             string code = table;

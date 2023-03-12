@@ -1,0 +1,32 @@
+﻿@model EnjuAihara.EntityFramework.WarehouseDetailModel
+@{ 
+	var i = ViewBag.Index;
+	var j = (int)ViewBag.Index + 1;
+}
+<tr>
+	<td class="STT text-center" style="vertical-align: middle;">
+		<label class="STT">@j</label>
+		<input hidden class="WarehouseDetailId" value="@Model.WarehouseDetailId" name="Prescription[@i].WarehouseDetailId" />
+	</td>
+	<td class="text-center" style="vertical-align: middle;">@Model.MedicineProvideModel.MedicineModel.MedicineName</td>
+	<td class="text-center" style="vertical-align: middle;">@Model.MedicineProvideModel.ProviderModel.ProviderName</td>
+	<td class="text-center" style="vertical-align: middle;">
+		@ViewBag.SoLuongKe
+		<input hidden class="SoluongKe" value="@ViewBag.SoLuongKe" name="Prescription[@i].PrescriptionNumber" />
+	</td>
+	<td class="text-center" style="vertical-align: middle;">@Model.MedicineProvideModel.MedicineModel.Unit</td>
+	<td class="text-center" style="vertical-align: middle;">
+		đ @ViewBag.Price
+	</td>
+	<td class="text-center" style="vertical-align: middle;">
+		đ @ViewBag.Total
+	</td>
+	<td class="text-center" style="vertical-align: middle;">
+		<textarea name="Prescription[@i].HowToUse" style="width: 100%" class="CachDung form-control"></textarea>
+	</td>
+	<td class="text-center">
+		<button class="delete-Medi btn btn-danger">
+			Xóa
+		</button>
+	</td>
+</tr>

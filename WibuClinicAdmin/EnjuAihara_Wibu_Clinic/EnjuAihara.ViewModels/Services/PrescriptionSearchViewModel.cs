@@ -27,5 +27,6 @@ namespace EnjuAihara.ViewModels.Services
         public double? TotalMoney { get; set; }
 
         public string Status { get; set; }
+        public bool? IsPay { get; set; }
     }
 }

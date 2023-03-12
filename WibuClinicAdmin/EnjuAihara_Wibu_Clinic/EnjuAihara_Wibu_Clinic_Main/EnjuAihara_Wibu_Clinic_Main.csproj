@@ -2254,6 +2254,9 @@
     <Content Include="Areas\Personal\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Services\Views\Prescription\Create.cshtml" />
     <Content Include="Areas\Services\Views\Prescription\_PaggingServerSideMedicine.cshtml" />
+    <Content Include="Areas\Services\Views\Prescription\AddNewMedi.cshtml" />
+    <Content Include="Areas\Services\Views\Prescription\Detail.cshtml" />
+    <Content Include="Areas\Services\Views\Prescription\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
