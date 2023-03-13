@@ -26,5 +26,9 @@ namespace EnjuAihara.ViewModels.Services
         public string Unit { get; set; }
 
         public decimal? SoLuongTon { get; set; }
+
+        public DateTime? HanSuDung { get; set; }
+
+        public string HanSuDungString { get; set; }
     }
 }

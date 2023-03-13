@@ -31,6 +31,7 @@ namespace EnjuAihara.EntityFramework
         public string AnonymousPhone { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<bool> IsPay { get; set; }
+        public Nullable<int> NumberOfDate { get; set; }
     
         public virtual AccountModel AccountModel { get; set; }
         public virtual AccountModel AccountModel1 { get; set; }

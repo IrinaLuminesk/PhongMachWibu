@@ -2,6 +2,9 @@
 @{
 	var PatientType = (bool)ViewBag.PatientType;
 	var Birthday = Model.AccountModel.UsersModel.Birthday == null ? "" : ((DateTime)Model.AccountModel.UsersModel.Birthday).ToString("yyyy-MM-dd");
+	var DSThuoc = (List<EnjuAihara.ViewModels.Services.DSThuocDetailViewModel>)ViewBag.DSThuoc;
+	var j = 1;
+	var z = 0;
 }
 <div class="content-header">
 	<div class="container-fluid">
@@ -168,7 +171,7 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					<label class="col-form-label">Kết luận của bác sĩ @Model.AccountModel1.UsersModel.LastName @Model.AccountModel1.UsersModel.FirstName </label>
+					<label class="col-form-label">Kết luận của bác sĩ @Model.AccountModel.UsersModel.LastName @Model.AccountModel.UsersModel.FirstName </label>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -193,7 +196,8 @@
 									<label for="Note" class="col-form-label">Kết luận</label>
 								</div>
 								<div class="col-md-10">
-									<textarea id="Note" name="Note" style="width: 100%" class="form-control"></textarea>
+									@*<textarea id="Note" name="Note" style="width: 100%" class="form-control"></textarea>*@
+									@Html.TextAreaFor(x => x.Note, new { @class = "form-control" })
 								</div>
 							</div>
 						</div>
@@ -217,7 +221,8 @@
 									<label for="DayOfMedicine" class="col-form-label">Số ngày thuốc (/Ngày)</label>
 								</div>
 								<div class="col-md-3">
-									<input type="number" id="DayOfMedicine" name="DayOfMedicine" class="form-control" />
+									@*<input type="number" id="DayOfMedicine" name="DayOfMedicine" class="form-control" />*@
+									@Html.TextBox("DayOfMedicine", Model.NumberOfDate, new { @class = "form-control", @type = "number", Value = Model.NumberOfDate })
 								</div>
 							</div>
 						</div>
@@ -274,7 +279,36 @@
 								</tr>
 							</thead>
 							<tbody>
-
+								@foreach (var i in DSThuoc)
+								{
+									<tr>
+										<td class="STT text-center" style="vertical-align: middle;">
+											<label class="STT">@j</label>
+											<input hidden class="WarehouseDetailId" value="@i.WarehouseDetailId" name="Prescription[@z].WarehouseDetailId" />
+										</td>
+										<td class="text-center" style="vertical-align: middle;">@i.TenThuoc</td>
+										<td class="text-center" style="vertical-align: middle;">@i.NCC</td>
+										<td class="text-center" style="vertical-align: middle;">
+											@i.SoLuong
+											<input hidden class="SoluongKe" value="@i.SoLuong" name="Prescription[@z].PrescriptionNumber" />
+										</td>
+										<td class="text-center" style="vertical-align: middle;">@i.DVT</td>
+										<td class="text-center" style="vertical-align: middle;">
+											đ @i.GiaTien
+										</td>
+										<td class="text-center" style="vertical-align: middle;">
+											đ @i.Total
+										</td>
+										<td class="text-center" style="vertical-align: middle;">
+											<textarea name="Prescription[@z].HowToUse" style="width: 100%" class="CachDung form-control">@i.Note</textarea>
+										</td>
+										<td class="text-center">
+											<button class="delete-Medi btn btn-danger">
+												Xóa
+											</button>
+										</td>
+									</tr>
+								}
 							</tbody>
 						</table>
 					</div>
@@ -284,7 +318,9 @@
 		</div>
 	</div>
 </form>
+<script src="~/Scripts/Services/KeToa/CacHamKeToa.js"></script>
 <script type="text/javascript">
+
 	$(document).ready(function () {
 		CloseSideBar();
 		PreventEnterButton();
@@ -331,6 +367,11 @@
 				}
 			},
 			{
+				"data": "HanSuDungString",
+				"className": "text-center",
+				"orderable": true
+			},
+			{
 				"data": "Price",
 				"className": "text-center",
 				"orderable": true,
@@ -367,7 +408,7 @@
 						var s = '<button id="' + data + '" class="btn btn-info add-to-prescription"><i class="fa fa-plus-square"></i>Thêm vào toa thuốc</button>';
 						return s;
 					}
-					var s = '<button class="btn btn-warning">Yêu cầu nhập kho</button>'
+					var s = '<button class="btn btn-warning btn-NhapKho">Yêu cầu nhập kho</button>'
 					return s;
 				}
 			}

@@ -11,6 +11,9 @@ using System.Data.SqlClient;
 using EnjuAihara.ViewModels.SelectList;
 using EnjuAihara.EntityFramework;
 using EnjuAihara.Utilities.RandomString;
+using EnjuAihara.Utilities.DateTimeFormat;
+using EnjuAihara.Utilities.LinqExtension;
+
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
 {
     public class PrescriptionController : IrinaLumineskController
@@ -99,6 +102,10 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 }
             };
             var query = _context.Database.SqlQuery<MedicineSearchViewModel>("exec GetMedicieInWarehouse @MedList, @ProList", param.ToArray()).ToList();
+            //var Tempquery = query.Distinct(x ).Where(x => x.SoLuongTon == null || x.SoLuongTon <= 0)
+            //var Tempquery = LinqExtension.DistinctBy(query.Where(x => x.SoLuongTon == null || x.SoLuongTon <= 0).ToList(), x => x.MedicineProviderId).ToList();
+            //query.RemoveAll(x => x.SoLuongTon == null || x.SoLuongTon <= 0);
+            //query.AddRange(Tempquery);
             var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
@@ -107,6 +114,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 {
                     i++;
                     item.STT = i;
+                    item.HanSuDungString = FormatDateTime.FormatDateTimeWithString(item.HanSuDung);
                 }
             }
             return Json(new
@@ -139,6 +147,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                     Note = model.Note,
                     IsPay = false,
                     DescriptionCode = DataCodeGenerate.KeToaCodeGen(),
+                    NumberOfDate = model.DayOfMedicine
                 };
                 if (model.PatientType == false)
                     ToaThuoc.CreateFor = model.FastSearch;
@@ -205,6 +214,27 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 ViewBag.PatientType = true;
             else
                 ViewBag.PatientType = false;
+
+            //Danh sách thuốc đã kê
+            List<DSThuocDetailViewModel> DSThuoc = new List<DSThuocDetailViewModel>();
+            foreach (var i in result.DescriptionDetailModels)
+            {
+                string TempPrice = ((double)i.WarehouseDetailModel.SalePrice / Convert.ToDouble(i.WarehouseDetailModel.BoughtQuantity)).ToString("N0");
+                double? Price = ((int)i.Quantity * Convert.ToDouble(TempPrice));
+                DSThuoc.Add(new DSThuocDetailViewModel()
+                {
+                    TenThuoc = i.WarehouseDetailModel.MedicineProvideModel.MedicineModel.MedicineName,
+                    NCC = i.WarehouseDetailModel.MedicineProvideModel.ProviderModel.ProviderName,
+                    GiaTien = Convert.ToDouble(TempPrice),
+                    Note = i.HowToUseNote,
+                    SoLuong = i.Quantity,
+                    Total = i.TotalPay,
+                    WarehouseDetailId = i.WarehouseDetailModel.WarehouseDetailId,
+                    DVT = i.WarehouseDetailModel.MedicineProvideModel.MedicineModel.Unit
+                });
+            }
+            ViewBag.DSThuoc = DSThuoc;
+
             return View(result);
         }
 
@@ -385,6 +415,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
 
             return Json(IllnessList, JsonRequestBehavior.AllowGet);
         }
+
 
     }
 }

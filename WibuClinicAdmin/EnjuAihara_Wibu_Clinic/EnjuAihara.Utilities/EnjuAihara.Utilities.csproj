@@ -92,6 +92,7 @@
     <Compile Include="DateTimeFormat\FormatDateTime.cs" />
     <Compile Include="EncryptionAlgorithm\Encrypt.cs" />
     <Compile Include="HtmlHelper\CustomeHtmlHelper.cs" />
+    <Compile Include="LinqExtension\LinqExtension.cs" />
     <Compile Include="Permission\AuthUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomString\DataCodeGenerate.cs" />

@@ -127,6 +127,7 @@
           <Property Name="AnonymousPhone" Type="nvarchar" MaxLength="20" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsPay" Type="bit" />
+          <Property Name="NumberOfDate" Type="int" />
         </EntityType>
         <EntityType Name="DistrictModel">
           <Key>
@@ -1237,6 +1238,7 @@
           <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="DescriptionModel" ToRole="AccountModel" />
           <NavigationProperty Name="DescriptionDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionDetailModel" />
           <NavigationProperty Name="DescriptionIllnessModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionIllnessModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionIllnessModel" />
+          <Property Name="NumberOfDate" Type="Int32" />
         </EntityType>
         <EntityType Name="DistrictModel">
           <Key>
@@ -2016,6 +2018,7 @@
           <EntitySetMapping Name="DescriptionModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DescriptionModel">
               <MappingFragment StoreEntitySet="DescriptionModel">
+                <ScalarProperty Name="NumberOfDate" ColumnName="NumberOfDate" />
                 <ScalarProperty Name="IsPay" ColumnName="IsPay" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="AnonymousPhone" ColumnName="AnonymousPhone" />

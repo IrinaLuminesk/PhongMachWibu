@@ -67,6 +67,7 @@
     <Compile Include="SelectList\SelectGuidItem.cs" />
     <Compile Include="SelectList\SelectListGuidForAutoComplete.cs" />
     <Compile Include="SelectList\SelectStringItem.cs" />
+    <Compile Include="Services\DSThuocDetailViewModel.cs" />
     <Compile Include="Services\MedicineSearchViewModel.cs" />
     <Compile Include="Services\PrescriptionCreateViewModel.cs" />
     <Compile Include="Services\PrescriptionDetailCreateViewModel.cs" />
