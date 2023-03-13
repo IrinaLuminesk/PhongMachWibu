@@ -74,7 +74,7 @@
                                                         <label for="Password" class="col-form-label">Ngày nhập kho</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="datetime" id="BoughtDate" name="BoughtDate" class="form-control" value="@ViewBag.DateNow">
+                                                        <input type="date" id="BoughtDate" name="BoughtDate" class="form-control" value="@ViewBag.DateNow">
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@
                                                         <label for="Password" class="col-form-label">Ngày tạo</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="datetime" id="CreateDate" name="CreateDate" class="form-control" readonly value="@ViewBag.DateNow">
+                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="@ViewBag.DateNow">
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,7 +126,7 @@
                                                         <label for="UserName" class="col-form-label">Số lượng còn tồn</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <input type="number" id="InStockQuantity" name="InStockQuantity" class="form-control">
+                                                        <input type="number" id="InstockQuantity" name="InstockQuantity" class="form-control" readonly="readonly">
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,6 +251,26 @@
         </div>
     </div>
 </div>
+<div id="AddConfirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Warning</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-question">Sản phẩm này trong kho vẫn còn tồn, bạn có chắc muốn nhập không?</p>
+                    <p class="text-warning"><small>Một khi đã tạo dữ liệu nhập hàng là không thể sửa !</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" id="cancel" data-dismiss="modal" value="Hủy">
+                    <input type="button" class="btn btn-info" value="Đồng ý" id="addConfirm">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#btn-add").on("click", function () {
@@ -305,9 +325,6 @@
         data = data + "&BoughtQuantity=" + BoughtQuantity;
         data = data + "&InstockQuantity=" + InstockQuantity;
         data = data + "&ExpiredDate=" + ExpiredDate;
-        //data = data + "&StockCode=" + StockCode;
-        //data = data + "&StockName=" + StockName;
-        //data = data + "&DetailNote=" + ProductStockNote;
 
         $.ajax({
             type: "POST",
@@ -315,15 +332,30 @@
             data: data,
             success: function (xhr, status, error) {
                 $btn.button('reset');
-                if (xhr.Message !== "" && xhr.Message !== null && xhr.Message !== undefined) {
-                    alertPopup(false, xhr.Message);
+                if (InstockQuantity > 0) {
+                    $("#AddConfirmModal").modal("show");
+                    $(document).on("click", "#addConfirm", function () {
+                        $("#stockReceivingDetailTable tbody").html(xhr);
+
+
+                        //$("#MedicineId").val("");
+                        //$("#ProviderId").val("");
+                        $("#BoughtPrice").val("");
+                        $("#SalePercentage").val("");
+                        $("#SalePrice").val("");
+                        $("#BoughtQuantity").val("");
+                        $("#InstockQuantity").val("");
+                        $("#ExpiredDate").val("");
+                        $("#AddConfirmModal").modal("hide");
+                    });
+                    
                 }
                 else {
                     $("#stockReceivingDetailTable tbody").html(xhr);
 
 
-                    $("#MedicineId").val("");
-                    $("#ProviderId").val("");
+                    //$("#MedicineId").val("");
+                    //$("#ProviderId").val("");
                     $("#BoughtPrice").val("");
                     $("#SalePercentage").val("");
                     $("#SalePrice").val("");
@@ -334,7 +366,7 @@
             },
             error: function (xhr, status, error) {
                 $btn.button('reset');
-                alertPopup(false, xhr.responseText);
+                AlertPopup(2, "Lỗi", xhr.message);
             }
         });
         //} else {
@@ -366,7 +398,8 @@
         var medicine = $(this).val();
         var provider = $("#ProviderId").val();
         if (provider != "" && medicine!="") {
-            UpdateMedicineProviderId(provider,medicine);
+            UpdateMedicineProviderId(provider, medicine);
+            CheckInStock(medicine);
         }
     });
         // Cập nhật dropdown Product nếu thay đổi entity
@@ -401,6 +434,24 @@
             }
         });
     }
+    function CheckInStock(medicine) {
+        $.ajax({
+            type: "POST",
+            url: "/Warehouse/StockReceiving/GetInStockQuantity",
+            data: {
+                Medicine: medicine
+            },
+            success: function (sl) {
+                $("#InstockQuantity").val(sl);
+            }
+        });
+    }
+    $(document).on("click", "#cancel", function (e) {
+        $("#AddConfirmModal").modal("hide");
+    });
+    $(document).on("click", ".close", function (e) {
+        $("#AddConfirmModal").modal("hide");
+    });
     Select2Init("#ProviderId");
     Select2Init("#MedicineId");
 </script>

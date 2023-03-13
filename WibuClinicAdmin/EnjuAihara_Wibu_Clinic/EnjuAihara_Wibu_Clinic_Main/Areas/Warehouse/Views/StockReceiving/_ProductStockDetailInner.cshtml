@@ -17,13 +17,16 @@
                 @i
                 <input type="hidden" name="stockReceivingDetailList[@k].STT" value="@i">
                 <input type="hidden" name="stockReceivingDetailList[@k].MedicineId" value="@item.MedicineId">
-                <input type="hidden" name="stockReceivingDetailList[@k].MedicineId" value="@item.MedicineProviderId">
+                <input type="hidden" name="stockReceivingDetailList[@k].MedicineProviderId" value="@item.MedicineProviderId">
+                <input type="hidden" name="stockReceivingDetailList[@k].MedicineCode" value="@item.MedicineCode">
+                <input type="hidden" name="stockReceivingDetailList[@k].MedicineName" value="@item.MedicineName">
                 <input type="hidden" name="stockReceivingDetailList[@k].ProviderId" value="@item.ProviderId">
                 <input type="hidden" name="stockReceivingDetailList[@k].BoughtPrice" value="@item.BoughtPrice">
                 <input type="hidden" name="stockReceivingDetailList[@k].SalePercentage" value="@item.SalePercentage">
                 <input type="hidden" name="stockReceivingDetailList[@k].SalePrice" value="@item.SalePrice">
                 <input type="hidden" name="stockReceivingDetailList[@k].BoughtQuantity" value="@item.BoughtQuantity">
-                <input type="hidden" name="stockReceivingDetailList[@k].InstockQuantity" value="@item.InstockQuantity">
+                <input type="hidden" name="stockReceivingDetailList[@k].InstockQuantity" value="@item.BoughtQuantity">
+                <input type="hidden" name="stockReceivingDetailList[@k].ExpiredDate" value="@item.ExpiredDate">
                 @*<input type="hidden" name="stockReceivingDetailList[@k].Quantity" value="@item.Quantity">*@
                 @*<input type="hidden" name="stockReceivingDetailList[@k].Price" value="@item.Price">*@
                 @*<input type="hidden" name="stockReceivingDetailList[@k].DetailNote" value="@item.DetailNote">*@

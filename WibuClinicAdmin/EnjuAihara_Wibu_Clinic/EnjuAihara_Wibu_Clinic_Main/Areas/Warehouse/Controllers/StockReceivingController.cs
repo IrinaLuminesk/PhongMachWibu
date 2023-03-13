@@ -18,6 +18,8 @@ using EnjuAihara.Utilities.EncryptionAlgorithm;
 using System.IO;
 using Microsoft.AspNet.Identity;
 using EnjuAihara.Utilities.RandomString;
+using System.Net;
+using System.Web.UI.WebControls;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
 {
@@ -86,9 +88,94 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
         public ActionResult Create()
         {
             CreateViewBag();
-            ViewBag.CreateBy=CurrentUser.UserName;
-            ViewBag.DateNow = DateTime.Now;
+            ViewBag.CreateBy=CurrentUser.UserName;//Sử dụng được cái này nè mà ko sd đc UserId nó lấy đc nhưng nó lại không cho nhập
+            ViewBag.DateNow = DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.DateNow2 = DateTime.Now.Date.ToString("yyyy-MM-dd");
             return View();
+        }
+        [HttpPost]
+        public JsonResult Create(WarehouseMasterModel master,List<WarehouseDetailModel> stockReceivingDetailList)
+        {
+            try
+            {
+
+
+                var ngayNhap = ConvertDateTimeToInt(master.BoughtDate);
+                var ngayTao = ConvertDateTimeToInt(master.CreateDate);
+                if ((ngayNhap - ngayTao) > 7 || (ngayTao - ngayNhap) > 7)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Thất bại",
+                        message = "Không được chọn ngày tương lai hoặc ngày quá khứ lớn hơn 1 tuần "
+                    });
+                }
+                if (stockReceivingDetailList == null || stockReceivingDetailList.Count == 0)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Thất bại",
+                        message = "Vui lòng chọn ít nhất 1 sản phẩm "
+                    });
+                }
+                WarehouseMasterModel newMaster = new WarehouseMasterModel();
+                newMaster.WarehouseMasterId = Guid.NewGuid();
+                newMaster.ImportCode = DataCodeGenerate.WarehouseCodeGen();
+                newMaster.BoughtDate = master.BoughtDate;
+                newMaster.CreateDate = DateTime.Now;
+                newMaster.CreateBy = CurrentUser.AccountId;
+                _context.Entry(newMaster).State = EntityState.Added;
+                _context.SaveChanges();
+                if (stockReceivingDetailList.Count > 0 && stockReceivingDetailList != null)
+                {
+                    foreach (var detail in stockReceivingDetailList)
+                    {
+                        WarehouseDetailModel newDetail = new WarehouseDetailModel();
+                        newDetail.WarehouseDetailId = Guid.NewGuid();
+                        newDetail.MedicineProviderId = detail.MedicineProviderId;
+                        newDetail.BoughtQuantity = detail.BoughtQuantity;
+                        newDetail.ExpiredDate = detail.ExpiredDate;
+                        newDetail.BoughtPrice = detail.BoughtPrice;
+                        newDetail.InstockQuantity = detail.InstockQuantity;
+                        newDetail.SalePrice = detail.SalePrice;
+                        newDetail.SalePercentage = detail.SalePercentage;
+                        newDetail.WarehouseMasterId = newMaster.WarehouseMasterId;
+                        _context.Entry(newDetail).State = EntityState.Added;
+                        _context.SaveChanges();
+
+                    }
+                }
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Nhập kho thành công",
+                    redirect = "Index"
+                });
+            } catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = ex.InnerException.Message.ToString()
+                });
+            }
+        }
+        public int ConvertDateTimeToInt(DateTime? dateTime)
+        {
+            int dateKey;
+            try
+            {
+                dateKey = Convert.ToInt32(string.Format("{0:yyyyMMdd}", dateTime));
+                return dateKey;
+            }
+            catch
+            {
+                return 0;
+            }
         }
         public void CreateViewBag()
         {
@@ -135,12 +222,12 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
                 model.MedicineCode = medicine.MedicineCode;
                 model.MedicineName = medicine.MedicineName;
             }
-            var provider = _context.ProviderModels.FirstOrDefault(p => p.ProviderId == model.ProviderId);
-            if (provider != null)
-            {
-                model.MedicineCode = provider.ProviderCode;
-                model.MedicineName = provider.ProviderName;
-            }
+            //var provider = _context.ProviderModels.FirstOrDefault(p => p.ProviderId == model.ProviderId);
+            //if (provider != null)
+            //{
+            //    model.MedicineCode = provider.ProviderCode;
+            //    model.MedicineName = provider.ProviderName;
+            //}
             #endregion
             //Nếu chưa có model trong stockReceivingDetailList
             //Add thêm model vào stockReceivingDetailList
@@ -166,6 +253,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
         {
             var thuocncc = _context.MedicineProvideModels.Where(x => x.ProviderId == ProviderId&& x.MedicineId==MedicineId).Select(x => x.MedicineProvideId).ToList();
             return Json(thuocncc, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetInStockQuantity (Guid Medicine)
+        {
+            var sl = _context.WarehouseDetailModels.Where(x => x.MedicineProvideModel.MedicineId == Medicine&&x.ExpiredDate>=DateTime.Now).Sum(x=>x.InstockQuantity);
+            return Json(sl, JsonRequestBehavior.AllowGet);
         }
     }
 }
