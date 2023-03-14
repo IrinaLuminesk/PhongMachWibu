@@ -53,29 +53,39 @@ namespace EnjuAihara.Core
         {
             if (Session["Permission"] == null)
             {
-                if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(CurrentUser.UserName))
+                if (User.Identity.IsAuthenticated)
                 {
-                    List<PagePermissionModel> Permissions = new List<PagePermissionModel>(GetAllCurrentPermission());
-                    Session["Permission"] = Permissions;
+                    if (GetAllCurrentPermission() != null)
+                    {
+                        List<PagePermissionModel> Permissions = new List<PagePermissionModel>(GetAllCurrentPermission());
+                        Session["Permission"] = Permissions;
+                    }
                 }
             }
             else
             {
                 Session["Permission"] = null;
-                List<PagePermissionModel> Permissions = new List<PagePermissionModel>(GetAllCurrentPermission());
-                Session["Permission"] = Permissions;
+                if (GetAllCurrentPermission() != null)
+                {
+                    List<PagePermissionModel> Permissions = new List<PagePermissionModel>(GetAllCurrentPermission());
+                    Session["Permission"] = Permissions;
+                }
             }
         }
 
         public List<PagePermissionModel> GetAllCurrentPermission()
         {
-            var AllRole = CurrentUser.AccountInRoleModels.Select(x => x.RoleId).ToList();
-            List<PagePermissionModel> Permissions = new List<PagePermissionModel>();
-            foreach (var i in AllRole)
+            if (CurrentUser != null)
             {
-                Permissions.AddRange(_context.PagePermissionModels.Where(x => x.RoleId == i).ToList());
+                var AllRole = CurrentUser.AccountInRoleModels.Select(x => x.RoleId).ToList();
+                List<PagePermissionModel> Permissions = new List<PagePermissionModel>();
+                foreach (var i in AllRole)
+                {
+                    Permissions.AddRange(_context.PagePermissionModels.Where(x => x.RoleId == i).ToList());
+                }
+                return Permissions;
             }
-            return Permissions;
+            return null;
         }
     }
 }

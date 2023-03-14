@@ -43,7 +43,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 (x.AccountModel1.UsersModel.FirstName.Contains(Client) || x.AccountModel1.UsersModel.LastName.Contains(Client) || x.AnonymousClient.Contains(Client) || string.IsNullOrEmpty(Client)) &&
                 (x.CreateDate >= FromDate || FromDate == null) &&
                 (x.CreateDate <= Todate || Todate == null)
-                ).
+                ).OrderBy(x => x.CreateDate).OrderBy(x => x.DescriptionCode).
                 Select(x =>
             new PrescriptionSearchViewModel
             {
@@ -54,7 +54,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 MedicineList = x.DescriptionDetailModels.Select(z => ("Thuốc " + z.WarehouseDetailModel.MedicineProvideModel.MedicineModel.MedicineName + " của " + z.WarehouseDetailModel.MedicineProvideModel.ProviderModel.ProviderName)).ToList(),
                 IllnessList = x.DescriptionIllnessModels.Select(z => z.IllnessModel.IllnessName).ToList(),
                 Note = x.Note,
-                TotalMoney = x.DescriptionDetailModels.Sum(z => (double)z.Quantity * z.WarehouseDetailModel.SalePrice) + x.Payment == null ? 0 : x.Payment ,
+                TotalMoney = x.DescriptionDetailModels.Sum(z => z.TotalPay) + (x.PhuThu == null ? 0 : x.PhuThu),
                 Status = x.IsPay == false ? "Chưa thanh toán" : "Đã thanh toán",
                 IsPay = x.IsPay
             }).ToList();
@@ -66,6 +66,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 {
                     i++;
                     item.STT = i;
+                    if (item.TotalMoney == null || item.TotalMoney <= 0)
+                        item.TotalMoney = 0;
                 }
             }
             return Json(new
@@ -102,10 +104,6 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 }
             };
             var query = _context.Database.SqlQuery<MedicineSearchViewModel>("exec GetMedicieInWarehouse @MedList, @ProList", param.ToArray()).ToList();
-            //var Tempquery = query.Distinct(x ).Where(x => x.SoLuongTon == null || x.SoLuongTon <= 0)
-            //var Tempquery = LinqExtension.DistinctBy(query.Where(x => x.SoLuongTon == null || x.SoLuongTon <= 0).ToList(), x => x.MedicineProviderId).ToList();
-            //query.RemoveAll(x => x.SoLuongTon == null || x.SoLuongTon <= 0);
-            //query.AddRange(Tempquery);
             var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
@@ -136,7 +134,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
         {
             try
             {
-                JsonResult result = ValidateCreate(model, Prescription);
+                JsonResult result = ValidateCreate(model, Prescription, null);
                 if (result != null)
                     return result;
                 DescriptionModel ToaThuoc = new DescriptionModel()
@@ -147,7 +145,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                     Note = model.Note,
                     IsPay = false,
                     DescriptionCode = DataCodeGenerate.KeToaCodeGen(),
-                    NumberOfDate = model.DayOfMedicine
+                    NumberOfDate = model.DayOfMedicine,
+                    
                 };
                 if (model.PatientType == false)
                     ToaThuoc.CreateFor = model.FastSearch;
@@ -238,6 +237,168 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             return View(result);
         }
 
+
+        [HttpPost]
+        public JsonResult Edit(PrescriptionCreateViewModel model, List<PrescriptionDetailCreateViewModel> Prescription, Guid DescriptionId)
+        {
+            try
+            {
+                JsonResult result = ValidateCreate(model, Prescription, DescriptionId);
+                if (result != null)
+                    return result;
+                var EditModel = _context.DescriptionModels.Where(x => x.DescriptionId == DescriptionId).FirstOrDefault();
+                if (EditModel != null)
+                {
+                    if (EditModel.CreateBy != CurrentUser.AccountId || !CurrentUser.AccountInRoleModels.Any(x => x.RolesModel.RoleName.Equals("Sysadmin") || x.RolesModel.RoleName.Equals("Admin")))
+                    {
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Vui lòng không sửa toa thuốc của bác sĩ khác kê",
+                            redirect = "/Services/Prescription"
+                        });
+                    }
+
+                    if (EditModel.IsPay == true)
+                    {
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Vui lòng không sửa toa thuốc đã thanh toán",
+                            redirect = "/Services/Prescription"
+                        });
+                    }
+                    EditModel.NumberOfDate = model.DayOfMedicine;
+                    EditModel.Note = model.Note;
+
+                    //Xóa các bệnh đã kê
+                    _context.DescriptionIllnessModels.RemoveRange(EditModel.DescriptionIllnessModels.ToList());
+                    _context.SaveChanges();
+                    foreach (var j in model.IllnessLst)
+                    {
+                        DescriptionIllnessModel Benhs = new DescriptionIllnessModel()
+                        {
+                            DescriptionId = DescriptionId,
+                            DescriptionIllnessId = Guid.NewGuid(),
+                            IllnessId = j
+                        };
+                        _context.Entry(Benhs).State = System.Data.Entity.EntityState.Added;
+                        _context.SaveChanges();
+                    }
+
+
+                    //Xóa các toa thuốc cũ
+                    _context.DescriptionDetailModels.RemoveRange(EditModel.DescriptionDetailModels.ToList());
+                    _context.SaveChanges();
+                    foreach (var i in Prescription)
+                    {
+                        var price = _context.WarehouseDetailModels.Where(x => x.WarehouseDetailId == i.WarehouseDetailId).FirstOrDefault();
+                        string TempPrice = ((double)price.SalePrice / Convert.ToDouble(price.BoughtQuantity)).ToString("N0");
+                        double? Price = ((int)i.PrescriptionNumber * Convert.ToDouble(TempPrice));
+                        DescriptionDetailModel ToaDetail = new DescriptionDetailModel()
+                        {
+                            DescriptionDetailId = Guid.NewGuid(),
+                            DescriptionId = DescriptionId,
+                            HowToUseNote = i.HowToUse,
+                            MedicineId = i.WarehouseDetailId,
+                            Quantity = i.PrescriptionNumber,
+                            TotalPay = Price
+                        };
+                        _context.Entry(ToaDetail).State = System.Data.Entity.EntityState.Added;
+                        _context.SaveChanges();
+                    }
+
+
+                    return Json(new
+                    {
+                        isSucess = true,
+                        title = "Thành công",
+                        message = "Sửa toa thuốc thành công",
+                        redirect = "/Services/Prescription"
+                    });
+                }
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Đã có lỗi xảy ra",
+                    redirect = "/Services/Prescription"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = ex.Message.ToString()
+                });
+            }
+        }
+
+        public JsonResult Delete(Guid Id)
+        {
+            try
+            {
+                var delete = _context.DescriptionModels.Where(x => x.DescriptionId == Id).FirstOrDefault();
+                if (delete == null)
+                {
+                    return Json(new
+                    {
+                        isSucess = true,
+                        title = "Lỗi",
+                        message = "Toa thuốc không tồn tại"
+                    });
+                }
+                if (delete.CreateBy != CurrentUser.AccountId || !CurrentUser.AccountInRoleModels.Any(x => x.RolesModel.RoleName.Equals("Sysadmin") || x.RolesModel.RoleName.Equals("Admin")))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng không xóa toa thuốc do bác sĩ khác kê"
+                    });
+                }
+                if (delete.IsPay == true)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng không xóa toa thuốc đã thanh toán"
+                    });
+                }
+                var Illness = _context.DescriptionIllnessModels.Where(x => x.DescriptionId == delete.DescriptionId).ToList();
+                _context.DescriptionIllnessModels.RemoveRange(Illness);
+                _context.SaveChanges();
+
+                var Medicines = _context.DescriptionDetailModels.Where(x => x.DescriptionId == delete.DescriptionId).ToList();
+                _context.DescriptionDetailModels.RemoveRange(Medicines);
+                _context.SaveChanges();
+
+                _context.Entry(delete).State = System.Data.Entity.EntityState.Deleted;
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Xóa thành công",
+                    message = "Xóa toa thuốc thành công"
+                }); ;
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = ex.Message.ToString()
+                });
+            }
+        }
+
         public ActionResult Detail(Guid Id)
         {
             var bill = _context.DescriptionModels.Where(x => x.DescriptionId == Id).FirstOrDefault();
@@ -245,49 +406,99 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             return View(bill);
         }
 
-        public JsonResult ValidateCreate(PrescriptionCreateViewModel model, List<PrescriptionDetailCreateViewModel> Prescription)
+
+        [HttpPost]
+        public PartialViewResult GetPayMent(Guid Id)
         {
-            //Bệnh nhân vãng lai
-            if (model.PatientType == true)
+            var result = _context.DescriptionModels.Where(x => x.DescriptionId == Id).FirstOrDefault();
+            string TienThuoc = ((double)result.DescriptionDetailModels.Sum(x => x.TotalPay)).ToString("N0");
+            ViewBag.TienThuoc = TienThuoc;
+            double PhuThu = 0;
+            if (!string.IsNullOrEmpty(result.AnonymousClient))
             {
-                if (string.IsNullOrEmpty(model.PatientFirstName))
-                {
-                    return Json(new
-                    {
-                        isSucess = false,
-                        title = "Lỗi",
-                        message = "Vui lòng nhập tên bệnh nhân"
-                    });
-                }
-                if (string.IsNullOrEmpty(model.PatientLastName))
-                {
-                    return Json(new
-                    {
-                        isSucess = false,
-                        title = "Lỗi",
-                        message = "Vui lòng nhập họ bệnh nhân"
-                    });
-                }
-                if (string.IsNullOrEmpty(model.PatientPhone))
-                {
-                    return Json(new
-                    {
-                        isSucess = false,
-                        title = "Lỗi",
-                        message = "Vui lòng nhập số điện thoại của bệnh nhân"
-                    });
-                }
+                PhuThu = 150000;
+                ViewBag.PhiPhuThuKhachVangLai = Convert.ToDouble(PhuThu).ToString("N0");
             }
             else
+                ViewBag.PhiPhuThuKhachVangLai = PhuThu.ToString();
+            ViewBag.TongCong = (Convert.ToDouble(TienThuoc) + PhuThu).ToString("N0");
+            return PartialView();
+        }
+
+
+        public JsonResult ConfirmPayment(Guid Id)
+        {
+            try
             {
-                if (model.FastSearch == null || model.FastSearch == Guid.Empty)
+                var result = _context.DescriptionModels.Where(x => x.DescriptionId == Id).FirstOrDefault();
+                result.IsPay = true;
+                _context.Entry(result).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+                return Json(new
                 {
-                    return Json(new
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Xác nhận thanh toán thành công",
+                    redirect = "/Services/Prescription"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = ex.Message.ToString()
+                });
+            }
+        }
+
+        public JsonResult ValidateCreate(PrescriptionCreateViewModel model, List<PrescriptionDetailCreateViewModel> Prescription, Guid? Id)
+        {
+            if (Id == null)
+            {
+                //Bệnh nhân vãng lai
+                if (model.PatientType == true)
+                {
+                    if (string.IsNullOrEmpty(model.PatientFirstName))
                     {
-                        isSucess = false,
-                        title = "Lỗi",
-                        message = "Vui lòng chọn bệnh nhân"
-                    });
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Vui lòng nhập tên bệnh nhân"
+                        });
+                    }
+                    if (string.IsNullOrEmpty(model.PatientLastName))
+                    {
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Vui lòng nhập họ bệnh nhân"
+                        });
+                    }
+                    if (string.IsNullOrEmpty(model.PatientPhone))
+                    {
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Vui lòng nhập số điện thoại của bệnh nhân"
+                        });
+                    }
+                }
+                else
+                {
+                    if (model.FastSearch == null || model.FastSearch == Guid.Empty)
+                    {
+                        return Json(new
+                        {
+                            isSucess = false,
+                            title = "Lỗi",
+                            message = "Vui lòng chọn bệnh nhân"
+                        });
+                    }
                 }
             }
             if (model.DayOfMedicine <= 0 || model.DayOfMedicine == null)

@@ -1,0 +1,36 @@
+﻿@{ 
+	var PhuThu = (string)ViewBag.PhiPhuThuKhachVangLai;
+}
+<div class="col-md-12">
+	<div class="row g-3 align-items-center">
+		<div class="col-md-3 text-center">
+			<label class="col-form-label">Tiền Thuốc</label>
+		</div>
+		<div class="col-md-9">
+			<input type="text" class="form-control" value="@ViewBag.TienThuoc" readonly disabled>
+		</div>
+	</div>
+</div>
+@if(!PhuThu.Equals("0"))
+{
+	<div class="col-md-12 mt-3">
+		<div class="row g-3 align-items-center">
+			<div class="col-md-3 text-center">
+				<label class="col-form-label">Tiền phụ thu của khách vãng lai</label>
+			</div>
+			<div class="col-md-9">
+				<input type="text" class="form-control" value="@PhuThu" disabled readonly>
+			</div>
+		</div>
+	</div>
+}
+<div class="col-md-12 mt-3">
+	<div class="row g-3 align-items-center">
+		<div class="col-md-3 text-center">
+			<label class="col-form-label">Tổng cộng tiền cần thu</label>
+		</div>
+		<div class="col-md-9">
+			<input type="text" class="form-control" value="@ViewBag.TongCong" disabled readonly>
+		</div>
+	</div>
+</div>

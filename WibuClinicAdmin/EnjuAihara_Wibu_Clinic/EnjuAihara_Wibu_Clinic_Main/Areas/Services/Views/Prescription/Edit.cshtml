@@ -26,7 +26,8 @@
 		</div>
 	</div>
 </div>
-<form id="frmCreate" enctype='multipart/form-data'>
+<form id="frmEdit" enctype='multipart/form-data'>
+	@Html.HiddenFor(x => x.DescriptionId)
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card h-100">
@@ -67,7 +68,7 @@
 									}
 									else
 									{
-										@Html.TextBoxFor(x => x.AccountModel.UsersModel.LastName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+										@Html.TextBoxFor(x => x.AccountModel1.UsersModel.LastName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
 									}
 								</div>
 							</div>
@@ -85,7 +86,7 @@
 									}
 									else
 									{
-										@Html.TextBoxFor(x => x.AccountModel.UsersModel.FirstName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+										@Html.TextBoxFor(x => x.AccountModel1.UsersModel.FirstName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
 									}
 								</div>
 							</div>
@@ -103,7 +104,7 @@
 									}
 									else
 									{
-										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Phone, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+										@Html.TextBoxFor(x => x.AccountModel1.UsersModel.Phone, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
 									}
 								</div>
 							</div>
@@ -120,7 +121,7 @@
 									}
 									else
 									{
-										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Birthday, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", Value = Birthday })
+										@Html.TextBoxFor(x => x.AccountModel1.UsersModel.Birthday, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", Value = Birthday })
 									}
 								</div>
 							</div>
@@ -140,7 +141,7 @@
 									}
 									else
 									{
-										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Address, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+										@Html.TextBoxFor(x => x.AccountModel1.UsersModel.Address, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
 									}
 								</div>
 							</div>
@@ -157,7 +158,7 @@
 									}
 									else
 									{
-										@Html.TextBoxFor(x => x.AccountModel.UsersModel.Email, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+										@Html.TextBoxFor(x => x.AccountModel1.UsersModel.Email, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
 									}
 								</div>
 							</div>
@@ -222,7 +223,7 @@
 								</div>
 								<div class="col-md-3">
 									@*<input type="number" id="DayOfMedicine" name="DayOfMedicine" class="form-control" />*@
-									@Html.TextBox("DayOfMedicine", Model.NumberOfDate, new { @class = "form-control", @type = "number", Value = Model.NumberOfDate })
+									@Html.TextBox("DayOfMedicine", Model.NumberOfDate, new { @class = "form-control", @type = "number", @Value = Model.NumberOfDate })
 								</div>
 							</div>
 						</div>
@@ -450,6 +451,8 @@
 			$("#DanhMuchKeToa > tbody").empty();
 		});
 
-
+		$("#btn-edit").on("click", function () {
+			Edit("Services/Prescription", "#frmEdit");
+		});
 	});
 </script>

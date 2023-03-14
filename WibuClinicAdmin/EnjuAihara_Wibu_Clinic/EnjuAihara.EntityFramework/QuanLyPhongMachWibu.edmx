@@ -119,7 +119,7 @@
           </Key>
           <Property Name="DescriptionId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DescriptionCode" Type="nvarchar" MaxLength="100" />
-          <Property Name="Payment" Type="float" />
+          <Property Name="PhuThu" Type="float" />
           <Property Name="CreateBy" Type="uniqueidentifier" />
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="CreateFor" Type="uniqueidentifier" />
@@ -1206,9 +1206,9 @@
           <Property Name="MedicineId" Type="Guid" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="HowToUseNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPay" Type="Double" />
           <NavigationProperty Name="DescriptionModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionDetailModel" ToRole="DescriptionModel" />
           <NavigationProperty Name="WarehouseDetailModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_WarehouseDetailModel" FromRole="DescriptionDetailModel" ToRole="WarehouseDetailModel" />
-          <Property Name="TotalPay" Type="Double" />
         </EntityType>
         <EntityType Name="DescriptionIllnessModel">
           <Key>
@@ -1226,7 +1226,7 @@
           </Key>
           <Property Name="DescriptionId" Type="Guid" Nullable="false" />
           <Property Name="DescriptionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Payment" Type="Double" />
+          <Property Name="PhuThu" Type="Double" />
           <Property Name="CreateBy" Type="Guid" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateFor" Type="Guid" />
@@ -1234,11 +1234,11 @@
           <Property Name="AnonymousPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="IsPay" Type="Boolean" />
+          <Property Name="NumberOfDate" Type="Int32" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="DescriptionModel" ToRole="AccountModel" />
           <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="DescriptionModel" ToRole="AccountModel" />
           <NavigationProperty Name="DescriptionDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionDetailModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionDetailModel" />
           <NavigationProperty Name="DescriptionIllnessModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionIllnessModel_DescriptionModel" FromRole="DescriptionModel" ToRole="DescriptionIllnessModel" />
-          <Property Name="NumberOfDate" Type="Int32" />
         </EntityType>
         <EntityType Name="DistrictModel">
           <Key>
@@ -2026,7 +2026,7 @@
                 <ScalarProperty Name="CreateFor" ColumnName="CreateFor" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="PhuThu" ColumnName="PhuThu" />
                 <ScalarProperty Name="DescriptionCode" ColumnName="DescriptionCode" />
                 <ScalarProperty Name="DescriptionId" ColumnName="DescriptionId" />
               </MappingFragment>

@@ -106,7 +106,111 @@
 		</div>
 	</div>
 </div>
+<div id="deleteConfirmation" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Xóa toa thuốc</h4>
+					<button type="button" class="close modal-closing"  data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p class="modal-question">Bạn có chắc bạn muốn xóa toa thuốc này không?</p>
+					<p class="text-warning"><small>Hành động này sẽ không thể khôi phục được</small></p>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="modal-closing btn btn-default" id="CancelButton" data-bs-dismiss="modal" value="Cancel">
+					<input type="button" class="btn btn-danger" value="Delete" id="DeleteConfirm">
+					<input type="hidden" id="DeleteId" name="DeleteId" />
+				</div>
+		</div>
+	</div>
+</div>
+
+<div id="XacNhanThanhToan" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Xác nhận thanh toán toa thuốc</h4>
+				<button type="button" class="close modal-closing" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="row" id="DetailToaThuoc">
+					
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="button" class="modal-closing btn btn-default" id="CancelButton" data-bs-dismiss="modal" value="Cancel">
+				<input type="button" class="btn btn-primary" id="XacNhanThanhToanConfirm" value="Xác nhận thanh toán">
+				<input type="hidden" id="XacNhanThanhToanId" name="XacNhanThanhToanId" />
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
+
+	function Delete2(Id) {
+		var formdata = new FormData();
+		formdata.append("Id", Id);
+
+		$.ajax({
+			type: "POST",
+			url: "/Services/Prescription/Delete",
+			data: formdata,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				$("#deleteConfirmation").modal("hide");
+				if (data.isSucess == true) {
+					if (data.title && data.message) {
+						$("#deleteConfirmation").modal("hide");
+						AlertPopup(1, data.title, data.message);
+					}
+					if (data.redirect) {
+						setTimeout(function () {
+							window.location.href = data.redirect;
+						}, 1500);
+					}
+				}
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+
+	}
+
+	function KiemTraXacNhanThanhToan(Id) {
+		var formdata = new FormData();
+		formdata.append("Id", Id);
+
+		$.ajax({
+			type: "POST",
+			url: "/Services/Prescription/GetPayMent",
+			data: formdata,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				$("#DetailToaThuoc").html("");
+				$("#DetailToaThuoc").html(data);
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	}
+
 	$(document).ready(function () {
 		JqueryAutoComplete("/Services/Prescription/ClientSearch", "#Client");
 		var columns = [
@@ -192,7 +296,8 @@
 						var s;
 						if (row.IsPay == false) {
 							s = '<a class="btn btn-info" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
-							s += '<button class="btn btn-danger btn-delete" data-controller="Services/Prescription" data-id="' + data + '" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Xóa</button>';
+							s += '<button class="btn-xoa-toa-thuoc btn btn-danger ml-2" data-id="' + data + '"><i class="fa-solid fa-circle-xmark"></i>Xóa</button>';
+							s += '<button class="btn-xacnhanthanhtoan-toa-thuoc btn btn-success ml-2" data-id="' + data + '"><i class="fa-solid fa-clipboard-check"></i>Xác nhận thanh toán</button>';
 						}
 						else {
 							s = '<a class="btn btn-info" href="/Services/Prescription/Detail/' + data + '"><i class="fa-solid fa-eye"></i>Xem chi tiết</a>';
@@ -204,6 +309,71 @@
 			}
 		];
 		PaggingServerSideSearchInitialWithClick("Services/Prescription", columns, true);
+
+		CloseSideBar();
+		$(".modal-closing").on('click', function () {
+			$("#DeleteId").val("");
+			$("#XacNhanThanhToanId").val("");
+		});
+	}); 
+
+	$(document).on("click", ".btn-xoa-toa-thuoc", function (e) {
+		e.preventDefault();
+		$("#DeleteId").val($(this).data("id"));
+		$("#deleteConfirmation").modal("show");
 	});
+	$(document).on("click", "#DeleteConfirm", function (e) {
+		e.preventDefault();
+		Delete2($("#DeleteId").val());
+	});
+
+
+
+	//Xác nhận thanh toán
+	$(document).on("click", ".btn-xacnhanthanhtoan-toa-thuoc", function (e) {
+		e.preventDefault();
+		KiemTraXacNhanThanhToan($(this).data("id"));
+		$("#XacNhanThanhToanId").val($(this).data("id"));
+		$("#XacNhanThanhToan").modal("show");
+	});
+
+
+	$(document).on("click", "#XacNhanThanhToanConfirm", function (e) {
+		e.preventDefault();
+		var formdata = new FormData();
+		formdata.append("Id", $("#XacNhanThanhToanId").val());
+
+		$.ajax({
+			type: "POST",
+			url: "/Services/Prescription/ConfirmPayment",
+			data: formdata,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				$("#XacNhanThanhToan").modal("hide");
+				if (data.isSucess == true) {
+					if (data.title && data.message) {
+						$("#XacNhanThanhToan").modal("hide");
+						AlertPopup(1, data.title, data.message);
+					}
+					if (data.redirect) {
+						setTimeout(function () {
+							window.location.href = data.redirect;
+						}, 1500);
+					}
+				}
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	});
+
 </script>
 

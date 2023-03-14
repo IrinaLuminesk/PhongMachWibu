@@ -23,7 +23,7 @@ namespace EnjuAihara.EntityFramework
     
         public System.Guid DescriptionId { get; set; }
         public string DescriptionCode { get; set; }
-        public Nullable<double> Payment { get; set; }
+        public Nullable<double> PhuThu { get; set; }
         public Nullable<System.Guid> CreateBy { get; set; }
         public string Note { get; set; }
         public Nullable<System.Guid> CreateFor { get; set; }
