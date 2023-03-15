@@ -1,0 +1,141 @@
+﻿@model EnjuAihara.EntityFramework.WarehouseMasterModel
+@{ 
+    var StockRecevingDetailList = (List<EnjuAihara.ViewModels.Warehouse.StockReceivingDetailViewModel>)ViewBag.ListStockRecevingDetail;
+}
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="frmEdit" enctype='multipart/form-data'>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="UserName" class="col-form-label">Kho</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="text" value="Phòng mạch wibu" disabled="disabled" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Người tạo</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(x => x.AccountModel.UserName, new { @class = "form-control", @readonly = true })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 ">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Ngày nhập kho</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(x => x.BoughtDate, new { @class = "form-control", @readonly = true })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Ngày tạo</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(x => x.CreateDate, new { @class = "form-control", @readonly = true })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="stockReceivingDetailTable" class="table table-bordered table-hover no-footer detail-table">
+                                        <thead class="isd-table-header">
+                                            <tr>
+                                                <th class="text-center">STT</th>
+                                                <th>Mã sản phẩm</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Số lượng</th>
+                                                <th>Giá mua</th>
+                                                <th>Chiết khấu</th>
+                                                <th>Hạn sử dụng</th>
+                                                <th>Giá bán</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stockReceivingDetailList">
+                                            @if (Model != null && StockRecevingDetailList.Count() > 0)
+                                            {
+                                                int i = 0;
+                                                int k = -1;
+
+                                                foreach (var item in StockRecevingDetailList)
+                                                {
+                                                    i++;
+                                                    k++;
+
+                                                    string background_color = "";
+
+                                                    <tr class="@background_color">
+                                                        <td class="text-center">
+                                                            @i
+                                                        </td>
+                                                        <td class="text-left">
+                                                            @Html.DisplayFor(p => item.MedicineCode)
+                                                        </td>
+                                                        <td class="wordwrap">
+                                                            @Html.DisplayFor(p => item.MedicineName)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(p => item.BoughtQuantity)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(p => item.BoughtPrice)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(p => item.SalePercentage)
+                                                        </td>
+                                                        <td class="text-right">
+                                                            @Html.DisplayFor(p => item.ExpiredDate)
+                                                        </td>
+                                                        <td class="text-right">
+                                                            @Html.DisplayFor(p => item.SalePrice)
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td class="text-center" colspan="8">
+                                                        Không có loại thuốc nào được nhập
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -164,6 +164,24 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
                 });
             }
         }
+        public ActionResult Detail(Guid? Id)
+        {
+            var master =_context.WarehouseMasterModels.Where(x => x.WarehouseMasterId == Id).FirstOrDefault();
+            var detailList = _context.WarehouseDetailModels.Where(x => x.WarehouseMasterId == Id).Select(x => new StockReceivingDetailViewModel {
+                WarehouseDetailId=x.WarehouseDetailId,
+                WarehouseMasterId=x.WarehouseMasterId,
+                MedicineProviderId=x.MedicineProviderId,
+                MedicineCode=_context.MedicineModels.Where(z=>z.MedicineId==x.MedicineProvideModel.MedicineId).Select(z=>z.MedicineCode).FirstOrDefault(),
+                MedicineName= _context.MedicineModels.Where(z => z.MedicineId == x.MedicineProvideModel.MedicineId).Select(z => z.MedicineName).FirstOrDefault(),
+                BoughtQuantity=x.BoughtQuantity,
+                BoughtPrice=x.BoughtPrice,
+                SalePercentage=x.SalePercentage,
+                SalePrice=x.SalePrice,
+                ExpiredDate=x.ExpiredDate,
+            }).ToList();
+            ViewBag.ListStockRecevingDetail = detailList;
+            return View(master);
+        }
         public int ConvertDateTimeToInt(DateTime? dateTime)
         {
             int dateKey;
@@ -248,6 +266,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
                 Id=x.MedicineModel.MedicineId,
             }).ToList();
             return Json(thuoc, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult RemoveMedicineStock(List<StockReceivingDetailViewModel> stockReceivingDetailList, int STT)
+        {
+            stockReceivingDetailList = stockReceivingDetailList.Where(p => p.STT != STT).ToList();
+            return PartialView("_ProductStockDetailInner", stockReceivingDetailList);
         }
         public ActionResult SearchMedicineProviderIdByProviderAndMedicine(Guid ProviderId,Guid MedicineId)
         {

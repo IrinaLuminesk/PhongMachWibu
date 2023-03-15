@@ -16,5 +16,10 @@ namespace EnjuAihara.ViewModels.Warehouse
         public string ProviderName { get; set; }
         public string MedicineCode { get; set; }
         public string ProviderCode { get; set; }
+        public string ImportCode { get; set; }
+        public Nullable<System.DateTime> BoughtDate { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.Guid> CreateBy { get; set; }
+
     }
 }

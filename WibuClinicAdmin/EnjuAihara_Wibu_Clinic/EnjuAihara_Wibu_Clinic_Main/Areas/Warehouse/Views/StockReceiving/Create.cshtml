@@ -27,24 +27,6 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        @*<div class="col-md-12">
-                                                <div class="row g-3 align-items-center">
-                                                    <div class="col-md-2 text-center">
-                                                        <label for="ForUser" class="col-form-label">Tạo tài khoản cho người dùng</label>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                        <select id="ForUser" name="ForUser" class="form-control"></select>
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        <button id="remove-user" type="button" class="btn btn-labeled btn-danger w-100">
-                                                            <span class="btn-label">
-                                                                <i class="fa fa-remove"></i>
-                                                                Xóa
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>*@
                                         <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <div class="row g-3 align-items-center">
@@ -337,9 +319,9 @@
                     $(document).on("click", "#addConfirm", function () {
                         $("#stockReceivingDetailTable tbody").html(xhr);
 
+                        //$("#ProviderId").append("<option value=''>Vui lòng chọn nhà cung cấp</option>");
+                        //$("#MedicineId").append("<option value=''>Vui lòng chọn thuốc</option>");
 
-                        //$("#MedicineId").val("");
-                        //$("#ProviderId").val("");
                         $("#BoughtPrice").val("");
                         $("#SalePercentage").val("");
                         $("#SalePrice").val("");
@@ -354,8 +336,6 @@
                     $("#stockReceivingDetailTable tbody").html(xhr);
 
 
-                    //$("#MedicineId").val("");
-                    //$("#ProviderId").val("");
                     $("#BoughtPrice").val("");
                     $("#SalePercentage").val("");
                     $("#SalePrice").val("");
@@ -375,6 +355,44 @@
         //}
         // }
         //}
+    });
+    $(document).on("click", ".btn-del-proDetail", function () {
+        // var ProductId = $(this).data("id");
+
+        var frmId = "";
+        //var isThemMoi = true;
+
+        //var $frmEdit = $("body #frmEdit");
+        //var $frmCreate = $("body #frmCreate");
+        //if ($frmEdit.length === 0) {
+        frmId = "frmCreate";
+        //}
+        //else {
+        //    frmId = "frmEdit";
+        //    isThemMoi = false;
+        //}
+        var data = $("#" + frmId).serialize();
+
+        var STT = $(this).data("row");
+        data = data + "&STT=" + STT;
+ 
+        $.ajax({
+            type: "POST",
+            url: "/Warehouse/StockReceiving/RemoveMedicineStock",
+            data: data,
+            success: function (xhr, status, error) {
+                if (xhr.Message != "" && xhr.Message != null && xhr.Message != undefined) {
+                    alertPopup(false, xhr.Message);
+                }
+                else {
+                    $("#stockReceivingDetailTable tbody#stockReceivingDetailList").html("");
+                    $("#stockReceivingDetailTable tbody#stockReceivingDetailList").html(xhr);
+                }
+            },
+            error: function (xhr, status, error) {
+                alertPopup(false, xhr.responseText);
+            }
+        });
     });
     $(document).on("change", "#BoughtPrice", function () {
         if ($("#SalePercentage").val() != null) {
@@ -446,6 +464,14 @@
             }
         });
     }
+    $(document).on("click", "#btn-del-product", function () {
+        $("#BoughtPrice").val("");
+        $("#SalePercentage").val("");
+        $("#SalePrice").val("");
+        $("#BoughtQuantity").val("");
+        $("#InstockQuantity").val("");
+        $("#ExpiredDate").val("");
+    });
     $(document).on("click", "#cancel", function (e) {
         $("#AddConfirmModal").modal("hide");
     });
