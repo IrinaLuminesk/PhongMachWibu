@@ -73,6 +73,8 @@ namespace EnjuAihara.Utilities.RandomString
                         break;
                 }
             }
+            else
+                code += m.ToString();
             return code;
         }
     }

@@ -1,0 +1,187 @@
+﻿<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Quản lý cuộc hẹn</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmSearch">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="DateCode" class="col-form-label">Mã cuộc hẹn</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="DateCode" name="DateCode" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="DateMaker" class="col-form-label">Tên người đặt</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="DateMaker" name="DateMaker" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Nurse" class="col-form-label">Tên người xử lý</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="Nurse" name="Nurse" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Status" class="col-form-label">Trạng thái</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="DateMaker" name="DateMaker" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-12">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-12 text-center">
+													<label class="col-form-label">Ngày tạo</label>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="FromDate" class="col-form-label">Từ ngày</label>
+												</div>
+												<div class="col-md-9">
+													<input type="date" id="FromDate" name="FromDate" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="ToDate" class="col-form-label">Đến ngày</label>
+												</div>
+												<div class="col-md-9">
+													<input type="date" id="ToDate" name="ToDate" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row" style="margin-top: 15px">
+										<div class="col-md-12 text-center">
+											<button type="button" class="btn btn-primary" id="btn-search">
+												<i class="fas fa-search"></i>
+												Tìm Kiếm
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="card">
+						<div class="card-body">
+							<div id="divSearchResult">
+								@Html.Partial("_PaggingServerSide")
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		CloseSideBar();
+		var columns = [
+			{
+				"data": "STT",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "DateCode",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Client",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Nurse",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "Doctor",
+				"orderable": true,
+				"className": "text-center",
+			},
+			{
+				"data": "DateCreateString",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "PayMentStatus",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "PayMentStatus",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "PrescriptionId",
+				"className": "text-center",
+				"orderable": false,
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+						var s;
+						s = "";
+						return s;
+					}
+					return "";
+				}
+			}
+		];
+		PaggingServerSideSearchInitialWithClick("Services/Date", columns, true);
+	});
+</script>

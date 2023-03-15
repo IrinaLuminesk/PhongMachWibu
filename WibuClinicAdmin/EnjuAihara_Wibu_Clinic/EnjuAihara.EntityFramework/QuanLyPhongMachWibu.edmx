@@ -89,10 +89,12 @@
           <Property Name="BacSiKham" Type="uniqueidentifier" />
           <Property Name="YTaXacNhan" Type="uniqueidentifier" />
           <Property Name="AppointmentDate" Type="datetime" />
-          <Property Name="PaymentStatus" Type="uniqueidentifier" />
-          <Property Name="DateStatus" Type="uniqueidentifier" />
+          <Property Name="HinhThucThanhToan" Type="nvarchar" MaxLength="100" />
           <Property Name="CreateDate" Type="datetime" />
-          <Property Name="Payment" Type="float" />
+          <Property Name="SoTienThanhToan" Type="float" />
+          <Property Name="TrangThaiCuocHen" Type="bit" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="TrangThaiThanhToan" Type="bit" />
         </EntityType>
         <EntityType Name="DescriptionDetailModel">
           <Key>
@@ -333,6 +335,7 @@
           <Property Name="BoughtDate" Type="datetime" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="uniqueidentifier" />
+          <Property Name="Actived" Type="bit" />
         </EntityType>
         <Association Name="FK_AccountInRoleModel_AccountModel">
           <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
@@ -1189,10 +1192,12 @@
           <Property Name="BacSiKham" Type="Guid" />
           <Property Name="YTaXacNhan" Type="Guid" />
           <Property Name="AppointmentDate" Type="DateTime" Precision="3" />
-          <Property Name="PaymentStatus" Type="Guid" />
-          <Property Name="DateStatus" Type="Guid" />
+          <Property Name="HinhThucThanhToan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="Payment" Type="Double" />
+          <Property Name="SoTienThanhToan" Type="Double" />
+          <Property Name="TrangThaiCuocHen" Type="Boolean" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrangThaiThanhToan" Type="Boolean" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel" FromRole="DateModel" ToRole="AccountModel" />
           <NavigationProperty Name="AccountModel1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="DateModel" ToRole="AccountModel" />
           <NavigationProperty Name="AccountModel2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="DateModel" ToRole="AccountModel" />
@@ -1480,6 +1485,7 @@
           <Property Name="BoughtDate" Type="DateTime" Precision="3" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateBy" Type="Guid" />
+          <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseMasterModel_AccountModel" FromRole="WarehouseMasterModel" ToRole="AccountModel" />
           <NavigationProperty Name="WarehouseDetailModels" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseDetailModel_WarehouseMasterModel" FromRole="WarehouseMasterModel" ToRole="WarehouseDetailModel" />
         </EntityType>
@@ -1981,10 +1987,12 @@
           <EntitySetMapping Name="DateModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.DateModel">
               <MappingFragment StoreEntitySet="DateModel">
-                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="TrangThaiThanhToan" ColumnName="TrangThaiThanhToan" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="TrangThaiCuocHen" ColumnName="TrangThaiCuocHen" />
+                <ScalarProperty Name="SoTienThanhToan" ColumnName="SoTienThanhToan" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="DateStatus" ColumnName="DateStatus" />
-                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="HinhThucThanhToan" ColumnName="HinhThucThanhToan" />
                 <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
                 <ScalarProperty Name="YTaXacNhan" ColumnName="YTaXacNhan" />
                 <ScalarProperty Name="BacSiKham" ColumnName="BacSiKham" />
@@ -2250,6 +2258,7 @@
           <EntitySetMapping Name="WarehouseMasterModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.WarehouseMasterModel">
               <MappingFragment StoreEntitySet="WarehouseMasterModel">
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="BoughtDate" ColumnName="BoughtDate" />
