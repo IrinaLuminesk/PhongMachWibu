@@ -23,7 +23,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             List<FunctionModel> kq = _context.FunctionModels.Where(x=>
                 ((x.FunctionId.Contains(search.FunctionId)) || (string.IsNullOrEmpty(search.FunctionId)) )&&
                 ( (x.FunctionName.Contains(search.FunctionName)) || (string.IsNullOrEmpty(search.FunctionName)))
-                
+         
                 ).ToList();
             return PartialView(kq);
         }
@@ -79,6 +79,47 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                     redirect = "/Permission/Function"
                 });
             }
+        }
+        [HttpPost]
+        public JsonResult Delete(string Id)
+        {
+            try
+            {
+                var pp = _context.PageFunctionModels.Where(x => x.FunctionId == Id).ToList();
+                if (pp != null && pp.Count() > 0)
+                {
+                    _context.PageFunctionModels.RemoveRange(pp);
+                }
+                var pm = _context.PagePermissionModels.Where(x => x.FuntionId == Id).ToList();
+                if (pm != null && pp.Count() > 0)
+                {
+                    _context.PagePermissionModels.RemoveRange(pm);
+                }
+                var f = _context.FunctionModels.Where(x => x.FunctionId == Id).FirstOrDefault();
+                if (f != null)
+                {
+                    _context.FunctionModels.Remove(f);
+                }
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Xóa chức năng thành công",
+                    redirect = "/Permission/Function"
+                }
+                );
+            }catch(Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = ex + " Xóa chức năng thất bại",
+                    redirect = "/Permission/Function"
+                });
+            }
+
         }
         public JsonResult ValidateFunction(FunctionModel model)
         {

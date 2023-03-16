@@ -453,6 +453,7 @@
         });
     }
     function CheckInStock(medicine) {
+        $("#InstockQuantity").val(0);
         $.ajax({
             type: "POST",
             url: "/Warehouse/StockReceiving/GetInStockQuantity",

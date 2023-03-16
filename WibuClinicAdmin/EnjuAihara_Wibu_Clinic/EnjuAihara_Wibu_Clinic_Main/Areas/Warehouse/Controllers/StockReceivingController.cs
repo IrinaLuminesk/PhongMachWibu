@@ -223,40 +223,28 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
 
         public ActionResult InsertProductStock(StockReceivingDetailViewModel model, List<StockReceivingDetailViewModel> stockReceivingDetailList)
         {
-            if (stockReceivingDetailList == null)
-            {
-                stockReceivingDetailList = new List<StockReceivingDetailViewModel>();
-            }
-            #region //Bổ sung MedicineCode và Name, ProviderName
-            //var stock = _context.StockModel.FirstOrDefault(p => p.StockId == model.StockId);
-            //if (stock != null)
+
+            //JsonResult json = ValidateWd(model);
+            //if (json != null)
             //{
-            //    model.StockCode = stock.StockCode;
-            //    model.StockName = stock.StockName;
+            //    return json;
             //}
-            var medicine =_context.MedicineModels.FirstOrDefault(p=>p.MedicineId==model.MedicineId);
-            if (medicine != null)
-            {
-                model.MedicineCode = medicine.MedicineCode;
-                model.MedicineName = medicine.MedicineName;
-            }
-            //var provider = _context.ProviderModels.FirstOrDefault(p => p.ProviderId == model.ProviderId);
-            //if (provider != null)
+            //else
             //{
-            //    model.MedicineCode = provider.ProviderCode;
-            //    model.MedicineName = provider.ProviderName;
-            //}
-            #endregion
-            //Nếu chưa có model trong stockReceivingDetailList
-            //Add thêm model vào stockReceivingDetailList
-            //if (stockReceivingDetailList.FirstOrDefault(p => p.MedicineProvideModel.MedicineId == model.MedicineProvideModel.MedicineId) == null)
-            //{
-                //Add thêm data
+                if (stockReceivingDetailList == null)
+                {
+                    stockReceivingDetailList = new List<StockReceivingDetailViewModel>();
+                }
+                var medicine = _context.MedicineModels.FirstOrDefault(p => p.MedicineId == model.MedicineId);
+                if (medicine != null)
+                {
+                    model.MedicineCode = medicine.MedicineCode;
+                    model.MedicineName = medicine.MedicineName;
+                }
+
                 stockReceivingDetailList.Add(model);
-            
-
-
-            return PartialView("_ProductStockDetailInner", stockReceivingDetailList);
+                return PartialView("_ProductStockDetailInner", stockReceivingDetailList);
+            //}       
         }
         public ActionResult SearchMedicineByProvider(Guid ProviderId)
         {
@@ -281,6 +269,82 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
         {
             var sl = _context.WarehouseDetailModels.Where(x => x.MedicineProvideModel.MedicineId == Medicine&&x.ExpiredDate>=DateTime.Now).Sum(x=>x.InstockQuantity);
             return Json(sl, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ValidateWd(StockReceivingDetailViewModel model)
+        {
+            if (model.MedicineId==null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống thuốc"
+                });
+            }
+            if (model.ProviderId==null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống nhà cung cấp"
+                });
+            }
+            if (model.InstockQuantity == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống số lượng còn tồn"
+                });
+            }
+            if (model.BoughtQuantity == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống số lượng nhập"
+                });
+            }
+            if (model.BoughtPrice == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống giá mua vào"
+                });
+            }
+            if (model.SalePercentage == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống chiết khấu"
+                });
+            }
+            if (model.SalePrice == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống giá bán"
+                });
+            }
+            if (model.ExpiredDate == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống hạn sử dụng"
+                });
+            }
+            return null;
         }
     }
 }

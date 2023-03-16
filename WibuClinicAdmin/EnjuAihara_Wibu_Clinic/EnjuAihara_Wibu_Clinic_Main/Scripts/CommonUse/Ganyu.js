@@ -478,6 +478,7 @@ $(document).on("click", ".btn-delete", function (e) {
     var id = $(this).data("id");
     var controller = $(this).data("controller");
     $("#deleteConfirmModal .modal-title .item-name").html(itemName);
+    $("#deleteConfirmModal .modal-question .item-name").html(itemName);
     $("#deleteConfirmModal .modal-question .controller").html(controller);
     $("#deleteConfirmModal").modal("show");
 
