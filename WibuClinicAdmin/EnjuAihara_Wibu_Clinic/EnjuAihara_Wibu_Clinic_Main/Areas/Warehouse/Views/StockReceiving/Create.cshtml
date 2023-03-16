@@ -317,6 +317,31 @@
                 if (InstockQuantity > 0) {
                     $("#AddConfirmModal").modal("show");
                     $(document).on("click", "#addConfirm", function () {
+                        var ct = xhr.getResponseHeader("content-type") || "";
+                        if (ct.indexOf('html') > -1) {
+                            $("#stockReceivingDetailTable tbody").html(xhr);
+
+                            //$("#ProviderId").append("<option value=''>Vui lòng chọn nhà cung cấp</option>");
+                            //$("#MedicineId").append("<option value=''>Vui lòng chọn thuốc</option>");
+
+                            $("#BoughtPrice").val("");
+                            $("#SalePercentage").val("");
+                            $("#SalePrice").val("");
+                            $("#BoughtQuantity").val("");
+                            $("#InstockQuantity").val("");
+                            $("#ExpiredDate").val("");
+                            $("#AddConfirmModal").modal("hide");
+                        }
+                        if (ct.indexOf('json') > -1) {
+                            AlertPopup(3, "Lỗi", response);
+                        }
+                        
+                    });
+                    
+                }
+                else {
+                    var ct = xhr.getResponseHeader("content-type") || "";
+                    if (ct.indexOf('html') > -1) {
                         $("#stockReceivingDetailTable tbody").html(xhr);
 
                         //$("#ProviderId").append("<option value=''>Vui lòng chọn nhà cung cấp</option>");
@@ -328,20 +353,11 @@
                         $("#BoughtQuantity").val("");
                         $("#InstockQuantity").val("");
                         $("#ExpiredDate").val("");
-                        $("#AddConfirmModal").modal("hide");
-                    });
-                    
-                }
-                else {
-                    $("#stockReceivingDetailTable tbody").html(xhr);
-
-
-                    $("#BoughtPrice").val("");
-                    $("#SalePercentage").val("");
-                    $("#SalePrice").val("");
-                    $("#BoughtQuantity").val("");
-                    $("#InstockQuantity").val("");
-                    $("#ExpiredDate").val("");
+                        //$("#AddConfirmModal").modal("hide");
+                    }
+                    if (ct.indexOf('json') > -1) {
+                        AlertPopup(3, "Lỗi", response);
+                    }
                 }
             },
             error: function (xhr, status, error) {
