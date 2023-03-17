@@ -23,7 +23,7 @@ namespace EnjuAihara.EntityFramework
     
         public System.Guid DescriptionId { get; set; }
         public string DescriptionCode { get; set; }
-        public Nullable<double> Payment { get; set; }
+        public Nullable<double> PhuThu { get; set; }
         public Nullable<System.Guid> CreateBy { get; set; }
         public string Note { get; set; }
         public Nullable<System.Guid> CreateFor { get; set; }
@@ -31,6 +31,7 @@ namespace EnjuAihara.EntityFramework
         public string AnonymousPhone { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<bool> IsPay { get; set; }
+        public Nullable<int> NumberOfDate { get; set; }
     
         public virtual AccountModel AccountModel { get; set; }
         public virtual AccountModel AccountModel1 { get; set; }

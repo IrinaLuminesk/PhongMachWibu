@@ -2,7 +2,24 @@
 @{ 
     var StockRecevingDetailList = (List<EnjuAihara.ViewModels.Warehouse.StockReceivingDetailViewModel>)ViewBag.ListStockRecevingDetail;
 }
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Chi tiết của lần nhập kho @Model.ImportCode</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="pull-right">
+                    <a class="btn btn-info" href="/MasterData/Medicine"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+                    <button type="button" class="btn btn-primary" id="btn-edit" style="width:20%">
+                        Duyệt
+                    </button>
+                </div>
 
+            </div>
+        </div>
+    </div>
+</div>
 <div class="content">
     <div class="form-horizontal">
         <div class="panel-group">
@@ -10,6 +27,7 @@
                 <div class="panel-body">
                     <form id="frmEdit" enctype='multipart/form-data'>
                         <div class="col-md-12">
+                            @Html.HiddenFor(x => x.WarehouseMasterId)
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -139,3 +157,54 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#btn-edit").on("click", function () {
+            var frm = $("#frmEdit"),
+                formData = new FormData(),
+                formParams = frm.serializeArray();
+            $.each(frm.find('input[type="file"]'), function (i, tag) {
+                isHasFile = true;
+                $.each($(tag)[0].files, function (i, file) {
+                    formData.append(tag.name, file);
+                });
+            });
+
+            $.each(formParams, function (i, val) {
+                formData.append(val.name, val.value);
+            });
+
+            /* var load = AjaxLoaderRan();*/
+            $.ajax({
+                type: "POST",
+                url: "/Warehouse/StockReceiving/DuyetNhapKho",
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $("#loading").show();
+                },
+                success: function (data) {
+                    if (data.isSucess) {
+                        if (data.title && data.message)
+                            AlertPopup(1, data.title, data.message);
+                        if (data.redirect) {
+                            setTimeout(function () {
+                                window.location.href = data.redirect;
+                            }, 1500);
+                        }
+                    }
+                    else {
+                        AlertPopup(3, data.title, data.message);
+                    }
+                },
+                error: function (data) {
+                    AlertPopup(2, "Lỗi", data.message);
+                },
+                complete: function () {
+                    $("#loading").hide();
+                }
+            });
+		});
+	});
+</script>

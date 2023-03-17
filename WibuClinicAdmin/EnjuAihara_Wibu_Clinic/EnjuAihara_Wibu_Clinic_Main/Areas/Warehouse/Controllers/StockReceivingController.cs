@@ -59,7 +59,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
                 WarehouseDetailId=x.WarehouseDetailModels.Select(y=>y.WarehouseDetailId).FirstOrDefault(),
                 CreateDate=x.CreateDate,
                 BoughtDate=x.BoughtDate,
-                CreateBy=_context.AccountModels.Where(y=>y.AccountId==x.CreateBy).Select(y=>y.AccountModel2.UserName).FirstOrDefault()
+                CreateBy=_context.AccountModels.Where(y=>y.AccountId==x.CreateBy).Select(y=>y.AccountModel2.UserName).FirstOrDefault(),
+                Status=x.Actived==true ? "Đã duyệt":"Chưa được duyệt"
 
             }).ToList();
             var finalResult = PaggingServerSideDatatable.DatatableSearch<StockReceivingSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
@@ -183,15 +184,18 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
             return View(master);
         }
         [HttpPost]
-        public ActionResult Edit(StockReceivingDetailViewModel detail,WarehouseMasterModel master)
+        public JsonResult DuyetNhapKho(WarehouseMasterModel master)
         {
-            _context.WarehouseMasterModels.Where(x=>x.WarehouseMasterId==master.WarehouseMasterId).FirstOrDefault();
+            var updateMaster=_context.WarehouseMasterModels.Where(x=>x.WarehouseMasterId==master.WarehouseMasterId).FirstOrDefault();
+            updateMaster.Actived = true;
+            _context.Entry(updateMaster).State = EntityState.Modified;
+            _context.SaveChanges();
             return Json(new
             {
                 isSucess = true,
                 title = "Thành công",
                 message = "Duyệt thành công",
-                redirect = "Index"
+                redirect = "/Warehouse/StockReceiving/Index"
             });
         }
         public int ConvertDateTimeToInt(DateTime? dateTime)
