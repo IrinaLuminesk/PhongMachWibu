@@ -259,126 +259,199 @@
             SaveData("Warehouse/StockReceiving", "#frmCreate");
             PreventEnterButton();
         });
-    });
-    $(document).on("click", "#btn-add-stockReceivingDetail", function () {
-        var $btn = $(this);
-        $btn.button('loading');
+        $("#btn-add-stockReceivingDetail").on('click', function () {
+            var $btn = $(this);
+            $btn.button('loading');
 
-        var MedicineId = $("#MedicineId").val();
-        var ProviderId = $("#ProviderId").val();
-        var BoughtPrice = $("#BoughtPrice").val();
-        var SalePercentage = $("#SalePercentage").val();
-        var SalePrice = $("#SalePrice").val();
-        var BoughtQuantity = $("#BoughtQuantity").val();
-        var InstockQuantity = $("#InstockQuantity").val();
-        var ExpiredDate = $("#ExpiredDate").val();
-        var MedicineProviderId = $("#MedicineProviderId").val();
-        //if (MedicineId === "") {
-        //    $btn.button('reset');
-        //    alertPopup(false, "Vui lòng chọn thuốc trước khi nhập!");
-        //}
-        //else {
-        //    if (ProductQuantity < 0 || ProductQuantity == "") {
-        //        $btn.button('reset');
-        //        alertPopup(false, "Vui lòng nhập số lượng lớn hơn 0!");
-        //    }
-        //    else {
-        //        if (ProductPrice !== "") {
-        var frmId = "frmCreate";
-        //var isThemMoi = true;
+            var MedicineId = $("#MedicineId").val();
+            var ProviderId = $("#ProviderId").val();
+            var BoughtPrice = $("#BoughtPrice").val();
+            var SalePercentage = $("#SalePercentage").val();
+            var SalePrice = $("#SalePrice").val();
+            var BoughtQuantity = $("#BoughtQuantity").val();
+            var InstockQuantity = $("#InstockQuantity").val();
+            var ExpiredDate = $("#ExpiredDate").val();
+            var MedicineProviderId = $("#MedicineProviderId").val();
+     
+            var frmId = "frmCreate";
 
-        //var $frmEdit = $("body #frmEdit");
-        var $frmCreate = $("body #frmCreate");
-        //if ($frmEdit.length === 0) {
-        //    frmId = "frmCreate";
-        //}
-        //else {
-        //    frmId = "frmEdit";
-        //    isThemMoi = false;
-        //}
-        var data = $("#" + frmId).serialize();
+            var $frmCreate = $("body #frmCreate");
 
-        data = data + "&MedicineId=" + MedicineId;
-        data = data + "&MedicineProviderId=" + MedicineProviderId;
-        data = data + "&ProviderId=" + ProviderId;
-        data = data + "&BoughtPrice=" + BoughtPrice;
-        data = data + "&SalePercentage=" + SalePercentage;
-        data = data + "&SalePrice=" + SalePrice;
-        data = data + "&BoughtQuantity=" + BoughtQuantity;
-        data = data + "&InstockQuantity=" + InstockQuantity;
-        data = data + "&ExpiredDate=" + ExpiredDate;
+            var data = $("#" + frmId).serialize();
 
-        $.ajax({
-            type: "POST",
-            url: "/Warehouse/StockReceiving/InsertProductStock",
-            data: data,
-            success: function (xhr, status, error) {
-                $btn.button('reset');
-                var ct = xhr.getResponseHeader("content-type") || "";
-                if (InstockQuantity > 0) {
-                    
-                    $("#AddConfirmModal").modal("show");
-                    $(document).on("click", "#addConfirm", function () {
-                        
+            data = data + "&MedicineId=" + MedicineId;
+            data = data + "&MedicineProviderId=" + MedicineProviderId;
+            data = data + "&ProviderId=" + ProviderId;
+            data = data + "&BoughtPrice=" + BoughtPrice;
+            data = data + "&SalePercentage=" + SalePercentage;
+            data = data + "&SalePrice=" + SalePrice;
+            data = data + "&BoughtQuantity=" + BoughtQuantity;
+            data = data + "&InstockQuantity=" + InstockQuantity;
+            data = data + "&ExpiredDate=" + ExpiredDate;
+
+            $.ajax({
+                type: "POST",
+                url: "/Warehouse/StockReceiving/InsertProductStock",
+                data: data,
+                success: function (xhr, status, output) {
+                    $btn.button('reset');
+                    var ct = output.getResponseHeader("content-type") || "";
+                    var html = xhr;
+                    if (InstockQuantity > 0) {
+
+                        $("#AddConfirmModal").modal("show");
+                        $(document).on("click", "#addConfirm", function () {
+
+                            if (ct.indexOf('html') > -1) {
+                                $("#stockReceivingDetailTable tbody").html(xhr);
+                                $("#BoughtPrice").val("");
+                                $("#SalePercentage").val("");
+                                $("#SalePrice").val("");
+                                $("#BoughtQuantity").val("");
+                                //$("#InstockQuantity").val("");
+                                $("#ExpiredDate").val("");
+                                $("#AddConfirmModal").modal("hide");
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                AlertPopup(3, "Lỗi", xhr);
+                            }
+
+                        });
+
+                    }
+                    else {
                         if (ct.indexOf('html') > -1) {
                             $("#stockReceivingDetailTable tbody").html(xhr);
                             $("#BoughtPrice").val("");
                             $("#SalePercentage").val("");
                             $("#SalePrice").val("");
                             $("#BoughtQuantity").val("");
-                            $("#InstockQuantity").val("");
+                            //$("#InstockQuantity").val("");
                             $("#ExpiredDate").val("");
-                            $("#AddConfirmModal").modal("hide");
                         }
                         if (ct.indexOf('json') > -1) {
-                            AlertPopup(3, "Lỗi", response);
+                            AlertPopup(3, "Lỗi", xhr);
                         }
-                        
-                    });
-                    
-                }
-                else {
-                    if (ct.indexOf('html') > -1) {
-                        $("#stockReceivingDetailTable tbody").html(xhr);
-                        $("#BoughtPrice").val("");
-                        $("#SalePercentage").val("");
-                        $("#SalePrice").val("");
-                        $("#BoughtQuantity").val("");
-                        $("#InstockQuantity").val("");
-                        $("#ExpiredDate").val("");
                     }
-                    if (ct.indexOf('json') > -1) {
-                        AlertPopup(3, "Lỗi", response);
-                    }
+                },
+                error: function (xhr, status, error) {
+                    $btn.button('reset');
+                    AlertPopup(2, "Lỗi", xhr.message);
                 }
-            },
-            error: function (xhr, status, error) {
-                $btn.button('reset');
-                AlertPopup(2, "Lỗi", xhr.message);
-            }
+            });
         });
-        //} else {
-        //    $btn.button('reset');
-        //    alertPopup(false, "Catalogue chưa thiết lập giá, vui lòng cấu hình giá trong danh mục!");
-        //}
-        // }
-        //}
     });
+    
+    //$(document).on("click", "#btn-add-stockReceivingDetail", function () {
+    //    //var $btn = $(this);
+    //    //$btn.button('loading');
+
+    //    //var MedicineId = $("#MedicineId").val();
+    //    //var ProviderId = $("#ProviderId").val();
+    //    //var BoughtPrice = $("#BoughtPrice").val();
+    //    //var SalePercentage = $("#SalePercentage").val();
+    //    //var SalePrice = $("#SalePrice").val();
+    //    //var BoughtQuantity = $("#BoughtQuantity").val();
+    //    //var InstockQuantity = $("#InstockQuantity").val();
+    //    //var ExpiredDate = $("#ExpiredDate").val();
+    //    //var MedicineProviderId = $("#MedicineProviderId").val();
+    //    ////if (MedicineId === "") {
+    //    ////    $btn.button('reset');
+    //    ////    alertPopup(false, "Vui lòng chọn thuốc trước khi nhập!");
+    //    ////}
+    //    ////else {
+    //    ////    if (ProductQuantity < 0 || ProductQuantity == "") {
+    //    ////        $btn.button('reset');
+    //    ////        alertPopup(false, "Vui lòng nhập số lượng lớn hơn 0!");
+    //    ////    }
+    //    ////    else {
+    //    ////        if (ProductPrice !== "") {
+    //    //var frmId = "frmCreate";
+    //    ////var isThemMoi = true;
+
+    //    ////var $frmEdit = $("body #frmEdit");
+    //    //var $frmCreate = $("body #frmCreate");
+    //    ////if ($frmEdit.length === 0) {
+    //    ////    frmId = "frmCreate";
+    //    ////}
+    //    ////else {
+    //    ////    frmId = "frmEdit";
+    //    ////    isThemMoi = false;
+    //    ////}
+    //    //var data = $("#" + frmId).serialize();
+
+    //    //data = data + "&MedicineId=" + MedicineId;
+    //    //data = data + "&MedicineProviderId=" + MedicineProviderId;
+    //    //data = data + "&ProviderId=" + ProviderId;
+    //    //data = data + "&BoughtPrice=" + BoughtPrice;
+    //    //data = data + "&SalePercentage=" + SalePercentage;
+    //    //data = data + "&SalePrice=" + SalePrice;
+    //    //data = data + "&BoughtQuantity=" + BoughtQuantity;
+    //    //data = data + "&InstockQuantity=" + InstockQuantity;
+    //    //data = data + "&ExpiredDate=" + ExpiredDate;
+
+    //    //$.ajax({
+    //    //    type: "POST",
+    //    //    url: "/Warehouse/StockReceiving/InsertProductStock",
+    //    //    data: data,
+    //    //    success: function (xhr, status, error) {
+    //    //        $btn.button('reset');
+    //    //        var ct = xhr.getResponseHeader("content-type") || "";
+    //    //        var html = xhr;
+    //    //        if (InstockQuantity > 0) {
+                    
+    //    //            $("#AddConfirmModal").modal("show");
+    //    //            $(document).on("click", "#addConfirm", function () {
+                        
+    //    //                if (ct.indexOf('html') > -1) {
+    //    //                    $("#stockReceivingDetailTable tbody").html(html);
+    //    //                    $("#BoughtPrice").val("");
+    //    //                    $("#SalePercentage").val("");
+    //    //                    $("#SalePrice").val("");
+    //    //                    $("#BoughtQuantity").val("");
+    //    //                    $("#InstockQuantity").val("");
+    //    //                    $("#ExpiredDate").val("");
+    //    //                    $("#AddConfirmModal").modal("hide");
+    //    //                }
+    //    //                if (ct.indexOf('json') > -1) {
+    //    //                    AlertPopup(3, "Lỗi", response);
+    //    //                }
+                        
+    //    //            });
+                    
+    //    //        }
+    //    //        else {
+    //    //            if (ct.indexOf('html') > -1) {
+    //    //                $("#stockReceivingDetailTable tbody").html(html);
+    //    //                $("#BoughtPrice").val("");
+    //    //                $("#SalePercentage").val("");
+    //    //                $("#SalePrice").val("");
+    //    //                $("#BoughtQuantity").val("");
+    //    //                $("#InstockQuantity").val("");
+    //    //                $("#ExpiredDate").val("");
+    //    //            }
+    //    //            if (ct.indexOf('json') > -1) {
+    //    //                AlertPopup(3, "Lỗi", response);
+    //    //            }
+    //    //        }
+    //    //    },
+    //    //    error: function (xhr, status, error) {
+    //    //        $btn.button('reset');
+    //    //        AlertPopup(2, "Lỗi", xhr.message);
+    //    //    }
+    //    //});
+    //    ////} else {
+    //    ////    $btn.button('reset');
+    //    ////    alertPopup(false, "Catalogue chưa thiết lập giá, vui lòng cấu hình giá trong danh mục!");
+    //    ////}
+    //    //// }
+    //    ////}
+    //});
     $(document).on("click", ".btn-del-proDetail", function () {
-        // var ProductId = $(this).data("id");
 
         var frmId = "";
-        //var isThemMoi = true;
-
-        //var $frmEdit = $("body #frmEdit");
-        //var $frmCreate = $("body #frmCreate");
-        //if ($frmEdit.length === 0) {
         frmId = "frmCreate";
-        //}
-        //else {
-        //    frmId = "frmEdit";
-        //    isThemMoi = false;
-        //}
+
         var data = $("#" + frmId).serialize();
 
         var STT = $(this).data("row");

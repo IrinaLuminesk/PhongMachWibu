@@ -182,6 +182,18 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
             ViewBag.ListStockRecevingDetail = detailList;
             return View(master);
         }
+        [HttpPost]
+        public ActionResult Edit(StockReceivingDetailViewModel detail,WarehouseMasterModel master)
+        {
+            _context.WarehouseMasterModels.Where(x=>x.WarehouseMasterId==master.WarehouseMasterId).FirstOrDefault();
+            return Json(new
+            {
+                isSucess = true,
+                title = "Thành công",
+                message = "Duyệt thành công",
+                redirect = "Index"
+            });
+        }
         public int ConvertDateTimeToInt(DateTime? dateTime)
         {
             int dateKey;
@@ -221,20 +233,20 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
             ViewBag.Actived = new SelectList(StatusList, "id", "name");
         }
 
+        [HttpPost]
         public ActionResult InsertProductStock(StockReceivingDetailViewModel model, List<StockReceivingDetailViewModel> stockReceivingDetailList)
         {
 
-            //JsonResult json = ValidateWd(model);
-            //if (json != null)
-            //{
-            //    return json;
-            //}
-            //else
-            //{
-                if (stockReceivingDetailList == null)
-                {
+            JsonResult json = ValidateWd(model);
+            if (json != null)
+            {
+                return json;
+            }
+
+            if (stockReceivingDetailList == null)
+            {
                     stockReceivingDetailList = new List<StockReceivingDetailViewModel>();
-                }
+            }
                 var medicine = _context.MedicineModels.FirstOrDefault(p => p.MedicineId == model.MedicineId);
                 if (medicine != null)
                 {
@@ -244,7 +256,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
 
                 stockReceivingDetailList.Add(model);
                 return PartialView("_ProductStockDetailInner", stockReceivingDetailList);
-            //}       
+                   
         }
         public ActionResult SearchMedicineByProvider(Guid ProviderId)
         {
