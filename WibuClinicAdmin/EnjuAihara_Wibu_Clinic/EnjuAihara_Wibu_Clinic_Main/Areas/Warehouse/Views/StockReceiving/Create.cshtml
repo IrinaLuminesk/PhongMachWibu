@@ -314,8 +314,9 @@
             data: data,
             success: function (xhr, status, error) {
                 $btn.button('reset');
+                var ct = xhr.getResponseHeader("content-type") || "";
                 if (InstockQuantity > 0) {
-                    var ct = xhr.getResponseHeader("content-type") || "";
+                    
                     $("#AddConfirmModal").modal("show");
                     $(document).on("click", "#addConfirm", function () {
                         
@@ -337,7 +338,6 @@
                     
                 }
                 else {
-                    var ct = xhr.getResponseHeader("content-type") || "";
                     if (ct.indexOf('html') > -1) {
                         $("#stockReceivingDetailTable tbody").html(xhr);
                         $("#BoughtPrice").val("");
