@@ -274,75 +274,35 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
         {
             if (model.MedicineId==null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống thuốc"
-                });
+                return Json("Vui lòng không để trống thuốc");
             }
             if (model.ProviderId==null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống nhà cung cấp"
-                });
+                return Json("Vui lòng không để trống nhà cung cấp");
             }
             if (model.InstockQuantity == null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống số lượng còn tồn"
-                });
+                return Json("Vui lòng không để trống số lượng còn tồn");
             }
             if (model.BoughtQuantity == null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống số lượng nhập"
-                });
+                return Json("Vui lòng không để trống số lượng nhập");
             }
             if (model.BoughtPrice == null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống giá mua vào"
-                });
+                return Json("Vui lòng không để trống giá mua vào");
             }
             if (model.SalePercentage == null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống chiết khấu"
-                });
+                return Json("Vui lòng không để trống chiết khấu");
             }
             if (model.SalePrice == null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống giá bán"
-                });
+                return Json("Vui lòng không để trống giá bán");
             }
             if (model.ExpiredDate == null)
             {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống hạn sử dụng"
-                });
+                return Json("Vui lòng không để trống hạn sử dụng");
             }
             return null;
         }
