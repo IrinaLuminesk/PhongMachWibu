@@ -431,6 +431,15 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             try
             {
                 var result = _context.DescriptionModels.Where(x => x.DescriptionId == Id).FirstOrDefault();
+
+                foreach (var i in result.DescriptionDetailModels.ToList())
+                {
+                    var WarehouseMedi = _context.WarehouseDetailModels.Where(x => x.WarehouseDetailId == i.MedicineId).FirstOrDefault();
+                    WarehouseMedi.InstockQuantity -= i.Quantity;
+                    _context.Entry(WarehouseMedi).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+
                 result.IsPay = true;
                 _context.Entry(result).State = System.Data.Entity.EntityState.Modified;
                 _context.SaveChanges();
