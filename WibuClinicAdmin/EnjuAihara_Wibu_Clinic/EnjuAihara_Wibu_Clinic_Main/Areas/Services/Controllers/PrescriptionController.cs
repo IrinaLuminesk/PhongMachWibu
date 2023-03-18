@@ -104,6 +104,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 }
             };
             var query = _context.Database.SqlQuery<MedicineSearchViewModel>("exec GetMedicieInWarehouse @MedList, @ProList", param.ToArray()).ToList();
+
+            var temp = query.GroupBy(x => x.MedicineProviderId).Select(x => new { key = x.Key, count = x.Count() }).Where(x => x.count > 1).ToList();
+
+            query.RemoveAll(x => temp.Any(y => y.key == x.MedicineProviderId));
+
             var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
