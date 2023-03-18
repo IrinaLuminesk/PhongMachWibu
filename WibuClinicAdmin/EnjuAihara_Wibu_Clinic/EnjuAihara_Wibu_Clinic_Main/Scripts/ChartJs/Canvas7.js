@@ -42,7 +42,16 @@ function BaoCaoChiTieuTrongNam() {
                     display: true,
                     text: 'Biểu đồ thống kê chi tiêu trong năm',
                     fullSize: true,
-                    size: 20
+                    fontSize: 25,
+                    fontFamily: "Times new roman"
+                },
+                legend: {
+                    labels: {
+                        font: {
+                            family: "Times new roman",
+                            size: 25
+                        }
+                    }
                 }
             }
         },
