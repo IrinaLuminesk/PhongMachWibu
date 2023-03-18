@@ -160,7 +160,10 @@
     <Compile Include="Entities\WardModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\WarehouseModel.cs">
+    <Compile Include="Entities\WarehouseDetailModel.cs">
+      <DependentUpon>Entitiy.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\WarehouseMasterModel.cs">
       <DependentUpon>Entitiy.tt</DependentUpon>
     </Compile>
     <Compile Include="Illness\IllnessData.cs" />

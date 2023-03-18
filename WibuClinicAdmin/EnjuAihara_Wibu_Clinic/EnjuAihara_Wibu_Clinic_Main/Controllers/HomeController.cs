@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using EnjuAihara.Core;
 using EnjuAihara.Utilities.Permission;
+using EnjuAihara.ViewModels.Reports;
+
 namespace EnjuAihara_Wibu_Clinic_Main.Controllers
 {
     public class HomeController : IrinaLumineskController
@@ -26,5 +28,45 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
+
+
+
+        [HttpPost]
+        public JsonResult GetTongTienTienChiTrongNam()
+        {
+            List<MonthMoneyViewModel> temp = GetAllMonth();
+            var query = _context.Database.SqlQuery<MonthMoneyViewModel>("exec GetTongTienTrongNam").ToList();
+            foreach (var i in query)
+            {
+                temp[i.Month - 1].Money += i.Money;
+            }
+            return Json(temp, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public JsonResult GetTongTienTienThuTrongNam()
+        {
+            List<MonthMoneyViewModel> temp = GetAllMonth();
+            var query = _context.Database.SqlQuery<MonthMoneyViewModel>("exec TongTienThuTrongNam").ToList();
+            foreach (var i in query)
+            {
+                temp[i.Month - 1].Money += i.Money;
+            }
+            return Json(temp, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public List<MonthMoneyViewModel> GetAllMonth()
+        {
+            List<MonthMoneyViewModel> temp = new List<MonthMoneyViewModel>();
+            for (int i = 1; i <= 12; i++)
+            {
+                temp.Add(new MonthMoneyViewModel() { Month = i, Money = 0 });
+            }
+            return temp;
+        }
+
+
     }
 }

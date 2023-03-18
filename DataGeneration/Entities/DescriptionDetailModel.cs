@@ -18,8 +18,10 @@ namespace DataGeneration.Entities
         public Nullable<System.Guid> DescriptionId { get; set; }
         public Nullable<System.Guid> MedicineId { get; set; }
         public Nullable<decimal> Quantity { get; set; }
+        public string HowToUseNote { get; set; }
+        public Nullable<double> TotalPay { get; set; }
     
         public virtual DescriptionModel DescriptionModel { get; set; }
-        public virtual MedicineProvideModel MedicineProvideModel { get; set; }
+        public virtual WarehouseDetailModel WarehouseDetailModel { get; set; }
     }
 }

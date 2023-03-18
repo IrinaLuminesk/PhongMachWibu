@@ -23,11 +23,18 @@ namespace DataGeneration.Entities
     
         public System.Guid DescriptionId { get; set; }
         public string DescriptionCode { get; set; }
-        public Nullable<double> Payment { get; set; }
+        public Nullable<double> PhuThu { get; set; }
         public Nullable<System.Guid> CreateBy { get; set; }
         public string Note { get; set; }
+        public Nullable<System.Guid> CreateFor { get; set; }
+        public string AnonymousClient { get; set; }
+        public string AnonymousPhone { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<bool> IsPay { get; set; }
+        public Nullable<int> NumberOfDate { get; set; }
     
         public virtual AccountModel AccountModel { get; set; }
+        public virtual AccountModel AccountModel1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DescriptionDetailModel> DescriptionDetailModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

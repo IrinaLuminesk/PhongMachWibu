@@ -55,6 +55,7 @@ namespace DataGeneration.Entities
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UsersModel> UsersModels { get; set; }
         public virtual DbSet<WardModel> WardModels { get; set; }
-        public virtual DbSet<WarehouseModel> WarehouseModels { get; set; }
+        public virtual DbSet<WarehouseDetailModel> WarehouseDetailModels { get; set; }
+        public virtual DbSet<WarehouseMasterModel> WarehouseMasterModels { get; set; }
     }
 }

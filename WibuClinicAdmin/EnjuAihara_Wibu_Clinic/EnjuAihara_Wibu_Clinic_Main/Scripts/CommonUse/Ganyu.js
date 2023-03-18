@@ -562,6 +562,10 @@ function NumberFormat(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function NumberFormatDot(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 
 function PrintElem(Id) {
     var mywindow = window.open('', 'PRINT', 'height=1000,width=1000');
