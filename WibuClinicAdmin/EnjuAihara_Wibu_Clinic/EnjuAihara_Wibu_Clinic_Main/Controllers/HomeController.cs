@@ -67,6 +67,13 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
             return temp;
         }
 
+        [HttpPost]
+        public JsonResult TopThuocSuDungNhieuNhatTrongNam()
+        {
+            var query = _context.Database.SqlQuery<TopThuocViewModel>("exec TopThuocSuDungNhieu").ToList();
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

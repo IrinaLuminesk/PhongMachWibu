@@ -37,8 +37,11 @@
 			</div>
 			<div class="col-lg-6">
 				<div class="card">
+					<div class="card-header">
+						<label class="m-0">Top 10 thuốc được sử dụng nhiều nhất trong năm @DateTime.Now.Year</label>
+					</div>
 					<div class="card-body">
-						Báo cáo của t
+						<canvas id="canvas5"></canvas>
 					</div>
 				</div>
 			</div>
@@ -70,10 +73,21 @@
 	</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js" integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="~/Scripts/ChartJs/Canvas5.js"></script>
 <script src="~/Scripts/ChartJs/Canvas7.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
+		//Canvas1
+		//Canvas2
+		//Canvas3
+		//Canvas4
+		//Canvas5
+		TopThuocTrongNam()
+		//Canvas6
+		//Canvas7
 		BaoCaoChiTieuTrongNam();
 	});
 </script>

@@ -64,6 +64,7 @@
     <Compile Include="Permission\PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\MonthMoneyViewModel.cs" />
+    <Compile Include="Reports\TopThuocViewModel.cs" />
     <Compile Include="SelectList\SelectBoolItem.cs" />
     <Compile Include="SelectList\SelectGuidItem.cs" />
     <Compile Include="SelectList\SelectListGuidForAutoComplete.cs" />
