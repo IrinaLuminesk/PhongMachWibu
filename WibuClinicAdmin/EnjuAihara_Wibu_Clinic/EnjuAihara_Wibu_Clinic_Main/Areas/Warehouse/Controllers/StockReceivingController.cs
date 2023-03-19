@@ -47,7 +47,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
 
                 && (x.WarehouseDetailModels.Any(z=>z.MedicineProvideModel.MedicineId == MedicineIdSearch) || MedicineIdSearch == null||MedicineIdSearch==Guid.Empty)
                 && (x.WarehouseDetailModels.Any(z => z.MedicineProvideModel.ProviderId == ProviderIdSearch) || ProviderIdSearch == null || ProviderIdSearch == Guid.Empty)
-                // && (x.InstockQuantity == Actived || Actived == null)
+                 && (x.Actived == Actived || Actived == null)
                 && (x.CreateDate >= FromDate || FromDate == null)
                 && (x.CreateDate <= ToDate || ToDate == null)
                 )
@@ -60,7 +60,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
                 CreateDate=x.CreateDate,
                 BoughtDate=x.BoughtDate,
                 CreateBy=_context.AccountModels.Where(y=>y.AccountId==x.CreateBy).Select(y=>y.AccountModel2.UserName).FirstOrDefault(),
-                Status=x.Actived==true ? "Đã duyệt":"Chưa được duyệt"
+                Status=x.Actived==true ? "Đã duyệt":"Chưa duyệt"
 
             }).ToList();
             var finalResult = PaggingServerSideDatatable.DatatableSearch<StockReceivingSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
@@ -231,8 +231,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
 
             List<SelectBoolItem> StatusList = new List<SelectBoolItem>()
             {
-                new SelectBoolItem() { id = true, name = "Còn tồn"},
-                new SelectBoolItem() { id = false, name = "Đã hết trong kho"}
+                new SelectBoolItem() { id = true, name = "Đã duyệt"},
+                new SelectBoolItem() { id = false, name = "Chưa duyệt"}
             };
             ViewBag.Actived = new SelectList(StatusList, "id", "name");
         }
@@ -288,13 +288,14 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
         }
         public JsonResult ValidateWd(StockReceivingDetailViewModel model)
         {
-            if (model.MedicineId==null)
-            {
-                return Json("Vui lòng không để trống thuốc");
-            }
+           
             if (model.ProviderId==null)
             {
                 return Json("Vui lòng không để trống nhà cung cấp");
+            }
+            if (model.MedicineId == null)
+            {
+                return Json("Vui lòng không để trống thuốc");
             }
             if (model.InstockQuantity == null)
             {
@@ -320,7 +321,69 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
             {
                 return Json("Vui lòng không để trống hạn sử dụng");
             }
+            if (model.InstockQuantity < 0)
+            {
+                return Json("Vui lòng không để số lượng tồn bé hơn 0");
+            }
+            if (model.BoughtQuantity <= 0)
+            {
+                return Json("Vui lòng không để số lượng nhập bé hơn hoặc bằng 0");
+            }
+            if (model.BoughtPrice <=0)
+            {
+                return Json("Vui lòng không để giá mua bé hơn hoặc bằng 0");
+            }
+            if (model.SalePercentage <= 0)
+            {
+                return Json("Vui lòng không để chiết khấu bé hơn hoặc bằng 0");
+            }
+            if (model.SalePrice <= 0)
+            {
+                return Json("Vui lòng không để giá bán bé hơn hoặc bằng 0");
+            }
+            if(model.ExpiredDate < DateTime.Now)
+            {
+                return Json("Vui lòng không nhập hàng có hạn sử dụng đã quá hạn sử dụng");
+            }
             return null;
+        }
+        public JsonResult AutoComplete(string searchTerm)
+        {
+            List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>()
+            {
+                new SelectListGuidForAutoComplete()
+                {
+                    text = "--Chọn tất cả--",
+                    value = Guid.Empty
+                }
+            };
+            result.AddRange(_context.ProviderModels.Where(x => (x.ProviderName.Contains(searchTerm) || x.ProviderCode
+            .Contains(searchTerm)) && x.Actived == true).Select(x =>
+            new SelectListGuidForAutoComplete
+            {
+                value = x.ProviderId,
+                text = x.ProviderCode + " | " + x.ProviderName
+            }).Take(10).ToList());
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult AutoComplete2(string searchTerm)
+        {
+            List<SelectListGuidForAutoComplete> result = new List<SelectListGuidForAutoComplete>()
+            {
+                new SelectListGuidForAutoComplete()
+                {
+                    text = "--Chọn tất cả--",
+                    value = Guid.Empty
+                }
+            };
+            result.AddRange(_context.MedicineModels.Where(x => (x.MedicineName.Contains(searchTerm) || x.MedicineCode
+            .Contains(searchTerm)) && x.Actived == true).Select(x =>
+            new SelectListGuidForAutoComplete
+            {
+                value = x.MedicineId,
+                text = x.MedicineCode + " | " + x.MedicineName
+            }).Take(10).ToList());
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

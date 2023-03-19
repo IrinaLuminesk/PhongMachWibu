@@ -85,7 +85,10 @@
                                                         <label for="UserName" class="col-form-label">Nhà cung cấp</label>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        @Html.DropDownList("ProviderId", (SelectList)ViewBag.ProviderIdSearch, "Vui lòng chọn nhà cung cấp", new { @class = "form-control" })
+                                                        <select id="ProviderId" name="ProviderId" class="form-control">
+                                                            <option>--Chọn tất cả--</option>
+                                                        </select>
+                                                        @*@Html.DropDownList("ProviderId", (SelectList)ViewBag.ProviderIdSearch, "Vui lòng chọn nhà cung cấp", new { @class = "form-control" })*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -560,6 +563,6 @@
     $(document).on("click", ".close", function (e) {
         $("#AddConfirmModal").modal("hide");
     });
-    Select2Init("#ProviderId");
+    Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete","#ProviderId");
     Select2Init("#MedicineId");
 </script>

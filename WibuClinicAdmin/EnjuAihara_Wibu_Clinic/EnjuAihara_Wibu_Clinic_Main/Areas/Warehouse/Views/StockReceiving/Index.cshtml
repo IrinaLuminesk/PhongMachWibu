@@ -38,8 +38,10 @@
                                                     <label for="ProviderCodeName" class="col-form-label">Hàng nhập</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    @Html.DropDownList("MedicineIdSearch", (SelectList)ViewBag.MedicineIdSearch, "-- Tất cả --", new { @class = "form-control" })
-
+                                                    @*@Html.DropDownList("MedicineIdSearch", (SelectList)ViewBag.MedicineIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
+                                                    <select id="MedicineIdSearch" name="MedicineIdSearch" class="form-control">
+                                                        <option>--Chọn tất cả--</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,8 +54,10 @@
                                                     <label for="ProviderCodeName" class="col-form-label">Nhà cung cấp</label>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    @Html.DropDownList("ProviderIdSearch", (SelectList)ViewBag.ProviderIdSearch, "-- Tất cả --", new { @class = "form-control" })
-
+                                                    @*@Html.DropDownList("ProviderIdSearch", (SelectList)ViewBag.ProviderIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
+                                                    <select id="ProviderIdSearch" name="ProviderIdSearch" class="form-control">
+                                                        <option>--Chọn tất cả--</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,8 +231,8 @@
 		];
         PaggingServerSideSearchInitialWithClick("Warehouse/StockReceiving", columns, true);
         Select2Init("#Actived");
-        Select2Init("#ProviderIdSearch");
-        Select2Init("#MedicineIdSearch");
+        Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete", "#ProviderIdSearch");
+        Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete2", "#MedicineIdSearch");
 	});
 </script>
 
