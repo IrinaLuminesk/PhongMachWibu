@@ -111,7 +111,7 @@
       <Name>EnjuAihara.EntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\EnjuAihara.ViewModels\EnjuAihara.ViewModels.csproj">
-      <Project>{d0a04ab4-7f1c-423a-b2d1-5f20440971d7}</Project>
+      <Project>{D0A04AB4-7F1C-423A-B2D1-5F20440971D7}</Project>
       <Name>EnjuAihara.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>

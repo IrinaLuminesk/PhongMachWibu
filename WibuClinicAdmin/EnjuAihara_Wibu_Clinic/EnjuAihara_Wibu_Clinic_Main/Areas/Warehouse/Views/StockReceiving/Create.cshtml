@@ -86,7 +86,7 @@
                                                     </div>
                                                     <div class="col-md-10">
                                                         <select id="ProviderId" name="ProviderId" class="form-control">
-                                                            <option>--Chọn tất cả--</option>
+                                                            <option>--Vui lòng chọn nhà cung cấp--</option>
                                                         </select>
                                                         @*@Html.DropDownList("ProviderId", (SelectList)ViewBag.ProviderIdSearch, "Vui lòng chọn nhà cung cấp", new { @class = "form-control" })*@
                                                     </div>
@@ -299,6 +299,8 @@
                 success: function (xhr, status, output) {
                     $btn.button('reset');
                     var ct = output.getResponseHeader("content-type") || "";
+                    console.log(ct.indexOf('html'));
+                    console.log(ct.indexOf('json'));
                     var html = xhr;
                     if (InstockQuantity > 0) {
 

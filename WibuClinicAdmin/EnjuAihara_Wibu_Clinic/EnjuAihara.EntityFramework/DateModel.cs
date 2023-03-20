@@ -20,10 +20,12 @@ namespace EnjuAihara.EntityFramework
         public Nullable<System.Guid> BacSiKham { get; set; }
         public Nullable<System.Guid> YTaXacNhan { get; set; }
         public Nullable<System.DateTime> AppointmentDate { get; set; }
-        public Nullable<System.Guid> PaymentStatus { get; set; }
-        public Nullable<System.Guid> DateStatus { get; set; }
+        public string HinhThucThanhToan { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
-        public Nullable<double> Payment { get; set; }
+        public Nullable<double> SoTienThanhToan { get; set; }
+        public Nullable<bool> TrangThaiCuocHen { get; set; }
+        public string Note { get; set; }
+        public Nullable<bool> TrangThaiThanhToan { get; set; }
     
         public virtual AccountModel AccountModel { get; set; }
         public virtual AccountModel AccountModel1 { get; set; }
