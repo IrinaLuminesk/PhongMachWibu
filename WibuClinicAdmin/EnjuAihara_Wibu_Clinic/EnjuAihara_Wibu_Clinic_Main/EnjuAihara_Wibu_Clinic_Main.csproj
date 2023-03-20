@@ -189,6 +189,8 @@
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\Services\Controllers\PrescriptionController.cs" />
     <Compile Include="Areas\Services\ServicesAreaRegistration.cs" />
+    <Compile Include="Areas\Warehouse\Controllers\StockReceivingController.cs" />
+    <Compile Include="Areas\Warehouse\WarehouseAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2170,6 +2172,7 @@
     <Folder Include="Areas\Reports\Controllers\" />
     <Folder Include="Areas\Reports\Data\" />
     <Folder Include="Areas\Reports\Views\Shared\" />
+    <Folder Include="Areas\Warehouse\Data\" />
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
   </ItemGroup>
@@ -2260,6 +2263,13 @@
     <Content Include="Areas\Services\Views\Prescription\Detail.cshtml" />
     <Content Include="Areas\Services\Views\Prescription\Edit.cshtml" />
     <Content Include="Areas\Services\Views\Prescription\GetPayMent.cshtml" />
+    <Content Include="Areas\Warehouse\Views\web.config" />
+    <Content Include="Areas\Warehouse\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Warehouse\Views\StockReceiving\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\StockReceiving\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\Warehouse\Views\StockReceiving\Create.cshtml" />
+    <Content Include="Areas\Warehouse\Views\StockReceiving\_ProductStockDetailInner.cshtml" />
+    <Content Include="Areas\Warehouse\Views\StockReceiving\Detail.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

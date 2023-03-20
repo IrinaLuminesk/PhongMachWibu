@@ -1,0 +1,240 @@
+﻿<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lý nhập kho</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Warehouse/StockReceiving/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="frmSearch">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-3 text-center">
+                                                    <label for="ProviderCode" class="col-form-label">Mã nhập kho</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="ImportCodeSearch" name="ImportCodeSearch" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-3 text-center">
+                                                    <label for="ProviderCodeName" class="col-form-label">Hàng nhập</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @*@Html.DropDownList("MedicineIdSearch", (SelectList)ViewBag.MedicineIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
+                                                    <select id="MedicineIdSearch" name="MedicineIdSearch" class="form-control">
+                                                        <option>--Chọn tất cả--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-3 text-center">
+                                                    <label for="ProviderCodeName" class="col-form-label">Nhà cung cấp</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @*@Html.DropDownList("ProviderIdSearch", (SelectList)ViewBag.ProviderIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
+                                                    <select id="ProviderIdSearch" name="ProviderIdSearch" class="form-control">
+                                                        <option>--Chọn tất cả--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row g-3 align-items-center">
+                                                <div class="col-md-3 text-center">
+                                                    <label for="Actived" class="col-form-label">Trạng thái</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @*<input type="text" id="AccountName" name="AccountName" class="form-control">*@
+                                                    @Html.DropDownList("Actived", (SelectList)ViewBag.Actived, "-- Tất cả --", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-3 text-center">
+                                                        <label for="FromDate" class="col-form-label">Được tạo từ ngày</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="date" id="FromDate" name="FromDate" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-3 text-center">
+                                                        <label for="ToDate" class="col-form-label">Được tạo đến ngày</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="date" id="ToDate" name="ToDate" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="row" style="margin-top: 15px">
+                                        <div class="col-md-12 text-center">
+                                            <button type="button" class="btn btn-primary" id="btn-search">
+                                                <i class="fas fa-search"></i>
+                                                Tìm Kiếm
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="divSearchResult">
+                                @Html.Partial("_PaggingServerSide")
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		var columns = [
+			{
+				"data": "STT",
+				"className": "text-center",
+				"orderable": true,
+            },
+            {
+                "data": "ImportCode",
+                "className": "text-center",
+                "orderable": true,
+            },
+			//{
+   //             "data": "MedicineCode",
+			//	"className": "text-center",
+			//	"orderable": true,
+			//},
+			//{
+   //             "data": "MedicineName",
+			//	"className": "text-center",
+			//	"orderable": true,
+			//},
+   //         {
+   //             "data": "ProviderName",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
+   //         {
+   //             "data": "BoughtQuantity",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
+
+			//{
+			//	"data": "Status",
+			//	"className": "text-center",
+			//	"orderable": true,
+   //         },
+   //         {
+   //             "data": "ExpiryString",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
+   //         {
+   //             "data": "BroughtPrice",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //             "render": function (data, type, row) {
+   //                 if (data != null && data != 0) {
+   //                     return CurrencyFormat(data);
+   //                 }
+   //                 return data;
+   //             }
+   //         },
+   //         {
+   //             "data": "SalePercentage",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //         },
+   //         {
+   //             "data": "SalePrice",
+   //             "className": "text-center",
+   //             "orderable": true,
+   //             "render": function (data, type, row) {
+   //                 if (data != null && data != 0) {
+   //                     return CurrencyFormat(data);
+   //                 }
+   //                 return data;
+   //             }
+   //         },
+            {
+                "data": "BoughtDateString",
+                "className": "text-center",
+                "orderable": true,
+            },
+            {
+                "data": "CreateDateString",
+                "className": "text-center",
+                "orderable": true,
+            },
+            {
+                "data": "CreateBy",
+                "className": "text-center",
+                "orderable": true,
+            },
+            {
+                "data": "Status",
+                "className": "text-center",
+                "orderable": true,
+            },
+			{
+                "data": "WarehouseMasterId",
+				"className": "text-center",
+				"orderable": false,
+				"render": function (data, type, row) {
+					if (data != "" && data != null) {
+                        var s = '<a class="btn btn-secondary ml-2" href="/Warehouse/StockReceiving/Detail/' + data + '"><i class="fa fa-book"></i>Xem chi tiết</a>';
+                        return s;
+					}
+					return "";
+				}
+			}
+		];
+        PaggingServerSideSearchInitialWithClick("Warehouse/StockReceiving", columns, true);
+        Select2Init("#Actived");
+        Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete", "#ProviderIdSearch");
+        Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete2", "#MedicineIdSearch");
+	});
+</script>
+
+
+

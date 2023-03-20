@@ -47,6 +47,12 @@ namespace EnjuAihara.Utilities.RandomString
             string[] temp = code.Split('-');
             return CreateCode(temp[1], temp[0]);
         }
+        public static string WarehouseCodeGen()
+        {
+            string code = _context.WarehouseMasterModels.OrderByDescending(x => x.ImportCode).Take(1).FirstOrDefault().ImportCode;
+            string[] temp = code.Split('-');
+            return CreateCode(temp[1], temp[0]);
+        }
         public static string CreateCode(string num, string table)
         {
             string code = table;

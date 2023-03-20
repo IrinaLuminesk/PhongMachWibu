@@ -1,0 +1,568 @@
+﻿<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Nhập kho</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="pull-right">
+
+                    <button type="button" class="btn btn-primary" id="btn-add">
+                        <i class="fa fa-plus-square"></i>
+                        Thêm mới
+                    </button>
+                    <a class="btn btn-info" href="/Warehouse/StockReceiving"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="frmCreate" enctype='multipart/form-data'>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="UserName" class="col-form-label">Kho</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="text" value="Phòng mạch wibu" disabled="disabled" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Người tạo</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="text" id="CreateBy" name="CreateBy" class="form-control" readonly value=@ViewBag.CreateBy>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 ">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Ngày nhập kho</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="BoughtDate" name="BoughtDate" class="form-control" value="@ViewBag.DateNow">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Ngày tạo</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="CreateDate" name="CreateDate" class="form-control" readonly value="@ViewBag.DateNow">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="UserName" class="col-form-label">Nhà cung cấp</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <select id="ProviderId" name="ProviderId" class="form-control">
+                                                            <option>--Chọn tất cả--</option>
+                                                        </select>
+                                                        @*@Html.DropDownList("ProviderId", (SelectList)ViewBag.ProviderIdSearch, "Vui lòng chọn nhà cung cấp", new { @class = "form-control" })*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Tên sản phẩm</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @*@Html.DropDownList("MedicineId", null, null, new { @class = "form-control" })*@
+                                                        <select class="form-control" id="MedicineId" name="MedicineId"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="UserName" class="col-form-label">Số lượng còn tồn</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="number" id="InstockQuantity" name="InstockQuantity" class="form-control" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Số lượng nhập</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="number" id="BoughtQuantity" name="BoughtQuantity" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-5 ">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Giá mua vào</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="number" id="BoughtPrice" name="BoughtPrice" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Chiết khấu</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="number" id="SalePercentage" name="SalePercentage" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Giá bán</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="number" id="SalePrice" name="SalePrice" class="form-control" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-2 text-center">
+                                                        <label for="Password" class="col-form-label">Hạn sử dụng</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="date" id="ExpiredDate" name="ExpiredDate" class="form-control" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="hidden" id="MedicineProviderId" name="MedicineProviderId" class="form-control">
+                                            </div>
+                                            <div class="col-md-2">
+
+                                                <a class="btn btn-danger" id="btn-del-product">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+                                                <a class="btn btn-primary" id="btn-add-stockReceivingDetail">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                    <table id="stockReceivingDetailTable" class="table table-bordered table-hover no-footer detail-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">STT</th>
+                                                <th>Mã sản phẩm</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Số lượng</th>
+                                                <th>Giá mua</th>
+                                                <th>Chiết khấu</th>
+                                                <th>Hạn sử dụng</th>
+                                                <th>Giá bán</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="stockReceivingDetailList">
+                                            @if (Model != null && Model.Count() > 0)
+                                            {
+                                                @Html.Partial("_ProductStockDetailInner")
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td class="text-center" colspan="9">
+                                                        Vui lòng thêm sản phẩm
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        @*<tfoot id="accessoryDetail">
+                                                <tr>
+                                                    <td colspan="5" class="text-right">
+                                                        <strong>@LanguageResource.SaleOrder_SubTotal</strong>
+                                                    </td>
+                                                    <td id="total" class="text-right"></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>*@
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="AddConfirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Warning</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-question">Sản phẩm này trong kho vẫn còn tồn, bạn có chắc muốn nhập không?</p>
+                    <p class="text-warning"><small>Một khi đã tạo dữ liệu nhập hàng là không thể sửa !</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" id="cancel" data-dismiss="modal" value="Hủy">
+                    <input type="button" class="btn btn-info" value="Đồng ý" id="addConfirm">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn-add").on("click", function () {
+            SaveData("Warehouse/StockReceiving", "#frmCreate");
+            PreventEnterButton();
+        });
+        $("#btn-add-stockReceivingDetail").on('click', function () {
+            var $btn = $(this);
+            $btn.button('loading');
+
+            var MedicineId = $("#MedicineId").val();
+            var ProviderId = $("#ProviderId").val();
+            var BoughtPrice = $("#BoughtPrice").val();
+            var SalePercentage = $("#SalePercentage").val();
+            var SalePrice = $("#SalePrice").val();
+            var BoughtQuantity = $("#BoughtQuantity").val();
+            var InstockQuantity = $("#InstockQuantity").val();
+            var ExpiredDate = $("#ExpiredDate").val();
+            var MedicineProviderId = $("#MedicineProviderId").val();
+     
+            var frmId = "frmCreate";
+
+            var $frmCreate = $("body #frmCreate");
+
+            var data = $("#" + frmId).serialize();
+
+            data = data + "&MedicineId=" + MedicineId;
+            data = data + "&MedicineProviderId=" + MedicineProviderId;
+            data = data + "&ProviderId=" + ProviderId;
+            data = data + "&BoughtPrice=" + BoughtPrice;
+            data = data + "&SalePercentage=" + SalePercentage;
+            data = data + "&SalePrice=" + SalePrice;
+            data = data + "&BoughtQuantity=" + BoughtQuantity;
+            data = data + "&InstockQuantity=" + InstockQuantity;
+            data = data + "&ExpiredDate=" + ExpiredDate;
+
+            $.ajax({
+                type: "POST",
+                url: "/Warehouse/StockReceiving/InsertProductStock",
+                data: data,
+                success: function (xhr, status, output) {
+                    $btn.button('reset');
+                    var ct = output.getResponseHeader("content-type") || "";
+                    var html = xhr;
+                    if (InstockQuantity > 0) {
+
+                        $("#AddConfirmModal").modal("show");
+                        $(document).on("click", "#addConfirm", function () {
+
+                            if (ct.indexOf('html') > -1) {
+                                $("#stockReceivingDetailTable tbody").html(xhr);
+                                $("#BoughtPrice").val("");
+                                $("#SalePercentage").val("");
+                                $("#SalePrice").val("");
+                                $("#BoughtQuantity").val("");
+                                //$("#InstockQuantity").val("");
+                                $("#ExpiredDate").val("");
+                                $("#AddConfirmModal").modal("hide");
+                            }
+                            if (ct.indexOf('json') > -1) {
+                                AlertPopup(3, "Lỗi", xhr);
+                            }
+
+                        });
+
+                    }
+                    else {
+                        if (ct.indexOf('html') > -1) {
+                            $("#stockReceivingDetailTable tbody").html(xhr);
+                            $("#BoughtPrice").val("");
+                            $("#SalePercentage").val("");
+                            $("#SalePrice").val("");
+                            $("#BoughtQuantity").val("");
+                            //$("#InstockQuantity").val("");
+                            $("#ExpiredDate").val("");
+                        }
+                        if (ct.indexOf('json') > -1) {
+                            AlertPopup(3, "Lỗi", xhr);
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $btn.button('reset');
+                    AlertPopup(2, "Lỗi", xhr.message);
+                }
+            });
+        });
+    });
+    
+    //$(document).on("click", "#btn-add-stockReceivingDetail", function () {
+    //    //var $btn = $(this);
+    //    //$btn.button('loading');
+
+    //    //var MedicineId = $("#MedicineId").val();
+    //    //var ProviderId = $("#ProviderId").val();
+    //    //var BoughtPrice = $("#BoughtPrice").val();
+    //    //var SalePercentage = $("#SalePercentage").val();
+    //    //var SalePrice = $("#SalePrice").val();
+    //    //var BoughtQuantity = $("#BoughtQuantity").val();
+    //    //var InstockQuantity = $("#InstockQuantity").val();
+    //    //var ExpiredDate = $("#ExpiredDate").val();
+    //    //var MedicineProviderId = $("#MedicineProviderId").val();
+    //    ////if (MedicineId === "") {
+    //    ////    $btn.button('reset');
+    //    ////    alertPopup(false, "Vui lòng chọn thuốc trước khi nhập!");
+    //    ////}
+    //    ////else {
+    //    ////    if (ProductQuantity < 0 || ProductQuantity == "") {
+    //    ////        $btn.button('reset');
+    //    ////        alertPopup(false, "Vui lòng nhập số lượng lớn hơn 0!");
+    //    ////    }
+    //    ////    else {
+    //    ////        if (ProductPrice !== "") {
+    //    //var frmId = "frmCreate";
+    //    ////var isThemMoi = true;
+
+    //    ////var $frmEdit = $("body #frmEdit");
+    //    //var $frmCreate = $("body #frmCreate");
+    //    ////if ($frmEdit.length === 0) {
+    //    ////    frmId = "frmCreate";
+    //    ////}
+    //    ////else {
+    //    ////    frmId = "frmEdit";
+    //    ////    isThemMoi = false;
+    //    ////}
+    //    //var data = $("#" + frmId).serialize();
+
+    //    //data = data + "&MedicineId=" + MedicineId;
+    //    //data = data + "&MedicineProviderId=" + MedicineProviderId;
+    //    //data = data + "&ProviderId=" + ProviderId;
+    //    //data = data + "&BoughtPrice=" + BoughtPrice;
+    //    //data = data + "&SalePercentage=" + SalePercentage;
+    //    //data = data + "&SalePrice=" + SalePrice;
+    //    //data = data + "&BoughtQuantity=" + BoughtQuantity;
+    //    //data = data + "&InstockQuantity=" + InstockQuantity;
+    //    //data = data + "&ExpiredDate=" + ExpiredDate;
+
+    //    //$.ajax({
+    //    //    type: "POST",
+    //    //    url: "/Warehouse/StockReceiving/InsertProductStock",
+    //    //    data: data,
+    //    //    success: function (xhr, status, error) {
+    //    //        $btn.button('reset');
+    //    //        var ct = xhr.getResponseHeader("content-type") || "";
+    //    //        var html = xhr;
+    //    //        if (InstockQuantity > 0) {
+                    
+    //    //            $("#AddConfirmModal").modal("show");
+    //    //            $(document).on("click", "#addConfirm", function () {
+                        
+    //    //                if (ct.indexOf('html') > -1) {
+    //    //                    $("#stockReceivingDetailTable tbody").html(html);
+    //    //                    $("#BoughtPrice").val("");
+    //    //                    $("#SalePercentage").val("");
+    //    //                    $("#SalePrice").val("");
+    //    //                    $("#BoughtQuantity").val("");
+    //    //                    $("#InstockQuantity").val("");
+    //    //                    $("#ExpiredDate").val("");
+    //    //                    $("#AddConfirmModal").modal("hide");
+    //    //                }
+    //    //                if (ct.indexOf('json') > -1) {
+    //    //                    AlertPopup(3, "Lỗi", response);
+    //    //                }
+                        
+    //    //            });
+                    
+    //    //        }
+    //    //        else {
+    //    //            if (ct.indexOf('html') > -1) {
+    //    //                $("#stockReceivingDetailTable tbody").html(html);
+    //    //                $("#BoughtPrice").val("");
+    //    //                $("#SalePercentage").val("");
+    //    //                $("#SalePrice").val("");
+    //    //                $("#BoughtQuantity").val("");
+    //    //                $("#InstockQuantity").val("");
+    //    //                $("#ExpiredDate").val("");
+    //    //            }
+    //    //            if (ct.indexOf('json') > -1) {
+    //    //                AlertPopup(3, "Lỗi", response);
+    //    //            }
+    //    //        }
+    //    //    },
+    //    //    error: function (xhr, status, error) {
+    //    //        $btn.button('reset');
+    //    //        AlertPopup(2, "Lỗi", xhr.message);
+    //    //    }
+    //    //});
+    //    ////} else {
+    //    ////    $btn.button('reset');
+    //    ////    alertPopup(false, "Catalogue chưa thiết lập giá, vui lòng cấu hình giá trong danh mục!");
+    //    ////}
+    //    //// }
+    //    ////}
+    //});
+    $(document).on("click", ".btn-del-proDetail", function () {
+
+        var frmId = "";
+        frmId = "frmCreate";
+
+        var data = $("#" + frmId).serialize();
+
+        var STT = $(this).data("row");
+        data = data + "&STT=" + STT;
+ 
+        $.ajax({
+            type: "POST",
+            url: "/Warehouse/StockReceiving/RemoveMedicineStock",
+            data: data,
+            success: function (xhr, status, error) {
+                if (xhr.Message != "" && xhr.Message != null && xhr.Message != undefined) {
+                    alertPopup(false, xhr.Message);
+                }
+                else {
+                    $("#stockReceivingDetailTable tbody#stockReceivingDetailList").html("");
+                    $("#stockReceivingDetailTable tbody#stockReceivingDetailList").html(xhr);
+                }
+            },
+            error: function (xhr, status, error) {
+                alertPopup(false, xhr.responseText);
+            }
+        });
+    });
+    $(document).on("change", "#BoughtPrice", function () {
+        if ($("#SalePercentage").val() != null) {
+            var money = $("#SalePercentage").val() * $("#BoughtPrice").val();
+            $("#SalePrice").val(parseFloat(money));
+        }
+    });
+    $(document).on("change", "#SalePercentage", function () {
+        if ($("#BoughtPrice").val() != null) {
+            var money = $("#SalePercentage").val() * $("#BoughtPrice").val();
+            $("#SalePrice").val(parseFloat(money));
+        }
+    });
+     $(document).on("change", "#ProviderId", function () {
+            var provider = $(this).val();
+            if (provider != "") {
+                UpdateMedicineDropdownProviderId(provider);
+            }
+     });
+    $(document).on("change", "#MedicineId", function () {
+        var medicine = $(this).val();
+        var provider = $("#ProviderId").val();
+        if (provider != "" && medicine!="") {
+            UpdateMedicineProviderId(provider, medicine);
+            CheckInStock(medicine);
+        }
+    });
+        // Cập nhật dropdown Product nếu thay đổi entity
+        function UpdateMedicineDropdownProviderId(provider) {
+            $.ajax({
+                type: "POST",
+                url: "/Warehouse/StockReceiving/SearchMedicineByProvider",
+                data: {
+                    ProviderId: provider
+                },
+                success: function (thuoc) {
+                    $("#MedicineId").html("");
+                    $("#MedicineId").append("<option value=''>Vui lòng chọn thuốc</option>");
+                    if (thuoc.length > 0) {
+                        $.each(thuoc, function (index, value) {
+                            $("#MedicineId").append("<option value='" + value.Id + "'>" + value.Name + "</option>");
+                        });
+                    }
+                }
+            });
+    }
+    function UpdateMedicineProviderId(provider,medicine) {
+        $.ajax({
+            type: "POST",
+            url: "/Warehouse/StockReceiving/SearchMedicineProviderIdByProviderAndMedicine",
+            data: {
+                ProviderId: provider,
+                MedicineId:medicine
+            },
+            success: function (thuocncc) {
+                $("#MedicineProviderId").val(thuocncc);
+            }
+        });
+    }
+    function CheckInStock(medicine) {
+        $("#InstockQuantity").val(0);
+        $.ajax({
+            type: "POST",
+            url: "/Warehouse/StockReceiving/GetInStockQuantity",
+            data: {
+                Medicine: medicine
+            },
+            success: function (sl) {
+                $("#InstockQuantity").val(sl);
+            }
+        });
+    }
+    $(document).on("click", "#btn-del-product", function () {
+        $("#BoughtPrice").val("");
+        $("#SalePercentage").val("");
+        $("#SalePrice").val("");
+        $("#BoughtQuantity").val("");
+        $("#InstockQuantity").val("");
+        $("#ExpiredDate").val("");
+    });
+    $(document).on("click", "#cancel", function (e) {
+        $("#AddConfirmModal").modal("hide");
+    });
+    $(document).on("click", ".close", function (e) {
+        $("#AddConfirmModal").modal("hide");
+    });
+    Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete","#ProviderId");
+    Select2Init("#MedicineId");
+</script>

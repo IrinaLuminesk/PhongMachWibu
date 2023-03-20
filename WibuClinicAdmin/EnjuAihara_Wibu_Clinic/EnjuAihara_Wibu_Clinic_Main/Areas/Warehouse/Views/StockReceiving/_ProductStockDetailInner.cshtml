@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EnjuAihara.ViewModels.Warehouse.StockReceivingDetailViewModel>
+@{
+    int i = 0;
+    int k = -1;
+}
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        i++;
+        k++;
+
+        string background_color = "";
+
+        <tr class="@background_color">
+            <td class="text-center">
+                @i
+                <input type="hidden" name="stockReceivingDetailList[@k].STT" value="@i">
+                <input type="hidden" name="stockReceivingDetailList[@k].MedicineId" value="@item.MedicineId">
+                <input type="hidden" name="stockReceivingDetailList[@k].MedicineProviderId" value="@item.MedicineProviderId">
+                <input type="hidden" name="stockReceivingDetailList[@k].MedicineCode" value="@item.MedicineCode">
+                <input type="hidden" name="stockReceivingDetailList[@k].MedicineName" value="@item.MedicineName">
+                <input type="hidden" name="stockReceivingDetailList[@k].ProviderId" value="@item.ProviderId">
+                <input type="hidden" name="stockReceivingDetailList[@k].BoughtPrice" value="@item.BoughtPrice">
+                <input type="hidden" name="stockReceivingDetailList[@k].SalePercentage" value="@item.SalePercentage">
+                <input type="hidden" name="stockReceivingDetailList[@k].SalePrice" value="@item.SalePrice">
+                <input type="hidden" name="stockReceivingDetailList[@k].BoughtQuantity" value="@item.BoughtQuantity">
+                <input type="hidden" name="stockReceivingDetailList[@k].InstockQuantity" value="@item.BoughtQuantity">
+                <input type="hidden" name="stockReceivingDetailList[@k].ExpiredDate" value="@item.ExpiredDate">
+                @*<input type="hidden" name="stockReceivingDetailList[@k].Quantity" value="@item.Quantity">*@
+                @*<input type="hidden" name="stockReceivingDetailList[@k].Price" value="@item.Price">*@
+                @*<input type="hidden" name="stockReceivingDetailList[@k].DetailNote" value="@item.DetailNote">*@
+                @*<input type="hidden" name="stockReceivingDetailList[@k].UnitPrice" class="stockReceivingDetailList-UnitPrice" value="@item.UnitPrice" disabled data-row="@k">*@
+
+            </td>
+            <td class="text-left">
+                @Html.DisplayFor(p => item.MedicineCode)
+            </td>
+            <td class="wordwrap">
+                @Html.DisplayFor(p => item.MedicineName)
+            </td>
+            <td>
+                @Html.DisplayFor(p => item.BoughtQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(p => item.BoughtPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(p => item.SalePercentage)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(p => item.ExpiredDate)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(p => item.SalePrice)
+            </td>
+            @*<td class="text-right">
+            @item.Price.FormatCurrency()
+        </td>
+        <td class="text-right">
+            @item.UnitPrice.FormatCurrency()
+        </td>*@
+            <td class="text-center">
+                <a class="btn btn-danger btn-del-proDetail" data-row="@i" data-id="@item.MedicineId">
+                    Xóa
+                </a>
+            </td>
+        </tr>
+    }
+}

@@ -85,15 +85,15 @@
                 return false;
             }
         });
-        $("#FunctionName").on("keypress", function (event) {
-            var regex = new RegExp("^[a-zA-Z0-9_]+$");
-            var regex2 = new RegExp("^[a-zA-Z0-9 ]+$");
-            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-            if (!regex.test(key) && !regex2.test(key)) {
-                event.preventDefault();
-                return false;
-            }
-        });
+        //$("#FunctionName").on("keypress", function (event) {
+        //    var regex = new RegExp("^[a-zA-Z0-9_]+$");
+        //    var regex2 = new RegExp("^[a-zA-Z0-9 ]+$");
+        //    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        //    if (!regex.test(key) && !regex2.test(key)) {
+        //        event.preventDefault();
+        //        return false;
+        //    }
+        //});
     });
 
 

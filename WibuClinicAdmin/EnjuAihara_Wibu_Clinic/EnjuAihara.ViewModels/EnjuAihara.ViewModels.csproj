@@ -73,6 +73,8 @@
     <Compile Include="Services\PrescriptionCreateViewModel.cs" />
     <Compile Include="Services\PrescriptionDetailCreateViewModel.cs" />
     <Compile Include="Services\PrescriptionSearchViewModel.cs" />
+    <Compile Include="Warehouse\StockReceivingDetailViewModel.cs" />
+    <Compile Include="Warehouse\StockReceivingSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnjuAihara.EntityFramework\EnjuAihara.EntityFramework.csproj">
