@@ -20,19 +20,21 @@ function BaoCaoKho() {
         labels: labels,
         datasets: [
             {
-                label: 'Số lượng xuất',
-                data: SLXuat,
+                label: 'Số lượng nhập',
+                data: SLNhap,
                 borderColor: '#feafbe',
                 backgroundColor: '#feafbe',
                 stack: 'single',
-                type: 'bar'
+                type: 'bar',
+                order: 1,
             },
             {
-                label: 'Số lượng nhập',
-                data: SLNhap,
+                label: 'Số lượng xuất',
+                data: SLXuat,
                 borderColor: '#877fae',
                 backgroundColor: '#877fae',
-                stack: 'single'
+                stack: 'single',
+                order: 0,
             }
         ]
     };
@@ -40,6 +42,7 @@ function BaoCaoKho() {
         type: 'line',
         data: data,
         options: {
+            responsive: true,
             plugins: {
                 title: {
                     display: true,
@@ -48,7 +51,8 @@ function BaoCaoKho() {
             },
             scales: {
                 y: {
-                    stacked: true
+                    beginatzero: true,
+                    stacked: false
                 }
             }
         },
