@@ -66,6 +66,27 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
             }
             return temp;
         }
+        [HttpPost]
+        public JsonResult WarehouseReport()
+        {
+            List<WarehouseReportViewModel> temp = GetAllMonthForWarehouseReport();
+            var query = _context.Database.SqlQuery<WarehouseReportViewModel>("exec sp_GetBaoCaoNhapXuatThuoc").ToList();
+            foreach (var i in query)
+            {
+                temp[i.ThangNhap - 1].SLNhap += i.SLNhap;
+                temp[i.ThangNhap - 1].SLXuat += i.SLXuat;
+            }
+            return Json(temp, JsonRequestBehavior.AllowGet);
+        }
+        public List<WarehouseReportViewModel> GetAllMonthForWarehouseReport()
+        {
+            List<WarehouseReportViewModel> temp = new List<WarehouseReportViewModel>();
+            for (int i = 1; i <= 12; i++)
+            {
+                temp.Add(new WarehouseReportViewModel() { ThangNhap = i, SLNhap = 0,SLXuat=0 });
+            }
+            return temp;
+        }
 
 
     }
