@@ -95,6 +95,21 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
             return Json(query, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult CacBenhThuongGap()
+        {
+            var pastYear = DateTime.Now.AddYears(-1).Year;
+            //Where(x => ((DateTime)x.DescriptionModel.CreateDate).Year == pastYear)
+            var list = _context.DescriptionIllnessModels.GroupBy(x => x.IllnessModel.IllnessName)
+                .Select(x => new CacBenhThuongGapViewModel
+                {
+                    TenBenh = x.Key,
+                    SLBenh = x.Count()
+                })
+                .OrderBy(x => x.TenBenh).Take(10).ToList();
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

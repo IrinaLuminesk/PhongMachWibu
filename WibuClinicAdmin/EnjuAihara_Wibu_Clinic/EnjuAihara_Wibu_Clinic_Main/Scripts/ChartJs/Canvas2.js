@@ -1,46 +1,37 @@
-﻿function TopThuocTrongNam() {
-	let TenThuoc = [];
-	let SoLuongSuDung = [];
+﻿function CacBenhThuongGap() {
+    let TenBenh = [];
+    let SoLuongBenh = [];
 
 
     const data = {
-        labels: TenThuoc,
+        labels: TenBenh,
         datasets: [{
-            data: SoLuongSuDung,
+            label: "Các bệnh thường gặp",
+            data: SoLuongBenh,
             backgroundColor: [
-                '#f197a470',
-                '#a1ebdb',
-                '#e0cbd1',
-                '#89d4e7',
-                '#fff0d9',
+                '#fedcae',
+                '#f2acae',
+                '#9c97d3',
+                '#da7771',
+                '#f5e460',
                 '#1f7575',
                 '#cc8070',
                 '#f7f4fb',
                 '#e3d4eb',
                 '#e0b9cc'
-            ]
+            ],
+            hoverOffset: 4
         }]
     };
 
     const config = {
-        type: 'polarArea',
+        type: 'pie',
         data: data,
         options: {
-            scales: {
-                r: {
-                    pointLabels: {
-                        display: true,
-                        font: {
-                            size: 11,
-                            weight: "bold"
-                        }
-                    }
-                }
-            },
             plugins: {
                 title: {
                     display: true,
-                    text: 'Biểu đồ thống kê thuốc sử dụng nhiều trong năm',
+                    text: 'Biểu đồ thống kê các bệnh thường gặp tại phòng mạch',
                     fullSize: true,
                     fontSize: 25,
                     fontFamily: "Times new roman"
@@ -60,19 +51,19 @@
         maintainAspectRatio: false
     };
 
-	var canvas = $("#canvas5");
+    var canvas = $("#canvas2");
     const chart = new Chart(canvas, config);
-    GetDataTopThuoc(chart, TenThuoc, SoLuongSuDung);
-	window.addEventListener('resize', function () { chart.resize() })
+    GetDataTopBenh(chart, TenBenh, SoLuongBenh);
+    window.addEventListener('resize', function () { chart.resize() })
 }
 
-function GetDataTopThuoc(chart, TenThuoc, SoLuongSuDung) {
+function GetDataTopBenh(chart, TenBenh, SoLuongBenh) {
     axios
-        .post("/Home/TopThuocSuDungNhieuNhatTrongNam")
+        .post("/Home/CacBenhThuongGap")
         .then(res => {
             $.each(res.data, function (index, value) {
-                TenThuoc.push(value.TenThuoc);
-                SoLuongSuDung.push(value.SoLuong);
+                TenBenh.push(value.TenBenh);
+                SoLuongBenh.push(value.SLBenh);
 
             });
             chart.update();
