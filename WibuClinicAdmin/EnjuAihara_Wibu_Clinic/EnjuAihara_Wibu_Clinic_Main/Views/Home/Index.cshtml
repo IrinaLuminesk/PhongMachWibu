@@ -7,9 +7,14 @@
 		<div class="row">
 			<div class="col-lg-4">
 				<div class="card">
-					<div class="card-body">
-						Báo cáo của Phước
-					</div>
+                    <div class="card-body">
+                        <div class="card-header">
+                            <label class="m-0">Thống kê số lượng khách hàng theo tháng trong năm @DateTime.Now.Year</label>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="canvas1"></canvas>
+                        </div>
+                    </div>
 				</div>
 			</div>
 			<div class="col-lg-4">
@@ -32,11 +37,14 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-6">
-				<div class="card">
-					<div class="card-body">
-						Báo cáo của Phước
-					</div>
-				</div>
+                <div class="card">
+                    <div class="card-header">
+                        <label class="m-0">Top 10 khách hàng thân thiết trong năm @DateTime.Now.Year</label>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="canvas4"></canvas>
+                    </div>
+                </div>
 			</div>
 			<div class="col-lg-6">
 				<div class="card">
@@ -52,7 +60,7 @@
 		<div class="row">
 			<div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" >
                         <label class="m-0">Thống kê số lượng thuốc nhập và bán trong năm @DateTime.Now.Year</label>
                     </div>
                     <div class="card-body">
@@ -82,16 +90,17 @@
 <script src="~/Scripts/ChartJs/Canvas2.js"></script>
 <script src="~/Scripts/ChartJs/Canvas5.js"></script>
 <script src="~/Scripts/ChartJs/Canvas7.js"></script>
-
+<script src="~/Scripts/ChartJs/Canvas4.js"></script>
 <script src="~/Scripts/ChartJs/Canvas6.js"></script>
+<script src="~/Scripts/ChartJs/Canvas1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		//Canvas1
+		ThongKeSLKhachTheoThang();
 		//Canvas2
 		CacBenhThuongGap()
 		//Canvas3
-		//Canvas4
+        Top10KH()
 		//Canvas5
 		TopThuocTrongNam()
 		//Canvas6
