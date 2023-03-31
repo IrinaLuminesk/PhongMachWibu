@@ -1,7 +1,7 @@
 ﻿using DataGeneration.Entities;
-using DataGeneration.Illness;
+
 using DataGeneration.StreetDataModel;
-using DataGeneration.User;
+
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -252,19 +252,40 @@ namespace DataGeneration
             //}
 
 
-            var list = _context.WarehouseMasterModels.ToList();
+            //var list = _context.WarehouseMasterModels.ToList();
+            //foreach (var i in list)
+            //{
+            //    string olddate = i.BoughtDate.ToString();
+            //    string[] temp = olddate.Split('/');
+            //    int u = ran.Next(1, 12);
+            //    int t = ran.Next(1, 27);
+            //    DateTime a = DateTime.Parse(string.Format("{0}/{1}/{2}", u.ToString(), t.ToString() , temp[2]));
+            //    i.BoughtDate = a;
+            //    _context.Entry(i).State = EntityState.Modified;
+            //    _context.SaveChanges();
+            //}
+
+
+
+            string root = @"C:\Project Crowley\PhongMachWibu\Resources\Coord.txt";
+            List<string> list = File.ReadLines(root).ToList();
+            List<Coordinate> prolst = new List<Coordinate>();
+            string sep = ",";
             foreach (var i in list)
             {
-                string olddate = i.BoughtDate.ToString();
-                string[] temp = olddate.Split('/');
-                int u = ran.Next(1, 12);
-                int t = ran.Next(1, 27);
-                DateTime a = DateTime.Parse(string.Format("{0}/{1}/{2}", u.ToString(), t.ToString() , temp[2]));
-                i.BoughtDate = a;
+                string[] temp = i.Split(sep.ToCharArray());
+                prolst.Add(new Coordinate() { Long = Convert.ToDouble(temp[0]), Lat = Convert.ToDouble(temp[1])});
+            }
+           var providerlist = _context.ProviderModels.Take(200).ToList();
+            int u = 0;
+            foreach (var i in providerlist)
+            {
+                i.longitude = prolst[u].Long;
+                i.Latitude = prolst[u].Lat;
                 _context.Entry(i).State = EntityState.Modified;
                 _context.SaveChanges();
+                u++;
             }
-
         }
         public static void SaveData(List<Root> lst)
         {
