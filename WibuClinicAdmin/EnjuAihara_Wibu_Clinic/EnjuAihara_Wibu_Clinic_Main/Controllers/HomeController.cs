@@ -109,7 +109,32 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
                 .OrderBy(x => x.TenBenh).Take(10).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
+        [HttpPost]
+        public JsonResult Top10KHTT()
+        {
+            var query = _context.Database.SqlQuery<TopKHTTViewModel>("exec GetTop10KHTT").ToList();
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult GetSLKhachTheoThang()
+        {
+            List<SLKhachTheoThangViewModel> temp = GetAllMonthForThongKeSlKhach();
+            var query = _context.Database.SqlQuery<SLKhachTheoThangViewModel>("exec GetSLKhachTheoThang").ToList();
+            foreach(var i in query)
+            {
+                temp[i.Thang - 1].SLKhach = i.SLKhach;
+            }
+            return Json(temp,JsonRequestBehavior.AllowGet);
+        }
+        public List<SLKhachTheoThangViewModel> GetAllMonthForThongKeSlKhach()
+        {
+            List<SLKhachTheoThangViewModel> temp = new List<SLKhachTheoThangViewModel>();
+            for (int i = 1; i <= 12; i++)
+            {
+                temp.Add(new SLKhachTheoThangViewModel() { Thang = i, SLKhach = 0 });
+            }
+            return temp;
+        }
 
     }
 }

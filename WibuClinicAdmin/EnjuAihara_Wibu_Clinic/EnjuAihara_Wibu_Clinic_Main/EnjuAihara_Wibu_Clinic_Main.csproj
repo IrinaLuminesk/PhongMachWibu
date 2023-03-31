@@ -234,7 +234,9 @@
     <Content Include="Scripts\build\npm\Plugins.js" />
     <Content Include="Scripts\build\npm\Publish.js" />
     <Content Include="Scripts\build\npm\vnu-jar.js" />
+    <Content Include="Scripts\ChartJs\Canvas1.js" />
     <Content Include="Scripts\ChartJs\Canvas2.js" />
+    <Content Include="Scripts\ChartJs\Canvas4.js" />
     <Content Include="Scripts\ChartJs\Canvas5.js" />
     <Content Include="Scripts\ChartJs\Canvas6.js" />
     <Content Include="Scripts\ChartJs\Canvas7.js" />
