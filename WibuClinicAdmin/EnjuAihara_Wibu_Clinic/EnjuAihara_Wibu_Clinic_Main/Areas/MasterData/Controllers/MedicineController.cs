@@ -30,6 +30,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
         public JsonResult _PaggingServerSide(DatatableViewModel model,MedicineSearchViewModel  search, string MedicineNameSearch, string MedicineCodeSearch, Guid? ProviderNameSearch, Guid? IngredientNameSearch, bool? Actived)
         {
+            _context.Database.CommandTimeout = 100000;
+
             int filteredResultsCount;
             int totalResultsCount = model.length;
 

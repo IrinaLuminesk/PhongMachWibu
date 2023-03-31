@@ -39,8 +39,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
             var query = _context.UsersModels.Where(x =>
             (x.UserCode.Contains(UserCode) || string.IsNullOrEmpty(UserCode)) &&
-            (x.LastName.Contains(UserName) || string.IsNullOrEmpty(UserName)) &&
-            (x.FirstName.Contains(UserName) || string.IsNullOrEmpty(UserName)) &&
+            ((x.LastName.Contains(UserName) || string.IsNullOrEmpty(UserName)) ||
+            (x.FirstName.Contains(UserName) || string.IsNullOrEmpty(UserName))) &&
             (x.Birthday >= BirthdayFrom || BirthdayFrom == null) &&
             (x.Birthday <= BirthdayTo || BirthdayTo == null) &&
             (x.Address.Contains(Address) || string.IsNullOrEmpty(Address)) &&
