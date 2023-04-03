@@ -185,6 +185,7 @@
     <Compile Include="Areas\Permission\Controllers\PageController.cs" />
     <Compile Include="Areas\Permission\Controllers\RoleController.cs" />
     <Compile Include="Areas\Permission\PermissionAreaRegistration.cs" />
+    <Compile Include="Areas\Personal\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\Services\Controllers\PrescriptionController.cs" />
@@ -234,6 +235,7 @@
     <Content Include="Scripts\build\npm\Plugins.js" />
     <Content Include="Scripts\build\npm\Publish.js" />
     <Content Include="Scripts\build\npm\vnu-jar.js" />
+    <Content Include="Scripts\Calendar\Calendar.js" />
     <Content Include="Scripts\ChartJs\Canvas1.js" />
     <Content Include="Scripts\ChartJs\Canvas2.js" />
     <Content Include="Scripts\ChartJs\Canvas4.js" />
@@ -2173,7 +2175,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Personal\Controllers\" />
     <Folder Include="Areas\Reports\Controllers\" />
     <Folder Include="Areas\Reports\Data\" />
     <Folder Include="Areas\Reports\Views\Shared\" />
@@ -2275,6 +2276,7 @@
     <Content Include="Areas\Warehouse\Views\StockReceiving\Create.cshtml" />
     <Content Include="Areas\Warehouse\Views\StockReceiving\_ProductStockDetailInner.cshtml" />
     <Content Include="Areas\Warehouse\Views\StockReceiving\Detail.cshtml" />
+    <Content Include="Areas\Personal\Views\Calendar\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
