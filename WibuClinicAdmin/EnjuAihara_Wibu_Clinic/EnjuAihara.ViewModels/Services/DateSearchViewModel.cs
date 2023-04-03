@@ -31,5 +31,9 @@ namespace EnjuAihara.ViewModels.Services
         public double? Money { get; set; }
 
         public Guid DateId { get; set; }
+
+        public string TrangThaiCuocHen { get; set; }
+
+        public Guid? PatientId { get; set; }
     }
 }

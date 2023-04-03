@@ -51,6 +51,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
                 Client = x.NguoiDatHen == null ? "" : x.AccountModel.UsersModel.LastName + " " + x.AccountModel.UsersModel.FirstName,
                 Doctor = x.BacSiKham == null ? "" : x.AccountModel1.UsersModel.LastName + " " + x.AccountModel1.UsersModel.FirstName,
                 Nurse = x.YTaXacNhan == null ? "" : x.AccountModel2.UsersModel.LastName + " " + x.AccountModel2.UsersModel.FirstName,
+                TrangThaiCuocHen = x.TrangThaiCuocHen == false ? "Chưa khám" : "Đã khám",
+                PatientId = x.NguoiDatHen
+
             }).ToList();
             var finalResult = PaggingServerSideDatatable.DatatableSearch<DateSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
@@ -72,6 +75,35 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             });
         }
 
+
+        [HttpPost]
+        public JsonResult ConfirmFinish(Guid Id)
+        {
+            try
+            {
+                var result = _context.DateModels.Where(x => x.DateId == Id).FirstOrDefault();
+                result.TrangThaiCuocHen = true;
+                _context.Entry(result).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Xác nhận hoàn thành thành công",
+                    redirect = "/Services/Date"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = string.Format("Lỗi: {0}", ex.Message.ToString()),
+                    redirect = "/Services/Date"
+                });
+            }
+        }
 
         public ActionResult AppointDoctor(Guid? Id)
         {

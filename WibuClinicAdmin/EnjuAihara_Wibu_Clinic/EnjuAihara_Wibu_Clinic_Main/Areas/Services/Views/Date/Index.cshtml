@@ -124,6 +124,21 @@
 		</div>
 	</div>
 </div>
+<div id="XacNhanHoanThanh" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Xác nhận hoàn thành khám</h4>
+				<button type="button" class="close modal-closing" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-footer">
+				<input type="button" class="modal-closing btn btn-default" id="CancelButton" data-bs-dismiss="modal" value="Cancel">
+				<input type="button" class="btn btn-primary" id="XacNhanHoanThanhConfirm" value="Xác nhận hoàn thành">
+				<input type="hidden" id="XacNhanHoanThanhId" name="XacNhanHoanThanhId" />
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 	$(document).ready(function () {
 		CloseSideBar();
@@ -164,18 +179,35 @@
 				"orderable": true,
 			},
 			{
-				"data": "PayMentStatus",
+				"data": "Money",
 				"className": "text-center",
 				"orderable": true,
 			},
 			{
-				"data": "PrescriptionId",
+				"data": "TrangThaiCuocHen",
+				"className": "text-center",
+				"orderable": true,
+			},
+			{
+				"data": "DateId",
 				"className": "text-center",
 				"orderable": false,
 				"render": function (data, type, row) {
 					if (data != "" && data != null) {
 						var s;
 						s = "";
+						if (row.PayMentStatus == "Đã thanh toán") {
+							if (row.Doctor == null || row.Doctor == "") {
+								s += '<a class="btn btn-info"  target="_blank" href="/Services/Date/AppointDoctor/' + data + '">Chỉ định người khám</a>';
+							}
+							else {
+								if (row.TrangThaiCuocHen == 'Chưa khám')
+									s += '<a class="btn btn-success btn-xacnhanhoanthanh" data-id="' + data + '">Xác nhận khám xong</a>';
+								else {
+									s += '<a class="ml-2 btn btn-info"  target="_blank" href="/Services/Prescription/Create/' + row.PatientId + '">Kê đơn thuốc</a>';
+								}
+							}
+						}
 						return s;
 					}
 					return "";
@@ -183,5 +215,55 @@
 			}
 		];
 		PaggingServerSideSearchInitialWithClick("Services/Date", columns, true);
+
+	});
+
+	$(document).on("click", ".btn-xacnhanhoanthanh", function (e) {
+		e.preventDefault();
+		$("#XacNhanHoanThanhId").val($(this).data("id"));
+		$("#XacNhanHoanThanh").modal("show");
+	});
+
+
+	$(".modal-closing").on('click', function () { 
+		$("#XacNhanHoanThanhId").val("");
+	});
+
+
+	$(document).on("click", "#XacNhanHoanThanhConfirm", function (e) {
+		e.preventDefault();
+		var formdata = new FormData();
+		formdata.append("Id", $("#XacNhanHoanThanhId").val());
+
+		$.ajax({
+			type: "POST",
+			url: "/Services/Date/ConfirmFinish",
+			data: formdata,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				$("#XacNhanHoanThanh").modal("hide");
+				if (data.isSucess == true) {
+					if (data.title && data.message) {
+						$("#XacNhanHoanThanh").modal("hide");
+						AlertPopup(1, data.title, data.message);
+					}
+					if (data.redirect) {
+						setTimeout(function () {
+							window.location.href = data.redirect;
+						}, 1500);
+					}
+				}
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
 	});
 </script>

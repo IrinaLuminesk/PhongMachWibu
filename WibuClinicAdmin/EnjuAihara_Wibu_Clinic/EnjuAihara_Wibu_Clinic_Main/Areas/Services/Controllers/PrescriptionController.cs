@@ -129,9 +129,17 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             });
         }
 
-        public ActionResult Create()
+        public ActionResult Create(Guid? Id)
         {
-            return View();
+            if (Id == null)
+            {
+                return View();
+            }
+            else
+            {
+                var patient = _context.AccountModels.Where(x => x.AccountId == Id).FirstOrDefault();
+                return View(patient);
+            }
         }
 
         [HttpPost]
