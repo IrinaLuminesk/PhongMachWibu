@@ -1,0 +1,62 @@
+﻿<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Thay đổi mật khẩu</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<form id="frmEdit" enctype='multipart/form-data'>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card h-100">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="OldPassword" class="col-form-label">Mật khẩu cũ</label>
+									</div>
+									<div class="col-md-10">
+										<input id="OldPassword" name="OldPassword" class="form-control"/>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-3">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="ProviderName" class="col-form-label">Mật khẩu mới</label>
+									</div>
+									<div class="col-md-10">
+										<input id="NewPassword" name="NewPassword" class="form-control" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 15px">
+							<div class="col-md-12 text-center">
+								<button type="button" class="btn btn-primary" id="btn-edit">
+									Lưu
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		$("#btn-edit").on("click", function () {
+			Edit("Personal/ChangePassword", "#frmEdit");
+		});
+
+	});
+
+
+</script>
