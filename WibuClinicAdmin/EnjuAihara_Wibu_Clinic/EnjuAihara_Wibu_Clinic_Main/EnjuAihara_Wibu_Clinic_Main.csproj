@@ -172,6 +172,7 @@
     <Compile Include="Areas\MasterData\Controllers\CityController.cs" />
     <Compile Include="Areas\MasterData\Controllers\DistrictController.cs" />
     <Compile Include="Areas\MasterData\Controllers\IllnessController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\MostAskQuestionsController.cs" />
     <Compile Include="Areas\MasterData\Controllers\StreetController.cs" />
     <Compile Include="Areas\MasterData\Controllers\IngredientController.cs" />
     <Compile Include="Areas\MasterData\Controllers\ProviderController.cs" />
@@ -2277,6 +2278,10 @@
     <Content Include="Areas\Warehouse\Views\StockReceiving\_ProductStockDetailInner.cshtml" />
     <Content Include="Areas\Warehouse\Views\StockReceiving\Detail.cshtml" />
     <Content Include="Areas\Personal\Views\Calendar\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\MostAskQuestions\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\MostAskQuestions\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\MostAskQuestions\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\MostAskQuestions\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

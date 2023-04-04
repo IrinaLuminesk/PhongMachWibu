@@ -156,6 +156,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 ingre.IngredientName = viewModel.IngredientName;
                 ingre.Actived = viewModel.Actived;
                 //provider.ProviderCode = viewModel.ProviderCode;
+                _context.Entry(ingre).State = EntityState.Modified;
                 _context.SaveChanges();
                 return Json(new
                 {

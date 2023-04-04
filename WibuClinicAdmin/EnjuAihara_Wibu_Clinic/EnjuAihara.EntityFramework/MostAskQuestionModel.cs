@@ -12,17 +12,15 @@ namespace EnjuAihara.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class ChangeDataLogModel
+    public partial class MostAskQuestionModel
     {
-        public System.Guid LogId { get; set; }
-        public string TableName { get; set; }
-        public Nullable<System.Guid> PrimaryKey { get; set; }
-        public string FieldName { get; set; }
-        public string OldData { get; set; }
-        public string NewData { get; set; }
-        public Nullable<System.Guid> LastEditBy { get; set; }
-        public Nullable<System.DateTime> LastEditTime { get; set; }
-        public string ChangeType { get; set; }
+        public System.Guid MostAskQuestionId { get; set; }
+        public string Title { get; set; }
+        public string Detail { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.Guid> CreateBy { get; set; }
+        public Nullable<bool> Actived { get; set; }
+        public Nullable<int> OrderIndex { get; set; }
     
         public virtual AccountModel AccountModel { get; set; }
     }

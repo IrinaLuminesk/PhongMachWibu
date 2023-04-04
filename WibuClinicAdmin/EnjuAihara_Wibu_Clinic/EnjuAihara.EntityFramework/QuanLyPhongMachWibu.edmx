@@ -69,6 +69,7 @@
           <Property Name="NewData" Type="nvarchar(max)" />
           <Property Name="LastEditBy" Type="uniqueidentifier" />
           <Property Name="LastEditTime" Type="datetime" />
+          <Property Name="ChangeType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CityModel">
           <Key>
@@ -158,6 +159,19 @@
           <Property Name="DistrictId" Type="uniqueidentifier" />
           <Property Name="WardId" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="EmailSenderModel">
+          <Key>
+            <PropertyRef Name="EmailId" />
+          </Key>
+          <Property Name="EmailId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nchar" MaxLength="10" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="SendFrom" Type="nvarchar(max)" />
+          <Property Name="SendTo" Type="nvarchar(max)" />
+          <Property Name="IsSend" Type="bit" />
+          <Property Name="SendDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="FunctionModel">
           <Key>
             <PropertyRef Name="FunctionId" />
@@ -219,6 +233,18 @@
           <Property Name="OrderIndex" Type="int" />
           <Property Name="Icon" Type="nvarchar" MaxLength="100" />
           <Property Name="Actived" Type="bit" />
+        </EntityType>
+        <EntityType Name="MostAskQuestionModel">
+          <Key>
+            <PropertyRef Name="MostAskQuestionId" />
+          </Key>
+          <Property Name="MostAskQuestionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Detail" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="uniqueidentifier" />
+          <Property Name="Actived" Type="bit" />
+          <Property Name="OrderIndex" Type="int" />
         </EntityType>
         <EntityType Name="PageFunctionModel">
           <Key>
@@ -637,6 +663,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MostAskQuestionModel_AccountModel">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
+          <End Role="MostAskQuestionModel" Type="Self.MostAskQuestionModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="MostAskQuestionModel">
+              <PropertyRef Name="CreateBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PageFunctionModel_FunctionModel">
           <End Role="FunctionModel" Type="Self.FunctionModel" Multiplicity="0..1" />
           <End Role="PageFunctionModel" Type="Self.PageFunctionModel" Multiplicity="*" />
@@ -760,6 +798,7 @@
           <EntitySet Name="DistrictModel" EntityType="Self.DistrictModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistrictStreetModel" EntityType="Self.DistrictStreetModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistrictWardModel" EntityType="Self.DistrictWardModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailSenderModel" EntityType="Self.EmailSenderModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FunctionModel" EntityType="Self.FunctionModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IllnessModel" EntityType="Self.IllnessModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IngredientModel" EntityType="Self.IngredientModel" Schema="dbo" store:Type="Tables" />
@@ -767,6 +806,7 @@
           <EntitySet Name="MedicineModel" EntityType="Self.MedicineModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicineProvideModel" EntityType="Self.MedicineProvideModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuModel" EntityType="Self.MenuModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MostAskQuestionModel" EntityType="Self.MostAskQuestionModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageFunctionModel" EntityType="Self.PageFunctionModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageModel" EntityType="Self.PageModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PagePermissionModel" EntityType="Self.PagePermissionModel" Schema="dbo" store:Type="Tables" />
@@ -878,6 +918,10 @@
             <End Role="ProviderModel" EntitySet="ProviderModel" />
             <End Role="MedicineProvideModel" EntitySet="MedicineProvideModel" />
           </AssociationSet>
+          <AssociationSet Name="FK_MostAskQuestionModel_AccountModel" Association="Self.FK_MostAskQuestionModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="MostAskQuestionModel" EntitySet="MostAskQuestionModel" />
+          </AssociationSet>
           <AssociationSet Name="FK_PageFunctionModel_FunctionModel" Association="Self.FK_PageFunctionModel_FunctionModel">
             <End Role="FunctionModel" EntitySet="FunctionModel" />
             <End Role="PageFunctionModel" EntitySet="PageFunctionModel" />
@@ -934,6 +978,7 @@
           <EntitySet Name="DistrictModels" EntityType="QuanLyPhongMachWibuModel.DistrictModel" />
           <EntitySet Name="DistrictStreetModels" EntityType="QuanLyPhongMachWibuModel.DistrictStreetModel" />
           <EntitySet Name="DistrictWardModels" EntityType="QuanLyPhongMachWibuModel.DistrictWardModel" />
+          <EntitySet Name="EmailSenderModels" EntityType="QuanLyPhongMachWibuModel.EmailSenderModel" />
           <EntitySet Name="FunctionModels" EntityType="QuanLyPhongMachWibuModel.FunctionModel" />
           <EntitySet Name="IllnessModels" EntityType="QuanLyPhongMachWibuModel.IllnessModel" />
           <EntitySet Name="IngredientModels" EntityType="QuanLyPhongMachWibuModel.IngredientModel" />
@@ -941,6 +986,7 @@
           <EntitySet Name="MedicineModels" EntityType="QuanLyPhongMachWibuModel.MedicineModel" />
           <EntitySet Name="MedicineProvideModels" EntityType="QuanLyPhongMachWibuModel.MedicineProvideModel" />
           <EntitySet Name="MenuModels" EntityType="QuanLyPhongMachWibuModel.MenuModel" />
+          <EntitySet Name="MostAskQuestionModels" EntityType="QuanLyPhongMachWibuModel.MostAskQuestionModel" />
           <EntitySet Name="PageFunctionModels" EntityType="QuanLyPhongMachWibuModel.PageFunctionModel" />
           <EntitySet Name="PageModels" EntityType="QuanLyPhongMachWibuModel.PageModel" />
           <EntitySet Name="PagePermissionModels" EntityType="QuanLyPhongMachWibuModel.PagePermissionModel" />
@@ -995,6 +1041,10 @@
           <AssociationSet Name="FK_DescriptionModel_CreateFor" Association="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="DescriptionModel" EntitySet="DescriptionModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MostAskQuestionModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="MostAskQuestionModel" EntitySet="MostAskQuestionModels" />
           </AssociationSet>
           <AssociationSet Name="FK_WarehouseMasterModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_WarehouseMasterModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
@@ -1125,6 +1175,7 @@
           <NavigationProperty Name="DateModels2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
           <NavigationProperty Name="DescriptionModels1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="AccountModel" ToRole="DescriptionModel" />
+          <NavigationProperty Name="MostAskQuestionModels" Relationship="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel" FromRole="AccountModel" ToRole="MostAskQuestionModel" />
           <NavigationProperty Name="WarehouseMasterModels" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseMasterModel_AccountModel" FromRole="AccountModel" ToRole="WarehouseMasterModel" />
         </EntityType>
         <EntityType Name="AccountRecoveryTokenModel">
@@ -1170,6 +1221,7 @@
           <Property Name="NewData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LastEditBy" Type="Guid" />
           <Property Name="LastEditTime" Type="DateTime" Precision="3" />
+          <Property Name="ChangeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_ChangeDataLogModel_AccountModel" FromRole="ChangeDataLogModel" ToRole="AccountModel" />
         </EntityType>
         <EntityType Name="CityModel">
@@ -1279,6 +1331,19 @@
           <NavigationProperty Name="DistrictModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictWardModel_DistrictModel" FromRole="DistrictWardModel" ToRole="DistrictModel" />
           <NavigationProperty Name="WardModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictWardModel_WardModel" FromRole="DistrictWardModel" ToRole="WardModel" />
         </EntityType>
+        <EntityType Name="EmailSenderModel">
+          <Key>
+            <PropertyRef Name="EmailId" />
+          </Key>
+          <Property Name="EmailId" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SendFrom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SendTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsSend" Type="Boolean" />
+          <Property Name="SendDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="FunctionModel">
           <Key>
             <PropertyRef Name="FunctionId" />
@@ -1352,6 +1417,19 @@
           <Property Name="Icon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="PageModels" Relationship="QuanLyPhongMachWibuModel.FK_PageModel_MenuModel" FromRole="MenuModel" ToRole="PageModel" />
+        </EntityType>
+        <EntityType Name="MostAskQuestionModel">
+          <Key>
+            <PropertyRef Name="MostAskQuestionId" />
+          </Key>
+          <Property Name="MostAskQuestionId" Type="Guid" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="Guid" />
+          <Property Name="Actived" Type="Boolean" />
+          <Property Name="OrderIndex" Type="Int32" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel" FromRole="MostAskQuestionModel" ToRole="AccountModel" />
         </EntityType>
         <EntityType Name="PageFunctionModel">
           <Key>
@@ -1618,6 +1696,18 @@
             </Principal>
             <Dependent Role="DescriptionModel">
               <PropertyRef Name="CreateFor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MostAskQuestionModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.MostAskQuestionModel" Role="MostAskQuestionModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="MostAskQuestionModel">
+              <PropertyRef Name="CreateBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1963,6 +2053,7 @@
           <EntitySetMapping Name="ChangeDataLogModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.ChangeDataLogModel">
               <MappingFragment StoreEntitySet="ChangeDataLogModel">
+                <ScalarProperty Name="ChangeType" ColumnName="ChangeType" />
                 <ScalarProperty Name="LastEditTime" ColumnName="LastEditTime" />
                 <ScalarProperty Name="LastEditBy" ColumnName="LastEditBy" />
                 <ScalarProperty Name="NewData" ColumnName="NewData" />
@@ -2070,6 +2161,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EmailSenderModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.EmailSenderModel">
+              <MappingFragment StoreEntitySet="EmailSenderModel">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SendDate" ColumnName="SendDate" />
+                <ScalarProperty Name="IsSend" ColumnName="IsSend" />
+                <ScalarProperty Name="SendTo" ColumnName="SendTo" />
+                <ScalarProperty Name="SendFrom" ColumnName="SendFrom" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FunctionModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.FunctionModel">
               <MappingFragment StoreEntitySet="FunctionModel">
@@ -2136,6 +2241,19 @@
                 <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
                 <ScalarProperty Name="MenuName" ColumnName="MenuName" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MostAskQuestionModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.MostAskQuestionModel">
+              <MappingFragment StoreEntitySet="MostAskQuestionModel">
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MostAskQuestionId" ColumnName="MostAskQuestionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

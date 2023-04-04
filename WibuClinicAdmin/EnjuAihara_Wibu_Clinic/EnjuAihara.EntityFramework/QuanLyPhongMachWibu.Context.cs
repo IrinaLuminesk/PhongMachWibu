@@ -39,6 +39,7 @@ namespace EnjuAihara.EntityFramework
         public virtual DbSet<DistrictModel> DistrictModels { get; set; }
         public virtual DbSet<DistrictStreetModel> DistrictStreetModels { get; set; }
         public virtual DbSet<DistrictWardModel> DistrictWardModels { get; set; }
+        public virtual DbSet<EmailSenderModel> EmailSenderModels { get; set; }
         public virtual DbSet<FunctionModel> FunctionModels { get; set; }
         public virtual DbSet<IllnessModel> IllnessModels { get; set; }
         public virtual DbSet<IngredientModel> IngredientModels { get; set; }
@@ -46,6 +47,7 @@ namespace EnjuAihara.EntityFramework
         public virtual DbSet<MedicineModel> MedicineModels { get; set; }
         public virtual DbSet<MedicineProvideModel> MedicineProvideModels { get; set; }
         public virtual DbSet<MenuModel> MenuModels { get; set; }
+        public virtual DbSet<MostAskQuestionModel> MostAskQuestionModels { get; set; }
         public virtual DbSet<PageFunctionModel> PageFunctionModels { get; set; }
         public virtual DbSet<PageModel> PageModels { get; set; }
         public virtual DbSet<PagePermissionModel> PagePermissionModels { get; set; }

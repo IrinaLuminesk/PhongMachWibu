@@ -92,6 +92,9 @@
     <Compile Include="DistrictWardModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmailSenderModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
     <Compile Include="FunctionModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
@@ -111,6 +114,9 @@
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
     <Compile Include="MenuModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MostAskQuestionModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
     <Compile Include="PageFunctionModel.cs">
