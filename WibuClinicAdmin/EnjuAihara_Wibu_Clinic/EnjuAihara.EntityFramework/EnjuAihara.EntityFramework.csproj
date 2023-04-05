@@ -119,6 +119,15 @@
     <Compile Include="MostAskQuestionModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
+    <Compile Include="NotificationForAccount.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationInRoleModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
     <Compile Include="PageFunctionModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>

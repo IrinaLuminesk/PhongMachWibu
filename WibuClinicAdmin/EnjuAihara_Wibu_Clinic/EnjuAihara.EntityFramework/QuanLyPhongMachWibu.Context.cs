@@ -48,6 +48,9 @@ namespace EnjuAihara.EntityFramework
         public virtual DbSet<MedicineProvideModel> MedicineProvideModels { get; set; }
         public virtual DbSet<MenuModel> MenuModels { get; set; }
         public virtual DbSet<MostAskQuestionModel> MostAskQuestionModels { get; set; }
+        public virtual DbSet<NotificationForAccount> NotificationForAccounts { get; set; }
+        public virtual DbSet<NotificationInRoleModel> NotificationInRoleModels { get; set; }
+        public virtual DbSet<NotificationModel> NotificationModels { get; set; }
         public virtual DbSet<PageFunctionModel> PageFunctionModels { get; set; }
         public virtual DbSet<PageModel> PageModels { get; set; }
         public virtual DbSet<PagePermissionModel> PagePermissionModels { get; set; }

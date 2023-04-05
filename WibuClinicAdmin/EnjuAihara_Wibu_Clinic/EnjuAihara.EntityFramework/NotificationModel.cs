@@ -12,26 +12,24 @@ namespace EnjuAihara.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class RolesModel
+    public partial class NotificationModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RolesModel()
+        public NotificationModel()
         {
-            this.AccountInRoleModels = new HashSet<AccountInRoleModel>();
+            this.NotificationForAccounts = new HashSet<NotificationForAccount>();
             this.NotificationInRoleModels = new HashSet<NotificationInRoleModel>();
-            this.PagePermissionModels = new HashSet<PagePermissionModel>();
         }
     
-        public System.Guid RoleId { get; set; }
-        public string RoleName { get; set; }
-        public Nullable<bool> Actived { get; set; }
-        public string RoleCode { get; set; }
+        public System.Guid NotificationId { get; set; }
+        public string NotificationTitle { get; set; }
+        public string NotificationDetail { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public string NotificationLink { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AccountInRoleModel> AccountInRoleModels { get; set; }
+        public virtual ICollection<NotificationForAccount> NotificationForAccounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationInRoleModel> NotificationInRoleModels { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PagePermissionModel> PagePermissionModels { get; set; }
     }
 }

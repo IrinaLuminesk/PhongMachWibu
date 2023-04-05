@@ -1,0 +1,19 @@
+﻿@model List<EnjuAihara.ViewModels.Firebase.NotificationViewModel>
+<div class="card">
+	<div class="card-header text-white" style="background-color: #d76133">
+		Các thông báo chưa đọc
+	</div>
+	<ul class="list-group list-group-flush">
+		@if (Model != null && Model.Count > 0)
+		{
+			foreach (var i in Model)
+			{
+				<li class="list-group-item">@i.Title</li>
+			}
+		}
+		else
+		{
+			<li class="list-group-item">Không có thông báo chưa đọc</li>
+		}
+	</ul>
+</div>

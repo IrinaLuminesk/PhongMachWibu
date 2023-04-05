@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using EnjuAihara.ViewModels.Permission;
+using EnjuAihara.ViewModels.Firebase;
+
 namespace EnjuAihara_Wibu_Clinic_Main.Controllers
 {
     public class SharedController : IrinaLumineskController
@@ -64,13 +66,64 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
                 }
                 y++;
             }
+
             return PartialView(finalresult);
         }
 
+        public List<NotificationViewModel> GetAllUserNotification()
+        {
+            //var CurrentId = CurrentUser.AccountId;
+            //var AllRole = CurrentUser.AccountInRoleModels.ToList();
+            //var list = _context.NotificationModels.Where(x => x.NotificationFor == CurrentId && x.IsRead == false).OrderBy(x => x.CreateDate).Select
+            //    (x => new NotificationViewModel
+            //    {
+            //        NotificationId = x.NotificationId,
+            //        Content = x.NotificationDetail,
+            //        Title = x.NotificationTitle,
+            //        CreateDate = x.CreateDate
+            //    }).ToList();
+            //var list2 = new List<NotificationViewModel>();
+            //foreach (var i in AllRole)
+            //{
+            //    list2.AddRange(_context.NotificationModels.Where(x => x.NotificationInRoleModels.Any(y => y.RoleId == i.RoleId)).Select
+            //    (x => new NotificationViewModel
+            //    {
+            //        NotificationId = x.NotificationId,
+            //        Content = x.NotificationDetail,
+            //        Title = x.NotificationTitle,
+            //        CreateDate = x.CreateDate
+            //    }).ToList());
+            //}
+            //List<NotificationViewModel> FinalList = new List<NotificationViewModel>();
+            //FinalList.AddRange(list2);
+            //FinalList.AddRange(list);
+            //return FinalList;
+            return null;
+        }
 
         public ActionResult Error()
         {
             return View();
+        }
+
+
+        public PartialViewResult Notification()
+        {
+            var result = GetAllUserNotification();
+            return PartialView(result);
+        }
+
+        public PartialViewResult NotificationCount()
+        {
+            var result = GetAllUserNotification();
+            if (result != null && result.Count > 0)
+            {
+                return PartialView(result.Count);
+            }
+            else
+            {
+                return PartialView(0);
+            }
         }
     }
 }

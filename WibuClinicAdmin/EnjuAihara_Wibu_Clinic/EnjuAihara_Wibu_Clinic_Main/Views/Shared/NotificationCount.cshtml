@@ -1,0 +1,22 @@
+﻿@model int
+<ul class="navbar-nav ml-auto mt-1">
+
+	<li class="nav-item">
+		<button type="button" class="btn btn-primary nav-link text-white" data-widget="control-sidebar" data-slide="true" role="button">
+			Thông báo
+			@if (Model == 0)
+			{
+				<p class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="NumberOfNotification"></p>
+			}
+			else
+			{
+				<p class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="NumberOfNotification">@Model</p>
+			}
+		</button>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" data-widget="fullscreen" href="#" role="button">
+			<i class="fas fa-expand-arrows-alt"></i>
+		</a>
+	</li>
+</ul>

@@ -297,6 +297,7 @@
     <Content Include="Scripts\dist\js\pages\dashboard.js" />
     <Content Include="Scripts\dist\js\pages\dashboard2.js" />
     <Content Include="Scripts\dist\js\pages\dashboard3.js" />
+    <Content Include="Scripts\Firebase\FirebaseRealTimeNotification.js" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -2511,6 +2512,8 @@
     <Content Include="Scripts\plugins\toastr\toastr.js.map" />
     <Content Include="Views\Shared\Sidebar.cshtml" />
     <Content Include="tsconfig.json" />
+    <Content Include="Views\Shared\Notification.cshtml" />
+    <Content Include="Views\Shared\NotificationCount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnjuAihara.Constant\EnjuAihara.Constant.csproj">

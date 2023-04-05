@@ -5,40 +5,43 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="146fe51cbbd348aeae839f11084f5fbc" Name="Diagram1" ZoomLevel="83">
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountInRoleModel" Width="1.5" PointX="8.25" PointY="15.625" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountModel" Width="1.5" PointX="3" PointY="13.75" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" Width="1.5" PointX="5.25" PointY="21.125" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CatalogModel" Width="1.5" PointX="12" PointY="11.125" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CatalogTypeModel" Width="1.5" PointX="9.75" PointY="11.5" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.ChangeDataLogModel" Width="1.5" PointX="5.25" PointY="23.875" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountInRoleModel" Width="1.5" PointX="5.25" PointY="18.25" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountModel" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" Width="1.5" PointX="5.25" PointY="10.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CatalogModel" Width="1.5" PointX="14" PointY="11.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CatalogTypeModel" Width="1.5" PointX="11.75" PointY="11.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.ChangeDataLogModel" Width="1.5" PointX="5.25" PointY="23.75" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.CityModel" Width="1.5" PointX="9.75" PointY="3.75" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DateModel" Width="1.5" PointX="5.25" PointY="16.5" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DescriptionDetailModel" Width="1.5" PointX="7.5" PointY="9.75" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DescriptionIllnessModel" Width="1.5" PointX="7.5" PointY="7.125" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DescriptionModel" Width="1.5" PointX="5.25" PointY="9.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DateModel" Width="1.5" PointX="5.25" PointY="30.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DescriptionDetailModel" Width="1.5" PointX="9.75" PointY="10.875" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DescriptionIllnessModel" Width="1.5" PointX="7.5" PointY="14.375" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DescriptionModel" Width="1.5" PointX="5.25" PointY="13.5" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DistrictModel" Width="1.5" PointX="12" PointY="3.5" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DistrictStreetModel" Width="1.5" PointX="14.25" PointY="3.625" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.DistrictWardModel" Width="1.5" PointX="14.25" PointY="0.75" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.EmailSenderModel" Width="1.5" PointX="0.75" PointY="2" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.FunctionModel" Width="1.5" PointX="6" PointY="43.5" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.IllnessModel" Width="1.5" PointX="5.25" PointY="3.125" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.IngredientModel" Width="1.5" PointX="5.25" PointY="46.875" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineCompoundModel" Width="1.5" PointX="7.5" PointY="32.875" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineModel" Width="1.5" PointX="3" PointY="34.375" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineProvideModel" Width="1.5" PointX="5.25" PointY="32.5" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MenuModel" Width="1.5" PointX="3.75" PointY="40.25" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MostAskQuestionModel" Width="1.5" PointX="5.25" PointY="5.75" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.PageFunctionModel" Width="1.5" PointX="8.25" PointY="41.625" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.PageModel" Width="1.5" PointX="6" PointY="39.875" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.PagePermissionModel" Width="1.5" PointX="8.25" PointY="36.375" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.ProviderModel" Width="1.5" PointX="3" PointY="31.125" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.RolesModel" Width="1.5" PointX="6" PointY="36.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.FunctionModel" Width="1.5" PointX="6" PointY="21.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.IllnessModel" Width="1.5" PointX="5.25" PointY="35.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.IngredientModel" Width="1.5" PointX="5.25" PointY="46.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineCompoundModel" Width="1.5" PointX="7.5" PointY="2.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineModel" Width="1.5" PointX="3" PointY="6.625" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MedicineProvideModel" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MenuModel" Width="1.5" PointX="3.75" PointY="42.875" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.MostAskQuestionModel" Width="1.5" PointX="5.25" PointY="27.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.NotificationForAccount" Width="1.5" PointX="8.25" PointY="17.125" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.NotificationInRoleModel" Width="1.5" PointX="8.25" PointY="30.75" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.NotificationModel" Width="1.5" PointX="6" PointY="39" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.PageFunctionModel" Width="1.5" PointX="8.25" PointY="34.25" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.PageModel" Width="1.5" PointX="6" PointY="42.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.PagePermissionModel" Width="1.5" PointX="8.25" PointY="22" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.ProviderModel" Width="1.5" PointX="3" PointY="9.5" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.RolesModel" Width="1.5" PointX="3" PointY="22" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.StreetModel" Width="1.5" PointX="12" PointY="0.875" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.sysdiagram" Width="1.5" PointX="0.75" PointY="6" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.UsersModel" Width="1.5" PointX="0.75" PointY="15" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.sysdiagram" Width="1.5" PointX="10.75" PointY="15" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.UsersModel" Width="1.5" PointX="0.75" PointY="16.625" />
         <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WardModel" Width="1.5" PointX="12" PointY="7.5" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WarehouseDetailModel" Width="1.5" PointX="7.5" PointY="27.25" />
-        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WarehouseMasterModel" Width="1.5" PointX="5.25" PointY="27.625" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WarehouseDetailModel" Width="1.5" PointX="7.5" PointY="7" />
+        <EntityTypeShape EntityType="QuanLyPhongMachWibuModel.WarehouseMasterModel" Width="1.5" PointX="5.25" PointY="7.375" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_AccountModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_RolesModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" />
@@ -51,6 +54,7 @@
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_NotificationForAccount_AccountModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_WarehouseMasterModel_AccountModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_DistrictModel_CityModel" />
@@ -70,6 +74,9 @@
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_ProviderModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_WarehouseDetailModel_MedicineProvideModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_PageModel_MenuModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_NotificationForAccount_NotificationModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_NotificationModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_RolesModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_PageFunctionModel_PageModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_PagePermissionModel_PageModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_PagePermissionModel_RolesModel" />

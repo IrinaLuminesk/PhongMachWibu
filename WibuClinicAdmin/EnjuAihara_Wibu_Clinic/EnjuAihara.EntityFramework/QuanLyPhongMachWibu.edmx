@@ -246,6 +246,33 @@
           <Property Name="Actived" Type="bit" />
           <Property Name="OrderIndex" Type="int" />
         </EntityType>
+        <EntityType Name="NotificationForAccount">
+          <Key>
+            <PropertyRef Name="NotificationForAccountId" />
+          </Key>
+          <Property Name="NotificationForAccountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NotificationId" Type="uniqueidentifier" />
+          <Property Name="AccountId" Type="uniqueidentifier" />
+          <Property Name="IsRead" Type="bit" />
+        </EntityType>
+        <EntityType Name="NotificationInRoleModel">
+          <Key>
+            <PropertyRef Name="NotificationInRoleModelId" />
+          </Key>
+          <Property Name="NotificationInRoleModelId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NotificationId" Type="uniqueidentifier" />
+          <Property Name="RoleId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="NotificationModel">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NotificationTitle" Type="nvarchar(max)" />
+          <Property Name="NotificationDetail" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="NotificationLink" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="PageFunctionModel">
           <Key>
             <PropertyRef Name="PageFunctionId" />
@@ -675,6 +702,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NotificationForAccount_AccountModel">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
+          <End Role="NotificationForAccount" Type="Self.NotificationForAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="NotificationForAccount">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationForAccount_NotificationModel">
+          <End Role="NotificationModel" Type="Self.NotificationModel" Multiplicity="0..1" />
+          <End Role="NotificationForAccount" Type="Self.NotificationForAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationModel">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationForAccount">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationInRoleModel_NotificationModel">
+          <End Role="NotificationModel" Type="Self.NotificationModel" Multiplicity="0..1" />
+          <End Role="NotificationInRoleModel" Type="Self.NotificationInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationModel">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationInRoleModel">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationInRoleModel_RolesModel">
+          <End Role="RolesModel" Type="Self.RolesModel" Multiplicity="0..1" />
+          <End Role="NotificationInRoleModel" Type="Self.NotificationInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RolesModel">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="NotificationInRoleModel">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PageFunctionModel_FunctionModel">
           <End Role="FunctionModel" Type="Self.FunctionModel" Multiplicity="0..1" />
           <End Role="PageFunctionModel" Type="Self.PageFunctionModel" Multiplicity="*" />
@@ -807,6 +882,9 @@
           <EntitySet Name="MedicineProvideModel" EntityType="Self.MedicineProvideModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuModel" EntityType="Self.MenuModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MostAskQuestionModel" EntityType="Self.MostAskQuestionModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationForAccount" EntityType="Self.NotificationForAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationInRoleModel" EntityType="Self.NotificationInRoleModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationModel" EntityType="Self.NotificationModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageFunctionModel" EntityType="Self.PageFunctionModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageModel" EntityType="Self.PageModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PagePermissionModel" EntityType="Self.PagePermissionModel" Schema="dbo" store:Type="Tables" />
@@ -922,6 +1000,22 @@
             <End Role="AccountModel" EntitySet="AccountModel" />
             <End Role="MostAskQuestionModel" EntitySet="MostAskQuestionModel" />
           </AssociationSet>
+          <AssociationSet Name="FK_NotificationForAccount_AccountModel" Association="Self.FK_NotificationForAccount_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="NotificationForAccount" EntitySet="NotificationForAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationForAccount_NotificationModel" Association="Self.FK_NotificationForAccount_NotificationModel">
+            <End Role="NotificationModel" EntitySet="NotificationModel" />
+            <End Role="NotificationForAccount" EntitySet="NotificationForAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationInRoleModel_NotificationModel" Association="Self.FK_NotificationInRoleModel_NotificationModel">
+            <End Role="NotificationModel" EntitySet="NotificationModel" />
+            <End Role="NotificationInRoleModel" EntitySet="NotificationInRoleModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationInRoleModel_RolesModel" Association="Self.FK_NotificationInRoleModel_RolesModel">
+            <End Role="RolesModel" EntitySet="RolesModel" />
+            <End Role="NotificationInRoleModel" EntitySet="NotificationInRoleModel" />
+          </AssociationSet>
           <AssociationSet Name="FK_PageFunctionModel_FunctionModel" Association="Self.FK_PageFunctionModel_FunctionModel">
             <End Role="FunctionModel" EntitySet="FunctionModel" />
             <End Role="PageFunctionModel" EntitySet="PageFunctionModel" />
@@ -987,6 +1081,9 @@
           <EntitySet Name="MedicineProvideModels" EntityType="QuanLyPhongMachWibuModel.MedicineProvideModel" />
           <EntitySet Name="MenuModels" EntityType="QuanLyPhongMachWibuModel.MenuModel" />
           <EntitySet Name="MostAskQuestionModels" EntityType="QuanLyPhongMachWibuModel.MostAskQuestionModel" />
+          <EntitySet Name="NotificationForAccounts" EntityType="QuanLyPhongMachWibuModel.NotificationForAccount" />
+          <EntitySet Name="NotificationInRoleModels" EntityType="QuanLyPhongMachWibuModel.NotificationInRoleModel" />
+          <EntitySet Name="NotificationModels" EntityType="QuanLyPhongMachWibuModel.NotificationModel" />
           <EntitySet Name="PageFunctionModels" EntityType="QuanLyPhongMachWibuModel.PageFunctionModel" />
           <EntitySet Name="PageModels" EntityType="QuanLyPhongMachWibuModel.PageModel" />
           <EntitySet Name="PagePermissionModels" EntityType="QuanLyPhongMachWibuModel.PagePermissionModel" />
@@ -1045,6 +1142,10 @@
           <AssociationSet Name="FK_MostAskQuestionModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="MostAskQuestionModel" EntitySet="MostAskQuestionModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationForAccount_AccountModel" Association="QuanLyPhongMachWibuModel.FK_NotificationForAccount_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="NotificationForAccount" EntitySet="NotificationForAccounts" />
           </AssociationSet>
           <AssociationSet Name="FK_WarehouseMasterModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_WarehouseMasterModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
@@ -1122,6 +1223,18 @@
             <End Role="MenuModel" EntitySet="MenuModels" />
             <End Role="PageModel" EntitySet="PageModels" />
           </AssociationSet>
+          <AssociationSet Name="FK_NotificationForAccount_NotificationModel" Association="QuanLyPhongMachWibuModel.FK_NotificationForAccount_NotificationModel">
+            <End Role="NotificationModel" EntitySet="NotificationModels" />
+            <End Role="NotificationForAccount" EntitySet="NotificationForAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationInRoleModel_NotificationModel" Association="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_NotificationModel">
+            <End Role="NotificationModel" EntitySet="NotificationModels" />
+            <End Role="NotificationInRoleModel" EntitySet="NotificationInRoleModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationInRoleModel_RolesModel" Association="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_RolesModel">
+            <End Role="RolesModel" EntitySet="RolesModels" />
+            <End Role="NotificationInRoleModel" EntitySet="NotificationInRoleModels" />
+          </AssociationSet>
           <AssociationSet Name="FK_PageFunctionModel_PageModel" Association="QuanLyPhongMachWibuModel.FK_PageFunctionModel_PageModel">
             <End Role="PageModel" EntitySet="PageModels" />
             <End Role="PageFunctionModel" EntitySet="PageFunctionModels" />
@@ -1176,6 +1289,7 @@
           <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
           <NavigationProperty Name="DescriptionModels1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="AccountModel" ToRole="DescriptionModel" />
           <NavigationProperty Name="MostAskQuestionModels" Relationship="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel" FromRole="AccountModel" ToRole="MostAskQuestionModel" />
+          <NavigationProperty Name="NotificationForAccounts" Relationship="QuanLyPhongMachWibuModel.FK_NotificationForAccount_AccountModel" FromRole="AccountModel" ToRole="NotificationForAccount" />
           <NavigationProperty Name="WarehouseMasterModels" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseMasterModel_AccountModel" FromRole="AccountModel" ToRole="WarehouseMasterModel" />
         </EntityType>
         <EntityType Name="AccountRecoveryTokenModel">
@@ -1431,6 +1545,39 @@
           <Property Name="OrderIndex" Type="Int32" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel" FromRole="MostAskQuestionModel" ToRole="AccountModel" />
         </EntityType>
+        <EntityType Name="NotificationForAccount">
+          <Key>
+            <PropertyRef Name="NotificationForAccountId" />
+          </Key>
+          <Property Name="NotificationForAccountId" Type="Guid" Nullable="false" />
+          <Property Name="NotificationId" Type="Guid" />
+          <Property Name="AccountId" Type="Guid" />
+          <Property Name="IsRead" Type="Boolean" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_NotificationForAccount_AccountModel" FromRole="NotificationForAccount" ToRole="AccountModel" />
+          <NavigationProperty Name="NotificationModel" Relationship="QuanLyPhongMachWibuModel.FK_NotificationForAccount_NotificationModel" FromRole="NotificationForAccount" ToRole="NotificationModel" />
+        </EntityType>
+        <EntityType Name="NotificationInRoleModel">
+          <Key>
+            <PropertyRef Name="NotificationInRoleModelId" />
+          </Key>
+          <Property Name="NotificationInRoleModelId" Type="Guid" Nullable="false" />
+          <Property Name="NotificationId" Type="Guid" />
+          <Property Name="RoleId" Type="Guid" />
+          <NavigationProperty Name="NotificationModel" Relationship="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_NotificationModel" FromRole="NotificationInRoleModel" ToRole="NotificationModel" />
+          <NavigationProperty Name="RolesModel" Relationship="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_RolesModel" FromRole="NotificationInRoleModel" ToRole="RolesModel" />
+        </EntityType>
+        <EntityType Name="NotificationModel">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Guid" Nullable="false" />
+          <Property Name="NotificationTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="NotificationLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NotificationForAccounts" Relationship="QuanLyPhongMachWibuModel.FK_NotificationForAccount_NotificationModel" FromRole="NotificationModel" ToRole="NotificationForAccount" />
+          <NavigationProperty Name="NotificationInRoleModels" Relationship="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_NotificationModel" FromRole="NotificationModel" ToRole="NotificationInRoleModel" />
+        </EntityType>
         <EntityType Name="PageFunctionModel">
           <Key>
             <PropertyRef Name="PageFunctionId" />
@@ -1490,6 +1637,7 @@
           <Property Name="Actived" Type="Boolean" />
           <Property Name="RoleCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccountInRoleModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_RolesModel" FromRole="RolesModel" ToRole="AccountInRoleModel" />
+          <NavigationProperty Name="NotificationInRoleModels" Relationship="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_RolesModel" FromRole="RolesModel" ToRole="NotificationInRoleModel" />
           <NavigationProperty Name="PagePermissionModels" Relationship="QuanLyPhongMachWibuModel.FK_PagePermissionModel_RolesModel" FromRole="RolesModel" ToRole="PagePermissionModel" />
         </EntityType>
         <EntityType Name="StreetModel">
@@ -1708,6 +1856,18 @@
             </Principal>
             <Dependent Role="MostAskQuestionModel">
               <PropertyRef Name="CreateBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationForAccount_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.NotificationForAccount" Role="NotificationForAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="NotificationForAccount">
+              <PropertyRef Name="AccountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1936,6 +2096,42 @@
             </Principal>
             <Dependent Role="PageModel">
               <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationForAccount_NotificationModel">
+          <End Type="QuanLyPhongMachWibuModel.NotificationModel" Role="NotificationModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.NotificationForAccount" Role="NotificationForAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationModel">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationForAccount">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationInRoleModel_NotificationModel">
+          <End Type="QuanLyPhongMachWibuModel.NotificationModel" Role="NotificationModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.NotificationInRoleModel" Role="NotificationInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotificationModel">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationInRoleModel">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationInRoleModel_RolesModel">
+          <End Type="QuanLyPhongMachWibuModel.RolesModel" Role="RolesModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.NotificationInRoleModel" Role="NotificationInRoleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RolesModel">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="NotificationInRoleModel">
+              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2254,6 +2450,36 @@
                 <ScalarProperty Name="Detail" ColumnName="Detail" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="MostAskQuestionId" ColumnName="MostAskQuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationForAccounts">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.NotificationForAccount">
+              <MappingFragment StoreEntitySet="NotificationForAccount">
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="NotificationForAccountId" ColumnName="NotificationForAccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationInRoleModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.NotificationInRoleModel">
+              <MappingFragment StoreEntitySet="NotificationInRoleModel">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="NotificationInRoleModelId" ColumnName="NotificationInRoleModelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.NotificationModel">
+              <MappingFragment StoreEntitySet="NotificationModel">
+                <ScalarProperty Name="NotificationLink" ColumnName="NotificationLink" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="NotificationDetail" ColumnName="NotificationDetail" />
+                <ScalarProperty Name="NotificationTitle" ColumnName="NotificationTitle" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

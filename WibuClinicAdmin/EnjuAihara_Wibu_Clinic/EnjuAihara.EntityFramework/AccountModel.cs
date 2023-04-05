@@ -27,6 +27,7 @@ namespace EnjuAihara.EntityFramework
             this.DescriptionModels = new HashSet<DescriptionModel>();
             this.DescriptionModels1 = new HashSet<DescriptionModel>();
             this.MostAskQuestionModels = new HashSet<MostAskQuestionModel>();
+            this.NotificationForAccounts = new HashSet<NotificationForAccount>();
             this.WarehouseMasterModels = new HashSet<WarehouseMasterModel>();
         }
     
@@ -64,6 +65,8 @@ namespace EnjuAihara.EntityFramework
         public virtual ICollection<DescriptionModel> DescriptionModels1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MostAskQuestionModel> MostAskQuestionModels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NotificationForAccount> NotificationForAccounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseMasterModel> WarehouseMasterModels { get; set; }
     }

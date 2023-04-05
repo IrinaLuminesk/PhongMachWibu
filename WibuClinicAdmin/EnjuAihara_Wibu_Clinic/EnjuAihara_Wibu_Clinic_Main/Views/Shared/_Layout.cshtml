@@ -1,6 +1,36 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+	<style>
+		.alert_list {
+			font-size: 11px;
+			color: grey
+		}
+
+		li.alert_li {
+			font-size: 11px;
+			color: grey;
+			padding: 10px 0px 2px 0px;
+			border-bottom: thin solid #c0c0c0;
+		}
+
+			li.alert_li:hover {
+				background-color: #eee
+			}
+
+		.turn_off_alert {
+			float: right;
+			margin-bottom: 1px
+		}
+
+		a.alert_message {
+			color: grey
+		}
+
+			a.alert_message:hover {
+				color: grey
+			}
+	</style>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Quản lý phòng mạch Wibu</title>
@@ -54,25 +84,11 @@
 					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 				</li>
 				<li class="nav-item d-none d-sm-inline-block">
-					<a href="/" class="nav-link">Home</a>
+					<a href="/" class="nav-link">Trang chủ</a>
 				</li>
 
 			</ul>
-
-
-			<ul class="navbar-nav ml-auto">
-
-				<li class="nav-item">
-					<a class="nav-link" data-widget="fullscreen" href="#" role="button">
-						<i class="fas fa-expand-arrows-alt"></i>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-						<i class="fas fa-th-large"></i>
-					</a>
-				</li>
-			</ul>
+			@Html.Action("NotificationCount", "Shared", new { area = "" })
 		</nav>
 
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -93,12 +109,14 @@
 			<div id="loading" class="modal" style="background-position: center; background-repeat: no-repeat; position: fixed; top: 0; left: 0; height: 100%; width: 100%; background-image:url(/Picture/GuraLoader2.gif)">
 			</div>
 			@*<div id="loading2" class="modal" style="background-position: center; background-repeat: no-repeat; position: fixed; top: 0; left: 0; height: 100%; width: 100%; background-image:url(/Picture/GuraDrum2.gif)">
-				</div>*@
+		</div>*@
+			<aside class="control-sidebar control-sidebar-light">
+				<div>
+					@Html.Action("Notification", "Shared", new { area = "" })
+				</div>
+			</aside>
 		</div>
 
-		<aside class="control-sidebar control-sidebar-dark">
-			nhhhh
-		</aside>
 
 
 		<!-- Main Footer -->
@@ -166,5 +184,12 @@
 			</div>
 		</div>
 	</div>
+	<script type="module">
+		import { CheckChange } from '/Scripts/Firebase/FirebaseRealTimeNotification.js'
+
+		$(document).ready(function () {
+			CheckChange();
+		});
+	</script>
 </body>
 </html>
