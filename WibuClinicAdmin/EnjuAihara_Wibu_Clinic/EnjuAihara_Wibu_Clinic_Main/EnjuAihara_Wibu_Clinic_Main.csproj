@@ -2514,6 +2514,7 @@
     <Content Include="tsconfig.json" />
     <Content Include="Views\Shared\Notification.cshtml" />
     <Content Include="Views\Shared\NotificationCount.cshtml" />
+    <Content Include="Views\Shared\GetNewNotification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnjuAihara.Constant\EnjuAihara.Constant.csproj">

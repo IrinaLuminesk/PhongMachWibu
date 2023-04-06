@@ -72,33 +72,18 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
 
         public List<NotificationViewModel> GetAllUserNotification()
         {
-            //var CurrentId = CurrentUser.AccountId;
-            //var AllRole = CurrentUser.AccountInRoleModels.ToList();
-            //var list = _context.NotificationModels.Where(x => x.NotificationFor == CurrentId && x.IsRead == false).OrderBy(x => x.CreateDate).Select
-            //    (x => new NotificationViewModel
-            //    {
-            //        NotificationId = x.NotificationId,
-            //        Content = x.NotificationDetail,
-            //        Title = x.NotificationTitle,
-            //        CreateDate = x.CreateDate
-            //    }).ToList();
-            //var list2 = new List<NotificationViewModel>();
-            //foreach (var i in AllRole)
-            //{
-            //    list2.AddRange(_context.NotificationModels.Where(x => x.NotificationInRoleModels.Any(y => y.RoleId == i.RoleId)).Select
-            //    (x => new NotificationViewModel
-            //    {
-            //        NotificationId = x.NotificationId,
-            //        Content = x.NotificationDetail,
-            //        Title = x.NotificationTitle,
-            //        CreateDate = x.CreateDate
-            //    }).ToList());
-            //}
-            //List<NotificationViewModel> FinalList = new List<NotificationViewModel>();
-            //FinalList.AddRange(list2);
-            //FinalList.AddRange(list);
-            //return FinalList;
-            return null;
+            var CurrentId = CurrentUser.AccountId;
+            List<NotificationViewModel> list = new List<NotificationViewModel>();
+            list.AddRange(_context.NotificationForAccounts.Where(x => x.AccountId == CurrentId && x.IsRead == false).OrderBy(x => x.NotificationModel.CreateDate).Select(x =>
+            new NotificationViewModel
+            {
+               Content = x.NotificationModel.NotificationDetail,
+               CreateDate = x.NotificationModel.CreateDate,
+               NotificationId = x.NotificationModel.NotificationId,
+               Title = x.NotificationModel.NotificationTitle,
+               Link = x.NotificationModel.NotificationLink
+            }).ToList());
+            return list;
         }
 
         public ActionResult Error()
@@ -124,6 +109,14 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
             {
                 return PartialView(0);
             }
+        }
+
+
+        [HttpPost]
+        public PartialViewResult GetNewNotification(Guid Id)
+        {
+            var Notification = _context.NotificationModels.Where(x => x.NotificationId == Id).FirstOrDefault();
+            return PartialView(Notification);
         }
     }
 }

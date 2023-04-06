@@ -18,6 +18,23 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 const starCountRef = ref(db, '/');
 var flag = false;
+function addNewNotification(Id) {
+    var formdata = new FormData();
+    formdata.append("Id", Id);
+    $.ajax({
+        type: "POST",
+        url: "/Shared/GetNewNotification",
+        data: formdata,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            $("#NotificationList").append(data);
+        },
+        error: function (event, xhr, options, exc) {
+            console.log("Có lỗi với hệ thống firebase");
+        }
+    });
+}
 export function CheckChange() {
     onValue(starCountRef, (snapshot) => {
         if (flag == true) {
@@ -27,6 +44,10 @@ export function CheckChange() {
             }
             else {
                 $("#NumberOfNotification").text(parseInt(i) + 1);
+            }
+            var Id = Object.keys(snapshot.val())[0];
+            if (Id != null && Id != '') {
+                addNewNotification(Object.values(snapshot.val())[0]);
             }
         }
         else
