@@ -28,6 +28,7 @@ namespace EnjuAihara.EntityFramework
         public virtual DbSet<AccountInRoleModel> AccountInRoleModels { get; set; }
         public virtual DbSet<AccountModel> AccountModels { get; set; }
         public virtual DbSet<AccountRecoveryTokenModel> AccountRecoveryTokenModels { get; set; }
+        public virtual DbSet<ArticleModel> ArticleModels { get; set; }
         public virtual DbSet<CatalogModel> CatalogModels { get; set; }
         public virtual DbSet<CatalogTypeModel> CatalogTypeModels { get; set; }
         public virtual DbSet<ChangeDataLogModel> ChangeDataLogModels { get; set; }

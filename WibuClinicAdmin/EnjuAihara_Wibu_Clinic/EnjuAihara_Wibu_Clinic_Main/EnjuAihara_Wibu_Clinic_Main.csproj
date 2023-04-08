@@ -169,6 +169,7 @@
     <Compile Include="App_Start\StartUp.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\MasterData\Controllers\AccountController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\ArticleController.cs" />
     <Compile Include="Areas\MasterData\Controllers\CityController.cs" />
     <Compile Include="Areas\MasterData\Controllers\DistrictController.cs" />
     <Compile Include="Areas\MasterData\Controllers\IllnessController.cs" />
@@ -2285,6 +2286,10 @@
     <Content Include="Areas\MasterData\Views\MostAskQuestions\Create.cshtml" />
     <Content Include="Areas\MasterData\Views\MostAskQuestions\Edit.cshtml" />
     <Content Include="Areas\Personal\Views\ChangePassword\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Article\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Article\_PaggingServerSide.cshtml" />
+    <Content Include="Areas\MasterData\Views\Article\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Article\Create.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

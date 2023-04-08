@@ -47,6 +47,7 @@
     <Compile Include="MasterData\AccountCreateViewModel.cs" />
     <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />
+    <Compile Include="MasterData\ArticleSearchViewModel.cs" />
     <Compile Include="MasterData\CitySearchViewModel.cs" />
     <Compile Include="MasterData\Coordinate.cs" />
     <Compile Include="MasterData\DistrictSearchViewModel.cs" />

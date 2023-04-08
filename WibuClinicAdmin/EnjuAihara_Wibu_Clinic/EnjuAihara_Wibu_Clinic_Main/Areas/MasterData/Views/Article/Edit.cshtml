@@ -1,0 +1,203 @@
+﻿@model EnjuAihara.EntityFramework.ArticleModel
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Chỉnh sửa @Model.Title</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/MasterData/Article"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmEdit" enctype='multipart/form-data'>
+						@Html.HiddenFor(x => x.ArticleId)
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Title" class="col-form-label">Tiêu đề bài viết</label>
+												</div>
+												<div class="col-md-10">
+													@*<input type="text" id="Title" name="Title" class="form-control">*@
+													@Html.TextAreaFor(x => x.Title, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Summary" class="col-form-label">Tóm tắt bài viết</label>
+												</div>
+												<div class="col-md-10">
+													@Html.TextAreaFor(x => x.Summary, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Thumbnail" class="col-form-label">Thumbnail cũ</label>
+												</div>
+												<div class="col-md-10">
+													<img src="@Model.Thumbnail" style="width: 400px; height:400px" />
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Thumbnail" class="col-form-label">Thumbnail</label>
+												</div>
+												<div class="col-md-10">
+													<input type="file" id="Thumbnail" name="Thumbnail" class="form-control">
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Actived" class="col-form-label">Trạng thái</label>
+												</div>
+												<div class="col-md-10">
+													@Html.ActivedRadioButton(x => x.Actived)
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-10 text-center">
+													<label for="ProviderName" class="col-form-label">Chi tiết</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-12 mt-3">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-12">
+													@Html.TextAreaFor(x => x.Detail, new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<div class="row" style="margin-top: 15px">
+										<div class="col-md-12 text-center">
+											<button type="button" class="btn btn-primary" id="btn-edit">
+												<i class="fa fa-plus-square"></i>
+												Lưu
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	function WaitingForLoad() {
+		$("#loading").show();
+	}
+
+	function DoneLoading() {
+		$("#loading").hide();
+	}
+	tinymce.init({
+		selector: 'textarea#Detail',
+		plugins: [
+			'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+			'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+			'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+		],
+		toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+			'bullist numlist checklist outdent indent | removeformat | code table help',
+		onpageload: WaitingForLoad
+	}).then(function () {
+		DoneLoading();
+	});
+	tinymce.triggerSave(true, true);
+
+
+	function EditDataArticle() {
+		var frm = $("#frmEdit");
+		var formData = new FormData();
+		var formParams = frm.serializeArray();
+
+		$.each(frm.find('input[type="file"]'), function (i, tag) {
+			isHasFile = true;
+			$.each($(tag)[0].files, function (i, file) {
+				formData.append(tag.name, file);
+			});
+		});
+
+		$.each(formParams, function (i, val) {
+			formData.append(val.name, val.value);
+		});
+
+		formData.append("Detail", tinymce.activeEditor.getContent());
+
+		console.log(formData);
+		$.ajax({
+			type: "POST",
+			url: "/MasterData/Article/Edit",
+			data: formData,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+			},
+			success: function (data) {
+				if (data.isSucess) {
+					if (data.title && data.message)
+						AlertPopup(1, data.title, data.message);
+					if (data.redirect) {
+						setTimeout(function () {
+							window.location.href = data.redirect;
+						}, 1500);
+					}
+				}
+				else {
+					AlertPopup(3, data.title, data.message);
+				}
+			},
+			error: function (xhr, status, error) {
+				var err = eval("(" + xhr.responseText + ")");
+				AlertPopup(3, "Lỗi", err);
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	}
+
+	$(document).ready(function () {
+		$("#btn-edit").on('click', function () {
+			tinymce.triggerSave(true, true);
+			EditDataArticle();
+		});
+	});
+</script>

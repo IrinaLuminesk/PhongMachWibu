@@ -38,6 +38,19 @@
           <Property Name="ExpiredDate" Type="datetime" />
           <Property Name="AccountId" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="ArticleModel">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Author" Type="uniqueidentifier" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Summary" Type="nvarchar(max)" />
+          <Property Name="Detail" Type="nvarchar(max)" />
+          <Property Name="Actived" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Thumbnail" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="CatalogModel">
           <Key>
             <PropertyRef Name="CatalogId" />
@@ -447,6 +460,18 @@
             </Principal>
             <Dependent Role="AccountRecoveryTokenModel">
               <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleModel_AccountModel">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
+          <End Role="ArticleModel" Type="Self.ArticleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="ArticleModel">
+              <PropertyRef Name="Author" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -862,6 +887,7 @@
           <EntitySet Name="AccountInRoleModel" EntityType="Self.AccountInRoleModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountModel" EntityType="Self.AccountModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountRecoveryTokenModel" EntityType="Self.AccountRecoveryTokenModel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleModel" EntityType="Self.ArticleModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CatalogModel" EntityType="Self.CatalogModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CatalogTypeModel" EntityType="Self.CatalogTypeModel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChangeDataLogModel" EntityType="Self.ChangeDataLogModel" Schema="dbo" store:Type="Tables" />
@@ -915,6 +941,10 @@
           <AssociationSet Name="FK_AccountRecoveryTokenModel_AccountModel" Association="Self.FK_AccountRecoveryTokenModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModel" />
             <End Role="AccountRecoveryTokenModel" EntitySet="AccountRecoveryTokenModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleModel_AccountModel" Association="Self.FK_ArticleModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="ArticleModel" EntitySet="ArticleModel" />
           </AssociationSet>
           <AssociationSet Name="FK_CatalogModel_CatalogTypeModel" Association="Self.FK_CatalogModel_CatalogTypeModel">
             <End Role="CatalogTypeModel" EntitySet="CatalogTypeModel" />
@@ -1061,6 +1091,7 @@
           <EntitySet Name="AccountInRoleModels" EntityType="QuanLyPhongMachWibuModel.AccountInRoleModel" />
           <EntitySet Name="AccountModels" EntityType="QuanLyPhongMachWibuModel.AccountModel" />
           <EntitySet Name="AccountRecoveryTokenModels" EntityType="QuanLyPhongMachWibuModel.AccountRecoveryTokenModel" />
+          <EntitySet Name="ArticleModels" EntityType="QuanLyPhongMachWibuModel.ArticleModel" />
           <EntitySet Name="CatalogModels" EntityType="QuanLyPhongMachWibuModel.CatalogModel" />
           <EntitySet Name="CatalogTypeModels" EntityType="QuanLyPhongMachWibuModel.CatalogTypeModel" />
           <EntitySet Name="ChangeDataLogModels" EntityType="QuanLyPhongMachWibuModel.ChangeDataLogModel" />
@@ -1114,6 +1145,10 @@
           <AssociationSet Name="FK_AccountRecoveryTokenModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="AccountRecoveryTokenModel" EntitySet="AccountRecoveryTokenModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_ArticleModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="ArticleModel" EntitySet="ArticleModels" />
           </AssociationSet>
           <AssociationSet Name="FK_ChangeDataLogModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_ChangeDataLogModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
@@ -1282,6 +1317,7 @@
           <NavigationProperty Name="AccountModel2" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_AccountModel" FromRole="AccountModel1" ToRole="AccountModel" />
           <NavigationProperty Name="UsersModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountModel_UsersModel" FromRole="AccountModel" ToRole="UsersModel" />
           <NavigationProperty Name="AccountRecoveryTokenModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel" FromRole="AccountModel" ToRole="AccountRecoveryTokenModel" />
+          <NavigationProperty Name="ArticleModels" Relationship="QuanLyPhongMachWibuModel.FK_ArticleModel_AccountModel" FromRole="AccountModel" ToRole="ArticleModel" />
           <NavigationProperty Name="ChangeDataLogModels" Relationship="QuanLyPhongMachWibuModel.FK_ChangeDataLogModel_AccountModel" FromRole="AccountModel" ToRole="ChangeDataLogModel" />
           <NavigationProperty Name="DateModels" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DateModels1" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel1" FromRole="AccountModel" ToRole="DateModel" />
@@ -1301,6 +1337,20 @@
           <Property Name="ExpiredDate" Type="DateTime" Precision="3" />
           <Property Name="AccountId" Type="Guid" />
           <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_AccountRecoveryTokenModel_AccountModel" FromRole="AccountRecoveryTokenModel" ToRole="AccountModel" />
+        </EntityType>
+        <EntityType Name="ArticleModel">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="Guid" Nullable="false" />
+          <Property Name="Author" Type="Guid" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Actived" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Thumbnail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_ArticleModel_AccountModel" FromRole="ArticleModel" ToRole="AccountModel" />
         </EntityType>
         <EntityType Name="CatalogModel">
           <Key>
@@ -1775,6 +1825,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ArticleModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.ArticleModel" Role="ArticleModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="ArticleModel">
+              <PropertyRef Name="Author" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ChangeDataLogModel_AccountModel">
           <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
           <End Type="QuanLyPhongMachWibuModel.ChangeDataLogModel" Role="ChangeDataLogModel" Multiplicity="*" />
@@ -2222,6 +2284,20 @@
                 <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleModels">
+            <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.ArticleModel">
+              <MappingFragment StoreEntitySet="ArticleModel">
+                <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

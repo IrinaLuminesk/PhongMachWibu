@@ -59,6 +59,9 @@
     <Compile Include="AccountRecoveryTokenModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArticleModel.cs">
+      <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
+    </Compile>
     <Compile Include="CatalogModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>

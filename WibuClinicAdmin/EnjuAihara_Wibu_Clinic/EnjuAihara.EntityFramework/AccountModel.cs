@@ -20,6 +20,7 @@ namespace EnjuAihara.EntityFramework
             this.AccountInRoleModels = new HashSet<AccountInRoleModel>();
             this.AccountModel1 = new HashSet<AccountModel>();
             this.AccountRecoveryTokenModels = new HashSet<AccountRecoveryTokenModel>();
+            this.ArticleModels = new HashSet<ArticleModel>();
             this.ChangeDataLogModels = new HashSet<ChangeDataLogModel>();
             this.DateModels = new HashSet<DateModel>();
             this.DateModels1 = new HashSet<DateModel>();
@@ -51,6 +52,8 @@ namespace EnjuAihara.EntityFramework
         public virtual UsersModel UsersModel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountRecoveryTokenModel> AccountRecoveryTokenModels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticleModel> ArticleModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChangeDataLogModel> ChangeDataLogModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
