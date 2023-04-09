@@ -22,6 +22,17 @@ namespace System.Web.Mvc.Html
             return MvcHtmlString.Create(result.ToString());
         }
 
+        public static MvcHtmlString ActivedRadioButtonCustomeText<TModel, TValue>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, string text1, string text2)
+        {
+            var result = new StringBuilder();
+            result.AppendFormat("<label class=\"col-form-label\">{0} {1}</label><label class=\"col-form-label\" style=\"margin-left:50px\">{2} {3}</label>",
+                helper.RadioButtonFor(expression, true, new { @checked = "checked", @id = "" }),
+                text1,
+                helper.RadioButtonFor(expression, false),
+               text2);
+
+            return MvcHtmlString.Create(result.ToString());
+        }
 
         public static bool CheckPermission(string PageUrl, string Function)
         {

@@ -82,7 +82,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Tạo nhóm người dùng mới thất bại",
+                    message = "Tạo nhóm người dùng mới thất bại " + ex.Message.ToString(),
                     redirect = "/Permission/Role"
                 });
             }
@@ -201,7 +201,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Lưu nhóm người dùng thất bại",
+                    message = "Lưu nhóm người dùng thất bại " + ex.Message.ToString(),
                     redirect = "/Permission/Role"
                 });
             }

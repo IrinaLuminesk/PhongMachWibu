@@ -136,7 +136,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Đã có lỗi xảy ra trong quá trình tạo người dùng"
+                    message = "Đã có lỗi xảy ra trong quá trình tạo người dùng " + ex.Message.ToString()
                 });
             }
         }

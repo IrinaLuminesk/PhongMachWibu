@@ -75,7 +75,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Tạo Function mới thất bại",
+                    message = "Tạo Function mới thất bại " + ex.Message.ToString(),
                     redirect = "/Permission/Function"
                 });
             }
@@ -180,7 +180,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 {
                     isSucess = false,
                     title = "Lỗi",
-                    message = "Lưu Function thất bại",
+                    message = "Lưu Function thất bại " + ex.Message.ToString(),
                     redirect = "/Permission/Function"
                 });
             }

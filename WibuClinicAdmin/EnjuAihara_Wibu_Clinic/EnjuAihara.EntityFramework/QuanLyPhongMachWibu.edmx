@@ -59,8 +59,9 @@
           <Property Name="CatalogTypeCode" Type="nvarchar" MaxLength="100" />
           <Property Name="CatalogCode" Type="nvarchar" MaxLength="100" />
           <Property Name="CatalogDescription" Type="nvarchar(max)" />
-          <Property Name="OrderIndex" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderIndex" Type="int" StoreGeneratedPattern="Identity" />
           <Property Name="Actived" Type="bit" />
+          <Property Name="Value" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="CatalogTypeModel">
           <Key>
@@ -1360,9 +1361,10 @@
           <Property Name="CatalogTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CatalogCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CatalogDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrderIndex" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderIndex" Type="Int32" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="CatalogTypeModel" Relationship="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel" FromRole="CatalogModel" ToRole="CatalogTypeModel" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CatalogTypeModel">
           <Key>
@@ -2304,6 +2306,7 @@
           <EntitySetMapping Name="CatalogModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.CatalogModel">
               <MappingFragment StoreEntitySet="CatalogModel">
+                <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Actived" ColumnName="Actived" />
                 <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
                 <ScalarProperty Name="CatalogDescription" ColumnName="CatalogDescription" />

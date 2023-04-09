@@ -20,6 +20,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
         }
         public PartialViewResult Sidebar()
         {
+            CreateConfigViewBag();
 
 
             var AllCurrentUserRoles = CurrentUser.AccountInRoleModels.Select(x => x.RolesModel).ToList();
@@ -117,6 +118,13 @@ namespace EnjuAihara_Wibu_Clinic_Main.Controllers
         {
             var Notification = _context.NotificationModels.Where(x => x.NotificationId == Id).FirstOrDefault();
             return PartialView(Notification);
+        }
+
+
+        public void CreateConfigViewBag()
+        {
+            //Mở Inspect Element
+            ViewBag.InspectElement = Convert.ToBoolean(_context.CatalogModels.Where(x => x.CatalogCode.Equals("InspectElement")).FirstOrDefault().Value);
         }
     }
 }

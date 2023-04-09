@@ -18,8 +18,9 @@ namespace EnjuAihara.EntityFramework
         public string CatalogTypeCode { get; set; }
         public string CatalogCode { get; set; }
         public string CatalogDescription { get; set; }
-        public int OrderIndex { get; set; }
+        public Nullable<int> OrderIndex { get; set; }
         public Nullable<bool> Actived { get; set; }
+        public string Value { get; set; }
     
         public virtual CatalogTypeModel CatalogTypeModel { get; set; }
     }

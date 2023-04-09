@@ -185,6 +185,7 @@
     <Compile Include="Areas\Permission\Controllers\AuthController.cs" />
     <Compile Include="Areas\Permission\Controllers\MenuController.cs" />
     <Compile Include="Areas\Permission\Controllers\PageController.cs" />
+    <Compile Include="Areas\Permission\Controllers\ParametersConfigurationController.cs" />
     <Compile Include="Areas\Permission\Controllers\RoleController.cs" />
     <Compile Include="Areas\Permission\PermissionAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Controllers\CalendarController.cs" />
@@ -2290,6 +2291,7 @@
     <Content Include="Areas\MasterData\Views\Article\_PaggingServerSide.cshtml" />
     <Content Include="Areas\MasterData\Views\Article\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\Article\Create.cshtml" />
+    <Content Include="Areas\Permission\Views\ParametersConfiguration\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />

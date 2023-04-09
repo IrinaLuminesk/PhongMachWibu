@@ -1,0 +1,82 @@
+﻿@model EnjuAihara.ViewModels.Permission.ConfigViewModel
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Cấu hình thông số web</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+					<button type="button" class="btn btn-primary" id="btn-edit">
+						Lưu
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmEdit" enctype='multipart/form-data'>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="card h-100">
+									<div class="card-header">
+										<p class="m-0">Cấu hình kỹ thuật</p>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="row g-3 align-items-center">
+													<div class="col-md-6 text-center">
+														<label for="InspectElement" class="col-form-label">Cho phép mở Inspect Element</label>
+													</div>
+													<div class="col-md-6">
+														@Html.ActivedRadioButtonCustomeText(x => x.InspectElement, "Cho phép mở", "Không cho phép mở")
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="card h-100">
+									<div class="card-header">
+										<p class="m-0">Cấu hình giá trị</p>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="row g-3 align-items-center">
+													<div class="col-md-6 text-center">
+														<label for="InspectElement" class="col-form-label">Tiền đặt cọc khám bệnh</label>
+													</div>
+													<div class="col-md-6">
+														@Html.TextBoxFor(x => x.DatCoc, new { @class = "form-control" })
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#btn-edit").on('click', function () {
+			Edit("Permission/ParametersConfiguration", "#frmEdit");
+		});
+	});
+</script>

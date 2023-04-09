@@ -2,6 +2,8 @@
 @model IEnumerable<EnjuAihara.ViewModels.Permission.MenuViewModel>
 @{ 
 	var CurrentUser = (EnjuAihara.EntityFramework.AccountModel)ViewBag.CurrentUser;
+
+	var InspectElement = Convert.ToBoolean(ViewBag.InspectElement);
 }
 <div class="sidebar">
 	<div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -50,3 +52,28 @@
 		</ul>
 	</nav>
 </div>
+@if (InspectElement == false)
+{
+	<script type="text/javascript">
+		document.addEventListener('contextmenu', function (e) {
+			e.preventDefault();
+		});
+		document.onkeydown = (e) => {
+			if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+				e.preventDefault();
+			}
+			if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+				e.preventDefault();
+			}
+			if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+				e.preventDefault();
+			}
+			if (e.ctrlKey && e.key == 'U') {
+				e.preventDefault();
+			}
+			if (e.keyCode == '123') {
+				e.preventDefault();
+			}
+		};
+	</script>
+}

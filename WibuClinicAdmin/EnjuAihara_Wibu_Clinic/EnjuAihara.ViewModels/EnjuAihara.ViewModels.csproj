@@ -63,6 +63,7 @@
     <Compile Include="MasterData\MedicineCreateViewModel.cs" />
     <Compile Include="MasterData\MedicineSearchViewModel.cs" />
     <Compile Include="Permission\Auth\LoginViewModel.cs" />
+    <Compile Include="Permission\ConfigViewModel.cs" />
     <Compile Include="Permission\MenuViewModel.cs" />
     <Compile Include="Permission\PageViewModel.cs" />
     <Compile Include="Personal\CalendarEventViewModel.cs" />

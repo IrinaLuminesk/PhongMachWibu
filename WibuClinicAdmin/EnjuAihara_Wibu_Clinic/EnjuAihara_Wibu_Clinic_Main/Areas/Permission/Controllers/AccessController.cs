@@ -73,6 +73,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             }
             catch (Exception ex)
             {
+                string error = ex.Message.ToString();
                 return Json(new { IsSuccess = false});
             }
         }
@@ -93,6 +94,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             }
             catch (Exception ex)
             {
+                string error = ex.Message.ToString();
                 return Json(new { IsSuccess = false });
             }
         }
