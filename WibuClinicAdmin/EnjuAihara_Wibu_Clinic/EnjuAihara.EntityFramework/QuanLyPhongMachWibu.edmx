@@ -327,6 +327,8 @@
           <Property Name="Address" Type="nvarchar" MaxLength="100" />
           <Property Name="Latitude" Type="float" />
           <Property Name="longitude" Type="float" />
+          <Property Name="CityId" Type="uniqueidentifier" />
+          <Property Name="DistrictId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="RolesModel">
           <Key>
@@ -848,6 +850,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProviderModel_CityModel">
+          <End Role="CityModel" Type="Self.CityModel" Multiplicity="0..1" />
+          <End Role="ProviderModel" Type="Self.ProviderModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityModel">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="ProviderModel">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProviderModel_DistrictModel">
+          <End Role="DistrictModel" Type="Self.DistrictModel" Multiplicity="0..1" />
+          <End Role="ProviderModel" Type="Self.ProviderModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistrictModel">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="ProviderModel">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WarehouseDetailModel_MedicineProvideModel">
           <End Role="MedicineProvideModel" Type="Self.MedicineProvideModel" Multiplicity="0..1" />
           <End Role="WarehouseDetailModel" Type="Self.WarehouseDetailModel" Multiplicity="*" />
@@ -1071,6 +1097,14 @@
             <End Role="RolesModel" EntitySet="RolesModel" />
             <End Role="PagePermissionModel" EntitySet="PagePermissionModel" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProviderModel_CityModel" Association="Self.FK_ProviderModel_CityModel">
+            <End Role="CityModel" EntitySet="CityModel" />
+            <End Role="ProviderModel" EntitySet="ProviderModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProviderModel_DistrictModel" Association="Self.FK_ProviderModel_DistrictModel">
+            <End Role="DistrictModel" EntitySet="DistrictModel" />
+            <End Role="ProviderModel" EntitySet="ProviderModel" />
+          </AssociationSet>
           <AssociationSet Name="FK_WarehouseDetailModel_MedicineProvideModel" Association="Self.FK_WarehouseDetailModel_MedicineProvideModel">
             <End Role="MedicineProvideModel" EntitySet="MedicineProvideModel" />
             <End Role="WarehouseDetailModel" EntitySet="WarehouseDetailModel" />
@@ -1287,6 +1321,14 @@
             <End Role="WarehouseMasterModel" EntitySet="WarehouseMasterModels" />
             <End Role="WarehouseDetailModel" EntitySet="WarehouseDetailModels" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProviderModel_CityModel" Association="QuanLyPhongMachWibuModel.FK_ProviderModel_CityModel">
+            <End Role="CityModel" EntitySet="CityModels" />
+            <End Role="ProviderModel" EntitySet="ProviderModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProviderModel_DistrictModel" Association="QuanLyPhongMachWibuModel.FK_ProviderModel_DistrictModel">
+            <End Role="DistrictModel" EntitySet="DistrictModels" />
+            <End Role="ProviderModel" EntitySet="ProviderModels" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountInRoleModel">
           <Key>
@@ -1399,6 +1441,7 @@
           <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Actived" Type="Boolean" />
           <NavigationProperty Name="DistrictModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictModel_CityModel" FromRole="CityModel" ToRole="DistrictModel" />
+          <NavigationProperty Name="ProviderModels" Relationship="QuanLyPhongMachWibuModel.FK_ProviderModel_CityModel" FromRole="CityModel" ToRole="ProviderModel" />
         </EntityType>
         <EntityType Name="DateModel">
           <Key>
@@ -1475,6 +1518,7 @@
           <NavigationProperty Name="CityModel" Relationship="QuanLyPhongMachWibuModel.FK_DistrictModel_CityModel" FromRole="DistrictModel" ToRole="CityModel" />
           <NavigationProperty Name="DistrictStreetModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictStreetModel_DistrictModel" FromRole="DistrictModel" ToRole="DistrictStreetModel" />
           <NavigationProperty Name="DistrictWardModels" Relationship="QuanLyPhongMachWibuModel.FK_DistrictWardModel_DistrictModel" FromRole="DistrictModel" ToRole="DistrictWardModel" />
+          <NavigationProperty Name="ProviderModels" Relationship="QuanLyPhongMachWibuModel.FK_ProviderModel_DistrictModel" FromRole="DistrictModel" ToRole="ProviderModel" />
         </EntityType>
         <EntityType Name="DistrictStreetModel">
           <Key>
@@ -1679,6 +1723,10 @@
           <Property Name="Latitude" Type="Double" />
           <Property Name="longitude" Type="Double" />
           <NavigationProperty Name="MedicineProvideModels" Relationship="QuanLyPhongMachWibuModel.FK_MedicineProvideModel_ProviderModel" FromRole="ProviderModel" ToRole="MedicineProvideModel" />
+          <Property Name="CityId" Type="Guid" />
+          <Property Name="DistrictId" Type="Guid" />
+          <NavigationProperty Name="CityModel" Relationship="QuanLyPhongMachWibuModel.FK_ProviderModel_CityModel" FromRole="ProviderModel" ToRole="CityModel" />
+          <NavigationProperty Name="DistrictModel" Relationship="QuanLyPhongMachWibuModel.FK_ProviderModel_DistrictModel" FromRole="ProviderModel" ToRole="DistrictModel" />
         </EntityType>
         <EntityType Name="RolesModel">
           <Key>
@@ -2247,6 +2295,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProviderModel_CityModel">
+          <End Type="QuanLyPhongMachWibuModel.CityModel" Role="CityModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.ProviderModel" Role="ProviderModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityModel">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="ProviderModel">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProviderModel_DistrictModel">
+          <End Type="QuanLyPhongMachWibuModel.DistrictModel" Role="DistrictModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.ProviderModel" Role="ProviderModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistrictModel">
+              <PropertyRef Name="DistrictId" />
+            </Principal>
+            <Dependent Role="ProviderModel">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2597,6 +2669,8 @@
           <EntitySetMapping Name="ProviderModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.ProviderModel">
               <MappingFragment StoreEntitySet="ProviderModel">
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Address" ColumnName="Address" />

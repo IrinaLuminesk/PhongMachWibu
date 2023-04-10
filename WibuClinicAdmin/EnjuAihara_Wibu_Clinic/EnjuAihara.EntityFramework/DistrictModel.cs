@@ -19,6 +19,7 @@ namespace EnjuAihara.EntityFramework
         {
             this.DistrictStreetModels = new HashSet<DistrictStreetModel>();
             this.DistrictWardModels = new HashSet<DistrictWardModel>();
+            this.ProviderModels = new HashSet<ProviderModel>();
         }
     
         public System.Guid DistrictId { get; set; }
@@ -32,5 +33,7 @@ namespace EnjuAihara.EntityFramework
         public virtual ICollection<DistrictStreetModel> DistrictStreetModels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DistrictWardModel> DistrictWardModels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProviderModel> ProviderModels { get; set; }
     }
 }

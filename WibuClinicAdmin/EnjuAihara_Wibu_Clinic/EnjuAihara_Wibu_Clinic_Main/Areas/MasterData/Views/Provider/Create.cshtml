@@ -20,31 +20,74 @@
                     <form id="frmCreate" enctype='multipart/form-data'>
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                       
-                                        <div class="col-md-12 mt-3">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-2 text-center">
-                                                    <label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <input type="text" id="ProviderName" name="ProviderName" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                    </div>
-                                    <div class="row" style="margin-top: 15px">
-                                        <div class="col-md-12 text-center">
-                                            <button type="button" class="btn btn-primary" id="btn-add">
-                                                <i class="fa fa-plus-square"></i>
-                                                Thêm mới
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+								<div class="card-body">
+									<div class="row">
+
+										<div class="col-md-12">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
+												</div>
+												<div class="col-md-10">
+													<input type="text" id="ProviderName" name="ProviderName" class="form-control">
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+									<div class="row mt-3">
+
+										<div class="col-md-12">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="Address" class="col-form-label">Địa chỉ chi tiết</label>
+												</div>
+												<div class="col-md-10">
+													<input type="text" id="Address" name="Address" class="form-control">
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+
+									<div class="row mt-3">
+
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="City" class="col-form-label">Thành phố</label>
+												</div>
+												<div class="col-md-10">
+													@Html.DropDownList("CityId", (SelectList)ViewBag.CityList, new { @class = "form-control"})
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-2 text-center">
+													<label for="District" class="col-form-label">Quận</label>
+												</div>
+												<div class="col-md-10" id="DistrictList">
+													<select type="text" id="DistrictId" name="District" class="form-control" disabled></select>
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+
+									<div class="row" style="margin-top: 15px">
+										<div class="col-md-12 text-center">
+											<button type="button" class="btn btn-primary" id="btn-add">
+												<i class="fa fa-plus-square"></i>
+												Thêm mới
+											</button>
+										</div>
+									</div>
+								</div>
                             </div>
                         </div>
                     </form>
@@ -54,9 +97,44 @@
     </div>
 </div>
 <script type="text/javascript">
+	function GetDistrict(Id) {
+		var form = new FormData();
+		form.append("Id", Id);
+
+		$.ajax({
+			type: "POST",
+			url: "/MasterData/Provider/GetDistrict",
+			data: form,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+				$("#DistrictList").html("");
+			},
+			success: function (data) {
+				console.log(data);
+				$("#DistrictList").html(data);
+				Select2Init("#DistrictId");
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+				$("#DistrictList").html("");
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	}
+
 	$(document).ready(function () {
-		/*Select2_AutoComplete("/MasterData/Account/AutoComplete", "#ForUser");*/
 		PreventEnterButton();
+		Select2Init("#CityId");
+		$("#CityId").on('change', function () {
+			GetDistrict($(this).val());
+
+		})
+
+		$("#CityId").trigger('change');
 		$("#btn-add").on("click", function () {
 			SaveData("MasterData/Provider", "#frmCreate");
 		});

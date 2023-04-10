@@ -83,6 +83,8 @@
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_PagePermissionModel_PageModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_PagePermissionModel_RolesModel" />
         <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_WarehouseDetailModel_WarehouseMasterModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_ProviderModel_CityModel" />
+        <AssociationConnector Association="QuanLyPhongMachWibuModel.FK_ProviderModel_DistrictModel" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

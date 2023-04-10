@@ -91,6 +91,7 @@
     <Compile Include="Datatable\PaggingServerSideDatatable.cs" />
     <Compile Include="DateTimeFormat\FormatDateTime.cs" />
     <Compile Include="EncryptionAlgorithm\Encrypt.cs" />
+    <Compile Include="GoogleMap\GoogleMapUtilities.cs" />
     <Compile Include="HtmlHelper\CustomeHtmlHelper.cs" />
     <Compile Include="LinqExtension\LinqExtension.cs" />
     <Compile Include="Permission\AuthUtilities.cs" />

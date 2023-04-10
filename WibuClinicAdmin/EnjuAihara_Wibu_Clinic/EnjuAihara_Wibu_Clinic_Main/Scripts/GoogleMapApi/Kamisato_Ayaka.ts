@@ -9,7 +9,7 @@
         }
     );
     for (var i = 0; i < Coords.data.length; i++) {
-        var marker = new google.maps.Marker({
+        const marker = new google.maps.Marker({
             position: { lat: Coords.data[i].Latitude, lng: Coords.data[i].Longitude },
             map,
             title: "Tên nhà cung cấp: " + Coords.data[i].Name + "\nĐịa chỉ: " + Coords.data[i].Address,

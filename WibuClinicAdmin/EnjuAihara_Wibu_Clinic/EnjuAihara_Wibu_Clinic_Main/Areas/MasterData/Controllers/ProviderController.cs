@@ -4,10 +4,12 @@ using EnjuAihara.Utilities.CloudinaryHelper;
 using EnjuAihara.Utilities.Datatable;
 using EnjuAihara.Utilities.DateTimeFormat;
 using EnjuAihara.Utilities.EncryptionAlgorithm;
+using EnjuAihara.Utilities.GoogleMap;
 using EnjuAihara.Utilities.RandomString;
 using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.Datatable;
 using EnjuAihara.ViewModels.MasterData;
+using EnjuAihara.ViewModels.SelectList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,7 +29,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             return View();
         }
         public JsonResult _PaggingServerSide(DatatableViewModel model, ProviderSearchViewModel search, string ProviderCodeSearch, string ProviderNameSearch,string AddressSearch , bool? Actived)
-        {
+        { 
             int filteredResultsCount;
             int totalResultsCount = model.length;
 
@@ -54,9 +56,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 ProviderName = x.ProviderName,
                 //RoleName = x.RolesModels.Select(y => y.RoleName).ToList(),
                 //RoleName = x.AccountInRoleModels.Select(y => y.RolesModel.RoleName).ToList(),
-                Address=x.Address,
-                Status=x.Actived==true? "Đang sử dụng":"Đã ngừng",
-                
+                Address = x.Address  + (x.DistrictModel == null ? "" : " Quận " + x.DistrictModel.DistrictName) + (x.CityModel == null ? "" : " Thành phố " + x.CityModel.CityName),
+                Status = x.Actived == true ? "Đang sử dụng" : "Đã ngừng",
+
 
             }).ToList();
             var finalResult = PaggingServerSideDatatable.DatatableSearch<ProviderSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
@@ -96,6 +98,49 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     message = "Vui lòng không để trống tên nhà cung cấp"
                 });
             }
+
+            if (string.IsNullOrEmpty(model.Address))
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống địa chỉ nhà cung cấp"
+                });
+            }
+            if (model.CityId == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống thành phố của nhà cung cấp"
+                });
+            }
+            if (model.DistrictId == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống quận nhà cung cấp"
+                });
+            }
+            var City = _context.CityModels.Where(x => x.CityId == model.CityId).FirstOrDefault();
+            var District = City.DistrictModels.Where(x => x.DistrictId == model.DistrictId).FirstOrDefault();
+            string TenQuan = District.DistrictName.Contains("Quận") ? District.DistrictName : string.Format("Quận {0}", District.DistrictName);
+            string TenThanhPho = City.CityName.Contains("Thành phố") ? City.CityName : string.Format("Thành phố {0}", City.CityName);
+            string FullAddress = string.Format("{0} {1} {2}", model.Address, TenQuan, TenThanhPho);
+            var Coordinate = GoogleMapUtilities.GetCoordinate(FullAddress);
+            if (Coordinate == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng nhập đúng địa chỉ thật"
+                });
+            }
             try {
                 ProviderModel newNcc = new ProviderModel()
                 {
@@ -103,7 +148,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     ProviderCode = DataCodeGenerate.ProviderCodeGen(),
                     Actived = true,
                     ProviderName = model.ProviderName,
-                    
+                    CityId = model.CityId,
+                    DistrictId = model.DistrictId,
+                    Latitude = Coordinate.Latitude, 
+                    longitude = Coordinate.Longitude
+
                 };
                 _context.Entry(newNcc).State = EntityState.Added;
                 _context.SaveChanges();
@@ -128,6 +177,14 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public ActionResult Edit(Guid id)
         {
             var pro = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == id);
+            var CityList = _context.CityModels.Where(x => x.Actived == true).OrderBy(x => x.CityName).Select(x =>
+            new SelectGuidItem
+            {
+                id = x.CityId,
+                name = x.CityName
+            }).ToList();
+
+            ViewBag.CityList = new SelectList(CityList, "id", "name", pro.CityId);
             return View(pro);
         }
         [HttpPost]
@@ -140,6 +197,48 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     isSucess = false,
                     title = "Lỗi",
                     message = "Vui lòng không để trống tên nhà cung cấp"
+                });
+            }
+            if (string.IsNullOrEmpty(viewModel.Address))
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống địa chỉ nhà cung cấp"
+                });
+            }
+            if (viewModel.CityId == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống thành phố của nhà cung cấp"
+                });
+            }
+            if (viewModel.DistrictId == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng không để trống quận nhà cung cấp"
+                });
+            }
+            var City = _context.CityModels.Where(x => x.CityId == viewModel.CityId).FirstOrDefault();
+            var District = City.DistrictModels.Where(x => x.DistrictId == viewModel.DistrictId).FirstOrDefault();
+            string TenQuan = District.DistrictName.Contains("Quận") ? District.DistrictName : string.Format("Quận {0}", District.DistrictName);
+            string TenThanhPho = City.CityName.Contains("Thành phố") ? City.CityName : string.Format("Thành phố {0}", City.CityName);
+            string FullAddress = string.Format("{0} {1} {2}", viewModel.Address, TenQuan, TenThanhPho);
+            var Coordinate = GoogleMapUtilities.GetCoordinate(FullAddress);
+            if (Coordinate == null)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Vui lòng nhập đúng địa chỉ thật"
                 });
             }
             if (viewModel.Actived==null)
@@ -156,7 +255,13 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 var provider = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == viewModel.ProviderId);
                 provider.ProviderName = viewModel.ProviderName;
                 provider.Actived = viewModel.Actived;
+                provider.CityId = viewModel.CityId;
+                provider.DistrictId = viewModel.DistrictId;
+                provider.Address = viewModel.Address;
+                provider.longitude = Coordinate.Longitude;
+                provider.Latitude = Coordinate.Latitude;
                 //provider.ProviderCode = viewModel.ProviderCode;
+                _context.Entry(provider).State = EntityState.Modified;
                 _context.SaveChanges();
                 return Json(new
                 {
@@ -179,6 +284,28 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public void CreateViewBag()
         {
             ViewBag.Actived = new SelectList(SelectListItemCustom.GetStatusSelectList(), "id", "name");
+
+            var CityList = _context.CityModels.Where(x => x.Actived == true).OrderBy(x => x.CityName).Select(x =>
+            new SelectGuidItem
+            {
+                id = x.CityId,
+                name = x.CityName
+            }).ToList();
+
+            ViewBag.CityList = new SelectList(CityList, "id", "name");
+        }
+
+        [HttpPost]
+        public PartialViewResult GetDistrict(Guid Id)
+        {
+            var result = _context.DistrictModels.Where(x => x.CityId == Id).OrderBy(x => x.DistrictName).Select(x =>
+            new SelectGuidItem
+            {
+                id = x.DistrictId,
+                name = x.DistrictName
+            }).ToList();
+
+            return PartialView(new SelectList(result, "id", "name"));
         }
     }
 }

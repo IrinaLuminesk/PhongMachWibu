@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Datatable\DatatableViewModel.cs" />
     <Compile Include="Firebase\NotificationViewModel.cs" />
+    <Compile Include="GoogleMap\GoogleMapResponseViewModel.cs" />
     <Compile Include="MasterData\AccountCreateViewModel.cs" />
     <Compile Include="MasterData\AccountEditViewModel.cs" />
     <Compile Include="MasterData\AccountSearchViewModel.cs" />

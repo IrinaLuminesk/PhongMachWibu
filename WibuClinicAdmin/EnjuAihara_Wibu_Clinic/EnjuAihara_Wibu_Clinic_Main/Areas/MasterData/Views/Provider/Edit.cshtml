@@ -1,82 +1,165 @@
 ﻿@model EnjuAihara.EntityFramework.ProviderModel
 <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Chỉnh sửa @Model.ProviderName</h1>
-            </div>
-            <div class="col-sm-6 text-right">
-                <div class="pull-right">
-                    <a class="btn btn-info" href="/MasterData/Provider"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Chỉnh sửa @Model.ProviderName</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/MasterData/Provider"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="content">
-    <form id="frmEdit" enctype='multipart/form-data'>
-        <div class="row">
-            @Html.HiddenFor(x => x.ProviderId)
-           
-            <div class="col-md-12">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-md-2 text-center">
-                                        <label for="AccountCode" class="col-form-label">Mã nhà cung cấp</label>
-                                    </div>
-                                    <div class="col-md-10">
-                                        @Html.TextBoxFor(x => x.ProviderCode, new { @class = "form-control", @readonly = "readonly",@disabled="disabled" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-3">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-md-2 text-center">
-                                        <label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
-                                    </div>
-                                    <div class="col-md-10">
-                                        @Html.TextBoxFor(x => x.ProviderName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
+	<form id="frmEdit" enctype='multipart/form-data'>
+		<div class="row">
+			@Html.HiddenFor(x => x.ProviderId)
 
-                            
-                            
-                            <div class="col-md-12 mt-3">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-md-2 text-center">
-                                        <label for="Actived" class="col-form-label">Trạng thái</label>
-                                    </div>
-                                    <div class="col-md-10">
-                                        @Html.ActivedRadioButton(x => x.Actived)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top: 15px">
-                            <div class="col-md-12 text-center">
-                                <button type="button" class="btn btn-primary" id="btn-edit" >
-                                    Lưu
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+			<div class="col-md-12">
+				<div class="card h-100">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="AccountCode" class="col-form-label">Mã nhà cung cấp</label>
+									</div>
+									<div class="col-md-10">
+										@Html.TextBoxFor(x => x.ProviderCode, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-12">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
+									</div>
+									<div class="col-md-10">
+										@Html.TextBoxFor(x => x.ProviderName, new { @class = "form-control" })
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row mt-3">
+
+							<div class="col-md-12">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="Address" class="col-form-label">Địa chỉ chi tiết</label>
+									</div>
+									<div class="col-md-10">
+										@Html.TextBoxFor(x => x.Address, new { @class = "form-control"})
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row mt-3">
+
+							<div class="col-md-6">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="City" class="col-form-label">Thành phố</label>
+									</div>
+									<div class="col-md-10">
+										@Html.DropDownList("CityId", (SelectList)ViewBag.CityList, new { @class = "form-control" })
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="District" class="col-form-label">Quận</label>
+									</div>
+									<div class="col-md-10" id="DistrictList">
+										<select type="text" id="DistrictId" name="District" class="form-control" disabled></select>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row mt-3">
+							<div class="col-md-12 mt-3">
+								<div class="row g-3 align-items-center">
+									<div class="col-md-2 text-center">
+										<label for="Actived" class="col-form-label">Trạng thái</label>
+									</div>
+									<div class="col-md-10">
+										@Html.ActivedRadioButton(x => x.Actived)
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 15px">
+							<div class="col-md-12 text-center">
+								<button type="button" class="btn btn-primary" id="btn-edit">
+									Lưu
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 <script type="text/javascript">
+
+	function GetDistrict(Id) {
+		var form = new FormData();
+		form.append("Id", Id);
+
+		$.ajax({
+			type: "POST",
+			url: "/MasterData/Provider/GetDistrict",
+			data: form,
+			processData: false,
+			contentType: false,
+			beforeSend: function () {
+				$("#loading").show();
+				$("#DistrictList").html("");
+			},
+			success: function (data) {
+				console.log(data);
+				$("#DistrictList").html(data);
+				Select2Init("#DistrictId");
+			},
+			error: function (event, xhr, options, exc) {
+				AlertPopup(2, "Lỗi", event.message);
+				$("#DistrictList").html("");
+			},
+			complete: function () {
+				$("#loading").hide();
+			}
+		});
+	}
+
 	$(document).ready(function () {
 
-		
+		Select2Init("#CityId");
 
 		$("#btn-edit").on("click", function () {
 			Edit("MasterData/Provider", "#frmEdit");
 		});
+
+
+		$("#CityId").on('change', function () {
+			GetDistrict($(this).val());
+
+		})
+
+		$("#CityId").trigger('change');
 
 	});
 </script>
