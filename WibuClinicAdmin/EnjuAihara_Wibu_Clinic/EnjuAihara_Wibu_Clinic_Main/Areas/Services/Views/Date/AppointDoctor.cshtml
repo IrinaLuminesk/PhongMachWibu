@@ -23,6 +23,7 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<form id="frmEdit" enctype='multipart/form-data'>
+						@Html.HiddenFor(x => x.DateId)
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
@@ -126,7 +127,7 @@
 												</div>
 												<div class="col-md-9">
 													@*<input type="text" id="PrescriptionCode" name="PrescriptionCode" class="form-control">*@
-													<select id="doctor" class="form-control"></select>
+													<select id="doctor" class="form-control" name="DoctorId"></select>
 												</div>
 											</div>
 										</div>
@@ -147,5 +148,46 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		Select2_AutoComplete("/Services/Date/AutoCompleteDoctor", "#doctor");
+
+		$("#btn-Appoint").on('click', function () {
+			var frm = $("#frmEdit");
+			formData = new FormData();
+			formParams = frm.serializeArray();
+
+			$.each(formParams, function (i, val) {
+				formData.append(val.name, val.value);
+			});
+			$.ajax({
+				type: "POST",
+				url: "/Services/Date/AppointDoctor",
+				data: formData,
+				processData: false,
+				contentType: false,
+				beforeSend: function () {
+					$("#loading").show();
+				},
+				success: function (data) {
+					if (data.isSucess) {
+						if (data.title && data.message)
+							AlertPopup(1, data.title, data.message);
+						if (data.redirect) {
+							setTimeout(function () {
+								window.location.href = data.redirect;
+							}, 1500);
+						}
+					}
+					else {
+						AlertPopup(3, data.title, data.message);
+					}
+				},
+				error: function (xhr, status, error) {
+					var err = eval("(" + xhr.responseText + ")");
+					AlertPopup(3, "Lỗi", err);
+				},
+				complete: function () {
+					$("#loading").hide();
+				}
+			});
+		});
 	});
 </script>

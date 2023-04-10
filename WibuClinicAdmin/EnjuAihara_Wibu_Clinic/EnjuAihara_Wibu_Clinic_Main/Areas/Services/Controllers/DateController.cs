@@ -113,6 +113,35 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             return View(cuochen);
         }
 
+
+        [HttpPost]
+        public JsonResult AppointDoctor(Guid DateId, Guid DoctorId)
+        {
+            try
+            {
+                var date = _context.DateModels.Where(x => x.DateId == DateId).FirstOrDefault();
+                date.BacSiKham = DoctorId;
+                date.YTaXacNhan = CurrentUser.AccountId;
+                _context.Entry(date).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Chỉ định bác sĩ khám thành công"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Lỗi " + ex.Message.ToString()
+                });
+            }
+        }
+
         public JsonResult AutoCompleteDoctor(string searchTerm)
         {
             var result = _context.UsersModels.Where(x => (x.LastName.Contains(searchTerm) || x.FirstName.Contains(searchTerm)) && x.AccountModels.Any(y => y.AccountInRoleModels.Any(z => z.RolesModel.RoleName.Equals("Bác sĩ")))).Select(
