@@ -44,6 +44,12 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             return Convert.ToInt32(result.CatalogModels.Where(x => x.CatalogCode.Equals("PriceConfiguration")).FirstOrDefault().Value);
         }
 
+
+        public int GetTongSoCuocHenTrongNgay(CatalogTypeModel result)
+        {
+            return 1;
+        }
+
         [HttpPost]
         public JsonResult Edit(ConfigViewModel edit)
         {

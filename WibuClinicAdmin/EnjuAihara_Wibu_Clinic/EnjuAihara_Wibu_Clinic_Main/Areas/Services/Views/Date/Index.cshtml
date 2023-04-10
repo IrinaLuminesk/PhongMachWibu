@@ -182,6 +182,12 @@
 				"data": "Money",
 				"className": "text-center",
 				"orderable": true,
+				"render": function (data, type, row) {
+					if (data != null) {
+						return CurrencyFormat(data);
+					}
+					return data;
+				}
 			},
 			{
 				"data": "TrangThaiCuocHen",
