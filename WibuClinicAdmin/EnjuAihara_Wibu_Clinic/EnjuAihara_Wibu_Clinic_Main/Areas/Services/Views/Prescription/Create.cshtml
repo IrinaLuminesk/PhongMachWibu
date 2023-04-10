@@ -1,4 +1,5 @@
-﻿<div class="content-header">
+﻿@model EnjuAihara.EntityFramework.AccountModel
+<div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
@@ -30,7 +31,16 @@
 						<div class="col-md-12">
 							<div class="row g-3 align-items-center">
 								<div class="col-md-12">
-									<select type="text" id="FastSearch" name="FastSearch" class="form-control" placeholder="Tìm nhanh tên bệnh nhân"></select>
+									@if (Model == null)
+									{
+										<select type="text" id="FastSearch" name="FastSearch" class="form-control" placeholder="Tìm nhanh tên bệnh nhân"></select>
+									}
+									else
+									{
+										<select type="text" id="FastSearch" name="FastSearch" class="form-control" placeholder="Tìm nhanh tên bệnh nhân" disabled>
+											<option selected value="@Model.AccountId">@Model.UsersModel.LastName @Model.UsersModel.FirstName</option>
+										</select>
+									}
 								</div>
 							</div>
 						</div>
@@ -46,9 +56,13 @@
 							<label class="col-form-label">Thông tin bệnh nhân</label>
 						</div>
 						<div class="col-md-6 text-right">
-							<label class="col-form-label">Bệnh nhân vãng lai</label>
+
 							@*<input type="checkbox" id="PatientType" name="PatientType">*@
-							@Html.CheckBox("PatientType")
+							@if (Model == null)
+							{ 
+								<label class="col-form-label">Bệnh nhân vãng lai</label>
+								@Html.CheckBox("PatientType")
+							}
 						</div>
 					</div>
 				</div>
@@ -60,7 +74,14 @@
 									<label for="PatientName" class="col-form-label">Họ bệnh nhân</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientLastName" name="PatientLastName" class="form-control" readonly>
+									@if (Model == null)
+									{
+										<input type="text" id="PatientLastName" name="PatientLastName" class="form-control" readonly>
+									}
+									else
+									{
+										<input type="text" id="PatientLastName" name="PatientLastName" class="form-control" value="@Model.UsersModel.LastName" readonly>
+									}
 								</div>
 							</div>
 						</div>
@@ -70,7 +91,14 @@
 									<label for="PatientFirstName" class="col-form-label">Tên bệnh nhân</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientFirstName" name="PatientFirstName" class="form-control" readonly>
+									@if (Model == null)
+									{
+										<input type="text" id="PatientFirstName" name="PatientFirstName" class="form-control" readonly>
+									}
+									else
+									{
+										<input type="text" id="PatientFirstName" name="PatientFirstName" class="form-control" value="@Model.UsersModel.FirstName" readonly>
+									}
 								</div>
 							</div>
 						</div>
@@ -80,7 +108,14 @@
 									<label for="PatientPhone" class="col-form-label">Điện thoại</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientPhone" name="PatientPhone" class="form-control" readonly>
+									@if (Model == null)
+									{
+										<input type="text" id="PatientPhone" name="PatientPhone" class="form-control" readonly>
+									}
+									else
+									{
+										<input type="text" id="PatientPhone" name="PatientPhone" class="form-control" readonly value="@Model.UsersModel.Phone">
+									}
 								</div>
 							</div>
 						</div>
@@ -90,7 +125,14 @@
 									<label for="PatientBirthday" class="col-form-label">Ngày sinh</label>
 								</div>
 								<div class="col-md-8">
-									<input type="date" id="PatientBirthday" name="PatientBirthday" class="form-control" readonly>
+									@if (Model == null)
+									{
+										<input type="date" id="PatientBirthday" name="PatientBirthday" class="form-control" readonly>
+									}
+									else
+									{
+										<input type="date" id="PatientBirthday" name="PatientBirthday" class="form-control" value="@(((DateTime)Model.UsersModel.Birthday).ToString("yyyy-MM-dd"))" readonly>
+									}
 								</div>
 							</div>
 						</div>
@@ -102,7 +144,14 @@
 									<label for="PatientAddress" class="col-form-label">Địa chỉ</label>
 								</div>
 								<div class="col-md-8">
-									<input type="text" id="PatientAddress" name="PatientAddress" class="form-control" readonly>
+									@if (Model == null)
+									{
+										<input type="text" id="PatientAddress" name="PatientAddress" class="form-control" readonly>
+									}
+									else
+									{
+										<input type="text" id="PatientAddress" name="PatientAddress" class="form-control" value="@Model.UsersModel.Address" readonly>
+									}
 								</div>
 							</div>
 						</div>
@@ -112,7 +161,14 @@
 									<label for="Email" class="col-form-label">Email</label>
 								</div>
 								<div class="col-md-8">
-									<input type="email" id="Email" name="Email" class="form-control" readonly>
+									@if (Model == null)
+									{
+										<input type="email" id="Email" name="Email" class="form-control" readonly>
+									}
+									else
+									{
+										<input type="email" id="Email" name="Email" class="form-control" value="@Model.UsersModel.Email" readonly>
+									}
 								</div>
 							</div>
 						</div>

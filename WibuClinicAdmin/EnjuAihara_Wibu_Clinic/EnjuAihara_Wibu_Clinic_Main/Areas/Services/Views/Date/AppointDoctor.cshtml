@@ -1,0 +1,193 @@
+﻿@model EnjuAihara.EntityFramework.DateModel
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Chỉ định bác sĩ khám</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					<a class="btn btn-info" href="/Services/Date"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+					<button class="btn btn-primary" id="btn-Appoint" style="width:20%">
+						<i class="fa-solid fa-pen-to-square"></i>
+						Lưu
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="content">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmEdit" enctype='multipart/form-data'>
+						@Html.HiddenFor(x => x.DateId)
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<label>Thông tin chi tiết về cuộc hẹn</label>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="RoleCode" class="col-form-label">Mã cuộc hẹn</label>
+												</div>
+												<div class="col-md-9">
+													@Html.TextBoxFor(x => x.DateCode, new { @class = "form-control" , @disabled = "disabled", @readonly = "readonly"})
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Client" class="col-form-label">Ngày đặt</label>
+												</div>
+												<div class="col-md-9">
+													@Html.TextBoxFor(x => x.AppointmentDate, new { @class = "form-control", @disabled = "disabled", @readonly = "readonly" , @type = "datetime"})
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="RoleCode" class="col-form-label">Mã người đặt</label>
+												</div>
+												<div class="col-md-9">
+													@Html.TextBoxFor(x => x.AccountModel.AccountCode, new { @class = "form-control", @disabled = "disabled", @readonly = "readonly" })
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Client" class="col-form-label">Tên nguời đặt</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="Client" name="Client" class="form-control" disabled readonly value="@Model.AccountModel.UsersModel.LastName @Model.AccountModel.UsersModel.FirstName">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="RoleCode" class="col-form-label">Tình trạng thanh toán</label>
+												</div>
+												<div class="col-md-9">
+													@if (Model.TrangThaiThanhToan == false)
+													{
+														<input type="text" id="PrescriptionCode" name="PrescriptionCode" class="form-control" disabled readonly value="Chưa thanh toán">
+													}
+													else
+													{
+														<input type="text" id="PrescriptionCode" name="PrescriptionCode" class="form-control" disabled readonly value="Đã thanh toán">
+													}
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Client" class="col-form-label">Hình thức thanh toán</label>
+												</div>
+												<div class="col-md-9">
+													@Html.TextBoxFor(x => x.HinhThucThanhToan, new { @class = "form-control", @disabled = "disabled", @readonly = "readonly" })
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="RoleCode" class="col-form-label">Số tiền thanh toán</label>
+												</div>
+												<div class="col-md-9">
+													@Html.TextBoxFor(x => x.SoTienThanhToan, new { @class = "form-control", @disabled = "disabled", @readonly = "readonly", Value=((double)Model.SoTienThanhToan).ToString("N0") })
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+
+										</div>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="RoleCode" class="col-form-label">Chỉ định người khám</label>
+												</div>
+												<div class="col-md-9">
+													@*<input type="text" id="PrescriptionCode" name="PrescriptionCode" class="form-control">*@
+													<select id="doctor" class="form-control" name="DoctorId"></select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		Select2_AutoComplete("/Services/Date/AutoCompleteDoctor", "#doctor");
+
+		$("#btn-Appoint").on('click', function () {
+			var frm = $("#frmEdit");
+			formData = new FormData();
+			formParams = frm.serializeArray();
+
+			$.each(formParams, function (i, val) {
+				formData.append(val.name, val.value);
+			});
+			$.ajax({
+				type: "POST",
+				url: "/Services/Date/AppointDoctor",
+				data: formData,
+				processData: false,
+				contentType: false,
+				beforeSend: function () {
+					$("#loading").show();
+				},
+				success: function (data) {
+					if (data.isSucess) {
+						if (data.title && data.message)
+							AlertPopup(1, data.title, data.message);
+						if (data.redirect) {
+							setTimeout(function () {
+								window.location.href = data.redirect;
+							}, 1500);
+						}
+					}
+					else {
+						AlertPopup(3, data.title, data.message);
+					}
+				},
+				error: function (xhr, status, error) {
+					var err = eval("(" + xhr.responseText + ")");
+					AlertPopup(3, "Lỗi", err);
+				},
+				complete: function () {
+					$("#loading").hide();
+				}
+			});
+		});
+	});
+</script>
