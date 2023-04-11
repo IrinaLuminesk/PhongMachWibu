@@ -101,6 +101,7 @@
                                                 <i class="fas fa-search"></i>
                                                 Tìm Kiếm
                                             </button>
+                                            <a type="button" id="exportExcel" name="exportExcel" class="btn btn-success" href="@Url.Action("ExportToExcel","StockReceiving")">Export Excel</a>
                                         </div>
                                     </div>
                                 </div>
@@ -233,6 +234,24 @@
         Select2Init("#Actived");
         Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete", "#ProviderIdSearch");
         Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete2", "#MedicineIdSearch");
+        $("#exportExcel").on("click", function () {
+
+            $("#exportExcel").button('loading');
+
+            /*  var load = AjaxLoaderRan();*/
+            $.ajax({
+                type: "POST",
+                url: "/Warehouse/StockReceiving/ExportToExcel",
+                data: $("#frmSearch").serializeArray(),
+                success: function (data) {
+                    AlertPopup(1, "Thành công","Export ra file Excel thành công" );
+                },
+                error: function (error) {
+                    $btn.button('reset');
+                    AlertPopup(2, "Đã có lỗi xảy ra", error);
+                },
+            });
+        })
 	});
 </script>
 
