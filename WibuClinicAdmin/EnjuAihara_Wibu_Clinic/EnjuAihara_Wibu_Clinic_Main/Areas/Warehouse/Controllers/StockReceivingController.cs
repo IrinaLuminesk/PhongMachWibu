@@ -430,8 +430,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
             {
                 ws.Cells[string.Format("A{0}", rowStart)].Value = stt;
                 ws.Cells[string.Format("B{0}", rowStart)].Value = item.ImportCode;
-                ws.Cells[string.Format("C{0}", rowStart)].Value = item.BoughtDate;
-                ws.Cells[string.Format("D{0}", rowStart)].Value = item.CreateDate;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}",item.BoughtDate);
+                ws.Cells[string.Format("D{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.CreateDate);
                 ws.Cells[string.Format("E{0}", rowStart)].Value = item.CreateBy;
                 ws.Cells[string.Format("F{0}", rowStart)].Value = item.Status;
                 rowStart++;
