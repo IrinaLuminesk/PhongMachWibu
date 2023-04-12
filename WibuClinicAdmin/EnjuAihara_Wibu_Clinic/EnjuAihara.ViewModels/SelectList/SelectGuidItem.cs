@@ -12,4 +12,12 @@ namespace EnjuAihara.ViewModels.SelectList
 
         public string name { get; set; }
     }
+
+
+    public class SelectGuidItemWithNull
+    {
+        public Guid? id { get; set; }
+
+        public string name { get; set; }
+    }
 }

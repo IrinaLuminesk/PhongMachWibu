@@ -151,9 +151,11 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     CityId = model.CityId,
                     DistrictId = model.DistrictId,
                     Latitude = Coordinate.Latitude, 
-                    longitude = Coordinate.Longitude
+                    longitude = Coordinate.Longitude,
+                    Address = model.Address
 
-                };
+
+            };
                 _context.Entry(newNcc).State = EntityState.Added;
                 _context.SaveChanges();
                 return Json(new
@@ -226,6 +228,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     message = "Vui lòng không để trống quận nhà cung cấp"
                 });
             }
+
             var City = _context.CityModels.Where(x => x.CityId == viewModel.CityId).FirstOrDefault();
             var District = City.DistrictModels.Where(x => x.DistrictId == viewModel.DistrictId).FirstOrDefault();
             string TenQuan = District.DistrictName.Contains("Quận") ? District.DistrictName : string.Format("Quận {0}", District.DistrictName);
@@ -286,12 +289,12 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             ViewBag.Actived = new SelectList(SelectListItemCustom.GetStatusSelectList(), "id", "name");
 
             var CityList = _context.CityModels.Where(x => x.Actived == true).OrderBy(x => x.CityName).Select(x =>
-            new SelectGuidItem
+            new SelectGuidItemWithNull
             {
                 id = x.CityId,
                 name = x.CityName
             }).ToList();
-
+            CityList.Add(new SelectGuidItemWithNull() { id = null, name = "-- Không chọn --" });
             ViewBag.CityList = new SelectList(CityList, "id", "name");
         }
 
@@ -299,13 +302,20 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public PartialViewResult GetDistrict(Guid Id)
         {
             var result = _context.DistrictModels.Where(x => x.CityId == Id).OrderBy(x => x.DistrictName).Select(x =>
-            new SelectGuidItem
+            new SelectGuidItemWithNull
             {
                 id = x.DistrictId,
                 name = x.DistrictName
             }).ToList();
-
+            result.Add(new SelectGuidItemWithNull() { id = null, name = "-- Không chọn --" });
             return PartialView(new SelectList(result, "id", "name"));
+        }
+
+
+        [HttpPost]
+        public PartialViewResult GetMap()
+        {
+            return PartialView();
         }
     }
 }

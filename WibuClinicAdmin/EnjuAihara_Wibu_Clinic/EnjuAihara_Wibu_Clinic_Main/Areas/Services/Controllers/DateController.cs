@@ -119,6 +119,20 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
         {
             try
             {
+                int SoBenhNhanDuocKhamCuaBacSi = Convert.ToInt32(_context.CatalogModels.Where(x => x.CatalogCode.Equals("MaximumPatientOccupancyPerDoctor")).FirstOrDefault().Value);
+                var TuNgayMoi = DateTime.Now.AddDays(-1).AddSeconds(1);
+                var DenNgayMoi = DateTime.Now.AddDays(1).AddSeconds(-1);
+                var SoBenhNhanVangLai = _context.DescriptionModels.Where(x => x.CreateDate >= TuNgayMoi && x.CreateDate <= DenNgayMoi && x.CreateBy == DoctorId && !string.IsNullOrEmpty(x.AnonymousClient) && !string.IsNullOrEmpty(x.AnonymousPhone)).ToList().Count();
+                var SoBenhNhanDaXuLy = _context.DateModels.Where(x => x.CreateDate >= TuNgayMoi && x.CreateDate <= DenNgayMoi && x.BacSiKham == DoctorId).ToList().Count();
+                if ((SoBenhNhanVangLai + SoBenhNhanDaXuLy) > SoBenhNhanDuocKhamCuaBacSi)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Thất bại",
+                        message = "Bác sĩ đã vượt quá số bệnh nhân quy định được khám"
+                    });
+                }
                 var date = _context.DateModels.Where(x => x.DateId == DateId).FirstOrDefault();
                 date.BacSiKham = DoctorId;
                 date.YTaXacNhan = CurrentUser.AccountId;

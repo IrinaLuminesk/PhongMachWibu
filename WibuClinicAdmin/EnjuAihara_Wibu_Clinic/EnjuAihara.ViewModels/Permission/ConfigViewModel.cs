@@ -14,5 +14,9 @@ namespace EnjuAihara.ViewModels.Permission
         //Thông số giá trị
         public int DatCoc { get; set; }
 
+        public int SoLuongCuocHenTrongNgay { get; set; }
+
+        public int SoLuongBenhNhanBacSiXuLy { get; set; }
+
     }
 }

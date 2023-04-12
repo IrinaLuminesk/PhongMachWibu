@@ -26,7 +26,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
             var config = new ConfigViewModel()
             {
                 InspectElement = GetInspectElementValue(result),
-                DatCoc = GetTienDatCoc(result2)
+                DatCoc = GetTienDatCoc(result2),
+                SoLuongBenhNhanBacSiXuLy = GetTongSoCuocHenBacSiXuLyTrongNgay(result2),
+                SoLuongCuocHenTrongNgay = GetTongSoCuocHenTrongNgay(result2)
             };
             return config;
         }
@@ -47,7 +49,12 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 
         public int GetTongSoCuocHenTrongNgay(CatalogTypeModel result)
         {
-            return 1;
+            return Convert.ToInt32(result.CatalogModels.Where(x => x.CatalogCode.Equals("MaximumOccupancy")).FirstOrDefault().Value);
+        }
+
+        public int GetTongSoCuocHenBacSiXuLyTrongNgay(CatalogTypeModel result)
+        {
+            return Convert.ToInt32(result.CatalogModels.Where(x => x.CatalogCode.Equals("MaximumPatientOccupancyPerDoctor")).FirstOrDefault().Value);
         }
 
         [HttpPost]
@@ -66,6 +73,29 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                     });
                 }
 
+                if (edit.SoLuongBenhNhanBacSiXuLy <= 0)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Thất bại",
+                        message = "Số lượng bệnh nhân được bác sĩ xử lý trong ngày phải lớn hơn 0"
+                    });
+                }
+
+                if (edit.SoLuongCuocHenTrongNgay <= 0)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Thất bại",
+                        message = "Số lượng cuộc hẹn trong ngày phải lớn hơn 0"
+                    });
+                }
+
+
+
+
                 var InspectElement = _context.CatalogModels.Where(x => x.CatalogCode.Equals("InspectElement")).FirstOrDefault();
                 InspectElement.Value = edit.InspectElement.ToString();
                 _context.Entry(InspectElement).State = System.Data.Entity.EntityState.Modified;
@@ -78,6 +108,15 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                 _context.SaveChanges();
 
 
+                var SoLuongBenhNhanToiDaTrongNgay = _context.CatalogModels.Where(x => x.CatalogCode.Equals("MaximumOccupancy")).FirstOrDefault();
+                SoLuongBenhNhanToiDaTrongNgay.Value = edit.SoLuongCuocHenTrongNgay.ToString();
+                _context.Entry(SoLuongBenhNhanToiDaTrongNgay).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+
+                var SoLuongBenhNhanToiDaCuaBacSiTrongNgay = _context.CatalogModels.Where(x => x.CatalogCode.Equals("MaximumPatientOccupancyPerDoctor")).FirstOrDefault();
+                SoLuongBenhNhanToiDaCuaBacSiTrongNgay.Value = edit.SoLuongBenhNhanBacSiXuLy.ToString();
+                _context.Entry(SoLuongBenhNhanToiDaCuaBacSiTrongNgay).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
                 return Json(new
                 {
                     isSucess = true,
