@@ -101,7 +101,8 @@
                                                 <i class="fas fa-search"></i>
                                                 Tìm Kiếm
                                             </button>
-                                            <a type="button" id="exportExcel" name="exportExcel" class="btn btn-success" href="@Url.Action("ExportToExcel","StockReceiving")">Export Excel</a>
+                                            <button type="button" id="exportExcel" name="exportExcel" class="btn btn-success">Export Excel</button>
+                                            @*<a type="button" href="@Url.Action("ExportToExcel","StockReceiving")" id="exportExcel" name="exportExcel" class="btn btn-success">Export Excel(để test)</a>*@
                                         </div>
                                     </div>
                                 </div>
@@ -236,22 +237,31 @@
         Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete2", "#MedicineIdSearch");
         $("#exportExcel").on("click", function () {
 
-            $("#exportExcel").button('loading');
-
-            /*  var load = AjaxLoaderRan();*/
-            $.ajax({
-                type: "POST",
-                url: "/Warehouse/StockReceiving/ExportToExcel",
-                data: $("#frmSearch").serializeArray(),
-                success: function (data) {
-                    AlertPopup(1, "Thành công","Export ra file Excel thành công" );
-                },
-                error: function (error) {
-                    $btn.button('reset');
-                    AlertPopup(2, "Đã có lỗi xảy ra", error);
-                },
-            });
-        })
+            /*  $("#exportExcel").button('loading');*/
+            @*var data = $("#frmSearch").serializeArray();
+            var data1 = $("#ImportCodeSearch").val();
+            window.location.href = "@Url.Action('ExportToExcel','StockReceiving', new { paramName1 = data1, paramName2 = data.paramValue2 })";*@
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Warehouse/StockReceiving/ExportToExcel",
+            //    data: $("#frmSearch").serializeArray(),
+            //    success: function (xhr, status, output) {
+            //        var ct = output.getResponseHeader("content-type") || "";
+            //        if (ct.indexOf('json') > -1) {
+            //            AlertPopup(2, "Đã có lỗi xảy ra", "Lỗi");
+            //        }
+            //        console.log(ct);
+            //    },
+            //    error: function (error) {
+            //        $("#exportExcel").button('reset');
+            //        AlertPopup(2, "Đã có lỗi xảy ra", error);
+            //    },
+            //});
+            form = document.getElementById('frmSearch');//cái này giống serialize hả
+            form.action = '/Warehouse/StockReceiving/ExportToExcel';
+            form.type = 'post'
+            form.submit();
+        });
 	});
 </script>
 
