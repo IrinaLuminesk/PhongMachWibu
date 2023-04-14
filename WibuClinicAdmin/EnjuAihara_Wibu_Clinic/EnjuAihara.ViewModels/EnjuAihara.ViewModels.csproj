@@ -56,6 +56,7 @@
     <Compile Include="MasterData\IllnessSearchViewModel.cs" />
     <Compile Include="MasterData\MedicineEditViewModel.cs" />
     <Compile Include="MasterData\IngredientSearchViewModel.cs" />
+    <Compile Include="MasterData\MedicineExcelViewModel.cs" />
     <Compile Include="MasterData\MostAskQuestionSearchViewModel.cs" />
     <Compile Include="MasterData\ProviderSearchViewModel.cs" />
     <Compile Include="MasterData\StreetCreateViewModel.cs" />

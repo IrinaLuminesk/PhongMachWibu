@@ -17,6 +17,7 @@ using EnjuAihara.Utilities.EncryptionAlgorithm;
 using System.IO;
 using Microsoft.AspNet.Identity;
 using EnjuAihara.Utilities.RandomString;
+using EnjuAihara.Utilities.Excel;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
@@ -28,7 +29,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             CreateViewBag();
             return View();
         }
-        public JsonResult _PaggingServerSide(DatatableViewModel model,MedicineSearchViewModel  search, string MedicineNameSearch, string MedicineCodeSearch, Guid? ProviderNameSearch, Guid? IngredientNameSearch, bool? Actived)
+        public JsonResult _PaggingServerSide(DatatableViewModel model, MedicineSearchViewModel search, string MedicineNameSearch, string MedicineCodeSearch, Guid? ProviderNameSearch, Guid? IngredientNameSearch, bool? Actived)
         {
             _context.Database.CommandTimeout = 100000;
 
@@ -127,7 +128,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         {
             try
             {
-                if(MedicineId != null)
+                if (MedicineId != null)
                 {
                     List<MedicineCreateViewModel> temp = new List<MedicineCreateViewModel>();
                     var temp2 = _context.MedicineProvideModels.Where(x => x.MedicineId == MedicineId && x.Actived == true).Select(x => x.ProviderId).ToList();
@@ -326,12 +327,12 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 }
             };
             result.AddRange(_context.ProviderModels.Where(x => (x.ProviderName.Contains(searchTerm) || x.ProviderCode
-            .Contains(searchTerm)) && x.Actived == true ).Select(x =>
-            new SelectListGuidForAutoComplete
-            {
-                value = x.ProviderId,
-                text = x.ProviderCode + " | " + x.ProviderName
-            }).Take(10).ToList());
+            .Contains(searchTerm)) && x.Actived == true).Select(x =>
+           new SelectListGuidForAutoComplete
+           {
+               value = x.ProviderId,
+               text = x.ProviderCode + " | " + x.ProviderName
+           }).Take(10).ToList());
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public JsonResult AutoComplete2(string searchTerm)
@@ -344,8 +345,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     value = Guid.Empty
                 }
             };
-            result.AddRange(_context.IngredientModels.Where(x => 
-            (x.IngredientCode.Contains(searchTerm) || x.IngredientName.Contains(searchTerm)) 
+            result.AddRange(_context.IngredientModels.Where(x =>
+            (x.IngredientCode.Contains(searchTerm) || x.IngredientName.Contains(searchTerm))
             && x.Actived == true)
                 .Select(x =>
             new SelectListGuidForAutoComplete
@@ -470,5 +471,41 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             }).ToList();
             return Json(new { data = Coord, count = Coord.Count });
         }
+
+
+        public ActionResult ExportToExcel(string MedicineNameSearch, string MedicineCodeSearch, Guid? ProviderNameSearch, Guid? IngredientNameSearch, bool? Actived)
+        {
+            var query = _context.MedicineProvideModels
+               .Where(x => (x.MedicineModel.MedicineCode.Contains(MedicineCodeSearch) || string.IsNullOrEmpty(MedicineCodeSearch))
+               && (x.MedicineModel.MedicineName.Contains(MedicineNameSearch) || string.IsNullOrEmpty(MedicineNameSearch))
+               && (x.ProviderModel.ProviderId == ProviderNameSearch || ProviderNameSearch == Guid.Empty || ProviderNameSearch == null)
+               && (x.MedicineCompoundModels.Any(y => y.IngredientModel.IngredientId == IngredientNameSearch) || IngredientNameSearch == null || IngredientNameSearch == Guid.Empty)
+               && (x.Actived == Actived || Actived == null)
+               ).AsEnumerable().Select(x =>
+           new MedicineExcelViewModel
+           {
+               MedicineCode = x.MedicineModel.MedicineCode,
+               MedicineName = x.MedicineModel.MedicineName,
+               Unit = x.MedicineModel.Unit,
+               Ingredients =  x.MedicineCompoundModels.Select(y => y.IngredientModel.IngredientName).ToList().Aggregate((c, n) => c + ", " + n),
+               Provider = x.ProviderModel.ProviderName
+
+           }).OrderBy(x => x.MedicineCode).ToList();
+
+            List<string> header = new List<string>()
+            {
+                "STT",
+                "Mã thuốc",
+                "Tên thuốc",
+                "Đơn vị tính",
+                "Thành phần",
+                "Nhà cung cấp"
+            };
+            byte[] ExcelFile = ExcelUtilities.ExportExcel<MedicineExcelViewModel>("Báo cáo thuốc", header, query);
+
+            return File(ExcelFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Medicine.xlsx");
+
+        }
+
     }
 }

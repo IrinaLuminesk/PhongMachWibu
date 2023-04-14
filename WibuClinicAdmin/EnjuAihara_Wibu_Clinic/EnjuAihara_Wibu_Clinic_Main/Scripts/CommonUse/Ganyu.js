@@ -588,3 +588,11 @@ function PrintElem(Id) {
     return true;
 }
 
+
+function ExportExcel(url) {
+    form = document.getElementById('frmSearch');//cái này giống serialize hả
+    form.action = url + '/ExportToExcel';
+    form.type = 'post'
+    form.submit();
+}
+
