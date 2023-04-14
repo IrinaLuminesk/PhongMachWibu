@@ -20,6 +20,8 @@ using Microsoft.AspNet.Identity;
 using EnjuAihara.Utilities.RandomString;
 using System.Net;
 using System.Web.UI.WebControls;
+using OfficeOpenXml;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
 {
@@ -384,6 +386,78 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Warehouse.Controllers
                 text = x.MedicineCode + " | " + x.MedicineName
             }).Take(10).ToList());
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+      
+        public ActionResult ExportToExcel(DatatableViewModel model, StockReceivingSearchViewModel search, string ImportCodeSearch, Guid? MedicineIdSearch, Guid? ProviderIdSearch, DateTime? FromDate, DateTime? ToDate, bool? Actived)
+        {
+            try
+            {
+                var query = _context.WarehouseMasterModels.
+                    Where(x => (x.ImportCode.Contains(ImportCodeSearch) || string.IsNullOrEmpty(ImportCodeSearch))
+
+                    && (x.WarehouseDetailModels.Any(z => z.MedicineProvideModel.MedicineId == MedicineIdSearch) || MedicineIdSearch == null || MedicineIdSearch == Guid.Empty)
+                    && (x.WarehouseDetailModels.Any(z => z.MedicineProvideModel.ProviderId == ProviderIdSearch) || ProviderIdSearch == null || ProviderIdSearch == Guid.Empty)
+                     && (x.Actived == Actived || Actived == null)
+                    && (x.CreateDate >= FromDate || FromDate == null)
+                    && (x.CreateDate <= ToDate || ToDate == null)
+                    )
+                    .Select(x =>
+                new StockReceivingSearchViewModel
+                {
+                    ImportCode = x.ImportCode,
+                    WarehouseMasterId = x.WarehouseMasterId,
+                    WarehouseDetailId = x.WarehouseDetailModels.Select(y => y.WarehouseDetailId).FirstOrDefault(),
+                    CreateDate = x.CreateDate,
+                    BoughtDate = x.BoughtDate,
+                    CreateBy = _context.AccountModels.Where(y => y.AccountId == x.CreateBy).Select(y => y.AccountModel2.UserName).FirstOrDefault(),
+                    Status = x.Actived == true ? "Đã duyệt" : "Chưa duyệt"
+
+                }).ToList();
+                ExcelPackage pck = new ExcelPackage();
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+                ws.Cells["A1"].Value = "Kết quả tìm kiếm";
+
+                ws.Cells["A2"].Value = "Ngày tháng";
+                ws.Cells["B2"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+
+                ws.Cells["A6"].Value = "STT";
+                ws.Cells["B6"].Value = "Mã nhập kho";
+                ws.Cells["C6"].Value = "Ngày Nhập kho";
+                ws.Cells["D6"].Value = "Ngày tạo";
+                ws.Cells["E6"].Value = "Người nhập";
+                ws.Cells["F6"].Value = "Trạng thái duyệt";
+
+                int rowStart = 7, stt = 1;
+                foreach (var item in query)
+                {
+                    ws.Cells[string.Format("A{0}", rowStart)].Value = stt;
+                    ws.Cells[string.Format("B{0}", rowStart)].Value = item.ImportCode;
+                    ws.Cells[string.Format("C{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.BoughtDate);
+                    ws.Cells[string.Format("D{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.CreateDate);
+                    ws.Cells[string.Format("E{0}", rowStart)].Value = item.CreateBy;
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = item.Status;
+                    rowStart++;
+                    stt++;
+                }
+                ws.Cells["A:AZ"].AutoFitColumns();
+                //Response.Clear();
+                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                //Response.AddHeader("content-disposition", "attachment:filename=" + "ExcelReport.xlsx");
+                //Response.BinaryWrite(pck.GetAsByteArray());
+                //Response.End();
+                return File(pck.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "FileExcel.xlsx"); 
+            }
+            catch(Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = ex.InnerException.Message.ToString()
+                });
+            }
+
         }
     }
 }

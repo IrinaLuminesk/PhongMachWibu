@@ -30,9 +30,9 @@ namespace EnjuAihara.EntityFramework
         public Nullable<System.Guid> CityId { get; set; }
         public Nullable<System.Guid> DistrictId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicineProvideModel> MedicineProvideModels { get; set; }
         public virtual CityModel CityModel { get; set; }
         public virtual DistrictModel DistrictModel { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicineProvideModel> MedicineProvideModels { get; set; }
     }
 }
