@@ -150,12 +150,12 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     ProviderName = model.ProviderName,
                     CityId = model.CityId,
                     DistrictId = model.DistrictId,
-                    Latitude = Coordinate.Latitude, 
+                    Latitude = Coordinate.Latitude,
                     longitude = Coordinate.Longitude,
                     Address = model.Address
 
 
-            };
+                };
                 _context.Entry(newNcc).State = EntityState.Added;
                 _context.SaveChanges();
                 return Json(new
