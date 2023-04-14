@@ -7,8 +7,6 @@ using System.Web.Mvc;
 using EnjuAihara.Utilities.EncryptionAlgorithm;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
-using EnjuAihara.EntityFramework;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 {

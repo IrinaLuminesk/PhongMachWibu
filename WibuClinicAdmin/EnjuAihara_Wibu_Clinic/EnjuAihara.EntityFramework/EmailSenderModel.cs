@@ -17,10 +17,12 @@ namespace EnjuAihara.EntityFramework
         public System.Guid EmailId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public string SendFrom { get; set; }
-        public string SendTo { get; set; }
+        public Nullable<System.Guid> SendTo { get; set; }
         public Nullable<bool> IsSend { get; set; }
         public Nullable<System.DateTime> SendDate { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public string EmailType { get; set; }
+    
+        public virtual AccountModel AccountModel { get; set; }
     }
 }

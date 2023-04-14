@@ -180,11 +180,11 @@
           <Property Name="EmailId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="nchar" MaxLength="10" />
           <Property Name="Content" Type="nvarchar(max)" />
-          <Property Name="SendFrom" Type="nvarchar(max)" />
-          <Property Name="SendTo" Type="nvarchar(max)" />
+          <Property Name="SendTo" Type="uniqueidentifier" />
           <Property Name="IsSend" Type="bit" />
           <Property Name="SendDate" Type="datetime" />
           <Property Name="CreateDate" Type="datetime" />
+          <Property Name="EmailType" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FunctionModel">
           <Key>
@@ -670,6 +670,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmailSenderModel_AccountModel">
+          <End Role="AccountModel" Type="Self.AccountModel" Multiplicity="0..1" />
+          <End Role="EmailSenderModel" Type="Self.EmailSenderModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="EmailSenderModel">
+              <PropertyRef Name="SendTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MedicineCompoundModel_IngredientModel">
           <End Role="IngredientModel" Type="Self.IngredientModel" Multiplicity="0..1" />
           <End Role="MedicineCompoundModel" Type="Self.MedicineCompoundModel" Multiplicity="*" />
@@ -1037,6 +1049,10 @@
             <End Role="WardModel" EntitySet="WardModel" />
             <End Role="DistrictWardModel" EntitySet="DistrictWardModel" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmailSenderModel_AccountModel" Association="Self.FK_EmailSenderModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModel" />
+            <End Role="EmailSenderModel" EntitySet="EmailSenderModel" />
+          </AssociationSet>
           <AssociationSet Name="FK_MedicineCompoundModel_IngredientModel" Association="Self.FK_MedicineCompoundModel_IngredientModel">
             <End Role="IngredientModel" EntitySet="IngredientModel" />
             <End Role="MedicineCompoundModel" EntitySet="MedicineCompoundModel" />
@@ -1209,6 +1225,10 @@
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="DescriptionModel" EntitySet="DescriptionModels" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmailSenderModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_EmailSenderModel_AccountModel">
+            <End Role="AccountModel" EntitySet="AccountModels" />
+            <End Role="EmailSenderModel" EntitySet="EmailSenderModels" />
+          </AssociationSet>
           <AssociationSet Name="FK_MostAskQuestionModel_AccountModel" Association="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel">
             <End Role="AccountModel" EntitySet="AccountModels" />
             <End Role="MostAskQuestionModel" EntitySet="MostAskQuestionModels" />
@@ -1367,6 +1387,7 @@
           <NavigationProperty Name="DateModels2" Relationship="QuanLyPhongMachWibuModel.FK_DateModel_AccountModel2" FromRole="AccountModel" ToRole="DateModel" />
           <NavigationProperty Name="DescriptionModels" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_AccountModel" FromRole="AccountModel" ToRole="DescriptionModel" />
           <NavigationProperty Name="DescriptionModels1" Relationship="QuanLyPhongMachWibuModel.FK_DescriptionModel_CreateFor" FromRole="AccountModel" ToRole="DescriptionModel" />
+          <NavigationProperty Name="EmailSenderModels" Relationship="QuanLyPhongMachWibuModel.FK_EmailSenderModel_AccountModel" FromRole="AccountModel" ToRole="EmailSenderModel" />
           <NavigationProperty Name="MostAskQuestionModels" Relationship="QuanLyPhongMachWibuModel.FK_MostAskQuestionModel_AccountModel" FromRole="AccountModel" ToRole="MostAskQuestionModel" />
           <NavigationProperty Name="NotificationForAccounts" Relationship="QuanLyPhongMachWibuModel.FK_NotificationForAccount_AccountModel" FromRole="AccountModel" ToRole="NotificationForAccount" />
           <NavigationProperty Name="WarehouseMasterModels" Relationship="QuanLyPhongMachWibuModel.FK_WarehouseMasterModel_AccountModel" FromRole="AccountModel" ToRole="WarehouseMasterModel" />
@@ -1548,11 +1569,12 @@
           <Property Name="EmailId" Type="Guid" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SendFrom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SendTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SendTo" Type="Guid" />
           <Property Name="IsSend" Type="Boolean" />
           <Property Name="SendDate" Type="DateTime" Precision="3" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="EmailType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AccountModel" Relationship="QuanLyPhongMachWibuModel.FK_EmailSenderModel_AccountModel" FromRole="EmailSenderModel" ToRole="AccountModel" />
         </EntityType>
         <EntityType Name="FunctionModel">
           <Key>
@@ -1956,6 +1978,18 @@
             </Principal>
             <Dependent Role="DescriptionModel">
               <PropertyRef Name="CreateFor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailSenderModel_AccountModel">
+          <End Type="QuanLyPhongMachWibuModel.AccountModel" Role="AccountModel" Multiplicity="0..1" />
+          <End Type="QuanLyPhongMachWibuModel.EmailSenderModel" Role="EmailSenderModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountModel">
+              <PropertyRef Name="AccountId" />
+            </Principal>
+            <Dependent Role="EmailSenderModel">
+              <PropertyRef Name="SendTo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2511,11 +2545,11 @@
           <EntitySetMapping Name="EmailSenderModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.EmailSenderModel">
               <MappingFragment StoreEntitySet="EmailSenderModel">
+                <ScalarProperty Name="EmailType" ColumnName="EmailType" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="SendDate" ColumnName="SendDate" />
                 <ScalarProperty Name="IsSend" ColumnName="IsSend" />
                 <ScalarProperty Name="SendTo" ColumnName="SendTo" />
-                <ScalarProperty Name="SendFrom" ColumnName="SendFrom" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="EmailId" ColumnName="EmailId" />

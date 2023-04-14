@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EnjuAihara.Core;
-using EnjuAihara.Utilities.Permission;
 using EnjuAihara.ViewModels.Reports;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Controllers

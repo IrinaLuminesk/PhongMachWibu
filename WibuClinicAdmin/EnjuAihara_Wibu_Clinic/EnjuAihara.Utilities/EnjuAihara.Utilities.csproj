@@ -106,6 +106,7 @@
     <Compile Include="CloudinaryHelper\CloudinaryUpload.cs" />
     <Compile Include="Datatable\PaggingServerSideDatatable.cs" />
     <Compile Include="DateTimeFormat\FormatDateTime.cs" />
+    <Compile Include="Email\EmailUtilities.cs" />
     <Compile Include="EncryptionAlgorithm\Encrypt.cs" />
     <Compile Include="Excel\ExcelUtilities.cs" />
     <Compile Include="GoogleMap\GoogleMapUtilities.cs" />
@@ -116,9 +117,7 @@
     <Compile Include="RandomString\DataCodeGenerate.cs" />
     <Compile Include="SelectListItemCustom\SelectListItem.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Momo\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

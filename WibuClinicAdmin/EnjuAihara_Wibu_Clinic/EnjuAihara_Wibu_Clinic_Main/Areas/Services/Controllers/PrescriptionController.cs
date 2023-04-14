@@ -3,7 +3,6 @@ using EnjuAihara.ViewModels.Datatable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EnjuAihara.ViewModels.Services;
 using EnjuAihara.Utilities.Datatable;
@@ -12,7 +11,6 @@ using EnjuAihara.ViewModels.SelectList;
 using EnjuAihara.EntityFramework;
 using EnjuAihara.Utilities.RandomString;
 using EnjuAihara.Utilities.DateTimeFormat;
-using EnjuAihara.Utilities.LinqExtension;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
 {

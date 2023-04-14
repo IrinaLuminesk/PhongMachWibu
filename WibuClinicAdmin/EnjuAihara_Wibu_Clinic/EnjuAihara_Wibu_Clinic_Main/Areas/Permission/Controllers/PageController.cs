@@ -1,7 +1,6 @@
 ﻿using EnjuAihara.Core;
 using EnjuAihara.EntityFramework;
 using EnjuAihara.Utilities.SelectListItemCustom;
-
 using EnjuAihara.ViewModels.SelectList;
 using System;
 using System.Collections.Generic;

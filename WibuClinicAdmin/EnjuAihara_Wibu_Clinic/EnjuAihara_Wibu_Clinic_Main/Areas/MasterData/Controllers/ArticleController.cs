@@ -8,7 +8,6 @@ using EnjuAihara.ViewModels.Datatable;
 using EnjuAihara.ViewModels.MasterData;
 using EnjuAihara.ViewModels.SelectList;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;

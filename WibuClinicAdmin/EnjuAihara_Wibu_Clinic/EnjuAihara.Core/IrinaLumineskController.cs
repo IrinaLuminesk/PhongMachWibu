@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using EnjuAihara.EntityFramework;
-using EnjuAihara.ViewModels;
-using EnjuAihara.Utilities;
-using EnjuAihara.Utilities.CloudinaryHelper;
 using System.Security.Claims;
 using System.Web.Routing;
 

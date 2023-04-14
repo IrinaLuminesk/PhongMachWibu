@@ -8,11 +8,9 @@ using EnjuAihara.ViewModels.Datatable;
 using EnjuAihara.ViewModels.MasterData;
 using EnjuAihara.Utilities.RandomString;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers

@@ -2,10 +2,6 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 [assembly: OwinStartup(typeof(EnjuAihara_Wibu_Clinic_Main.App_Start.StartUp))]
 namespace EnjuAihara_Wibu_Clinic_Main.App_Start
 {

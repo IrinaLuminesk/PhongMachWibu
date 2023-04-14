@@ -1,19 +1,13 @@
 ﻿using EnjuAihara.Core;
 using EnjuAihara.EntityFramework;
-using EnjuAihara.Utilities.CloudinaryHelper;
 using EnjuAihara.Utilities.Datatable;
-using EnjuAihara.Utilities.DateTimeFormat;
-using EnjuAihara.Utilities.EncryptionAlgorithm;
 using EnjuAihara.Utilities.RandomString;
 using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.Datatable;
 using EnjuAihara.ViewModels.MasterData;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Web;
 using System.Web.Mvc;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
