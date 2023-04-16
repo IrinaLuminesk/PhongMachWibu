@@ -178,7 +178,7 @@
             <PropertyRef Name="EmailId" />
           </Key>
           <Property Name="EmailId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Title" Type="nchar" MaxLength="10" />
+          <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Content" Type="nvarchar(max)" />
           <Property Name="SendTo" Type="uniqueidentifier" />
           <Property Name="IsSend" Type="bit" />
@@ -1567,7 +1567,7 @@
             <PropertyRef Name="EmailId" />
           </Key>
           <Property Name="EmailId" Type="Guid" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SendTo" Type="Guid" />
           <Property Name="IsSend" Type="Boolean" />

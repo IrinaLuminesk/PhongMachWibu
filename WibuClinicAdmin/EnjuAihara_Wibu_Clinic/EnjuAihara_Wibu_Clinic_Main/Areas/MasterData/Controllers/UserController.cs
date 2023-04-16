@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using EnjuAihara.Utilities.GoogleMap;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
@@ -212,6 +213,18 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     title = "Lỗi",
                     message = "Vui lòng không để trống địa chỉ người dùng"
                 });
+            }
+            else
+            {
+                if (GoogleMapUtilities.GetCoordinate(model.Address) == null)
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Vui lòng sử dụng địa chỉ thật của người dùng"
+                    });
+                }
             }
 
             if (string.IsNullOrEmpty(model.Phone))

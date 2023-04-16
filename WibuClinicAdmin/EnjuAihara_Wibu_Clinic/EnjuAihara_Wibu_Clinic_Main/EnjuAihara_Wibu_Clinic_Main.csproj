@@ -2311,6 +2311,9 @@
     <Content Include="Areas\Services\Views\Date\Index.cshtml" />
     <Content Include="Areas\Services\Views\Date\_PaggingServerSide.cshtml" />
     <Content Include="Areas\Services\Views\Date\AppointDoctor.cshtml" />
+    <Content Include="Areas\Permission\Views\Auth\PasswordReset.cshtml" />
+    <Content Include="Areas\Permission\Views\Auth\PasswordChange.cshtml" />
+    <Content Include="Areas\Permission\Views\Auth\Error.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
