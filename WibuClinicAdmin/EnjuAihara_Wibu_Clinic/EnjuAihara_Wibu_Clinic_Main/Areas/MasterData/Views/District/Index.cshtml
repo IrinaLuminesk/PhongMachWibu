@@ -1,4 +1,8 @@
-﻿<div class="content-header">
+﻿@{
+	bool CreateFlag = CustomeHtmlHelper.CheckPermission("/MasterData/District", "CREATE");
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/District", "EDIT");
+}
+<div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
@@ -6,7 +10,10 @@
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
-					<a class="btn btn-primary" href="/Masterdata/District/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+					@if (CreateFlag == true)
+					{
+						<a class="btn btn-primary" href="/Masterdata/District/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+					}
 				</div>
 			</div>
 		</div>
@@ -93,6 +100,7 @@
 		JqueryAutoComplete("/MasterData/City/AutoCompleteCityName", "#InCity");
 		JqueryAutoComplete("/MasterData/District/AutoCompleteDistrictName", "#DistrictName");
 		Select2Init("#Actived");
+		var flag = "@EditFlag";
 		var columns = [
 			{
 				"data": "STT",
@@ -118,20 +126,24 @@
 				"data": "Status",
 				"className": "text-center",
 				"orderable": true,
-			},
-			{
-				"data": "DistrictId",
-				"className": "text-center",
-				"orderable": false,
-				"render": function (data, type, row) {
-					if (data != "" && data != null) {
-						var s = '<a class="btn btn-info" href="/MasterData/District/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
-						return s;
-					}
-					return "";
-				}
 			}
 		];
+		if (flag == true || flag == 'True') {
+			columns.push(
+				{
+					"data": "DistrictId",
+					"className": "text-center",
+					"orderable": false,
+					"render": function (data, type, row) {
+						if (data != "" && data != null) {
+							var s = '<a class="btn btn-info" href="/MasterData/District/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+							return s;
+						}
+						return "";
+					}
+				}
+			);
+		}
 		PaggingServerSideSearchInitialWithClick("MasterData/District", columns, true);
 	});
 </script>

@@ -1,129 +1,142 @@
-﻿<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Quản lý thuốc</h1>
-            </div>
-            <div class="col-sm-6 text-right">
-                <div class="pull-right">
-                    <a class="btn btn-primary" href="/Masterdata/Medicine/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
-                </div>
-            </div>
-        </div>
-    </div>
+﻿@{
+	bool CreateFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Medicine", "CREATE");
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Medicine", "EDIT");
+	bool ExcelFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Medicine", "EXPORTTOEXCEL");
+	bool ViewMapFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Medicine", "ViewMap");
+}
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">Quản lý thuốc</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<div class="pull-right">
+					@if (CreateFlag == true)
+					{
+						<a class="btn btn-primary" href="/Masterdata/Medicine/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="content">
-    <div class="form-horizontal">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form id="frmSearch">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="MedicineName" class="col-form-label">Tên thuốc</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input type="text" id="MedicineNameSearch" name="MedicineNameSearch" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="MedicineCode" class="col-form-label">Mã thuốc</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <input type="text" id="MedicineCodeSearch" name="MedicineCodeSearch" class="form-control">
+	<div class="form-horizontal">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<form id="frmSearch">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="MedicineName" class="col-form-label">Tên thuốc</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="MedicineNameSearch" name="MedicineNameSearch" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="MedicineCode" class="col-form-label">Mã thuốc</label>
+												</div>
+												<div class="col-md-9">
+													<input type="text" id="MedicineCodeSearch" name="MedicineCodeSearch" class="form-control">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
+												</div>
+												<div class="col-md-9">
+													<select id="ProviderNameSearch" name="ProviderNameSearch" class="form-control">
+														<option>--Chọn tất cả--</option>
+													</select>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="ProviderName" class="col-form-label">Tên nhà cung cấp</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <select id="ProviderNameSearch" name="ProviderNameSearch" class="form-control">
-                                                        <option>--Chọn tất cả--</option>
-                                                    </select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="ProviderName" class="col-form-label">Tên thành phần</label>
+												</div>
+												<div class="col-md-9">
+													<select id="IngredientNameSearch" name="IngredientNameSearch" class="form-control">
+														<option>--Chọn tất cả--</option>
+													</select>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="ProviderName" class="col-form-label">Tên thành phần</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <select id="IngredientNameSearch" name="IngredientNameSearch" class="form-control">
-                                                        <option>--Chọn tất cả--</option>
-                                                    </select>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="Actived" class="col-form-label">Trạng thái</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    @*<input type="text" id="AccountName" name="AccountName" class="form-control">*@
-                                                    @Html.DropDownList("Actived", (SelectList)ViewBag.Actived, "-- Tất cả --", new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 15px">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row g-3 align-items-center">
+												<div class="col-md-3 text-center">
+													<label for="Actived" class="col-form-label">Trạng thái</label>
+												</div>
+												<div class="col-md-9">
+													@*<input type="text" id="AccountName" name="AccountName" class="form-control">*@
+													@Html.DropDownList("Actived", (SelectList)ViewBag.Actived, "-- Tất cả --", new { @class = "form-control" })
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin-top: 15px">
 										<div class="col-md-12 text-center">
 											<button type="button" class="btn btn-primary" id="btn-search">
 												<i class="fas fa-search"></i>
 												Tìm Kiếm
 											</button>
-											<button type="button" id="exportExcel" name="exportExcel" class="btn btn-success">Xuất Excel</button>
+											@if (ExcelFlag == true)
+											{
+												<button type="button" id="exportExcel" name="exportExcel" class="btn btn-success">Xuất Excel</button>
+											}
 										</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="divSearchResult">
-                                @Html.Partial("_PaggingServerSide")
-                            </div>
-                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="card">
+						<div class="card-body">
+							<div id="divSearchResult">
+								@Html.Partial("_PaggingServerSide")
+							</div>
+						</div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        JqueryAutoComplete("/MasterData/Medicine/JqueryAutoCompleteMediName", "#MedicineNameSearch");
+	$(document).ready(function () {
+		JqueryAutoComplete("/MasterData/Medicine/JqueryAutoCompleteMediName", "#MedicineNameSearch");
+		var EditFlag = "@EditFlag";
+		var MapFlag = "@ViewMapFlag";
 		var columns = [
 			{
 				"data": "STT",
 				"className": "text-center",
 				"orderable": true,
-            },
+			},
 			{
 				"data": "MedicineCode",
 				"className": "text-center",
@@ -140,7 +153,7 @@
 				"orderable": true,
 			},
 			{
-                "data": "IngredientName",
+				"data": "IngredientName",
 				"orderable": false,
 				"className": "text-center",
 				"render": function (data, type, row) {
@@ -156,7 +169,7 @@
 				}
 			},
 			{
-                "data": "ProviderName",
+				"data": "ProviderName",
 				"className": "text-center",
 				"orderable": true,
 			},
@@ -169,70 +182,78 @@
 				"data": "Status2",
 				"className": "text-center",
 				"orderable": true,
-            },
-            {
-                "data": "MedicineOnHandQuantity",
-                "className": "text-center",
-                "orderable": true,
-				"render": function (data, type, row) {
-                    if (data != null && data != 0) {
-                        return NumberFormat(data);
-                    }
-                    return data;
-				}
-            },
-            {
-                "data": "MaxPrice",
-                "className": "text-center",
-                "orderable": true,
-                "render": function (data, type, row) {
-                    if (data != null) {
-                        return CurrencyFormat(data);
-                    }
-                    return data;
-                }
-            },
-            {
-                "data": "ExpiryString",
-                "className": "text-center",
-                "orderable": true,
-            },
-            {
-                "data": "MapId",
-                "className": "text-center",
-                "orderable": false,
-                "render": function (data, type, row) {
-                    if (data != "" && data != null) {
-						var s = '<a href="/MasterData/Medicine/ViewMap/' + data + '" target="_blank"><i class="fa-solid fa-map-location-dot"></i>Xem trên bản đồ</a>';
-                        return s;
-                    }
-                    return "";
-                }
-            },
+			},
 			{
-				"data": "MedicineProvideId",
+				"data": "MedicineOnHandQuantity",
 				"className": "text-center",
-				"orderable": false,
+				"orderable": true,
 				"render": function (data, type, row) {
-					if (data != "" && data != null) {
-                        var s = '<a class="btn btn-info" href="/MasterData/Medicine/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
-						s += '<a class="btn btn-info ml-2" href="/MasterData/Medicine/Create/' + row.MedicineId + '"><i class="fa-solid fa-pen-to-square"></i>Thêm nhà cung cấp</a>';
-						return s;
+					if (data != null && data != 0) {
+						return NumberFormat(data);
 					}
-					return "";
+					return data;
 				}
+			},
+			{
+				"data": "MaxPrice",
+				"className": "text-center",
+				"orderable": true,
+				"render": function (data, type, row) {
+					if (data != null) {
+						return CurrencyFormat(data);
+					}
+					return data;
+				}
+			},
+			{
+				"data": "ExpiryString",
+				"className": "text-center",
+				"orderable": true,
 			}
 		];
+		if (MapFlag == true || MapFlag == 'True') {
+			columns.push(
+				{
+					"data": "MapId",
+					"className": "text-center",
+					"orderable": false,
+					"render": function (data, type, row) {
+						if (data != "" && data != null) {
+							var s = '<a href="/MasterData/Medicine/ViewMap/' + data + '" target="_blank"><i class="fa-solid fa-map-location-dot"></i>Xem trên bản đồ</a>';
+							return s;
+						}
+						return "";
+					}
+				}
+			);
+		}
+		if (EditFlag == true || EditFlag == 'True') {
+			columns.push(
+				{
+					"data": "MedicineProvideId",
+					"className": "text-center",
+					"orderable": false,
+					"render": function (data, type, row) {
+						if (data != "" && data != null) {
+							var s = '<a class="btn btn-info" href="/MasterData/Medicine/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+							s += '<a class="btn btn-info ml-2" href="/MasterData/Medicine/Create/' + row.MedicineId + '"><i class="fa-solid fa-pen-to-square"></i>Thêm nhà cung cấp</a>';
+							return s;
+						}
+						return "";
+					}
+				}
+			);
+		}
 		//$("#btn-search").on("click", function () {
 		//	PaggingServerSide("MasterData/Account", columns, true);
 		//});
 		PaggingServerSideSearchInitialWithClick("MasterData/Medicine", columns, true);
-        Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#ProviderNameSearch");
-        Select2_AutoComplete("/MasterData/Medicine/AutoComplete2", "#IngredientNameSearch");
-        Select2Init("#Actived");
+		Select2_AutoComplete("/MasterData/Medicine/AutoComplete", "#ProviderNameSearch");
+		Select2_AutoComplete("/MasterData/Medicine/AutoComplete2", "#IngredientNameSearch");
+		Select2Init("#Actived");
 
 		$("#exportExcel").on("click", function () {
-            ExportExcel("/MasterData/Medicine");
+			ExportExcel("/MasterData/Medicine");
 		});
 
 	});

@@ -1,4 +1,7 @@
-﻿<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
+﻿@{
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Account", "EDIT");
+}
+<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
 	<thead class="table-header">
 		<tr>
 			<th class="text-center">STT</th>
@@ -10,7 +13,10 @@
 			<th class="text-center">Thời gian đăng nhập cuối</th>
 			<th class="text-center">Được tạo bởi</th>
 			<th class="text-center">Trạng thái</th>
-			<th class="text-center">Hành động</th>
+			@if (EditFlag == true)
+			{
+				<th class="text-center">Hành động</th>
+			}
 		</tr>
 	</thead>
 </table>

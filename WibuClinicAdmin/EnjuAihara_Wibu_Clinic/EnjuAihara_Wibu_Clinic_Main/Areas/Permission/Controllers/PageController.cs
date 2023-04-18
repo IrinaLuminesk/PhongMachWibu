@@ -132,11 +132,16 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
 
                 //Lưu danh mục chức năng cho trang
                 var functionlst = _context.PageFunctionModels.Where(x => x.PageId == model.PageId).ToList();
+                List<string> DeleteFunctions = new List<string>();
                 //Xóa hết tạo lại
                 if (functionlst.Count > 0)
                 {
                     foreach (var i in functionlst)
                     {
+                        if (!Functionlst.Contains(i.FunctionId))
+                        {
+                            DeleteFunctions.Add(i.FunctionId);
+                        }
                         _context.Entry(i).State = EntityState.Deleted;
                         _context.SaveChanges();
                     }
@@ -153,7 +158,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
                     };
                     _context.Entry(pagefunction).State = EntityState.Added;
                     _context.SaveChanges();
-                }    
+                }
+
+
+                //Các quyền
+                if (DeleteFunctions.Count > 0)
+                {
+                    foreach (var i in DeleteFunctions)
+                    {
+                        var PagePermissionList = _context.PagePermissionModels.Where(x => x.PageId == model.PageId && x.FuntionId.Equals(i)).ToList();
+                        _context.PagePermissionModels.RemoveRange(PagePermissionList);
+                        _context.SaveChanges();
+                    }
+                }
                 return Json(new
                 {
                     isSucess = true,

@@ -1,5 +1,6 @@
 ﻿@{ 
 	bool CreateFlag = CustomeHtmlHelper.CheckPermission("/MasterData/User", "CREATE");
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/User", "EDIT");
 }
 <style>
 	table.dataTable td, table.dataTable th {
@@ -170,6 +171,7 @@
 	$(document).ready(function () {
 		Select2Init("#Actived");
 		CloseSideBar();
+		var flag = "@EditFlag";
 		var columns = [
 			{
 				"data": "STT",
@@ -231,20 +233,24 @@
 				"data": "Status",
 				"className": "text-center",
 				"orderable": true,
-			},
-			{
-				"data": "UserId",
-				"className": "text-center",
-				"orderable": false,
-				"render": function (data, type, row) {
-					if (data != "" && data != null) {
-						var s = '<a class="btn btn-info" href="/MasterData/User/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
-						return s;
-					}
-					return "";
-				}
 			}
 		];
+		if (flag == true || flag == 'True') {
+			columns.push(
+				{
+					"data": "UserId",
+					"className": "text-center",
+					"orderable": false,
+					"render": function (data, type, row) {
+						if (data != "" && data != null) {
+							var s = '<a class="btn btn-info" href="/MasterData/User/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+							return s;
+						}
+						return "";
+					}
+				}
+			);
+		}
 		PaggingServerSideSearchInitialWithClick("MasterData/User", columns, true);
 
 

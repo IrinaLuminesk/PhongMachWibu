@@ -1,5 +1,9 @@
-﻿<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
-    <thead class="table-header">
+﻿@{
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Medicine", "EDIT");
+	bool ViewMapFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Medicine", "ViewMap");
+}
+<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
+	<thead class="table-header">
 		<tr>
 			<th class="text-center">STT</th>
 			<th class="text-center">Mã thuốc</th>
@@ -12,8 +16,14 @@
 			<th class="text-center">Số lượng tồn</th>
 			<th class="text-center">Giá bán cao nhất</th>
 			<th class="text-center">Hạn sử dụng gần nhất</th>
-			<th class="text-center">Vị trí nhà cung cấp</th>
-			<th class="text-center">Hành động</th>
+			@if (ViewMapFlag == true)
+			{
+				<th class="text-center">Vị trí nhà cung cấp</th>
+			}
+			@if (EditFlag == true)
+			{
+				<th class="text-center">Hành động</th>
+			}
 		</tr>
-    </thead>
+	</thead>
 </table>

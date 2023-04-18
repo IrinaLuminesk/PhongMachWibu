@@ -1,8 +1,7 @@
-﻿@*<style>
-	table.dataTable td, table.dataTable th {
-		white-space: nowrap;
-	}
-</style>*@
+﻿@{
+	bool CreateFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Account", "CREATE");
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Account", "EDIT");
+}
 <div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
@@ -11,7 +10,10 @@
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
-					<a class="btn btn-primary" href="/Masterdata/Account/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+					@if (CreateFlag == true)
+					{
+						<a class="btn btn-primary" href="/Masterdata/Account/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+					}
 				</div>
 			</div>
 		</div>
@@ -127,6 +129,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
+		var flag = "@EditFlag";
 		var columns = [
 			{
 				"data": "STT",
@@ -183,20 +186,24 @@
 				"data": "Status",
 				"className": "text-center",
 				"orderable": true,
-			},
-			{
-				"data": "AccountId",
-				"className": "text-center",
-				"orderable": false,
-				"render": function (data, type, row) {
-					if (data != "" && data != null) {
-						var s = '<a class="btn btn-info" href="/MasterData/Account/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
-						return s;
-					}
-					return "";
-				}
 			}
 		];
+		if (flag == true || flag == 'True') {
+			columns.push(
+				{
+					"data": "AccountId",
+					"className": "text-center",
+					"orderable": false,
+					"render": function (data, type, row) {
+						if (data != "" && data != null) {
+							var s = '<a class="btn btn-info" href="/MasterData/Account/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+							return s;
+						}
+						return "";
+					}
+				}
+			);
+		}
 		//$("#btn-search").on("click", function () {
 		//	PaggingServerSide("MasterData/Account", columns, true);
 		//});
