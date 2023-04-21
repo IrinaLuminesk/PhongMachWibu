@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<EnjuAihara.EntityFramework.PageModel>
 @{
 	int j = 1;
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/Permission/Page", "EDIT");
 }
 <table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
 	<thead class="table-header">
@@ -36,7 +37,10 @@
 					}
 				</td>
 				<td class="text-center" style="vertical-align: middle;">
-					<a class="btn btn-info" href="/Permission/Page/Edit/@i.PageId"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>
+					@if (EditFlag == true)
+					{
+						<a class="btn btn-info" href="/Permission/Page/Edit/@i.PageId"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>
+					}
 				</td>
 			</tr>
 			j++;

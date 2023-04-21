@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<EnjuAihara.EntityFramework.FunctionModel>
 @{
-    int j = 1;
+	int j = 1;
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/Permission/Function", "EDIT");
+	bool DeleteFlag = CustomeHtmlHelper.CheckPermission("/Permission/Function", "DELETE");
 }
 <table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
     <thead class="table-header">
@@ -30,8 +32,14 @@
                     }
                 </td>*@
                 <td class="text-center" style="vertical-align: middle;">
-                    <a class="btn btn-info" href="/Permission/Function/Edit/@i.FunctionId"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>
-                    <button class="btn btn-delete btn-danger" id="buttonDelete" data-item-name="@i.FunctionName" data-controller="Permission/Function" data-id="@i.FunctionId"><i class="fa-solid fa-trash"></i>Xóa</button>
+                    @if (EditFlag == true)
+					{
+                        <a class="btn btn-info" href="/Permission/Function/Edit/@i.FunctionId"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>
+					}
+                    @if (DeleteFlag == true)
+					{
+                        <button class="btn btn-delete btn-danger" id="buttonDelete" data-item-name="@i.FunctionName" data-controller="Permission/Function" data-id="@i.FunctionId"><i class="fa-solid fa-trash"></i>Xóa</button>
+					}
                 </td>
             </tr>
             j++;

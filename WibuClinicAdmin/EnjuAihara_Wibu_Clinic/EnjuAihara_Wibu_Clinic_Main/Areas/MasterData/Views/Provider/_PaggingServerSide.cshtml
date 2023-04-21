@@ -1,12 +1,18 @@
-﻿<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
-    <thead class="table-header">
-        <tr>
-            <th class="text-center">STT</th>
-            <th class="text-center">Mã nhà cung cấp</th>
-            <th class="text-center">Tên nhà cung cấp</th>
-            <th class="text-center">Địa chỉ</th>
-            <th class="text-center">Trạng thái</th>
-            <th class="text-center">Hành động</th>
-        </tr>
-    </thead>
+﻿@{
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Provider", "EDIT");
+}
+<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
+	<thead class="table-header">
+		<tr>
+			<th class="text-center">STT</th>
+			<th class="text-center">Mã nhà cung cấp</th>
+			<th class="text-center">Tên nhà cung cấp</th>
+			<th class="text-center">Địa chỉ</th>
+			<th class="text-center">Trạng thái</th>
+			@if (EditFlag == true)
+			{
+				<th class="text-center">Hành động</th>
+			}
+		</tr>
+	</thead>
 </table>

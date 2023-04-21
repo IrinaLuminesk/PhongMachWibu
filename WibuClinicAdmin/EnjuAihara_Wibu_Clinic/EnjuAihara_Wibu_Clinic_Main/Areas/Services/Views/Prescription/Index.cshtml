@@ -1,4 +1,11 @@
-﻿<div class="content-header">
+﻿@{
+	bool CreateFlag = CustomeHtmlHelper.CheckPermission("/Services/Prescription", "Create");
+	bool DeleteFlag = CustomeHtmlHelper.CheckPermission("/Services/Prescription", "Delete");
+	bool EditFlag = CustomeHtmlHelper.CheckPermission("/Services/Prescription", "Edit");
+	bool DetailFlag = CustomeHtmlHelper.CheckPermission("/Services/Prescription", "Detail");
+	bool ConfirmFlag = CustomeHtmlHelper.CheckPermission("/Services/Prescription", "CONFIRMPAYMENT");
+}
+<div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
@@ -6,7 +13,10 @@
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
-					<a class="btn btn-primary" href="/Services/Prescription/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Tạo toa thuốc</a>
+					@if (CreateFlag == true)
+					{
+						<a class="btn btn-primary" href="/Services/Prescription/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Tạo toa thuốc</a>
+					}
 				</div>
 			</div>
 		</div>
@@ -109,19 +119,19 @@
 <div id="deleteConfirmation" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Xóa toa thuốc</h4>
-					<button type="button" class="close modal-closing"  data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p class="modal-question">Bạn có chắc bạn muốn xóa toa thuốc này không?</p>
-					<p class="text-warning"><small>Hành động này sẽ không thể khôi phục được</small></p>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="modal-closing btn btn-default" id="CancelButton" data-bs-dismiss="modal" value="Cancel">
-					<input type="button" class="btn btn-danger" value="Delete" id="DeleteConfirm">
-					<input type="hidden" id="DeleteId" name="DeleteId" />
-				</div>
+			<div class="modal-header">
+				<h4 class="modal-title">Xóa toa thuốc</h4>
+				<button type="button" class="close modal-closing" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p class="modal-question">Bạn có chắc bạn muốn xóa toa thuốc này không?</p>
+				<p class="text-warning"><small>Hành động này sẽ không thể khôi phục được</small></p>
+			</div>
+			<div class="modal-footer">
+				<input type="button" class="modal-closing btn btn-default" id="CancelButton" data-bs-dismiss="modal" value="Cancel">
+				<input type="button" class="btn btn-danger" value="Delete" id="DeleteConfirm">
+				<input type="hidden" id="DeleteId" name="DeleteId" />
+			</div>
 		</div>
 	</div>
 </div>
@@ -135,7 +145,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row" id="DetailToaThuoc">
-					
+
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -212,6 +222,10 @@
 	}
 
 	$(document).ready(function () {
+		var DeleteFlag = "@DeleteFlag";
+		var EditFlag = "@EditFlag";
+		var DetailFlag = "@DetailFlag";
+		var ConfirmFlag = "@ConfirmFlag";
 		JqueryAutoComplete("/Services/Prescription/ClientSearch", "#Client");
 		var columns = [
 			{
@@ -293,14 +307,24 @@
 				"orderable": false,
 				"render": function (data, type, row) {
 					if (data != "" && data != null) {
-						var s;
+						var s = '';
 						if (row.IsPay == false) {
-							s = '<a class="btn btn-info" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
-							s += '<button class="btn-xoa-toa-thuoc btn btn-danger ml-2" data-id="' + data + '"><i class="fa-solid fa-circle-xmark"></i>Xóa</button>';
-							s += '<button class="btn-xacnhanthanhtoan-toa-thuoc btn btn-success ml-2" data-id="' + data + '"><i class="fa-solid fa-clipboard-check"></i>Xác nhận thanh toán</button>';
+							if (EditFlag == 'True') {
+								s = '<a class="btn btn-info" href="/Services/Prescription/Edit/' + data + '"><i class="fa-solid fa-pen-to-square"></i>Chỉnh sửa</a>';
+							}
+							if (DeleteFlag == 'True') {
+								s += '<button class="btn-xoa-toa-thuoc btn btn-danger ml-2" data-id="' + data + '"><i class="fa-solid fa-circle-xmark"></i>Xóa</button>';
+							}
+							if (ConfirmFlag == 'True') {
+								s += '<button class="btn-xacnhanthanhtoan-toa-thuoc btn btn-success ml-2" data-id="' + data + '"><i class="fa-solid fa-clipboard-check"></i>Xác nhận thanh toán</button>';
+
+							}
 						}
 						else {
-							s = '<a class="btn btn-info" href="/Services/Prescription/Detail/' + data + '"><i class="fa-solid fa-eye"></i>Xem chi tiết</a>';
+							if (DetailFlag == 'True') {
+								s = '<a class="btn btn-info" href="/Services/Prescription/Detail/' + data + '"><i class="fa-solid fa-eye"></i>Xem chi tiết</a>';
+
+							}
 						}
 						return s;
 					}
@@ -315,7 +339,7 @@
 			$("#DeleteId").val("");
 			$("#XacNhanThanhToanId").val("");
 		});
-	}); 
+	});
 
 	$(document).on("click", ".btn-xoa-toa-thuoc", function (e) {
 		e.preventDefault();

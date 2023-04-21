@@ -1,4 +1,8 @@
-﻿<div class="content-header">
+﻿@{ 
+	bool AppointFlag = CustomeHtmlHelper.CheckPermission("/Services/Date", "AppointDoctor");
+	bool ConfirmFlag = CustomeHtmlHelper.CheckPermission("/Services/Date", "ConfirmFinish");
+}
+<div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
@@ -142,6 +146,8 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 		CloseSideBar();
+		var AppojntFlag = "@AppointFlag";
+		var ConfirmFlag = "@ConfirmFlag";
 		var columns = [
 			{
 				"data": "STT",
@@ -204,11 +210,17 @@
 						s = "";
 						if (row.PayMentStatus == "Đã thanh toán") {
 							if (row.Doctor == null || row.Doctor == "") {
-								s += '<a class="btn btn-info"  target="_blank" href="/Services/Date/AppointDoctor/' + data + '">Chỉ định người khám</a>';
+								if (AppojntFlag == 'True') {
+									s += '<a class="btn btn-info"  target="_blank" href="/Services/Date/AppointDoctor/' + data + '">Chỉ định người khám</a>';
+								}
 							}
 							else {
-								if (row.TrangThaiCuocHen == 'Chưa khám')
-									s += '<a class="btn btn-success btn-xacnhanhoanthanh" data-id="' + data + '">Xác nhận khám xong</a>';
+								if (row.TrangThaiCuocHen == 'Chưa khám') { 
+									if (ConfirmFlag == 'True') {
+										s += '<a class="btn btn-success btn-xacnhanhoanthanh" data-id="' + data + '">Xác nhận khám xong</a>';
+
+									}
+								}
 								else {
 									s += '<a class="ml-2 btn btn-info"  target="_blank" href="/Services/Prescription/Create/' + row.PatientId + '">Kê đơn thuốc</a>';
 								}
