@@ -102,30 +102,25 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     message = "Vui lòng không để trống địa chỉ nhà cung cấp"
                 });
             }
-            if (model.CityId == null)
-            {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống thành phố của nhà cung cấp"
-                });
-            }
-            if (model.DistrictId == null)
-            {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống quận nhà cung cấp"
-                });
-            }
-            var City = _context.CityModels.Where(x => x.CityId == model.CityId).FirstOrDefault();
-            var District = City.DistrictModels.Where(x => x.DistrictId == model.DistrictId).FirstOrDefault();
-            string TenQuan = District.DistrictName.Contains("Quận") ? District.DistrictName : string.Format("Quận {0}", District.DistrictName);
-            string TenThanhPho = City.CityName.Contains("Thành phố") ? City.CityName : string.Format("Thành phố {0}", City.CityName);
-            string FullAddress = string.Format("{0} {1} {2}", model.Address, TenQuan, TenThanhPho);
-            var Coordinate = GoogleMapUtilities.GetCoordinate(FullAddress);
+            //if (model.CityId == null)
+            //{
+            //    return Json(new
+            //    {
+            //        isSucess = false,
+            //        title = "Lỗi",
+            //        message = "Vui lòng không để trống thành phố của nhà cung cấp"
+            //    });
+            //}
+            //if (model.DistrictId == null)
+            //{
+            //    return Json(new
+            //    {
+            //        isSucess = false,
+            //        title = "Lỗi",
+            //        message = "Vui lòng không để trống quận nhà cung cấp"
+            //    });
+            //}
+            var Coordinate = GoogleMapUtilities.GetCoordinate(model.Address);
             if (Coordinate == null)
             {
                 return Json(new
@@ -142,8 +137,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     ProviderCode = DataCodeGenerate.ProviderCodeGen(),
                     Actived = true,
                     ProviderName = model.ProviderName,
-                    CityId = model.CityId,
-                    DistrictId = model.DistrictId,
+                    //CityId = model.CityId,
+                    //DistrictId = model.DistrictId,
                     Latitude = Coordinate.Latitude,
                     longitude = Coordinate.Longitude,
                     Address = model.Address
@@ -204,31 +199,25 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     message = "Vui lòng không để trống địa chỉ nhà cung cấp"
                 });
             }
-            if (viewModel.CityId == null)
-            {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống thành phố của nhà cung cấp"
-                });
-            }
-            if (viewModel.DistrictId == null)
-            {
-                return Json(new
-                {
-                    isSucess = false,
-                    title = "Lỗi",
-                    message = "Vui lòng không để trống quận nhà cung cấp"
-                });
-            }
-
-            var City = _context.CityModels.Where(x => x.CityId == viewModel.CityId).FirstOrDefault();
-            var District = City.DistrictModels.Where(x => x.DistrictId == viewModel.DistrictId).FirstOrDefault();
-            string TenQuan = District.DistrictName.Contains("Quận") ? District.DistrictName : string.Format("Quận {0}", District.DistrictName);
-            string TenThanhPho = City.CityName.Contains("Thành phố") ? City.CityName : string.Format("Thành phố {0}", City.CityName);
-            string FullAddress = string.Format("{0} {1} {2}", viewModel.Address, TenQuan, TenThanhPho);
-            var Coordinate = GoogleMapUtilities.GetCoordinate(FullAddress);
+            //if (viewModel.CityId == null)
+            //{
+            //    return Json(new
+            //    {
+            //        isSucess = false,
+            //        title = "Lỗi",
+            //        message = "Vui lòng không để trống thành phố của nhà cung cấp"
+            //    });
+            //}
+            //if (viewModel.DistrictId == null)
+            //{
+            //    return Json(new
+            //    {
+            //        isSucess = false,
+            //        title = "Lỗi",
+            //        message = "Vui lòng không để trống quận nhà cung cấp"
+            //    });
+            //}
+            var Coordinate = GoogleMapUtilities.GetCoordinate(viewModel.Address);
             if (Coordinate == null)
             {
                 return Json(new
@@ -252,8 +241,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 var provider = _context.ProviderModels.FirstOrDefault(x => x.ProviderId == viewModel.ProviderId);
                 provider.ProviderName = viewModel.ProviderName;
                 provider.Actived = viewModel.Actived;
-                provider.CityId = viewModel.CityId;
-                provider.DistrictId = viewModel.DistrictId;
+                //provider.CityId = viewModel.CityId;
+                //provider.DistrictId = viewModel.DistrictId;
                 provider.Address = viewModel.Address;
                 provider.longitude = Coordinate.Longitude;
                 provider.Latitude = Coordinate.Latitude;

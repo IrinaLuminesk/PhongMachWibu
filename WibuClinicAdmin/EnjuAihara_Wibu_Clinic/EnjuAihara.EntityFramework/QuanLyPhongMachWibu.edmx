@@ -61,7 +61,7 @@
           <Property Name="CatalogDescription" Type="nvarchar(max)" />
           <Property Name="OrderIndex" Type="int" />
           <Property Name="Actived" Type="bit" />
-          <Property Name="Value" Type="varchar(max)" />
+          <Property Name="Value" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CatalogTypeModel">
           <Key>
@@ -324,7 +324,7 @@
           <Property Name="ProviderCode" Type="nvarchar" MaxLength="100" />
           <Property Name="ProviderName" Type="nvarchar(max)" />
           <Property Name="Actived" Type="bit" />
-          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="Latitude" Type="float" />
           <Property Name="longitude" Type="float" />
           <Property Name="CityId" Type="uniqueidentifier" />
@@ -338,6 +338,7 @@
           <Property Name="RoleName" Type="nvarchar" MaxLength="100" />
           <Property Name="Actived" Type="bit" />
           <Property Name="RoleCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhanCap" Type="int" />
         </EntityType>
         <EntityType Name="StreetModel">
           <Key>
@@ -1426,7 +1427,7 @@
           <Property Name="CatalogDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OrderIndex" Type="Int32" />
           <Property Name="Actived" Type="Boolean" />
-          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CatalogTypeModel" Relationship="QuanLyPhongMachWibuModel.FK_CatalogModel_CatalogTypeModel" FromRole="CatalogModel" ToRole="CatalogTypeModel" />
         </EntityType>
         <EntityType Name="CatalogTypeModel">
@@ -1741,7 +1742,7 @@
           <Property Name="ProviderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProviderName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Actived" Type="Boolean" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Latitude" Type="Double" />
           <Property Name="longitude" Type="Double" />
           <Property Name="CityId" Type="Guid" />
@@ -1761,6 +1762,7 @@
           <NavigationProperty Name="AccountInRoleModels" Relationship="QuanLyPhongMachWibuModel.FK_AccountInRoleModel_RolesModel" FromRole="RolesModel" ToRole="AccountInRoleModel" />
           <NavigationProperty Name="NotificationInRoleModels" Relationship="QuanLyPhongMachWibuModel.FK_NotificationInRoleModel_RolesModel" FromRole="RolesModel" ToRole="NotificationInRoleModel" />
           <NavigationProperty Name="PagePermissionModels" Relationship="QuanLyPhongMachWibuModel.FK_PagePermissionModel_RolesModel" FromRole="RolesModel" ToRole="PagePermissionModel" />
+          <Property Name="PhanCap" Type="Int32" />
         </EntityType>
         <EntityType Name="StreetModel">
           <Key>
@@ -2718,6 +2720,7 @@
           <EntitySetMapping Name="RolesModels">
             <EntityTypeMapping TypeName="QuanLyPhongMachWibuModel.RolesModel">
               <MappingFragment StoreEntitySet="RolesModel">
+                <ScalarProperty Name="PhanCap" ColumnName="PhanCap" />
                 <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
                 <ScalarProperty Name="Actived" ColumnName="Actived" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />

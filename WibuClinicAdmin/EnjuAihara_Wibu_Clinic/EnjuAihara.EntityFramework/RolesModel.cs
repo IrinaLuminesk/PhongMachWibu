@@ -26,6 +26,7 @@ namespace EnjuAihara.EntityFramework
         public string RoleName { get; set; }
         public Nullable<bool> Actived { get; set; }
         public string RoleCode { get; set; }
+        public Nullable<int> PhanCap { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountInRoleModel> AccountInRoleModels { get; set; }

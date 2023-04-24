@@ -120,6 +120,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         [HttpPost]
         public JsonResult Create(AccountCreateViewModel model)
         {
+            foreach (var i in model.Roles)
+            {
+                var quyenthem = _context.RolesModels.Where(x => x.RoleId == i).FirstOrDefault().PhanCap;
+                if (CurrentUser.AccountInRoleModels.Any(x => x.RolesModel.PhanCap > quyenthem))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Quyền hiện tại của tài khoản không cho phép thêm mới quyền cao hơn"
+                    });
+                }
+            }
             JsonResult ValidateResult = ValidateAccount(model);
             if (ValidateResult != null)
                 return ValidateResult;
@@ -186,6 +199,19 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public JsonResult Edit(AccountEditViewModel model)
         {
             bool flag = true;
+            foreach (var i in model.Roles)
+            {
+                var quyenthem = _context.RolesModels.Where(x => x.RoleId == i).FirstOrDefault().PhanCap;
+                if (CurrentUser.AccountInRoleModels.Any(x => x.RolesModel.PhanCap > quyenthem))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Quyền hiện tại của tài khoản không cho phép sửa quyền cao hơn"
+                    });
+                }
+            }
             JsonResult ValidateResult = ValidateAccountEdit(model);
             if (ValidateResult != null)
                 return ValidateResult;
