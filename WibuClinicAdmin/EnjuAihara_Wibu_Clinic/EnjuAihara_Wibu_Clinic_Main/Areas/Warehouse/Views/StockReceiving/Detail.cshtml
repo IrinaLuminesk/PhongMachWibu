@@ -1,6 +1,7 @@
 ﻿@model EnjuAihara.EntityFramework.WarehouseMasterModel
 @{ 
     var StockRecevingDetailList = (List<EnjuAihara.ViewModels.Warehouse.StockReceivingDetailViewModel>)ViewBag.ListStockRecevingDetail;
+    bool DuyetnhapkhoFlag = CustomeHtmlHelper.CheckPermission("/Warehouse/StockReceiving", "DuyetNhapKho");
 }
 <div class="content-header">
     <div class="container-fluid">
@@ -11,9 +12,12 @@
             <div class="col-sm-6 text-right">
                 <div class="pull-right">
                     <a class="btn btn-info" href="/Warehouse/StockReceiving"><i class="fa-solid fa-arrow-rotate-left"></i>Quay lại</a>
+                    @if (DuyetnhapkhoFlag == true)
+                    {
                     <button type="button" class="btn btn-primary" id="btn-edit" style="width:20%">
                         Duyệt
                     </button>
+                    }
                 </div>
 
             </div>

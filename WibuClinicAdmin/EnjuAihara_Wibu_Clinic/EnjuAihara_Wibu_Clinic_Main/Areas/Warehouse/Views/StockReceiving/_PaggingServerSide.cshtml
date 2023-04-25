@@ -1,4 +1,7 @@
-﻿<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
+﻿@{ 
+    bool DetailFlag = CustomeHtmlHelper.CheckPermission("/Warehouse/StockReceiving", "DETAIL");
+}
+<table class="table table-bordered table-striped table-hover dataTableServerSide no-footer" id="tableRes" style="width:100%">
     <thead class="table-header">
         <tr>
             <th class="text-center">STT</th>
@@ -7,7 +10,9 @@
             <th class="text-center">Ngày tạo</th>
             <th class="text-center">Người nhập</th>
             <th class="text-center">Trạng thái duyệt</th>
+            @if(@DetailFlag==true){
             <th class="text-center">Hành động</th>
+            }
         </tr>
     </thead>
 </table>

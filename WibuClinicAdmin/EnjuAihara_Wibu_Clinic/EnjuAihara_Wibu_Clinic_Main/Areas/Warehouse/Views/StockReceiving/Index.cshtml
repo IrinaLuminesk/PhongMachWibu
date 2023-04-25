@@ -1,79 +1,87 @@
-﻿<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Quản lý nhập kho</h1>
-            </div>
-            <div class="col-sm-6 text-right">
-                <div class="pull-right">
-                    <a class="btn btn-primary" href="/Warehouse/StockReceiving/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+﻿@{
+    bool CreateFlag = CustomeHtmlHelper.CheckPermission("/Warehouse/StockReceiving", "CREATE");
+    bool DetailFlag= CustomeHtmlHelper.CheckPermission("/Warehouse/StockReceiving", "DETAIL");
+    bool ExcelExportFlag = CustomeHtmlHelper.CheckPermission("/Warehouse/StockReceiving", "ExportToExcel");
+}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Quản lý nhập kho</h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <div class="pull-right">
+                        @if (CreateFlag == true)
+                        {
+                            <a class="btn btn-primary" href="/Warehouse/StockReceiving/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
+                        }
+                        </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="content">
-    <div class="form-horizontal">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <form id="frmSearch">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="ProviderCode" class="col-form-label">Mã nhập kho</label>
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form id="frmSearch">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-3 text-center">
+                                                        <label for="ProviderCode" class="col-form-label">Mã nhập kho</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" id="ImportCodeSearch" name="ImportCodeSearch" class="form-control">
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-9">
-                                                    <input type="text" id="ImportCodeSearch" name="ImportCodeSearch" class="form-control">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-3 text-center">
+                                                        <label for="ProviderCodeName" class="col-form-label">Hàng nhập</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        @*@Html.DropDownList("MedicineIdSearch", (SelectList)ViewBag.MedicineIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
+                                                        <select id="MedicineIdSearch" name="MedicineIdSearch" class="form-control">
+                                                            <option>--Chọn tất cả--</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-3 text-center">
+                                                        <label for="ProviderCodeName" class="col-form-label">Nhà cung cấp</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        @*@Html.DropDownList("ProviderIdSearch", (SelectList)ViewBag.ProviderIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
+                                                        <select id="ProviderIdSearch" name="ProviderIdSearch" class="form-control">
+                                                            <option>--Chọn tất cả--</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-3 text-center">
+                                                        <label for="Actived" class="col-form-label">Trạng thái</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        @*<input type="text" id="AccountName" name="AccountName" class="form-control">*@
+                                                        @Html.DropDownList("Actived", (SelectList)ViewBag.Actived, "-- Tất cả --", new { @class = "form-control" })
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="ProviderCodeName" class="col-form-label">Hàng nhập</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    @*@Html.DropDownList("MedicineIdSearch", (SelectList)ViewBag.MedicineIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
-                                                    <select id="MedicineIdSearch" name="MedicineIdSearch" class="form-control">
-                                                        <option>--Chọn tất cả--</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="ProviderCodeName" class="col-form-label">Nhà cung cấp</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    @*@Html.DropDownList("ProviderIdSearch", (SelectList)ViewBag.ProviderIdSearch, "-- Tất cả --", new { @class = "form-control" })*@
-                                                    <select id="ProviderIdSearch" name="ProviderIdSearch" class="form-control">
-                                                        <option>--Chọn tất cả--</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-md-3 text-center">
-                                                    <label for="Actived" class="col-form-label">Trạng thái</label>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    @*<input type="text" id="AccountName" name="AccountName" class="form-control">*@
-                                                    @Html.DropDownList("Actived", (SelectList)ViewBag.Actived, "-- Tất cả --", new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3">
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <div class="row g-3 align-items-center">
                                                     <div class="col-md-3 text-center">
@@ -95,40 +103,44 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <div class="row" style="margin-top: 15px">
-                                        <div class="col-md-12 text-center">
-                                            <button type="button" class="btn btn-primary" id="btn-search">
-                                                <i class="fas fa-search"></i>
-                                                Tìm Kiếm
-                                            </button>
-                                            <button type="button" id="exportExcel" name="exportExcel" class="btn btn-success">Export Excel</button>
-                                            @*<a type="button" href="@Url.Action("ExportToExcel","StockReceiving")" id="exportExcel" name="exportExcel" class="btn btn-success">Export Excel(để test)</a>*@
+                                        <div class="row" style="margin-top: 15px">
+                                            <div class="col-md-12 text-center">
+                                                <button type="button" class="btn btn-primary" id="btn-search">
+                                                    <i class="fas fa-search"></i>
+                                                    Tìm Kiếm
+                                                </button>
+                                                @if (ExcelExportFlag == true)
+                                                {
+                                                <button type="button" id="exportExcel" name="exportExcel" class="btn btn-success">Export Excel</button>
+                                                }
+                                                @*<a type="button" href="@Url.Action("ExportToExcel","StockReceiving")" id="exportExcel" name="exportExcel" class="btn btn-success">Export Excel(để test)</a>*@
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="divSearchResult">
-                                @Html.Partial("_PaggingServerSide")
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="divSearchResult">
+                                    @Html.Partial("_PaggingServerSide")
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script type="text/javascript">
-	$(document).ready(function () {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        var flag = "@DetailFlag";
 		var columns = [
 			{
 				"data": "STT",
@@ -217,20 +229,34 @@
                 "data": "Status",
                 "className": "text-center",
                 "orderable": true,
-            },
-			{
-                "data": "WarehouseMasterId",
-				"className": "text-center",
-				"orderable": false,
-				"render": function (data, type, row) {
-					if (data != "" && data != null) {
-                        var s = '<a class="btn btn-secondary ml-2" href="/Warehouse/StockReceiving/Detail/' + data + '"><i class="fa fa-book"></i>Xem chi tiết</a>';
-                        return s;
-					}
-					return "";
-				}
-			}
-		];
+            }
+			//{
+   //             "data": "WarehouseMasterId",
+			//	"className": "text-center",
+			//	"orderable": false,
+			//	"render": function (data, type, row) {
+			//		if (data != "" && data != null) {
+   //                     var s = '<a class="btn btn-secondary ml-2" href="/Warehouse/StockReceiving/Detail/' + data + '"><i class="fa fa-book"></i>Xem chi tiết</a>';
+   //                     return s;
+			//		}
+			//		return "";
+			//	}
+			//}
+            ];
+            if (flag == true || flag == "True") {
+                columns.push({
+                    "data": "WarehouseMasterId",
+                    "className": "text-center",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                        if (data != "" && data != null) {
+                            var s = '<a class="btn btn-secondary ml-2" href="/Warehouse/StockReceiving/Detail/' + data + '"><i class="fa fa-book"></i>Xem chi tiết</a>';
+                            return s;
+                        }
+                        return "";
+                    }
+                });
+            }
         PaggingServerSideSearchInitialWithClick("Warehouse/StockReceiving", columns, true);
         Select2Init("#Actived");
         Select2_AutoComplete("/Warehouse/StockReceiving/AutoComplete", "#ProviderIdSearch");
@@ -263,7 +289,7 @@
             form.submit();
         });
 	});
-</script>
+    </script>
 
 
 
