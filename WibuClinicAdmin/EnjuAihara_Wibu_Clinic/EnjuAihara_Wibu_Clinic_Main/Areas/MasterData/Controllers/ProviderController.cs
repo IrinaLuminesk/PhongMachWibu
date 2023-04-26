@@ -7,7 +7,9 @@ using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.Datatable;
 using EnjuAihara.ViewModels.MasterData;
 using EnjuAihara.ViewModels.SelectList;
+using Microsoft.Office.Interop.Excel;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -319,11 +321,51 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             {
                 if(excelfile.FileName.EndsWith("xls")|| excelfile.FileName.EndsWith("xlsx"))
                 {
-                    string fileName = Path.GetFileName(excelfile.FileName);
-                    string path = Path.Combine(Server.MapPath("~/Content"), fileName);
-                    excelfile.SaveAs(path);
+                    //Nhận file và lưu file vào thư mục Content
+                    //string fileName = Path.GetFileName(excelfile.FileName);
+                    string path = Server.MapPath("~/Content/"+ excelfile.FileName);
+                    
                     if (System.IO.File.Exists(path))
+                    {
                         System.IO.File.Delete(path);
+                    }
+                    excelfile.SaveAs(path);
+                    //Giờ sẽ làm đọc file
+                    Excel.Application application = new Excel.Application();
+                    Excel.Workbook workbook = application.Workbooks.Open(path);
+                    Excel.Worksheet worksheet = workbook.ActiveSheet;
+                    Excel.Range range = worksheet.UsedRange;
+                    //List<ProviderModel> lst = new List<ProviderModel>();
+                    for (int row = 2; row <= range.Rows.Count; row++)
+                    {
+                        var Coordinate = GoogleMapUtilities.GetCoordinate(((Excel.Range)range.Cells[row, 2]).Text);
+                        if (Coordinate == null)
+                        {
+                            return Json(new
+                            {
+                                isSucess = false,
+                                title = "Lỗi",
+                                message = "Vui lòng nhập đúng địa chỉ thật"
+                            });
+                        }
+                    }
+                    for (int row = 2; row <= range.Rows.Count; row++)
+                    {
+                        var Coordinate = GoogleMapUtilities.GetCoordinate(((Excel.Range)range.Cells[row, 2]).Text);
+                        ProviderModel newNcc = new ProviderModel()
+                        {
+                            ProviderId = Guid.NewGuid(),
+                            ProviderCode = DataCodeGenerate.ProviderCodeGen(),
+                            Actived = true,
+                            ProviderName = ((Excel.Range)range.Cells[row, 1]).Text,
+                            Latitude = Coordinate.Latitude,
+                            longitude = Coordinate.Longitude,
+                            Address = ((Excel.Range)range.Cells[row, 2]).Text
+                        };
+                        _context.Entry(newNcc).State = EntityState.Added;
+                        _context.SaveChanges();
+
+                    }
                     return Json(new
                     {
                         isSucess = true,
