@@ -9,8 +9,11 @@ using EnjuAihara.ViewModels.MasterData;
 using EnjuAihara.ViewModels.SelectList;
 using System;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
@@ -299,6 +302,46 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public PartialViewResult GetMap()
         {
             return PartialView();
+        }
+        [HttpPost]
+        public ActionResult ImportExcel(HttpPostedFileBase excelfile)
+        {
+            if (excelfile.ContentLength == 0)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Bạn chưa chọn file Excel!"
+                });
+            }
+            else
+            {
+                if(excelfile.FileName.EndsWith("xls")|| excelfile.FileName.EndsWith("xlsx"))
+                {
+                    string fileName = Path.GetFileName(excelfile.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Content"), fileName);
+                    excelfile.SaveAs(path);
+                    if (System.IO.File.Exists(path))
+                        System.IO.File.Delete(path);
+                    return Json(new
+                    {
+                        isSucess = true,
+                        title = "Thành công",
+                        message = "Hệ thống đã nhận file thành công!"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Đây không phải là file Excel!"
+                    });
+                }
+            }
+            
         }
     }
 }
