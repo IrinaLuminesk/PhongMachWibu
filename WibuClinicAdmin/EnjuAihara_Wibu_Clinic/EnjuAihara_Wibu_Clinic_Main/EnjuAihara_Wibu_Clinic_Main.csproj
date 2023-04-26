@@ -2318,6 +2318,8 @@
     <Content Include="Areas\Permission\Views\Auth\PasswordReset.cshtml" />
     <Content Include="Areas\Permission\Views\Auth\PasswordChange.cshtml" />
     <Content Include="Areas\Permission\Views\Auth\Error.cshtml" />
+    <Content Include="Content\TestImport.xlsx" />
+    <Content Include="Content\Book1v2.xlsx" />
     <None Include="packages.config" />
     <Content Include="Scripts\build\config\.eslintrc.json" />
     <Content Include="Scripts\build\npm\.eslintrc.json" />
