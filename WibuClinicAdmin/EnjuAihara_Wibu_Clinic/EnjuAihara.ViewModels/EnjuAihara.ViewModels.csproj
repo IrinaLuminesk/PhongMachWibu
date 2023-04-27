@@ -53,6 +53,7 @@
     <Compile Include="MasterData\Coordinate.cs" />
     <Compile Include="MasterData\DistrictSearchViewModel.cs" />
     <Compile Include="MasterData\EditUserViewModel.cs" />
+    <Compile Include="MasterData\ExcelIllnessViewModel.cs" />
     <Compile Include="MasterData\IllnessSearchViewModel.cs" />
     <Compile Include="MasterData\MedicineEditViewModel.cs" />
     <Compile Include="MasterData\IngredientSearchViewModel.cs" />

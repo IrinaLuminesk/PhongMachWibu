@@ -10,6 +10,7 @@
 			</div>
 			<div class="col-sm-6 text-right">
 				<div class="pull-right">
+					<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ImportFromExcel">Import Excel</button>
 					@if (CreateFlag == true)
 					{
 						<a class="btn btn-primary" href="/Masterdata/Illness/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i>Thêm mới</a>
@@ -80,7 +81,35 @@
 		</div>
 	</div>
 </div>
+<div id="ImportFromExcel" class="modal modal fade"  role="dialog" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Import dữ liệu từ file excel</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="excelForm" enctype='multipart/form-data'>
+					<div class="row g-3 align-items-center">
+						<div class="col-md-3 text-center">
+							<label class="col-form-label">Chọn file</label>
+						</div>
+						<div class="col-md-9">
+							<input type="file" id="ExcelFile" name="ExcelFile" class="form-control">
+						</div>
+					</div>
+				</form>
 
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+				<a class="btn btn-success" href="~/ExcelTemplate/Test.xlsx" target="_blank">Tải file mẫu</a>
+				<button type="button" id="SaveExcelData" class="btn btn-primary">Lưu</button>
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 	$(document).ready(function () {
 		JqueryAutoComplete("/MasterData/Illness/AutoComplete", "#IllnessName");
@@ -131,6 +160,53 @@
 		}
 		PaggingServerSideSearchInitialWithClick("MasterData/Illness", columns, true);
 		Select2Init("#Actived");
+
+
+		$("#SaveExcelData").on('click', function () {
+			var formData = new FormData();
+			
+			
+			$.each($("#excelForm").find('input[type="file"]'), function (i, tag) {
+				$.each($(tag)[0].files, function (i, file) {
+					formData.append(tag.name, file);
+				});
+			});
+
+
+			$.ajax({
+				type: "POST",
+				url: "/MasterData/Illness/ImportExcel",
+				data: formData,
+				processData: false,
+				contentType: false,
+				beforeSend: function () {
+					$("#loading").show();
+				},
+				success: function (data) {
+					if (data.isSucess) {
+						if (data.title && data.message)
+							AlertPopup(1, data.title, data.message);
+						if (data.redirect) {
+							setTimeout(function () {
+								window.location.href = data.redirect;
+							}, 1500);
+						}
+					}
+					else {
+						AlertPopup(3, data.title, data.message);
+					}
+				},
+				error: function (xhr, status, error) {
+					var err = eval("(" + xhr.responseText + ")");
+					AlertPopup(3, "Lỗi", err);
+				},
+				complete: function () {
+					$("#loading").hide();
+				}
+			});
+		});
+
+
 	});
 </script>
 
