@@ -321,60 +321,8 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
             }
             else
             {
-                if(excelfile.FileName.EndsWith("xls")|| excelfile.FileName.EndsWith("xlsx"))
-                {
-                    ////Nhận file và lưu file vào thư mục Content
-                    ////string fileName = Path.GetFileName(excelfile.FileName);
-                    //string path = Server.MapPath("~/Content/"+ excelfile.FileName);
-
-                    //if (System.IO.File.Exists(path))
-                    //{
-                    //    System.IO.File.Delete(path);
-                    //}
-                    //excelfile.SaveAs(path);
-                    ////Giờ sẽ làm đọc file
-                    //Excel.Application application = new Excel.Application();
-                    //Excel.Workbook workbook = application.Workbooks.Open(path);
-                    //Excel.Worksheet worksheet = workbook.ActiveSheet;
-                    //Excel.Range range = worksheet.UsedRange;
-                    ////List<ProviderModel> lst = new List<ProviderModel>();
-                    //for (int row = 2; row < range.Rows.Count; row++)
-                    //{
-                    //    var Coordinate = GoogleMapUtilities.GetCoordinate(((Excel.Range)range.Cells[row, 2]).Text);
-                    //    if (Coordinate == null)
-                    //    {
-                    //        return Json(new
-                    //        {
-                    //            isSucess = false,
-                    //            title = "Lỗi",
-                    //            message = "Vui lòng nhập đúng địa chỉ thật"
-                    //        });
-                    //    }
-                    //}
-                    //for (int row = 2; row < range.Rows.Count; row++)
-                    //{
-                    //    var Coordinate = GoogleMapUtilities.GetCoordinate(((Excel.Range)range.Cells[row, 2]).Text);
-                    //    ProviderModel newNcc = new ProviderModel()
-                    //    {
-                    //        ProviderId = Guid.NewGuid(),
-                    //        ProviderCode = DataCodeGenerate.ProviderCodeGen(),
-                    //        Actived = true,
-                    //        ProviderName = ((Excel.Range)range.Cells[row, 1]).Text,
-                    //        Latitude = Coordinate.Latitude,
-                    //        longitude = Coordinate.Longitude,
-                    //        Address = ((Excel.Range)range.Cells[row, 2]).Text
-                    //    };
-                    //    _context.Entry(newNcc).State = EntityState.Added;
-                    //    _context.SaveChanges();
-
-                    //}
-                    //workbook.Close();
-                    //return Json(new
-                    //{
-                    //    isSucess = true,
-                    //    title = "Thành công",
-                    //    message = "Hệ thống đã nhận file thành công!"
-                    //});
+                if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+                {                    
                     using (var package = new ExcelPackage(excelfile.InputStream))
                     {
                         // get the first worksheet in the workbook
@@ -382,32 +330,41 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                         int col = 3;
                         for (int row = 4; worksheet.Cells[row, col].Value != null; row++)
                         {
-                                var Coordinate = GoogleMapUtilities.GetCoordinate(worksheet.Cells[row, col+1].Text);
-                                if (Coordinate == null)
+                            var Coordinate = GoogleMapUtilities.GetCoordinate(worksheet.Cells[row, col + 1].Text);
+                            if (Coordinate == null)
+                            {
+                                return Json(new
                                 {
-                                    return Json(new
-                                    {
-                                        isSucess = false,
-                                        title = "Lỗi",
-                                        message = "Vui lòng nhập đúng địa chỉ thật"
-                                    });
-                                }                        
+                                    isSucess = false,
+                                    title = "Lỗi",
+                                    message = "Vui lòng nhập đúng địa chỉ thật"
+                                });
+                            }
+                            if (worksheet.Cells[row, col].Text == "")
+                            {
+                                return Json(new
+                                {
+                                    isSucess = false,
+                                    title = "Lỗi",
+                                    message = "Vui lòng không để trống họ tên"
+                                });
+                            }
                         }
                         for (int row = 4; worksheet.Cells[row, col].Value != null; row++)
                         {
-                                var Coordinate = GoogleMapUtilities.GetCoordinate(worksheet.Cells[row, col+1].Text);
-                                ProviderModel newNcc = new ProviderModel()
-                                {
-                                    ProviderId = Guid.NewGuid(),
-                                    ProviderCode = DataCodeGenerate.ProviderCodeGen(),
-                                    Actived = true,
-                                    ProviderName = worksheet.Cells[row, col].Text,
-                                    Latitude = Coordinate.Latitude,
-                                    longitude = Coordinate.Longitude,
-                                    Address = worksheet.Cells[row, col + 1].Text
-                                };
-                                _context.Entry(newNcc).State = EntityState.Added;
-                                _context.SaveChanges();
+                            var Coordinate = GoogleMapUtilities.GetCoordinate(worksheet.Cells[row, col + 1].Text);
+                            ProviderModel newNcc = new ProviderModel()
+                            {
+                                ProviderId = Guid.NewGuid(),
+                                ProviderCode = DataCodeGenerate.ProviderCodeGen(),
+                                Actived = true,
+                                ProviderName = worksheet.Cells[row, col].Text,
+                                Latitude = Coordinate.Latitude,
+                                longitude = Coordinate.Longitude,
+                                Address = worksheet.Cells[row, col + 1].Text
+                            };
+                            _context.Entry(newNcc).State = EntityState.Added;
+                            _context.SaveChanges();
                         }
                         return Json(new
                         {
@@ -427,7 +384,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                     });
                 }
             }
-            
+
         }
     }
 }
