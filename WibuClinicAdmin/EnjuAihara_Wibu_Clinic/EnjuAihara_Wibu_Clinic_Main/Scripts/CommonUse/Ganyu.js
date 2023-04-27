@@ -631,7 +631,9 @@ function ImportExcel(controller) {
         data: formData,
         processData: false,
         contentType: false,
-
+        beforeSend: function () {
+            $("#loading").show();
+        },
         success: function (data) {
             if (data.isSucess == true) {
                 if (data.title && data.message) {
@@ -647,6 +649,9 @@ function ImportExcel(controller) {
         },
         error: function (data) {
             AlertPopup(2, "Lỗi", data.message);
+        },
+        complete: function () {
+            $("#loading").hide();
         }
 
     });
