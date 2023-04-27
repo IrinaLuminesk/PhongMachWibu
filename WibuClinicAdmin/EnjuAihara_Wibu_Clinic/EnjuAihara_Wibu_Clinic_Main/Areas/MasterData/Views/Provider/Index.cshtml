@@ -11,9 +11,10 @@
             <div class="col-sm-6 text-right">
                 <div class="pull-right">
                     @if (CreateFlag == true)
-					{
+                    {
+                        <button class="btn btn-success"  id="btn-ImportExcel" target="_blank"><i class="fa fa-plus-square"></i> Import Excel</button>
                         <a class="btn btn-primary" href="/Masterdata/Provider/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
-					}
+                    }
                 </div>
             </div>
         </div>
@@ -208,6 +209,15 @@
 		//});
 		PaggingServerSideSearchInitialWithClick("MasterData/Provider", columns, true);
 		//Select2Init("#RoleNameSearch");
-		Select2Init("#Actived");
+        Select2Init("#Actived");
+        $(document).on("click", "#btn-ImportExcel", function (e) {
+
+            $("#importExcelModal").modal("show");
+
+            
+        });
+        $("#importExBtn").on("click", function () {
+            ImportExcel("MasterData/Provider");
+        });
 	});
 </script>
