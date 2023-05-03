@@ -7,10 +7,17 @@ using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.ViewModels.Datatable;
 using EnjuAihara.ViewModels.MasterData;
 using EnjuAihara.ViewModels.SelectList;
+using Microsoft.Office.Interop.Excel;
+using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
+using System.Web;
 using System.Web.Mvc;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
@@ -299,6 +306,85 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         public PartialViewResult GetMap()
         {
             return PartialView();
+        }
+        [HttpPost]
+        public ActionResult ImportExcel(HttpPostedFileBase excelfile)
+        {
+            if (excelfile.ContentLength == 0)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Bạn chưa chọn file Excel!"
+                });
+            }
+            else
+            {
+                if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
+                {                    
+                    using (var package = new ExcelPackage(excelfile.InputStream))
+                    {
+                        // get the first worksheet in the workbook
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                        int col = 3;
+                        for (int row = 4; worksheet.Cells[row, col].Value != null; row++)
+                        {
+                            var Coordinate = GoogleMapUtilities.GetCoordinate(worksheet.Cells[row, col + 1].Text);
+                            if (Coordinate == null)
+                            {
+                                return Json(new
+                                {
+                                    isSucess = false,
+                                    title = "Lỗi",
+                                    message = "Vui lòng nhập đúng địa chỉ thật"
+                                });
+                            }
+                            if (worksheet.Cells[row, col].Text == "")
+                            {
+                                return Json(new
+                                {
+                                    isSucess = false,
+                                    title = "Lỗi",
+                                    message = "Vui lòng không để trống họ tên"
+                                });
+                            }
+                        }
+                        for (int row = 4; worksheet.Cells[row, col].Value != null; row++)
+                        {
+                            var Coordinate = GoogleMapUtilities.GetCoordinate(worksheet.Cells[row, col + 1].Text);
+                            ProviderModel newNcc = new ProviderModel()
+                            {
+                                ProviderId = Guid.NewGuid(),
+                                ProviderCode = DataCodeGenerate.ProviderCodeGen(),
+                                Actived = true,
+                                ProviderName = worksheet.Cells[row, col].Text,
+                                Latitude = Coordinate.Latitude,
+                                longitude = Coordinate.Longitude,
+                                Address = worksheet.Cells[row, col + 1].Text
+                            };
+                            _context.Entry(newNcc).State = EntityState.Added;
+                            _context.SaveChanges();
+                        }
+                        return Json(new
+                        {
+                            isSucess = true,
+                            title = "Thành công",
+                            message = "Hệ thống đã nhận file thành công!"
+                        });
+                    } // the using 
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Đây không phải là file Excel!"
+                    });
+                }
+            }
+
         }
     }
 }

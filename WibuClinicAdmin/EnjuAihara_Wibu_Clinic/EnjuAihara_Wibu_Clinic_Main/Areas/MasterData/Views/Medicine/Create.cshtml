@@ -308,21 +308,21 @@
 
 	function LoopThrough() {
 		var i = 0;
-		$("#Detail-Container").find('div[class^="accordion-item"').each(function () {
+		$("#Detail-Container").find('div[class^="accordion-item"]').each(function () {
 
 			$(this).attr('id', "item-" + i);
-			$(this).find('button[id^="remove-item"').attr('id', 'remove-item-' + i);
-			$(this).find('button[class^="accordion-button"').attr('data-bs-target', '#collapse-' + (i + 1));
-			$(this).find('div[class^="accordion-collapse"').attr('id', 'collapse-' + (i + 1));
-			$(this).find('button[class^="accordion-button"').text("Thông tin chi tiết #" + (i + 1));
-			$(this).find('button[id^="Remove-Provider"').attr('id', 'Remove-Provider-' + i);
+			$(this).find('button[id^="remove-item"]').attr('id', 'remove-item-' + i);
+			$(this).find('button[class^="accordion-button"]').attr('data-bs-target', '#collapse-' + (i + 1));
+			$(this).find('div[class^="accordion-collapse"]').attr('id', 'collapse-' + (i + 1));
+			$(this).find('button[class^="accordion-button"]').text("Thông tin chi tiết #" + (i + 1));
+			$(this).find('button[id^="Remove-Provider"]').attr('id', 'Remove-Provider-' + i);
 
 			//Ảnh Preview
 			var ImageName = 'Image-' + i;
-			$(this).find('img[class*="img-preview"').attr('id', ImageName);
+			$(this).find('img[class*="img-preview"]').attr('id', ImageName);
 
 			//Input Ảnh
-			$.Img = $(this).find('input[class*="med-file"');
+			$.Img = $(this).find('input[class*="med-file"]');
 			var ImgStringName = 'Med[' + i + '].Img';
 			var ImgStringId = 'Med-' + i + '-Img';
 			$.Img.attr('id', ImgStringId);
@@ -334,7 +334,7 @@
 			//Input Nhà cung cấp
 			var NCCStringName = 'Med[' + i + '].Provider';
 			var NCCStringId = 'Med-' + i + '-Provider';
-			$.NSX = $(this).find('select[class*="med-NCC"');
+			$.NSX = $(this).find('select[class*="med-NCC"]');
 			$.NSX.attr('id', NCCStringId);
 			$.NSX.attr('name', NCCStringName);
 			Select2_AutoComplete("/MasterData/Medicine/AutoCompleteNotAll", "#" + NCCStringId);
@@ -343,7 +343,7 @@
 			//Input Nguyên Liệu
 			var NLStringName = 'Med[' + i + '].Ingredient';
 			var NLStringId = 'Med-' + i + '-Ingredient';
-			$.NL = $(this).find('select[class*="med-Ingre"');
+			$.NL = $(this).find('select[class*="med-Ingre"]');
 			$.NL.attr('id', NLStringId);
 			$.NL.attr('name', NLStringName);
 			Select2_MultipleAutoComplete("/MasterData/Medicine/AutoComplete2NotAll", "#" + NLStringId);

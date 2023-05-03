@@ -148,17 +148,17 @@ function ClearInfo() {
 function LoopThrough(obj, WarehouseDetailId) {
 	var flag = true;
 	$("#DanhMuchKeToa").find('tbody>tr').each(function () {
-		if ($(this).find('input[class^="WarehouseDetailId"').val() == WarehouseDetailId)
+		if ($(this).find('input[class^="WarehouseDetailId"]').val() == WarehouseDetailId)
 			flag = false;
 	});
 	if (flag == true) {
 		$("#DanhMuchKeToa").find('tbody>tr').each(function () {
 			var temp = obj.index + 1;
-			$(this).find('input[class^="WarehouseDetailId"').attr('name', 'Prescription[' + obj.index + '].WarehouseDetailId');
-			$(this).find('input[class^="SoluongKe"').attr('name', 'Prescription[' + obj.index + '].PrescriptionNumber');
-			$(this).find('textarea[class^="CachDung"').attr('name', 'Prescription[' + obj.index + '].HowToUse');
+			$(this).find('input[class^="WarehouseDetailId"]').attr('name', 'Prescription[' + obj.index + '].WarehouseDetailId');
+			$(this).find('input[class^="SoluongKe"]').attr('name', 'Prescription[' + obj.index + '].PrescriptionNumber');
+			$(this).find('textarea[class^="CachDung"]').attr('name', 'Prescription[' + obj.index + '].HowToUse');
 			/*	$(this).find('td[class^="STT"').text(temp);*/
-			$(this).find('label[class^="STT"').text(temp);
+			$(this).find('label[class^="STT"]').text(temp);
 			obj.index++;
 		});
 		return true;

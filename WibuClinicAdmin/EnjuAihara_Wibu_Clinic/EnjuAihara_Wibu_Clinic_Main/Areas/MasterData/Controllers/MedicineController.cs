@@ -14,7 +14,6 @@ using EnjuAihara.Utilities.SelectListItemCustom;
 using EnjuAihara.Utilities.CloudinaryHelper;
 using EnjuAihara.Utilities.RandomString;
 using EnjuAihara.Utilities.Excel;
-
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 {
     public class MedicineController : IrinaLumineskController
@@ -484,7 +483,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                MedicineName = x.MedicineModel.MedicineName,
                Unit = x.MedicineModel.Unit,
                Ingredients =  x.MedicineCompoundModels.Select(y => y.IngredientModel.IngredientName).ToList().Aggregate((c, n) => c + ", " + n),
-               Provider = x.ProviderModel.ProviderName
+               Provider = x.ProviderModel?.ProviderName
 
            }).OrderBy(x => x.MedicineCode).ToList();
 

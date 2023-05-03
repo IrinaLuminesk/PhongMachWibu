@@ -40,6 +40,7 @@
 										<select type="text" id="FastSearch" name="FastSearch" class="form-control" placeholder="Tìm nhanh tên bệnh nhân" disabled>
 											<option selected value="@Model.AccountId">@Model.UsersModel.LastName @Model.UsersModel.FirstName</option>
 										</select>
+										<input type="hidden" value="@Model.AccountId" name="FastSearch"/>
 									}
 								</div>
 							</div>

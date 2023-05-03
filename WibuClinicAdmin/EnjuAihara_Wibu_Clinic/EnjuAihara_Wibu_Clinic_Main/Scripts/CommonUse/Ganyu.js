@@ -489,9 +489,11 @@ $(document).on("click", ".btn-delete", function (e) {
 });
 $(document).on("click", "#cancel", function (e) {
     $("#deleteConfirmModal").modal("hide");
+    $("#importExcelModal").modal("hide");
 });
 $(document).on("click", ".close", function (e) {
     $("#deleteConfirmModal").modal("hide");
+    $("#importExcelModal").modal("hide");
 });
 
 
@@ -595,4 +597,62 @@ function ExportExcel(url) {
     form.type = 'post'
     form.submit();
 }
+//$(document).on("click", "#btn-ImportExcel", function (e) {
+//    //var itemName = $(this).data("item-name");
+//    //var id = $(this).data("id");
+//    //var controller = $(this).data("controller");
+//    //$("#deleteConfirmModal .modal-title .item-name").html(itemName);
+//    //$("#deleteConfirmModal .modal-question .item-name").html(itemName);
+//    //$("#deleteConfirmModal .modal-question .controller").html(controller);
+//    $("#importExcelModal").modal("show");
 
+//    $("#importExBtn").on("click", function () {
+//        ImportExcel();
+//    });
+//});
+function ImportExcel(controller) {
+    var frm = $("#frmImport"),
+        formData = new FormData(),
+        formParams = frm.serializeArray();
+    $.each(frm.find('input[type="file"]'), function (i, tag) {
+        isHasFile = true;
+        $.each($(tag)[0].files, function (i, file) {
+            formData.append(tag.name, file);
+        });
+    });
+
+    $.each(formParams, function (i, val) {
+        formData.append(val.name, val.value);
+    });
+    $.ajax({
+        url: "/" + controller + "/ImportExcel" ,
+        type: "POST",
+        dataType: "json",
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        success: function (data) {
+            if (data.isSucess == true) {
+                if (data.title && data.message) {
+                    AlertPopup(1, data.title, data.message);
+                }
+                if (data.redirect) {
+                    setTimeout(function () {
+                        window.location.href = data.redirect;
+                    }, 1500);
+                }
+            }
+
+        },
+        error: function (data) {
+            AlertPopup(2, "Lỗi", data.message);
+        },
+        complete: function () {
+            $("#loading").hide();
+        }
+
+    });
+}
