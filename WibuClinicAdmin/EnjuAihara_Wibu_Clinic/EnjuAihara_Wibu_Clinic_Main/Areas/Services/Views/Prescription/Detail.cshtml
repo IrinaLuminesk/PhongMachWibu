@@ -13,9 +13,7 @@
 					<button class="btn btn-info" id="PrintBill">
 						<i class="fas fa-print"></i> In hóa đơn
 					</button>
-					<button class="btn btn-danger">
-						<i class="far fa-file-pdf"></i> Xuất PDF
-					</button>
+					
 				</div>
 			</div>
 		</div>
@@ -111,7 +109,13 @@
 				<div class="col-md-12">
 					<div class="text-right">
 						<p>
-							<span class="text-black me-3">Tổng tiền</span><span style="font-size: 25px;">đ @ViewBag.Total</span>
+							<span class="text-black me-3">Tổng tiền thuốc</span><span style="font-size: 25px;">đ @ViewBag.Total</span>
+						</p>
+						<p>
+							<span class="text-black me-3">Phụ thu</span><span style="font-size: 25px;">đ @(Model.PhuThu == null ? 0 : Model.PhuThu)</span>
+						</p>
+						<p>
+							<span class="text-black me-3">Tổng cộng</span><span style="font-size: 25px;">đ @ViewBag.TotalAndPhuThu</span>
 						</p>
 					</div>
 				</div>

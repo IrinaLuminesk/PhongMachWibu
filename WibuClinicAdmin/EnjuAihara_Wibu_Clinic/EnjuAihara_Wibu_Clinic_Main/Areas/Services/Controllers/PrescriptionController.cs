@@ -11,6 +11,7 @@ using EnjuAihara.ViewModels.SelectList;
 using EnjuAihara.EntityFramework;
 using EnjuAihara.Utilities.RandomString;
 using EnjuAihara.Utilities.DateTimeFormat;
+using EnjuAihara.Firebase;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
 {
@@ -103,9 +104,9 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             };
             var query = _context.Database.SqlQuery<MedicineSearchViewModel>("exec GetMedicieInWarehouse @MedList, @ProList", param.ToArray()).ToList();
 
-            var temp = query.GroupBy(x => x.MedicineProviderId).Select(x => new { key = x.Key, count = x.Count() }).Where(x => x.count > 1).ToList();
+            //var temp = query.GroupBy(x => x.MedicineProviderId).Select(x => new { key = x.Key, count = x.Count() }).Where(x => x.count > 1).ToList();
 
-            query.RemoveAll(x => temp.Any(y => y.key == x.MedicineProviderId));
+            //query.RemoveAll(x => temp.Any(y => y.key == x.MedicineProviderId));
 
             var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
@@ -414,6 +415,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
         {
             var bill = _context.DescriptionModels.Where(x => x.DescriptionId == Id).FirstOrDefault();
             ViewBag.ToTal = ((double)bill.DescriptionDetailModels.Sum(x => x.TotalPay)).ToString("N0");
+            ViewBag.TotalAndPhuThu = (((double)bill.DescriptionDetailModels.Sum(x => x.TotalPay)) + (bill.PhuThu == null ? 0 : (double)bill.PhuThu)).ToString("N0");
             return View(bill);
         }
 
@@ -648,5 +650,29 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
         }
 
 
+
+
+        public JsonResult OrderNhapKho(string ProMed)
+        {
+            try
+            {
+                FirebaseUtility.InsertData("Yêu cầu nhập kho", string.Format("Vui lòng nhập kho thuốc {0} của {1}", ProMed.Split(',')[0], ProMed.Split(',')[1]), "");
+                return Json(new
+                {
+                    isSucess = true,
+                    title = "Thành công",
+                    message = "Tạo yêu cầu nhập thuốc thành công"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    isSucess = false,
+                    title = "Lỗi",
+                    message = "Đã có lỗi xảy ra trong quá trình tạo yêu cầu"
+                });
+            }
+        }
     }
 }

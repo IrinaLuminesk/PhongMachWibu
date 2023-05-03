@@ -409,7 +409,7 @@
 						var s = '<button id="' + data + '" class="btn btn-info add-to-prescription"><i class="fa fa-plus-square"></i>Thêm vào toa thuốc</button>';
 						return s;
 					}
-					var s = '<button class="btn btn-warning btn-NhapKho">Yêu cầu nhập kho</button>'
+					var s = '<button class="btn btn-warning btn-NhapKho" id="' + row.MedName + "," +row.ProName + '">Yêu cầu nhập kho</button>'
 					return s;
 				}
 			}
@@ -431,6 +431,47 @@
 			else
 				AlertPopup(3, "Lỗi", "Vui Lòng không chọn thuốc đã có trong danh sách");
 		});
+
+
+		/*Yêu cầu nhập kho thuốc*/
+		$(document).on("click", ".btn-NhapKho", function (e) {
+			e.preventDefault();
+			var formdata = new FormData();
+			formdata.append("ProMed", $(this).attr('id'));
+
+
+			$.ajax({
+				type: "POST",
+				url: "/Services/Prescription/OrderNhapKho",
+				data: formdata,
+				processData: false,
+				contentType: false,
+				beforeSend: function () {
+					$("#loading").show();
+				},
+				success: function (data) {
+					if (data.isSucess) {
+						if (data.title && data.message)
+							AlertPopup(1, data.title, data.message);
+						if (data.redirect) {
+							setTimeout(function () {
+								window.location.href = data.redirect;
+							}, 1500);
+						}
+					}
+					else {
+						AlertPopup(3, data.title, data.message);
+					}
+				},
+				error: function (event, xhr, options, exc) {
+					AlertPopup(2, "Lỗi", event.message);
+				},
+				complete: function () {
+					$("#loading").hide();
+				}
+			});
+		});
+
 
 		$(document).on("click", ".delete-Medi", function (e) {
 			e.preventDefault();

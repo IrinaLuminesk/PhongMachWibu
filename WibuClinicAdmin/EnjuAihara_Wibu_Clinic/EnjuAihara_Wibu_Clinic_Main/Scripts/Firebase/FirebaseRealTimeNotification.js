@@ -45,9 +45,11 @@ export function CheckChange() {
             else {
                 $("#NumberOfNotification").text(parseInt(i) + 1);
             }
-            var Id = Object.keys(snapshot.val())[0];
+            var jsonObject = JSON.parse(JSON.stringify(snapshot.val()));
+            var size = Object.keys(jsonObject).length;
+            var Id = Object.keys(snapshot.val())[size - 1];
             if (Id != null && Id != '') {
-                addNewNotification(Object.values(snapshot.val())[0]);
+                addNewNotification(Object.values(snapshot.val())[size - 1]);
             }
         }
         else
