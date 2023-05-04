@@ -118,6 +118,16 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         {
             try
             {
+                var quyenxoa = _context.RolesModels.Where(x => x.RoleId == id).FirstOrDefault().PhanCap;
+                if (CurrentUser.AccountInRoleModels.Any(x => x.RolesModel.PhanCap > quyenxoa))
+                {
+                    return Json(new
+                    {
+                        isSucess = false,
+                        title = "Lỗi",
+                        message = "Quyền hiện tại của tài khoản không cho phép xóa quyền cao hơn"
+                    });
+                }
                 var pageRole = _context.PagePermissionModels.Where(x => x.RoleId == id).ToList();
                 if (pageRole != null && pageRole.Count() > 0)
                 {
