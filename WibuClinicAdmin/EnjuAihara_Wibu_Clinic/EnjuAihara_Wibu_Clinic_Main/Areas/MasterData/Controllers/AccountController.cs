@@ -100,7 +100,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
 
         public void CreateRolesViewBag(Guid? Id)
         {
-            var RoleList = _context.RolesModels.ToList();
+            var RoleList = _context.RolesModels.Where(x => !x.RoleName.Equals("Sysadmin")).ToList();
             ViewBag.RoleList = RoleList;
 
             if (Id != null)
@@ -239,7 +239,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 EditAccount.Actived = model.Actived;
 
 
-                var listRoles = _context.AccountInRoleModels.Where(x => x.AccountId == model.AccountId).ToList();
+                var listRoles = _context.AccountInRoleModels.Where(x => x.AccountId == model.AccountId && !x.RolesModel.RoleName.Equals("Sysadmin")).ToList();
                 _context.AccountInRoleModels.RemoveRange(listRoles);
                 _context.SaveChanges();
                 List<AccountInRoleModel> roles = new List<AccountInRoleModel>();
