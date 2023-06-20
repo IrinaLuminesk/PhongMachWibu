@@ -58,7 +58,7 @@ namespace EnjuAihara.Utilities.Excel
                 {
                     DataTable table = new DataTable();
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
                     PropertyInfo[] properties = typeof(T).GetProperties();
                     foreach (var j in properties)
                     {

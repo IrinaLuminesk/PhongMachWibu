@@ -26,6 +26,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
         }
         public JsonResult _PaggingServerSide(DatatableViewModel model, MedicineSearchViewModel search, string MedicineNameSearch, string MedicineCodeSearch, Guid? ProviderNameSearch, Guid? IngredientNameSearch, bool? Actived)
         {
+            #region code cũ
             _context.Database.CommandTimeout = 100000;
 
             int filteredResultsCount;
@@ -60,7 +61,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 Expiry = x.WarehouseDetailModels.OrderByDescending(y => y.ExpiredDate).Select(y => y.ExpiredDate).FirstOrDefault(),
                 Status = x.Actived == true ? "Đang sử dụng" : "Đã ngưng"
 
-            }).OrderBy(x => x.MedicineCode).ToList();
+            }).OrderBy(x => x.MedicineCode);
             var finalResult = PaggingServerSideDatatable.DatatableSearch<MedicineSearchViewModel>(model, out filteredResultsCount, out totalResultsCount, query.AsQueryable(), "STT");
             if (finalResult != null && finalResult.Count > 0)
             {
@@ -96,6 +97,10 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                 recordsFiltered = filteredResultsCount,
                 data = finalResult
             });
+            #endregion
+
+
+
         }
         public void CreateViewBag()
         {
@@ -482,7 +487,7 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.MasterData.Controllers
                MedicineCode = x.MedicineModel.MedicineCode,
                MedicineName = x.MedicineModel.MedicineName,
                Unit = x.MedicineModel.Unit,
-               Ingredients =  x.MedicineCompoundModels.Select(y => y.IngredientModel.IngredientName).ToList().Aggregate((c, n) => c + ", " + n),
+               Ingredients = x.MedicineCompoundModels.FirstOrDefault() != null ? x.MedicineCompoundModels.Select(y => y.IngredientModel.IngredientName).ToList().Aggregate((c, n) => c + ", " + n) : "",
                Provider = x.ProviderModel?.ProviderName
 
            }).OrderBy(x => x.MedicineCode).ToList();

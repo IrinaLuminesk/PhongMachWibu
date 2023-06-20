@@ -1,6 +1,7 @@
 ﻿@{
 	bool CreateFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Provider", "CREATE");
 	bool EditFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Provider", "EDIT");
+	bool ImportFlag = CustomeHtmlHelper.CheckPermission("/MasterData/Provider", "IMPORTEXCEL");
 }
 <div class="content-header">
     <div class="container-fluid">
@@ -10,9 +11,13 @@
             </div>
             <div class="col-sm-6 text-right">
                 <div class="pull-right">
+                    @if (ImportFlag == true)
+					{
+                        <button class="btn btn-success" id="btn-ImportExcel" target="_blank"><i class="fa fa-plus-square"></i> Import Excel</button>
+                    }
                     @if (CreateFlag == true)
                     {
-                        <button class="btn btn-success"  id="btn-ImportExcel" target="_blank"><i class="fa fa-plus-square"></i> Import Excel</button>
+                        
                         <a class="btn btn-primary" href="/Masterdata/Provider/Create" id="btn-create" target="_blank"><i class="fa fa-plus-square"></i> Thêm mới</a>
                     }
                 </div>

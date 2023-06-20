@@ -159,6 +159,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QuanLyPhongMachWibu.edmx</DependentUpon>
     </Compile>
+    <Compile Include="QuanLyPhongMachWibuEntities.cs" />
     <Compile Include="RolesModel.cs">
       <DependentUpon>QuanLyPhongMachWibu.tt</DependentUpon>
     </Compile>

@@ -42,7 +42,7 @@ namespace EnjuAihara.Firebase
                 };
                 _context.Entry(Notification).State = System.Data.Entity.EntityState.Added;
                 _context.SaveChanges();
-                foreach (var i in _context.AccountModels.Where(x => x.AccountInRoleModels.Any(y => y.RolesModel.RoleCode.Equals("SYSADMIN") || y.RolesModel.RoleCode.Equals("ADMIN"))).ToList())
+                foreach (var i in _context.AccountModels.Where(x => x.AccountInRoleModels.Any(y => y.RolesModel.RoleCode.Equals("SYSADMIN") || y.RolesModel.RoleCode.Equals("ADMIN") || y.RolesModel.RoleCode.Equals("NURSE"))).ToList())
                 {
                     var NotificationFor = new NotificationForAccount()
                     {

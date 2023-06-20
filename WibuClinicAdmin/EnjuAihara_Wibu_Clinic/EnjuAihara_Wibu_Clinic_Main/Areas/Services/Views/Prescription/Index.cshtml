@@ -184,6 +184,9 @@
 						}, 1500);
 					}
 				}
+				else {
+					AlertPopup(3, data.title, data.message);
+				}
 			},
 			error: function (event, xhr, options, exc) {
 				AlertPopup(2, "Lỗi", event.message);
@@ -388,6 +391,9 @@
 							window.location.href = data.redirect;
 						}, 1500);
 					}
+				}
+				else {
+					AlertPopup(3, data.title, data.message);
 				}
 			},
 			error: function (event, xhr, options, exc) {
