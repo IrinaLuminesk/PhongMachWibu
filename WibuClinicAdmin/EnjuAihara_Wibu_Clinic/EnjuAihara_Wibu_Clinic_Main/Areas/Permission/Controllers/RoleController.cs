@@ -23,11 +23,16 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Permission.Controllers
         }
         public PartialViewResult _Search(RolesModel r)
         {
-            List<RolesModel> roles = _context.RolesModels.Where(x=>
-            (x.RoleCode.Contains(r.RoleCode)||string.IsNullOrEmpty(r.RoleCode))
-            &&(x.RoleName.Contains(r.RoleName) || string.IsNullOrEmpty(r.RoleName))
-            &&(x.Actived==r.Actived||r.Actived==null)
+            List<RolesModel> roles = _context.RolesModels.Where(x =>
+            (x.RoleCode.Contains(r.RoleCode) || string.IsNullOrEmpty(r.RoleCode))
+            && (x.RoleName.Contains(r.RoleName) || string.IsNullOrEmpty(r.RoleName))
+            && (x.Actived == r.Actived || r.Actived == null)
             ).ToList();
+
+            int i = roles.FindIndex(x => x.RoleName.Equals("Sysadmin"));
+            if(i != -1)
+                roles.RemoveAt(i);
+
             return PartialView(roles);
         }
         public ActionResult Create()

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EnjuAihara.Utilities.DateTimeFormat;
 using EnjuAihara.ViewModels.SelectList;
+using System.Collections.Generic;
 
 namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
 {
@@ -15,11 +16,17 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
         // GET: Services/Date
         public ActionResult Index()
         {
+            List<SelectBoolItem> active = new List<SelectBoolItem>()
+            {
+                new SelectBoolItem() {id = true, name = "Đã khám" },
+                new SelectBoolItem() {id = false, name = "Chưa khám" }
+            };
+            ViewBag.TrangThai = new SelectList(active, "id", "name");
             return View();
         }
 
         [HttpPost]
-        public JsonResult _PaggingServerSide(DatatableViewModel model, DateSearchViewModel search, DateTime? FromDate, DateTime? Todate)
+        public JsonResult _PaggingServerSide(DatatableViewModel model, DateSearchViewModel search, DateTime? FromDate, DateTime? Todate, string DateCode, bool? Status)
         {
             int filteredResultsCount;
             int totalResultsCount = model.length;
@@ -31,14 +38,13 @@ namespace EnjuAihara_Wibu_Clinic_Main.Areas.Services.Controllers
             search.PageSize = model.length;
             search.PageNumber = model.start / model.length + 1;
 
-            var query = _context.DateModels.
-                //Where(x =>
-                //(x.DescriptionCode.Contains(PrescriptionCode) || string.IsNullOrEmpty(PrescriptionCode)) &&
+            var query = _context.DateModels.Where(x =>
+                (x.DateCode.Contains(DateCode) || string.IsNullOrEmpty(DateCode)) &&
                 //(x.AccountModel1.UsersModel.FirstName.Contains(Client) || x.AccountModel1.UsersModel.LastName.Contains(Client) || x.AnonymousClient.Contains(Client) || string.IsNullOrEmpty(Client)) &&
-                //(x.CreateDate >= FromDate || FromDate == null) &&
-                //(x.CreateDate <= Todate || Todate == null)
-                //).OrderBy(x => x.CreateDate).OrderBy(x => x.DescriptionCode).
-                OrderBy(x => x.CreateDate).Select(x =>
+                (x.CreateDate >= FromDate || FromDate == null) &&
+                (x.CreateDate <= Todate || Todate == null) &&
+                (x.TrangThaiCuocHen == Status || Status == null))
+                .OrderBy(x => x.CreateDate).Select(x =>
             new DateSearchViewModel
             {
                 DateCode = x.DateCode,

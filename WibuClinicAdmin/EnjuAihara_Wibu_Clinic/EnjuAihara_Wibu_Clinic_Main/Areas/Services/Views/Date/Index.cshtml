@@ -60,7 +60,8 @@
 													<label for="Status" class="col-form-label">Trạng thái</label>
 												</div>
 												<div class="col-md-9">
-													<input type="text" id="DateMaker" name="DateMaker" class="form-control">
+													@*<input type="text" id="DateMaker" name="DateMaker" class="form-control">*@
+													@Html.DropDownList("Status", (SelectList)ViewBag.TrangThai, "-- Tất cả --", new { @class = "form-control" })
 												</div>
 											</div>
 										</div>

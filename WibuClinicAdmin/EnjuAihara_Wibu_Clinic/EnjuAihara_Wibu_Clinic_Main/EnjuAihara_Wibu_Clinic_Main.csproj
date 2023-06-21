@@ -247,6 +247,7 @@
     <Content Include="Global.asax" />
     <Content Include="Picture\404.png" />
     <Content Include="Picture\AvatarAdmin.jpg" />
+    <Content Include="Picture\Login.jpg" />
     <Content Include="Picture\GuraDrum2.gif" />
     <Content Include="Picture\GuraLoader.gif" />
     <Content Include="Picture\GuraLoader2.gif" />
